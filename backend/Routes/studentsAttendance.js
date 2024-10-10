@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors=require('cors');
 app.use(cors({
-    origin: 'https://ghss-management.vercel.app', // Your frontend's origin
+    origin: 'https://ghss-management.vercel.app/admin', // Your frontend's origin
     credentials: true // Allow cookies to be sent
 }));
 
@@ -297,10 +297,10 @@ console.log("admin-login called",req.body);
 
         res.cookie('adminToken', token, {
             httpOnly: true,
-            secure: true,
-            sameSite: isProduction,
+            secure: isProduction,
+            sameSite: 'lax',
             maxAge: 3600000 // 1 hour
-        });
+        });  
 
         res.json({ message: 'Login successful' });
     } catch (err) {
