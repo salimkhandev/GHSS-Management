@@ -292,7 +292,8 @@ console.log("admin-login called",req.body);
 
         res.cookie('adminToken', token, {
             httpOnly: true,
-            secure: isProduction,
+
+      
             sameSite: 'lax',
             maxAge: 3600000 // 1 hour
         });  
