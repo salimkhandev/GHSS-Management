@@ -3,10 +3,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-
-
-
+const cors=require('cors');
+app.use(cors({
+    origin: 'https://ghss-management.vercel.app', // Your frontend's origin
+    credentials: true // Allow cookies to be sent
+}));
 
 router.get('/lastAttendanceDate', async (req, res) => {
     // Access the admin token from the cookies
