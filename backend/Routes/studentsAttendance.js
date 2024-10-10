@@ -294,7 +294,6 @@ console.log("admin-login called",req.body);
             httpOnly: true,
             secure: isProduction,
             sameSite: 'lax',
-            domain: 'ghss-management.vercel.app',
             maxAge: 3600000 // 1 hour
         });  
 
