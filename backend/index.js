@@ -14,7 +14,7 @@ const studentsAttendance = require('./Routes/studentsAttendance');
 
 // Use cookie-parser middleware
 app.use(cookieParser());
-
+const port = process.env.PORT || 3000;
 app.use(cors({
    origin: 'https://ghss-management.vercel.app', // Your frontend's origin
    credentials: true // Allow cookies to be sent
@@ -32,7 +32,9 @@ app.use('/', studentRoutes); // Use student routes
 app.get('/', (req, res) => {
 res.json("helo salim")
 });
-
+app.listen(port, () => {
+   console.log(`Server is running on http://localhost:${port}`);
+});
 // app.listen(3000, () => {
 //    console.log(`Server is running on http://localhost:3000`);
 // });
