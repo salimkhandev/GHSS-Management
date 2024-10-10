@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors=require('cors');
 app.use(cors({
-    origin: 'https://ghss-management.vercel.app', // Your frontend's origin
+// Your frontend's origin
     credentials: true // Allow cookies to be sent
 }));
 
