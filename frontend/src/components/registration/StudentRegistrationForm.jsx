@@ -20,7 +20,7 @@ function StudentRegistrationForm() {
 
     useEffect(() => {
         // Fetch classes and sections from the backend
-        axios.get('http://localhost:3000/classes')
+        axios.get('https://ghss-management-backend.vercel.app/classes')
             .then(response => {
                 setClasses(response.data);
             })
@@ -28,7 +28,7 @@ function StudentRegistrationForm() {
                 console.error('There was an error fetching the classes!', error);
             });
 
-        axios.get('http://localhost:3000/sections')
+        axios.get('https://ghss-management-backend.vercel.app/sections')
             .then(response => {
                 setSections(response.data);
             })
@@ -57,7 +57,7 @@ function StudentRegistrationForm() {
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     setLoading(true);
-                    axios.post('http://localhost:3000/students', values)
+                    axios.post('https://ghss-management-backend.vercel.app/students', values)
                         .then(response => {
                             setSnackbar({ open: true, message: "Student registered successfully!✅" });
                         })

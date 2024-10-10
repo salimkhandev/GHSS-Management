@@ -10,7 +10,7 @@ const AttendancePieChart = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/attendancePercentage');
+                const response = await axios.get('https://ghss-management-backend.vercel.app/attendancePercentage');
                 setData(response.data);
                 console.log('Fetched data:', response.data);
             } catch (error) {

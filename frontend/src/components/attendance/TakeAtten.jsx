@@ -23,7 +23,7 @@ const [loading, setLoading]=useState(false)
         const fetchLastDate = async () => {
             try {
                 // Send a GET request to the backend to fetch the last attendance date
-                const response = await axios.get('http://localhost:3000/lastAttendanceDate', { withCredentials: true });
+                const response = await axios.get('https://ghss-management-backend.vercel.app/lastAttendanceDate', { withCredentials: true });
 
                 // Update the state with the fetched date
                 if (response.data.last_attendance_date) {
@@ -54,7 +54,7 @@ const [loading, setLoading]=useState(false)
     useEffect(() => {
         const checkAuth = async () => { 
             try {
-                const response = await fetch('http://localhost:3000/verify-token-asTeacher', {
+                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asTeacher', {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -79,7 +79,7 @@ const [loading, setLoading]=useState(false)
         setLoading(true)
         const fetchStudents = async () => {
 try {
-    const response = await axios.get('http://localhost:3000/studentsAttendance', {withCredentials: true });
+    const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', {withCredentials: true });
     setLoading(false)
     setStudents(response.data);
 } catch (error) {
@@ -130,7 +130,7 @@ try {
         const attendanceData = [...selectedStudents, ...absentees];
 
         try {
-            await axios.post('http://localhost:3000/saveAttendance', { attendanceData, attendanceDate });
+            await axios.post('https://ghss-management-backend.vercel.app/saveAttendance', { attendanceData, attendanceDate });
             setLoading(false)
             alert('Attendance saved successfully!');
             localStorage.setItem('attendanceSavedDate', dayjs().format('YYYY-MM-DD')); // Store today's date in local storage

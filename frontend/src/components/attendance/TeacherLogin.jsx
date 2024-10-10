@@ -17,7 +17,7 @@ const Login = () => {
     setError('');
     
     try {
-        const response = await axios.post('http://localhost:3000/teacherLogin', {
+        const response = await axios.post('https://ghss-management-backend.vercel.app/teacherLogin', {
             username,
             password,
         }, { withCredentials: true });

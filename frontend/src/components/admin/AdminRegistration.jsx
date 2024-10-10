@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const AdminRegister = () => {
     const [username, setUsername] = useState('');
+
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     
@@ -15,7 +16,7 @@ const AdminRegister = () => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await fetch('http://localhost:3000/verify-token-asAdmin', {
+                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asAdmin', {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -48,7 +49,7 @@ console.log(data);
         setMessage('');
 
         try {
-            const response = await axios.post('http://localhost:3000/admin-register', {
+            const response = await axios.post('https://ghss-management-backend.vercel.app/admin-register', {
                 username,
                 password,
             }, { withCredentials: true });

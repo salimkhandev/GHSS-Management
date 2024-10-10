@@ -20,7 +20,7 @@ const RegisterTeacher = () => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await fetch('http://localhost:3000/verify-token-asAdmin', {
+                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asAdmin', {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -49,7 +49,7 @@ const RegisterTeacher = () => {
     useEffect(() => {
         const fetchClasses = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/classes');
+                const response = await axios.get('https://ghss-management-backend.vercel.app/classes');
                 setClasses(response.data);
              
             } catch (err) {
@@ -65,7 +65,7 @@ const RegisterTeacher = () => {
         const fetchSectionsOfClassID = async () => {
             if (classId) {
                 try {
-                    const response = await axios.post('http://localhost:3000/get-sections', { class_id: classId });
+                    const response = await axios.post('https://ghss-management-backend.vercel.app/get-sections', { class_id: classId });
                     setSectionsOfClsId(response.data);
                 } catch (err) {
                     setError('Failed to fetch sections');
@@ -82,7 +82,7 @@ const RegisterTeacher = () => {
         setMessage('');
 
         try {
-            const response = await axios.post('http://localhost:3000/register-teacher', {
+            const response = await axios.post('https://ghss-management-backend.vercel.app/register-teacher', {
                 username,
                 password,
                 class_id: classId,

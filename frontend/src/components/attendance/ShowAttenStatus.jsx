@@ -19,7 +19,7 @@ const AttendanceStatusList = () => {
         const fetchClasses = async () => {
             setLoading(true)
             try {
-                const response = await axios.get('http://localhost:3000/classes');
+                const response = await axios.get('https://ghss-management-backend.vercel.app/classes');
                 setClasses(response.data);
                 setLoading(false)
             } catch (error) {
@@ -37,7 +37,7 @@ const AttendanceStatusList = () => {
 
             if (selectedClassId) { // Fetch only when a class is selected
                 try {
-                    const response = await axios.post('http://localhost:3000/getsec', { class_id: selectedClassId });
+                    const response = await axios.post('https://ghss-management-backend.vercel.app/getsec', { class_id: selectedClassId });
                     setSections(response.data); 
                     setLoading(false)
 // Update the sections state with fetched sections
@@ -57,7 +57,7 @@ const AttendanceStatusList = () => {
             setLoading(true)
 
             try {
-                const response = await axios.get('http://localhost:3000/studentAttendanceStatus',{params:{class_id:selectedClassId,section_id:selectedSectionId}});
+                const response = await axios.get('https://ghss-management-backend.vercel.app/studentAttendanceStatus',{params:{class_id:selectedClassId,section_id:selectedSectionId}});
                 setAttendanceRecords(response.data);
                 setLoading(false)
 

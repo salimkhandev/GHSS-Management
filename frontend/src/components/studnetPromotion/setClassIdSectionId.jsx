@@ -29,7 +29,7 @@ const Classes = ({ selectedClass, selectedSection, studentIds, selectedSectionNa
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const responseCls = await axios.get('http://localhost:3000/classes');
+        const responseCls = await axios.get('https://ghss-management-backend.vercel.app/classes');
         setClasses(responseCls.data);
       } catch (error) {
         console.error("Error fetching the classes data:", error);
@@ -79,7 +79,7 @@ if (bringClassSec) {
   const fetchSections = async () => {
 
   try {
-    const responseSec = await axios.post('http://localhost:3000/getsec', { class_id });
+    const responseSec = await axios.post('https://ghss-management-backend.vercel.app/getsec', { class_id });
     setSection(responseSec.data);
    
     
@@ -112,7 +112,7 @@ if (bringClassSec) {
   const handleSubmit = async () => {
     setLoading(true); // Show loader
     try {
-      const response = await axios.post('http://localhost:3000/promotestd', {
+      const response = await axios.post('https://ghss-management-backend.vercel.app/promotestd', {
         selectedClassId: selectedClassId, // Local state value
         selectedSectionId: selectedSectionId, // Local state value
         originalSelectedClass: selectedClass, // Prop value

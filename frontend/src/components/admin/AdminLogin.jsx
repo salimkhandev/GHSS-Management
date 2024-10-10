@@ -17,7 +17,7 @@ const AdminLogin = () => {
         setMessage('');
 
         try {
-            const response = await axios.post('http://localhost:3000/admin-login', {
+            const response = await axios.post('https://ghss-management-backend.vercel.app/admin-login', {
                 username,
                 password,
             }, { withCredentials: true });

@@ -14,7 +14,7 @@ function StudentBulkUpload() {
 
         setLoading(true);
         try {
-            await axios.post('http://localhost:3000/students/bulk', formData, {
+            await axios.post('https://ghss-management-backend.vercel.app/students/bulk', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             setSnackbar({ open: true, message: "Students imported successfully!✅" });

@@ -41,7 +41,7 @@ const StudentList = () => {
         setLoading(true);
     
         try {
-            const response = await axios.post('http://localhost:3000/get-sections', { class_id: clsid });
+            const response = await axios.post('https://ghss-management-backend.vercel.app/get-sections', { class_id: clsid });
             if (response) {
                 
                 setSections(response.data);
@@ -56,7 +56,7 @@ const StudentList = () => {
         setLoading(true)
 
         try {
-            const response = await axios.post('http://localhost:3000/get-std', { section_id: secid });
+            const response = await axios.post('https://ghss-management-backend.vercel.app/get-std', { section_id: secid });
             setStudents(response.data);
             setLoading(false)
 
@@ -68,7 +68,7 @@ const StudentList = () => {
         const fetchData = async () => {
             try {
 
-                const classesResponse = await axios.get('http://localhost:3000/classes');
+                const classesResponse = await axios.get('https://ghss-management-backend.vercel.app/classes');
                 setClasses(classesResponse.data);
 
                 // setTimeout(() => {
@@ -95,7 +95,7 @@ const StudentList = () => {
            
             setLoading(true)
             try {
-                const responseCls = await axios.get('http://localhost:3000/filteredSectionStd',
+                const responseCls = await axios.get('https://ghss-management-backend.vercel.app/filteredSectionStd',
 
                     {
                         params: {
@@ -126,7 +126,7 @@ const StudentList = () => {
         const fetchStudents = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get('http://localhost:3000/students',{params: {page:page}});
+                const response = await axios.get('https://ghss-management-backend.vercel.app/students',{params: {page:page}});
                 setStudents(response.data.rows);
                 setTotalpages(response.data.totalPages) // Update state with the fetched students data
                 // setLoading(false); 
@@ -161,7 +161,7 @@ const StudentList = () => {
         const fetchClasses = async () => {
             setLoading(true);
             try {
-                const responseCls = await axios.get('http://localhost:3000/filteredClassStd',
+                const responseCls = await axios.get('https://ghss-management-backend.vercel.app/filteredClassStd',
 
                     {
                         params: {

@@ -26,7 +26,7 @@ const UpdateAttenStatusOfClsSec = () => {
         const fetchAttendanceData = async () => {
         
             try {
-                const response = await fetch('http://localhost:3000/attendanceGroupedByDate', {
+                const response = await fetch('https://ghss-management-backend.vercel.app/attendanceGroupedByDate', {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -51,7 +51,7 @@ const UpdateAttenStatusOfClsSec = () => {
 
     const handleStatusChange = async (id, status) => {
         try {
-            const response = await axios.put(`http://localhost:3000/updateAttendance`, {
+            const response = await axios.put(`https://ghss-management-backend.vercel.app/updateAttendance`, {
                 id,
                 status // Ensure this matches the backend's expected key
             });

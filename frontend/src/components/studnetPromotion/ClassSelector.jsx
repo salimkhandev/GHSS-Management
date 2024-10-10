@@ -45,7 +45,7 @@ const ClassSelector = () => {
     const handleGetSections = async (clsid) => {
         setLoading(true)
         try {
-            const response = await axios.post('http://localhost:3000/get-sections', { class_id: clsid });
+            const response = await axios.post('https://ghss-management-backend.vercel.app/get-sections', { class_id: clsid });
             if (response) {
 
                 setSections(response.data);
@@ -62,7 +62,7 @@ const ClassSelector = () => {
             // setLoading(true);
             try {
 
-                const classesResponse = await axios.get('http://localhost:3000/classes');
+                const classesResponse = await axios.get('https://ghss-management-backend.vercel.app/classes');
                 setClasses(classesResponse.data);
 
                 setLoading(false);
@@ -86,7 +86,7 @@ const ClassSelector = () => {
             setLoading(true)
             
             try {
-                const responseCls = await axios.get('http://localhost:3000/filteredSectionStd',
+                const responseCls = await axios.get('https://ghss-management-backend.vercel.app/filteredSectionStd',
                     
                     {
                         params: {
