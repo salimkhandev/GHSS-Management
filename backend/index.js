@@ -16,7 +16,7 @@ const studentsAttendance = require('./Routes/studentsAttendance');
 app.use(cookieParser());
 
 app.use(cors({
-   origin: 'http://localhost:5173', // Your frontend's origin
+   origin: 'https://ghss-management.vercel.app', // Your frontend's origin
    credentials: true // Allow cookies to be sent
 }));
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +33,6 @@ app.get('/', (req, res) => {
 res.json("helo salim")
 });
 
-app.listen(3000, () => {
-   console.log(`Server is running on http://localhost:3000`);
-});
+// app.listen(3000, () => {
+//    console.log(`Server is running on http://localhost:3000`);
+// });
