@@ -4,15 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const cors = require('cors');
 
-// Allow requests from your frontend
-const corsOptions = {
-    origin: 'https://ghss-management.vercel.app',  // Replace with your frontend URL
-    credentials: true  // Allow cookies to be sent
-};
-
-app.use(cors(corsOptions));
 
 
 
