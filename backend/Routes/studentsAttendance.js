@@ -291,11 +291,12 @@ console.log("admin-login called",req.body);
         }
 
         const token = jwt.sign({ id: admin.id, role: admin.role }, 'your_jwt_secret', { expiresIn: '1h' });
+        const isProduction = process.env.NODE_ENV === 'production';
 
         res.cookie('adminToken', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
+            sameSite: isProduction,
             maxAge: 3600000 // 1 hour
         });
 
