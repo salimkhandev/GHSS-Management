@@ -8,7 +8,7 @@ const cors = require('cors');
 
 // Allow requests from your frontend
 const corsOptions = {
-    origin: 'https://your-frontend-url.vercel.app',  // Replace with your frontend URL
+    origin: 'https://ghss-management.vercel.app',  // Replace with your frontend URL
     credentials: true  // Allow cookies to be sent
 };
 
