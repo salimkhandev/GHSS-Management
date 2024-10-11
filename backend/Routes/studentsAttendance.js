@@ -288,15 +288,14 @@ console.log("admin-login called",req.body);
         }
 
         const token = jwt.sign({ id: admin.id, role: admin.role }, 'your_jwt_secret', { expiresIn: '1h' });
-        const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction = process.env.NODE_ENV === 'production';
 
-        res.cookie('adminToken', token, {
-            httpOnly: true,
-
-      
-            sameSite: 'lax',
-            maxAge: 3600000 // 1 hour
-        });  
+// Set a cookie on the response
+res.cookie('adminToken', token, {
+    httpOnly: false,  // Set to false for simplicity
+    sameSite: 'lax',
+    maxAge: 3600000 // 1 hour
+});  
 
         res.json({ message: 'Login successful' });
     } catch (err) {
