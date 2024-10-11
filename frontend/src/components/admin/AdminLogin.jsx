@@ -12,22 +12,55 @@ const AdminLogin = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setMessage('');
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setMessage('');
 
-        try {
-            const response = await axios.post('https://ghss-management-backend.vercel.app/admin-login', {
+    //     try {
+    //         const response = await axios.post('https://ghss-management-backend.vercel.app/admin-login', {
+    //             username,
+    //             password,
+    //         }, { withCredentials: true });
+    //         login()
+    //         navigate('/admin/TeacherRegistration');
+    //         setMessage(response.data.message);
+    //     } catch (err) {
+    //         setMessage('Error logging in');
+    //     }
+    // };
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage(''); // Clear any previous messages
+
+    try {
+        const response = await axios.post(
+            'https://ghss-management-backend.vercel.app/admin-login',
+            {
                 username,
                 password,
-            }, { withCredentials: true });
-            login()
-            navigate('/admin/TeacherRegistration');
-            setMessage(response.data.message);
-        } catch (err) {
-            setMessage('Error logging in');
-        }
-    };
+            },
+            {
+                withCredentials: true, // This allows cookies to be sent with the request
+                headers: {
+                    'Content-Type': 'application/json', // Optional, but can be specified
+                },
+            }
+        );
+
+        // Assuming `login` is a function that handles successful login actions
+        login();
+        
+        // Navigate to the Teacher Registration page after a successful login
+        navigate('/admin/TeacherRegistration');
+        
+        // Set the success message
+        setMessage(response.data.message);
+    } catch (err) {
+        console.error('Login error:', err); // Log the error for debugging
+        setMessage('Error logging in'); // Set the error message for user feedback
+    }
+};
+
 
     return (
         <Box
