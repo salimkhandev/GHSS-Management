@@ -290,20 +290,20 @@ console.log("admin-login called",req.body);
         const token = jwt.sign({ id: admin.id, role: admin.role }, 'your_jwt_secret', { expiresIn: '1h' });
     const isProduction = process.env.NODE_ENV === 'production';
 
-// Set a cookie on the response
-// res.cookie('adminToken', token, {
-//     httpOnly: false,  // Set to false for simplicity
-//     sameSite: 'lax',
-//     maxAge: 3600000 // 1 hour
-// });  
-res.cookie('adminToken', 'token', {
-  domain: 'ghss-management.vercel.app',  // Frontend domain
-  path: '/',
-  httpOnly: true,    // Prevents JavaScript access
-  secure: true,      // Only send over HTTPS
-  sameSite: 'None',  // Allows cross-site requests
-  maxAge: 24 * 60 * 60 * 1000, // Cookie expires after 1 day
-});
+Set a cookie on the response
+res.cookie('adminToken', token, {
+    httpOnly: true,  // Set to false for simplicity
+    sameSite: 'None',
+    maxAge: 3600000 // 1 hour
+});  
+// res.cookie('adminToken', 'token', {
+//   domain: 'ghss-management.vercel.app',  // Frontend domain
+//   path: '/',
+//   httpOnly: true,    // Prevents JavaScript access
+//   secure: true,      // Only send over HTTPS
+//   sameSite: 'None',  // Allows cross-site requests
+//   maxAge: 24 * 60 * 60 * 1000, // Cookie expires after 1 day
+// });
 
 
         res.json({ message: 'Login successful' });
