@@ -293,7 +293,7 @@ console.log("admin-login called",req.body);
 // Set a cookie on the response
 res.cookie('adminToken', token, {
     httpOnly: false,  // Set to false for simplicity
-    sameSite: 'None',
+    sameSite: 'strick',
     secure:true,
     maxAge: 3600000 // 1 hour
 });  
