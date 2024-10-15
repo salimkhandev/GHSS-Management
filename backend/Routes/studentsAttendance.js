@@ -142,10 +142,10 @@ router.post('/teacherLogin', async (req, res) => {
 
         // Set token in HTTP-only cookie
         res.cookie('TeacherToken', TeacherToken, {
-            httpOnly: true,
-            secure: true, // Use true in production (HTTPS)
-            sameSite: 'strict', // Adjust based on your needs
-            maxAge: 3600000 // 1 hour
+      httpOnly: false,  // Set to false for simplicity
+    sameSite: 'None',
+    secure:true,
+    maxAge: 3600000 // 1 hour
         });
 
         res.json({ message: 'Login successful' });
@@ -258,10 +258,10 @@ router.post('/admin-register', async (req, res) => {
 
 
         res.cookie('adminToken', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 3600000 // 1 hour
+        httpOnly: false,  // Set to false for simplicity
+    sameSite: 'None',
+    secure:true,
+    maxAge: 3600000 // 1 hour
         });
         res.status(201).json({ message: 'Admin registered successfully' });
     } catch (err) {
