@@ -292,8 +292,9 @@ console.log("admin-login called",req.body);
 
 // Set a cookie on the response
 res.cookie('adminToken', token, {
-    httpOnly: true,  // Set to false for simplicity
+    httpOnly: false,  // Set to false for simplicity
     sameSite: 'None',
+    secure:true,
     maxAge: 3600000 // 1 hour
 });  
 // res.cookie('adminToken', 'token', {
@@ -306,7 +307,7 @@ res.cookie('adminToken', token, {
 // });
 
 
-        res.json({ message: 'Login successful' });
+        res.json({ message: 'Login successful bro' });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
