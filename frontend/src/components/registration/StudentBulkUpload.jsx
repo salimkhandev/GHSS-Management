@@ -62,7 +62,7 @@ function StudentBulkUpload() {
                     disabled={loading}
                     startIcon={!loading && <UploadFileIcon />} // Add the icon to the button
                 >
-                    {loading ? <CircularProgress size={24} /> : 'Upload CSV'}
+                    {loading ? <CircularProgress size={24} /> : 'Register in bulk'}
                 </Button>
                 <Snackbar
                     open={snackbar.open}
