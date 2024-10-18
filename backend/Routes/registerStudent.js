@@ -21,7 +21,7 @@ router.post('/students', async (req, res) => {
 });
 // GET route to get all students
 router.get('/students', async (req, res) => {
-    const { page = 1, limit = 10 } = req.query; // Default page is 1, and default limit is 10
+    const { page = 1, limit = 9 } = req.query; // Default page is 1, and default limit is 10
     const offset = (page - 1) * limit;
 
     const countQuery = 'SELECT COUNT(*) AS totalpages FROM students';
