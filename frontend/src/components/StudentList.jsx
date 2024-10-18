@@ -345,7 +345,8 @@ const StudentList = () => {
                 <div className="flex justify-center items-center min-h-[444px]">
                     <CircularProgress />
                 </div>
-            ) : (
+            ) : (<>
+          
                 <Grid container spacing={2}>
                     {filteredStudents.map(student => (
                         <Grid item xs={12} sm={6} md={4} key={student.id}>
@@ -367,7 +368,9 @@ const StudentList = () => {
                             </Card>
                         </Grid>
                     ))}
-                        {!selectedSection && filteredStudents.length != 0 && !loading &&
+ 
+                </Grid>
+{!selectedSection && filteredStudents.length != 0 && !loading &&
 
                             <Box
                                 display="flex"
@@ -398,8 +401,8 @@ const StudentList = () => {
                                     Next
                                 </Button>
                             </Box>
-                        } 
-                </Grid>
+                        }
+  </>
             )}
             { selectedClass && selectedClassid && selectedSection && selectedSectionid && !loading && filteredStudents.length>0 &&
                 <ExportToExcel students={filteredStudents} />
