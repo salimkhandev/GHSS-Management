@@ -10,9 +10,10 @@ import AdminLogin from "./components/admin/AdminLogin"
 import TeacherRegistration from "./components/admin/TeacherRegistration"
 import AdminRegistration from "./components/admin/AdminRegistration"
 import ProtectedRoutes from "./components/admin/ProtectedRoutes"
+import Home from './components/Home';
 
 import { useState } from 'react';
-const Home = () => <h2>Home Page</h2>;
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   return <div>

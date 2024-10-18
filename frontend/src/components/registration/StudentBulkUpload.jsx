@@ -46,7 +46,7 @@ function StudentBulkUpload() {
     };
 
     return (
-        <div className="flex items-center justify-center mt-[-90px] bg-light">
+        <div className="flex items-center justify-center mt-[-180px] bg-light">
             <div className="bg-white rounded-lg shadow-sm p-4">
                 <input
                     type="file"

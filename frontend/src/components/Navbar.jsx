@@ -9,21 +9,21 @@ const Navbar = () => {
             className="bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-lg"
         >
             <Toolbar className="flex justify-between">
-            <HamburgerMenu />
-                <Typography variant="h6" className="font-bold">
-                    MyApp
+                <HamburgerMenu />
+                <Typography variant="h6" sx={{ fontWeight: 'bold', textTransform: 'capitalize' }}>
+                    GHSS Luqman Banda
                 </Typography>
                 <div className="flex space-x-4">
-                    <Button component={Link} to="/" color="inherit">
+                    <Button component={Link} to="/" color="inherit" sx={{ textTransform: 'capitalize' }}>
                         Home
                     </Button>
-                    <Button component={Link} to="/promote" color="inherit">
+                    <Button component={Link} to="/promote" color="inherit" sx={{ textTransform: 'capitalize' }}>
                         Promote Students
                     </Button>
-                    <Button component={Link} to="/studentlist" color="inherit">
+                    <Button component={Link} to="/studentlist" color="inherit" sx={{ textTransform: 'capitalize' }}>
                         Students List
                     </Button>
-                    <Button component={Link} to="/contact" color="inherit">
+                    <Button component={Link} to="/contact" color="inherit" sx={{ textTransform: 'capitalize' }}>
                         Student Form
                     </Button>
                 </div>
