@@ -1,12 +1,15 @@
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import HamburgerMenu from "./HamburgerMenu";
+import MobileHamberger from "./MobileHamberger";
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
+        <div>
+            <MobileHamberger/>
         <AppBar
             position="sticky"
-            className="bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-lg"
+            className="bg-gradient-to-r navbarHide from-blue-500 to-blue-700 text-white shadow-lg"
         >
             <Toolbar className="flex justify-between">
                 <HamburgerMenu />
@@ -29,6 +32,7 @@ const Navbar = () => {
                 </div>
             </Toolbar>
         </AppBar>
+            </div>
     );
 };
 
