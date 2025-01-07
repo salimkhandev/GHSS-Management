@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Drawer, IconButton, List, ListItem, ListItemText } from "@mui/material";
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemText,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu"; // Hamburger icon
-import HamburgerMenu from './managementMobile'
+import CloseIcon from "@mui/icons-material/Close"; // Close icon
+import HamburgerMenu from "./managementMobile";
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -21,13 +31,20 @@ const Navbar = () => {
     return (
         <AppBar position="static hideOnLargerScreen" className="bg-blue-900">
             <Toolbar className="flex justify-between">
-
                 {/* Hamburger Menu for Mobile View */}
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
+                <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={toggleDrawer}
+                >
                     <MenuIcon />
                 </IconButton>
                 {/* School Name */}
-                <Typography variant="h6" sx={{ fontWeight: "bold", textTransform: "capitalize" }}>
+                <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", textTransform: "capitalize" }}
+                >
                     GHSS Luqman Banda
                 </Typography>
             </Toolbar>
@@ -35,14 +52,31 @@ const Navbar = () => {
             {/* Mobile Drawer Navigation */}
             <Drawer anchor="left" open={open} onClose={toggleDrawer}>
                 <div className="w-64 h-full bg-blue-900 p-4">
+                    {/* Close Button */}
+                    <IconButton
+                        onClick={toggleDrawer}
+                        style={{ color: "white", marginLeft: "auto", display: "block" }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+
                     <List>
                         {menuItems.map((item, index) => (
-                            <ListItem button key={index} component={Link} to={item.path} onClick={toggleDrawer}>
-                                <ListItemText primary={item.text} className="text-white text-lg font-semibold" />
+                            <ListItem
+                                button
+                                key={index}
+                                component={Link}
+                                to={item.path}
+                                onClick={toggleDrawer}
+                            >
+                                <ListItemText
+                                    primary={item.text}
+                                    className="text-white text-lg font-semibold"
+                                />
                             </ListItem>
                         ))}
                     </List>
-                        <HamburgerMenu />
+                    <HamburgerMenu />
                 </div>
             </Drawer>
         </AppBar>
