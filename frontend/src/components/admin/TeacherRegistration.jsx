@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, InputLabel, Typography, MenuItem, Select, FormControl } from '@mui/material';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const RegisterTeacher = () => {
     const [username, setUsername] = useState('');
@@ -13,7 +17,11 @@ const RegisterTeacher = () => {
     const [message, setMessage] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword); // Toggle the state
+    };
     const navigate = useNavigate();
     const role = 'teacher';
 
@@ -142,10 +150,24 @@ const RegisterTeacher = () => {
                 />
 
                 <TextField
+                    type={showPassword ? "text" : "password"} // Switch between text and password
+
                     label="Password"
                     autoComplete="current-password"
                     variant="outlined"
-                    type="password"
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={handleTogglePassword}
+                                    edge="end"
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                     fullWidth
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

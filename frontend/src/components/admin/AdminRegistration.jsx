@@ -2,7 +2,10 @@ import { useState ,useEffect} from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const AdminRegister = () => {
     const [username, setUsername] = useState('');
 
@@ -11,6 +14,11 @@ const AdminRegister = () => {
     
     const [authenticated, setAuthenticated] = useState(false);
     const navigate = useNavigate();
+   const [showPassword, setShowPassword] = useState(false);
+
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword); // Toggle the state
+    };
     
     // Role is set to 'teacher' by default and doesn't need to be changed
     useEffect(() => {
@@ -88,10 +96,24 @@ console.log(data);
             <TextField
                 label="Password"
                 variant="outlined"
-                type="password"
+                        type={showPassword ? "text" : "password"} // Switch between text and password
+
                 fullWidth
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={handleTogglePassword}
+                                        edge="end"
+                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
             />
             {message && (
                 <Typography color="primary" variant="body2">

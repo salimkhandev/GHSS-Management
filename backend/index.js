@@ -18,10 +18,12 @@ app.use(cors({
    origin: 'https://ghss-management.vercel.app', // Your frontend's origin
    credentials: true // Allow cookies to be sent
 }));
+
 // app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+
 
 
 app.use('/', classSectionRoutes);
@@ -30,9 +32,10 @@ app.use('/students/bulk', bulkupload);
 app.use('/', studentRoutes); // Use student routes
 
 app.get('/', (req, res) => {
-   res.json("helo salim")
+   res.json("Hello From Backend")
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
    console.log(`Server is running on http://localhost:${port}`);
 });
+

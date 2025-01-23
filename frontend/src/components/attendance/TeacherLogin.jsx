@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { TextField, Button, Box, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -9,7 +13,11 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false)
     const navigate=useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
 
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword); // Toggle the state
+    };
     const handleSubmit = async (e) => {
 
     setLoading(true)
@@ -64,8 +72,22 @@ const Login = () => {
             />
             <TextField
                 label="Password"
+                type={showPassword ? "text" : "password"} // Switch between text and password
+
                 variant="outlined"
-                type="password"
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                onClick={handleTogglePassword}
+                                edge="end"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    ),
+                }}  type="password"
                 fullWidth
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
