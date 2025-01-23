@@ -87,7 +87,7 @@ const Login = () => {
                             </IconButton>
                         </InputAdornment>
                     ),
-                }}  type="password"
+                }}  
                 fullWidth
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
