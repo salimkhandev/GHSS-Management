@@ -294,7 +294,7 @@ console.log("admin-login called",req.body);
 res.cookie('adminToken', token, {
     httpOnly: false,  // Set to false for simplicity
     sameSite: 'None',
-    secure:true,
+    secure:false,
     maxAge: 3600000 // 1 hour
 });  
 
@@ -316,17 +316,21 @@ router.get('/verify-token-asAdmin', async (req, res) => {
 
         if (!adminExists) {
             // No admin exists, prompt for admin registration
+            console.log('no admin exists');
             return res.json({ RegisterAdmin: true });
         }
 
         const token = req.cookies.adminToken;
 
         if (!token) {
+            console.log('no token provided');
+            
             return res.status(401).json({ authenticated: false, message: 'No token provided' });
         }
 
         jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
             if (err) {
+                console.log('token verification failed');
                 return res.status(401).json({ authenticated: false, message: 'Token verification failed' });
             }
             res.json({ authenticated: true, user: decoded });

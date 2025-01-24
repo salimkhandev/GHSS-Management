@@ -44,7 +44,7 @@ const handleSubmit = async (e) => {
         login();
         
         // Navigate to the Teacher Registration page after a successful login
-        navigate('/admin/TeacherRegistration');
+        navigate('TeacherRegistration/admin/');
         
         // Set the success message
         setMessage(response.data.message);
@@ -96,7 +96,7 @@ const handleSubmit = async (e) => {
                                 edge="end"
                                 aria-label={showPassword ? "Hide password" : "Show password"}
                             >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                {showPassword ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                         </InputAdornment>
                     ),

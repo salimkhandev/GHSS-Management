@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, List, ListItem, ListItemText, Typography, Grid, Card,CircularProgress, CardContent } from '@mui/material';
 import axios from 'axios';
 import { Transform } from '@mui/icons-material';
-// import PieChart from "./PieChart";
+import PieChart from "./PieChart";
 
 const AttendanceStatusList = () => {
     const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -160,7 +160,7 @@ const AttendanceStatusList = () => {
             {/* Display attendance status */}
             <Container style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px', maxWidth: '600px', marginTop: '20px' }}>
                 <div>
-                    {/* <PieChart /> */}
+                    <PieChart />
                 </div>
                 <Typography variant="h5" gutterBottom>
                     Attendance Status

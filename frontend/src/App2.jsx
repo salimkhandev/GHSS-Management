@@ -26,7 +26,7 @@ const PasswordField = () => {
                             edge="end"
                             aria-label={showPassword ? "Hide password" : "Show password"}
                         >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
                     </InputAdornment>
                 ),

@@ -15,7 +15,7 @@ const studentsAttendance = require('./Routes/studentsAttendance');
 // Use cookie-parser middleware
 app.use(cookieParser());
 app.use(cors({
-   origin: 'https://ghss-management.vercel.app', // Your frontend's origin
+   origin: 'https://ghss-management.vercel.app',
    credentials: true // Allow cookies to be sent
 }));
 
