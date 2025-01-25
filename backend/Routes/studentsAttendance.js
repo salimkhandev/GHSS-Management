@@ -294,7 +294,7 @@ console.log("admin-login called",req.body);
 res.cookie('adminToken', token, {
     httpOnly: false,  // Set to false for simplicity
     sameSite: 'None',
-    secure:false,
+    secure:true,
     maxAge: 3600000 // 1 hour
 });  
 
