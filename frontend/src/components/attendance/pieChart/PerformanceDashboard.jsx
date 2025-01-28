@@ -3,7 +3,7 @@ import { Box, Typography, Button, Container, Grid, CircularProgress } from '@mui
 
 // Lazy load the components
 const ClassPerformance = React.lazy(() => import('./Container'));
-const OverallClassPerformance = React.lazy(() => import('./AttenBasedSectionsPerformance'));
+const AttenBasedSectionsPerformance = React.lazy(() => import('./AttenBasedSectionsPerformance'));
 const Top50StudentsAtten = React.lazy(() => import('./Top10StudentsAtten'));
 
 const PerformanceDashboard = () => {
@@ -15,7 +15,7 @@ const PerformanceDashboard = () => {
             case 'ClassPerformance':
                 return <ClassPerformance />;
             case 'OverallClassPerformance':
-                return <OverallClassPerformance />;
+                return <AttenBasedSectionsPerformance/>;
             case 'Top50Students':
                 return <Top50StudentsAtten />;
             default:
