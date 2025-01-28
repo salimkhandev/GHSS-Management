@@ -4,7 +4,7 @@ import { Card, CardContent, Typography, Grid, CircularProgress, Button } from "@
 // Lazy load the Pie Chart components
 const DailyAttenPieChart = lazy(() => import("./DailyAttenPieChart"));
 const TheMonthlyAttenPieChart = lazy(() => import("./TheMonthlyAttenPieChart"));
-const OverallAttenPieChart = lazy(() => import("./OverallAttenPieChart"));
+const OverallAttenPieChart = lazy(() => import("./OverallAttenPieChart.jsx"));
 
 export default function ClassSectionDisplay() {
     const [classes, setClasses] = useState([]);
