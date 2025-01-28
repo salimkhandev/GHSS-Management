@@ -93,7 +93,7 @@ const AttendancePieChart = () => {
                 </Typography>
             ) : data.length === 0 ? (
                 <Typography variant="body1" align="center" color="textSecondary">
-                    No data available.
+                    No data available yet.
                 </Typography>
             ) : (
                 <Grid container spacing={3}>
