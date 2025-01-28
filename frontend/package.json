@@ -17,6 +17,7 @@
     "@mui/material": "^5.16.7",
     "antd": "^5.20.0",
     "axios": "^1.7.3",
+    "date-fns": "^4.1.0",
     "file-saver": "^2.0.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.3.24",

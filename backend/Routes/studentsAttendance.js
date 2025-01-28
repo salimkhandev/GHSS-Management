@@ -64,38 +64,6 @@ res.status(200).send('Attendance records saved successfully.');
         res.status(500).send('Server error');
     }
 })
-router.get('/studentAttendanceStatus', async (req, res) => {
-    const { class_id, section_id } = req.query;
-    try {
-        // Query the database to get attendance data
-        const result = await pool.query(`
-            SELECT 
-                TO_CHAR(a.attendance_date, 'YYYY-MM-DD') AS attendance_date,
-                json_agg(json_build_object(
-                    'name', s.name, 
-                    'status', a.status
-                )) AS attendance_records
-            FROM 
-                attendance a
-            JOIN 
-                students s ON a.student_id = s.id
-            WHERE 
-                a.class_id = $1
-                AND a.section_id = $2
-            GROUP BY 
-                a.attendance_date
-            ORDER BY 
-                a.attendance_date DESC;
-        `,[class_id,section_id]);
-
-        // Send the result as JSON response
-        res.json(result.rows);
-    } catch (error) {
-        // Handle any errors that occurred during the query
-        console.error('Error fetching student attendance status:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
 
 //LOGIN FOR TEACHERS FOR THIER OWN CLASSES
 
