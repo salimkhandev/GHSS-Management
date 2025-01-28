@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import StudentForm from "./components/registration/StudentForm";
 import StudentList from "./components/StudentList";
 import ClassSelector from "./components/studnetPromotion/ClassSelector";
-import ShowAttenStatus from "./components/attendance/ShowAttenStatus";
+// import ShowAttenStatus from "./components/attendance/ShowAttenStatus";
 import TakenAtten from "./components/attendance/TakeAtten";
 import TeacherLogin from "./components/attendance/TeacherLogin"
 import AdminLogin from "./components/admin/AdminLogin"
