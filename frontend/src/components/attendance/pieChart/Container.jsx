@@ -215,7 +215,7 @@ export default function ClassSectionDisplay() {
                     <Suspense fallback={<CircularProgress className="m-auto" />}>
                         {attendanceOption === "monthly" && <TheMonthlyAttenPieChart data={attendanceData} />}
                         {attendanceOption === "daily" && attendanceData.length > 0 && <DailyAttenPieChart data={attendanceData} />}
-                        {attendanceOption === "overall" && attendanceData.length > 0 && <OverallAttenPieChart data={attendanceData} startDate={startDate} endDate={endDate} />}
+                        {attendanceOption === "overall" && attendanceData.length > 0 && <OverallAtten data={attendanceData} startDate={startDate} endDate={endDate} />}
                     </Suspense>
                 </>
             )}
