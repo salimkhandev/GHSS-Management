@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Grid, CircularProgress, Button } from "@
 
 // Lazy load the Pie Chart components
 const DailyAttenPieChart = lazy(() => import("./DailyAttenPieChart"));
-const MonthlyAttenPieChart = lazy(() => import("./MonthlyAttenPieChart"));
+const TheMonthlyAttenPieChart = lazy(() => import("./TheMonthlyAttenPieChart"));
 const OverallAttenPieChart = lazy(() => import("./OverallAttenPieChart"));
 
 export default function ClassSectionDisplay() {
@@ -213,7 +213,7 @@ export default function ClassSectionDisplay() {
                     </Grid>
 
                     <Suspense fallback={<CircularProgress className="m-auto" />}>
-                        {attendanceOption === "monthly" && <MonthlyAttenPieChart data={attendanceData} />}
+                        {attendanceOption === "monthly" && <TheMonthlyAttenPieChart data={attendanceData} />}
                         {attendanceOption === "daily" && attendanceData.length > 0 && <DailyAttenPieChart data={attendanceData} />}
                         {attendanceOption === "overall" && attendanceData.length > 0 && <OverallAttenPieChart data={attendanceData} startDate={startDate} endDate={endDate} />}
                     </Suspense>
