@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
 import { Typography, Box, Card, CardContent, Grid, CircularProgress } from '@mui/material';
 import { Star } from '@mui/icons-material'; // Icon for 100% attendance
