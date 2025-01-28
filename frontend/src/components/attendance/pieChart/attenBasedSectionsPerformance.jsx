@@ -53,7 +53,7 @@ const AttendancePieChart = () => {
 
                 setLoading(false);
             } catch (error) {
-                setError('Error fetching data.');
+                setError('Error fetching data.',error);
                 setLoading(false);
             }
         };
