@@ -1,3 +1,4 @@
+
 const pool = require('../dbConfig');
 const express = require('express');
 const router = express.Router();
@@ -93,28 +94,6 @@ router.get('/studentAttendanceStatus', async (req, res) => {
         // Handle any errors that occurred during the query
         console.error('Error fetching student attendance status:', error);
         res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-
-router.get('/attendancePercentage', async (req, res) => {
-    try {
-        const result = await pool.query(`
-            SELECT 
-                class_id,
-                section_id,
-              TO_CHAR(attendance_date, 'YYYY-MM-DD') AS attendance_date,
-               ROUND( SUM(CASE WHEN status = 'Present' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),2) AS present_percentage,
-               ROUND( SUM(CASE WHEN status = 'Absent' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),2) AS absent_percentage
-            FROM 
-                attendance
-            GROUP BY 
-                class_id, section_id, attendance_date;
-        `);
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching attendance data:', error);
-        res.status(500).send('Server Error');
     }
 });
 
@@ -340,8 +319,6 @@ router.get('/verify-token-asAdmin', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
-
-
 
 
 router.get('/verify-token-asTeacher', (req, res) => {

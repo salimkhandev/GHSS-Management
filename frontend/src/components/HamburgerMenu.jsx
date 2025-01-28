@@ -41,10 +41,10 @@ const HamburgerMenu = () => {
                 </MenuItem>
                 <MenuItem onClick={handleClose} className="hover:bg-gray-100">
                     <Link
-                        to="/ShowAttenStatus"
+                        to="/PerformanceDashboard"
                         className="text-gray-800 hover:text-blue-500 transition-colors duration-200 no-underline"
                     >
-                        Show Attendance Status
+                        Attendance Detail
                     </Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose} className="hover:bg-gray-100">

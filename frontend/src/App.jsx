@@ -11,6 +11,7 @@ import TeacherRegistration from "./components/admin/TeacherRegistration"
 import AdminRegistration from "./components/admin/AdminRegistration"
 import ProtectedRoutes from "./components/admin/ProtectedRoutes"
 import Home from './components/Home';
+import PerformanceDashboard from './components/attendance/pieChart/PerformanceDashboard';
 
 import { useState } from 'react';
 
@@ -25,7 +26,7 @@ function App() {
           <Route path="/promote" element={<ClassSelector />} />
           <Route path="/studentlist" element={<StudentList />} />
           <Route path="/contact" element={<StudentForm />} />
-          <Route path="/ShowAttenStatus" element={<ShowAttenStatus />} />
+          <Route path="/PerformanceDashboard" element={<PerformanceDashboard />} />
 
           <Route path="/TakeAtten" element={<TakenAtten />} />
 

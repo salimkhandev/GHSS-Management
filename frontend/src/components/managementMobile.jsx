@@ -18,7 +18,7 @@ const Navbar = () => {
 
     const menuItems = [
         { text: "Take Attendance", path: "/TakeAtten" },
-        { text: "Show Attendance Status", path: "/ShowAttenStatus" },
+        { text: "Attendance Detail", path: "/PerformanceDashboard" },
         { text: "Login for your Class", path: "/TeacherLogin" },
         { text: "Register Teacher", path: "/admin/TeacherRegistration" },
     ];
