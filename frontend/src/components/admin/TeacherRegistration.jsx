@@ -34,7 +34,6 @@ const RegisterTeacher = () => {
                 });
                 const data = await response.json();
                 console.log("verificantion detail");
-           
 
                  if (data.authenticated) {
                     setAuthenticated(true);
