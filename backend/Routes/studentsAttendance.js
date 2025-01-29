@@ -256,37 +256,39 @@ res.cookie('adminToken', token, {
 
 
 // 😂😍🥰❤️📱😊😒🦞🦞🦞 
+const jwt = require('jsonwebtoken');
+const pool = require('../db'); // Ensure this points to your PostgreSQL pool
+
 router.get('/verify-token-asAdmin', async (req, res) => {
     try {
-        const result = await pool.query('SELECT role FROM teachers WHERE role = $1', ['admin']);
-        const adminExists = result.rowCount > 0;
-
-        if (!adminExists) {
-            // No admin exists, prompt for admin registration
-            console.log('no admin exists');
-            return res.json({ RegisterAdmin: true });
-        }
-
         const token = req.cookies.adminToken;
 
         if (!token) {
-            console.log('no token provided');
-            
+            console.log('No token provided');
             return res.status(401).json({ authenticated: false, message: 'No token provided' });
         }
 
-        jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+        jwt.verify(token, 'your_jwt_secret', async (err, decoded) => {
             if (err) {
-                console.log('token verification failed');
+                console.log('Token verification failed');
                 return res.status(401).json({ authenticated: false, message: 'Token verification failed' });
             }
-            res.json({ authenticated: true, user: decoded });
+
+            if (decoded.role !== 'admin') {
+                console.log('User is not an admin');
+                return res.status(403).json({ authenticated: false, message: 'Access denied. Not an admin' });
+            }
+
+            // If admin, return success response
+            return res.json({ authenticated: true, user: decoded });
         });
+
     } catch (error) {
         console.error('Error verifying token:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
 
 
 router.get('/verify-token-asTeacher', (req, res) => {
