@@ -84,7 +84,7 @@ router.post('/teacherLogin', async (req, res) => {
         }
 
         // Create a token for the teacher
-        const TeacherToken = jwt.sign({ id: teacher.id, class_id: teacher.class_id, section_id: teacher.section_id }, 'your_jwt_secret', { expiresIn: '1h' });
+        const TeacherToken = jwt.sign({ id: teacher.id, class_id: teacher.class_id, section_id: teacher.section_id,role:'teacher' }, 'your_jwt_secret', { expiresIn: '1h' });
         console.log("teacher token", TeacherToken);
 
         // Set token in HTTP-only cookie
