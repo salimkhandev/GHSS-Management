@@ -34,13 +34,9 @@ const RegisterTeacher = () => {
                 });
                 const data = await response.json();
                 console.log("verificantion detail");
-                
+           
 
-                if (data.RegisterAdmin) {
-                    return navigate('/admin/TeacherRegistration/AdminRegistration')
-                }
-
-                else if (data.authenticated) {
+                 if (data.authenticated) {
                     setAuthenticated(true);
                 } else {
                     navigate('/admin');

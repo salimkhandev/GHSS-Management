@@ -33,11 +33,7 @@ const AdminRegister = () => {
                 console.log(data); 
 
 
-                if (data.RegisterAdmin) {
-
-                   setAuthenticated(true);
-                }
-                else if (data.authenticated) {
+            if (data.authenticated) {
                     setAuthenticated(true);
                 } else {
                     navigate('/admin');
