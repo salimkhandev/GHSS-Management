@@ -256,8 +256,7 @@ res.cookie('adminToken', token, {
 
 
 // 😂😍🥰❤️📱😊😒🦞🦞🦞 
-const jwt = require('jsonwebtoken');
-const pool = require('../db'); // Ensure this points to your PostgreSQL pool
+// Ensure this points to your PostgreSQL pool
 
 router.get('/verify-token-asAdmin', async (req, res) => {
     try {
