@@ -89,7 +89,7 @@ router.post('/teacherLogin', async (req, res) => {
 
         // Set token in HTTP-only cookie
         res.cookie('TeacherToken', TeacherToken, {
-      httpOnly: false,  // Set to false for simplicity
+      httpOnly: true,  // Set to false for simplicity
     sameSite: 'None',
     secure:true,
     maxAge: 3600000 // 1 hour
