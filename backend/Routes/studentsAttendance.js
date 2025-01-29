@@ -261,33 +261,6 @@ res.cookie('adminToken', token, {
 
 
 
-
-router.get('/verify-token-asTeacher', (req, res) => {
-    try {
-        const token = req.cookies.TeacherToken;
-
-        if (!token) {
-            return res.status(401).json({ authenticated: false, message: 'No token provided' });
-        }
-
-        jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-            if (err) {
-                return res.status(401).json({ authenticated: false, message: 'Invalid token' });
-            }
-
-            if (decoded.role !== 'teacher') {
-                return res.status(403).json({ authenticated: false, message: 'Access denied. Not a teacher' });
-            }
-
-            return res.json({ authenticated: true, user: decoded });
-        });
-
-    } catch (error) {
-        console.error('Error verifying token:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
 // Express route to fetch attendance records grouped by date for a specific class and section
 router.get('/attendanceGroupedByDate', async (req, res) => {
     const token = req.cookies.TeacherToken;

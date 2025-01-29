@@ -2,7 +2,7 @@ const pool = require('../../dbConfig');
 const express = require('express');
 const router = express.Router();
 
-router.get('/verify-token-asAdmin', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const token = req.cookies.adminToken;
 
