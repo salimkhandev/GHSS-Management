@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Classes from './setClassIdSectionId'; // Import the Classes component
 
+import { useNavigate } from 'react-router-dom';
 
 const ClassSelector = () => {
     const [students, setStudents] = useState([]);
@@ -22,6 +23,38 @@ const ClassSelector = () => {
     const [selectAll, setSelectAll] = useState(false);
     const [allIds, setAllIds] = useState([]);
     const [showNoStudentsMessage, setShowNoStudentsMessage] = useState(false);
+    const [authenticated, setAuthenticated] = useState(false);
+    const navigate = useNavigate();
+
+    // Role is set to 'teacher' by default and doesn't need to be changed
+    useEffect(() => {
+        
+        const checkAuth = async () => {
+            try {
+                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asAdmin', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+                console.log(data);
+
+
+                if (data.authenticated) {
+                    setAuthenticated(true);
+                } else {
+                    navigate('/admin');
+                }
+            } catch (error) {
+                console.error('Error verifying token:', error);
+                navigate('/admin');
+            } finally {
+                // setLoading(false);
+            }
+        };
+
+        checkAuth();
+    }, [navigate]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -188,6 +221,7 @@ if (getSelectedObj) {
    
 
     return (
+        <> {authenticated &&(
         <div className="p-4 min-h-screen bg-gray-100 flex flex-col items-center">
             <div className="relative">
                 <Box>
@@ -361,6 +395,10 @@ if (getSelectedObj) {
                 </>
             )}
         </div>
+                                
+                                        )        
+                                        }
+                                        </>
     );
 };
 
