@@ -1,6 +1,8 @@
 const pool = require('../../dbConfig');
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');  // ✅ Import JWT
+
 
 router.get('/', (req, res) => {
     try {
