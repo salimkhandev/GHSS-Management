@@ -1,4 +1,4 @@
-import  { useEffect, useState, useMemo, lazy, Suspense } from "react";
+import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { Card, CardContent, Typography, Grid, CircularProgress, Button } from "@mui/material";
 
 // Lazy load the Pie Chart components
@@ -120,14 +120,16 @@ export default function ClassSectionDisplay() {
 
     return (
         <div className="p-8">
-            <Typography variant="h4" className="mb-6 font-semibold text-center">
-                Classes and Sections
+            <Typography variant="h4" sx={{ my: 3, fontWeight: 'bold', color: '#333' }}
+>
+                Classes
             </Typography>
 
             {loading && (
-                <div className="fixed inset-0 flex items-center justify-center ">
+                <div className="fixed h-[80%] mt-44 inset-0 flex items-center justify-center">
                     <CircularProgress />
                 </div>
+
             )}
 
             {error && <Typography color="error" className="text-center text-lg">{error}</Typography>}
@@ -155,24 +157,31 @@ export default function ClassSectionDisplay() {
                         Sections for {selectedClassName}
                     </Typography>
                     <Grid container spacing={2}>
-                        {sections.length > 0 ? (
-                            sections.map((section) => (
-                                <Grid item xs={12} sm={6} md={4} key={section.id}>
-                                    <Card
-                                        onClick={() => handleSectionClick(section.id)}
-                                        className="cursor-pointer hover:shadow-xl transition-shadow"
-                                    >
-                                        <CardContent>
-                                            <Typography variant="h6" className="text-center">{section.name}</Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            ))
-                        ) : (
+                        {sections.length == 0 && !loading &&  (
                             <Grid item xs={12}>
                                 <Typography className="text-center">No sections available for this class.</Typography>
                             </Grid>
-                        )}
+                          
+                        ) }
+{
+                            sections.length > 0 && !loading &&       (
+
+
+  sections.map((section) => (
+            <Grid item xs={12} sm={6} md={4} key={section.id}>
+                <Card
+                    onClick={() => handleSectionClick(section.id)}
+                    className="cursor-pointer hover:shadow-xl transition-shadow"
+                >
+                    <CardContent>
+                        <Typography variant="h6" className="text-center">{section.name}</Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+            ))
+                        )
+                        
+                        }
                     </Grid>
                 </>
             )}
@@ -212,9 +221,9 @@ export default function ClassSectionDisplay() {
                         </Grid>
                     </Grid>
 
-                    <Suspense fallback={<CircularProgress className="m-auto" />}>
-                        {attendanceOption === "monthly" && <TheMonthlyAttenPieChart data={attendanceData} />}
-                        {attendanceOption === "daily" && attendanceData.length > 0 && <DailyAttenPieChart data={attendanceData} />}
+                    <Suspense>
+                        {attendanceOption === "monthly" && attendanceData.length >0 && <TheMonthlyAttenPieChart  data={attendanceData} />}
+                        {attendanceOption === "daily" && attendanceData.length > 0 && <DailyAttenPieChart  data={attendanceData} />}
                         {attendanceOption === "overall" && attendanceData.length > 0 && <OverallAtten data={attendanceData} startDate={startDate} endDate={endDate} />}
                     </Suspense>
                 </>

@@ -1,11 +1,10 @@
-import  { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
-import { Typography, Box, Card, CardContent, Grid, CircularProgress } from '@mui/material';
+import { Typography, Box, Card, CardContent, Grid  } from '@mui/material';
 import { format } from 'date-fns'; // Import the date-fns library
 
 const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName }) => {
-    const [loading, setLoading] = useState(true); // State to handle loading
+    // const [loading, setLoading] = useState(true); // State to handle loading
 
     const COLORS = ['#00C49F', '#FF8042'];
 
@@ -40,12 +39,6 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
         return 340;
     };
 
-    useEffect(() => {
-        // Simulate loading delay
-        if (data.length > 0) {
-            setLoading(false); // Set loading to false once data is available
-        }
-    }, [data]);
 
     return (
         <Box>
@@ -76,15 +69,7 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                 Class: {className} | Section: {sectionName}
             </Typography>
 
-            {loading ? (
-                <Box display="flex" justifyContent="center" alignItems="center" height="300px">
-                    <CircularProgress />
-                </Box>
-            ) : data.length === 0 ? (
-                <Typography variant="body1" align="center" color="textSecondary">
-                    No data available.
-                </Typography>
-            ) : (
+          
                 <Grid container spacing={3} justifyContent="center">
                     {data.map((entry, index) => {
                         const overallPercentage = Math.round(parseFloat(entry.overall_percentage));
@@ -125,7 +110,7 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                         );
                     })}
                 </Grid>
-            )}
+            
         </Box>
     );
 };

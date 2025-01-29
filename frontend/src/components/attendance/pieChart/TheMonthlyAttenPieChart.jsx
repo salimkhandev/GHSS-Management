@@ -28,20 +28,17 @@ const AttendancePieChart = ({ data }) => {
 
     return (
         <Box>
-            <Typography
+           
+
+         
+                <Typography
                 variant="h4"
                 align="center"
                 gutterBottom
                 sx={{ color: '#333', fontWeight: 'bold' }}
-            >
+                >
                 Monthly Attendance Overview
             </Typography>
-
-            {data.length === 0 ? (
-                <Typography variant="body1" align="center" color="textSecondary">
-                    No data available yet.
-                </Typography>
-            ) : (
                 <Grid container spacing={3}>
                     {data.map((entry, index) => (
                         <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
@@ -79,7 +76,7 @@ const AttendancePieChart = ({ data }) => {
                         </Grid>
                     ))}
                 </Grid>
-            )}
+            
         </Box>
     );
 };

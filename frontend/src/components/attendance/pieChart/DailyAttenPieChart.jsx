@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
 import { Typography, Box, Card, CardContent, Grid } from '@mui/material';
 
-const AttendancePieChart = ({ data }) => {
+const AttendancePieChart = ({ data}) => {
     const COLORS = ['#00C49F', '#FF8042'];
     const renderLabel = (entry) => {
         return `${Math.round(entry.value)}%`;
@@ -44,11 +44,7 @@ const AttendancePieChart = ({ data }) => {
                 Daily Attendance Overview
             </Typography>
 
-            {data.length === 0 ? (
-                <Typography variant="body1" align="center" color="textSecondary">
-                    No data available.
-                </Typography>
-            ) : (
+         
                 <Grid container spacing={3}>
                     {data.map((entry, index) => (
                         <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
@@ -86,7 +82,7 @@ const AttendancePieChart = ({ data }) => {
                         </Grid>
                     ))}
                 </Grid>
-            )}
+            
         </Box>
     );
 };
