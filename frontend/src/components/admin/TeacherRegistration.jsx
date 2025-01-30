@@ -15,39 +15,14 @@ const RegisterTeacher = () => {
     const [sectionsOfClsId, setSectionsOfClsId] = useState([]);
     const [classId, setClassId] = useState('');
     const [message, setMessage] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
     const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword); // Toggle the state
     };
-    const navigate = useNavigate();
     const role = 'teacher';
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asAdmin', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-                const data = await response.json();
-                console.log("verificantion detail");
-
-                 if (data.authenticated) {
-                    setAuthenticated(true);
-                } else {
-                    navigate('/admin');
-                }
-            } catch (error) {
-                console.error('Error verifying token:', error);
-                navigate('/admin');
-            }
-        };
-
-        checkAuth();
-    }, [navigate]);
 
     useEffect(() => {
         const fetchClasses = async () => {
@@ -115,7 +90,7 @@ const RegisterTeacher = () => {
     }
 
     return (
-        authenticated && (
+
             <Box
                 component="form"
                 sx={{
@@ -221,7 +196,7 @@ const RegisterTeacher = () => {
                     Register Admin
                 </Button>
             </Box>
-        )
+        
     );
 };
 

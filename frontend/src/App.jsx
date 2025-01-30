@@ -33,17 +33,17 @@ function App() {
 
           <Route path="/TeacherLogin" element={<TeacherLogin />} />
           <Route path="/admin" element={<AdminLogin />} setIsAuthenticated={setIsAuthenticated} />
-          <Route path="/admin/TeacherRegistration" element={<TeacherRegistration />} /> 
           
           {/* Catch-all route for undefined paths */}
           <Route path="*" element={<h1>not found</h1>} />
-          <Route element={<Protected/>}>
 
-          <Route path="/admin/TeacherRegistration/AdminRegistration" element={
-            <AdminRegistration />           
-          } /> 
+{/* Protected Routes */}
+          <Route element={<Protected/>}>
           <Route path="/promote" element={<ClassSelector />} />
+          <Route path="/admin/TeacherRegistration/AdminRegistration" element={<AdminRegistration />}/> 
+          <Route path="/admin/TeacherRegistration" element={<TeacherRegistration />} /> 
           </Route>
+          
         </Routes>
       </main>
     </Router>

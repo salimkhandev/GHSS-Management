@@ -52,7 +52,7 @@ const AdminLogin = () => {
             login(); // Update auth state
             setIsAuthenticated(true); // Update state to trigger <Outlet />
         } catch (err) {
-            setMessage("Error logging in");
+            setMessage("Error logging in",err);
         }
     };
 
