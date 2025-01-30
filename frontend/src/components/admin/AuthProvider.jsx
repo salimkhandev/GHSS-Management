@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 // Create a provider to wrap around the app
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     // Function to log the user in (set global authentication state)
     const login = () => {
