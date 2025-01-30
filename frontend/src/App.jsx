@@ -10,10 +10,12 @@ import AdminLogin from "./components/admin/AdminLogin"
 import TeacherRegistration from "./components/admin/TeacherRegistration"
 import AdminRegistration from "./components/admin/AdminRegistration"
 import ProtectedRoutes from "./components/admin/ProtectedRoutes"
+import Protected from "./components/admin/Protected"
 import Home from './components/Home';
 import PerformanceDashboard from './components/attendance/pieChart/PerformanceDashboard';
 
 import { useState } from 'react';
+import { Login } from '@mui/icons-material';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -24,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/promote" element={<ClassSelector />} />
-          <Route path="/studentlist" element={<StudentList />} />
+          {/* <Route path="/studentlist" element={<StudentList />} /> */}
           <Route path="/contact" element={<StudentForm />} />
           <Route path="/PerformanceDashboard" element={<PerformanceDashboard />} />
 
@@ -38,6 +40,10 @@ function App() {
           } /> 
           {/* Catch-all route for undefined paths */}
           <Route path="*" element={<h1>not found</h1>} />
+
+          <Route element={<Protected/>}>
+            <Route path="/studentlist" element={<StudentList />} />
+          </Route>
         </Routes>
       </main>
     </Router>

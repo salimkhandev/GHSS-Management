@@ -26,7 +26,6 @@ const ClassSelector = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const navigate = useNavigate();
 
-    // Role is set to 'teacher' by default and doesn't need to be changed
     useEffect(() => {
         
         const checkAuth = async () => {
@@ -49,7 +48,7 @@ const ClassSelector = () => {
                 console.error('Error verifying token:', error);
                 navigate('/admin');
             } finally {
-                // setLoading(false);
+                setLoading(false);
             }
         };
 
