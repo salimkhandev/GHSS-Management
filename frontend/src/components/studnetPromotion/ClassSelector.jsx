@@ -188,7 +188,7 @@ if (getSelectedObj) {
    
 
     return (
-        <> {authenticated &&(
+       
         <div className="p-4 min-h-screen bg-gray-100 flex flex-col items-center">
             <div className="relative">
                 <Box>
@@ -363,9 +363,7 @@ if (getSelectedObj) {
             )}
         </div>
                                 
-                                        )        
-                                        }
-                                        </>
+                                    
     );
 };
 
