@@ -25,7 +25,6 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/promote" element={<ClassSelector />} />
           {/* <Route path="/studentlist" element={<StudentList />} /> */}
           <Route path="/contact" element={<StudentForm />} />
           <Route path="/PerformanceDashboard" element={<PerformanceDashboard />} />
@@ -35,14 +34,15 @@ function App() {
           <Route path="/TeacherLogin" element={<TeacherLogin />} />
           <Route path="/admin" element={<AdminLogin />} setIsAuthenticated={setIsAuthenticated} />
           <Route path="/admin/TeacherRegistration" element={<TeacherRegistration />} /> 
-          <Route path="/admin/TeacherRegistration/AdminRegistration" element={
-              <AdminRegistration />           
-          } /> 
+          
           {/* Catch-all route for undefined paths */}
           <Route path="*" element={<h1>not found</h1>} />
-
           <Route element={<Protected/>}>
-            <Route path="/studentlist" element={<StudentList />} />
+
+          <Route path="/admin/TeacherRegistration/AdminRegistration" element={
+            <AdminRegistration />           
+          } /> 
+          <Route path="/promote" element={<ClassSelector />} />
           </Route>
         </Routes>
       </main>
