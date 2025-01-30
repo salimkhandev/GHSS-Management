@@ -10,7 +10,7 @@ import AdminLogin from "./components/admin/AdminLogin"
 import TeacherRegistration from "./components/admin/TeacherRegistration"
 import AdminRegistration from "./components/admin/AdminRegistration"
 import ProtectedRoutes from "./components/admin/ProtectedRoutes"
-import Protected from "./components/admin/Protected"
+import Protected from "./components/admin/ProtectedLoginRoute"
 import Home from './components/Home';
 import PerformanceDashboard from './components/attendance/pieChart/PerformanceDashboard';
 
