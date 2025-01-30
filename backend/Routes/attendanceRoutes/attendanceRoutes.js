@@ -2,6 +2,7 @@ const express =require('express')
 const router=express.Router()
 const pool=require('../dbConfig')
 const {authenticateToken}=require('../Middlewares/middlewares')
+
 router.get('/lastAttendanceDate', async (req, res) => {
     // Access the admin token from the cookies
     const TeacherToken = req.cookies.TeacherToken;

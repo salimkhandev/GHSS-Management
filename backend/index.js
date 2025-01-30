@@ -46,6 +46,7 @@ app.use('/overallAttenPercentage', overallAttenPercentage); // Use attendance pe
 app.use('/attenBasedSectionsPerformance', attenBasedSectionsPerformance); // Use attendance percentage routes
 app.use('/Top10StudentsAtten', Top10StudentsAtten); // Use attendance percentage routes
 
+
 app.get('/', (req, res) => {
    res.json("Hello From Backend")
 });
