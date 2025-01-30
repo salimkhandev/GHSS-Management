@@ -3,19 +3,20 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+// import { useAuth } from "./AuthProvider";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const AdminLogin = () => {
-    const { login } = useAuth();
-
+    // const { login } = useAuth();
+    const { login, logout,isAuthenticated } = useAuth(); 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
+    // const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
 
     // Check if admin is already authenticated
     useEffect(() => {
@@ -25,14 +26,18 @@ const AdminLogin = () => {
                     "https://ghss-management-backend.vercel.app/verify-token-asAdmin",
                     { withCredentials: true }
                 );
-                setIsAuthenticated(response.data.authenticated);
+              if (response.data.authenticated) {
+                    login(); // If authenticated, set global auth state
+                }
             } catch (error) {
-                setIsAuthenticated(false);
+                logout()
+                setMessage("Error logging in",error)
+                
             }
         };
 
         verifyAuth();
-    }, []);
+    }, [login,logout]);
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
@@ -50,9 +55,8 @@ const AdminLogin = () => {
             );
 
             login(); // Update auth state
-            setIsAuthenticated(true); // Update state to trigger <Outlet />
         } catch (err) {
-            setMessage("Error logging in",err);
+            setMessage("Error logging in", err);
         }
     };
 

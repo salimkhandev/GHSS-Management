@@ -10,6 +10,7 @@ import AdminLogin from "./components/admin/AdminLogin"
 import TeacherRegistration from "./components/admin/TeacherRegistration"
 import AdminRegistration from "./components/admin/AdminRegistration"
 import ProtectedRoutes from "./components/admin/ProtectedRoutes"
+import{ AuthProvider} from "./components/admin/AuthProvider"
 import Protected from "./components/admin/ProtectedLoginRoute"
 import Home from './components/Home';
 import PerformanceDashboard from './components/attendance/pieChart/PerformanceDashboard';
@@ -20,6 +21,7 @@ import { Login } from '@mui/icons-material';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   return <div>
+<AuthProvider>
     <Router>
       <Navbar />
       <main>
@@ -47,6 +49,7 @@ function App() {
         </Routes>
       </main>
     </Router>
+</AuthProvider>
   </div>;
 }
 
