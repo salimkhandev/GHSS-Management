@@ -190,7 +190,9 @@ router.post('/register-teacher', isAdminToken, isAdmin, async (req, res) => {
 // Admin registration route
 router.post('/admin-register', async (req, res) => {
     const { username, password } = req.body;
-
+    if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
+    }
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
