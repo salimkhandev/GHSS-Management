@@ -26,7 +26,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/studentlist" element={<StudentList />} />
-          <Route path="/contact" element={<StudentForm />} />
           <Route path="/PerformanceDashboard" element={<PerformanceDashboard />} />
 
           <Route path="/TakeAtten" element={<TakenAtten />} />
@@ -39,11 +38,12 @@ function App() {
 
 {/* Protected Routes */}
           <Route element={<Protected/>}>
+          <Route path="/contact" element={<StudentForm />} />
           <Route path="/promote" element={<ClassSelector />} />
           <Route path="/admin/TeacherRegistration/AdminRegistration" element={<AdminRegistration />}/> 
           <Route path="/admin/TeacherRegistration" element={<TeacherRegistration />} /> 
           </Route>
-          
+
         </Routes>
       </main>
     </Router>
