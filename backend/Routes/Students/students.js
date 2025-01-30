@@ -4,10 +4,10 @@ const pool = require('../dbConfig');
 
 // POST route to save a new student
 router.post('/students', async (req, res) => {
-    const { name, section_id ,class_id} = req.body;
+    const { name, section_id, class_id } = req.body;
 
-    console.log('Form data ❤️',req.body);
-    
+    console.log('Form data ❤️', req.body);
+
     try {
         const result = await pool.query(
             'INSERT INTO Students (name,class_id , section_id) VALUES ($1, $2 ,$3) RETURNING *',
@@ -48,7 +48,7 @@ router.get('/students', async (req, res) => {
         // Return the student data along with pagination information
         res.json({
             rows: result.rows,
-            totalPages:totalPages
+            totalPages: totalPages
             // currentPage: parseInt(page, 10),
             // totalStudents: totalCount
         });
@@ -61,12 +61,12 @@ router.get('/students', async (req, res) => {
 // only for selected sections in the class
 
 router.get('/filteredSectionStd', async (req, res) => {
-    const {class_id,section_id} = req.query;
+    const { class_id, section_id } = req.query;
     try {
         //query for total students
-        const totalResult = await pool.query('SELECT COUNT(*) FROM students where class_id=$1 and section_id=$2',[class_id,section_id]);
-        const total = parseInt(totalResult.rows[0].count, 10); 
- 
+        const totalResult = await pool.query('SELECT COUNT(*) FROM students where class_id=$1 and section_id=$2', [class_id, section_id]);
+        const total = parseInt(totalResult.rows[0].count, 10);
+
         const result = await pool.query(`SELECT students.id as id, students.name AS student_name, sections.name AS section_name, classes.name AS class_name FROM students INNER JOIN sections ON students.section_id = sections.id INNER JOIN classes ON students.class_id = classes.id where students.class_id=$1 and students.section_id=$2`, [class_id, section_id]);
         const idResult = await pool.query(
             `SELECT id FROM students WHERE class_id = $1 AND section_id = $2`,
@@ -80,13 +80,13 @@ router.get('/filteredSectionStd', async (req, res) => {
             allIds: idResult.rows.map(row => row.id)  // Array of all student IDs
         });
 
-        console.log('↘️',result.rows);
-        
-        } catch (err) {
-            console.error('Error fetching student data:', err.stack);
-            res.status(500).send('Server Error');
-            }
-            });
+        console.log('↘️', result.rows);
+
+    } catch (err) {
+        console.error('Error fetching student data:', err.stack);
+        res.status(500).send('Server Error');
+    }
+});
 
 // only for selected class
 router.get('/filteredClassStd', async (req, res) => {

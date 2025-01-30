@@ -23,6 +23,7 @@ router.get('/sections', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
 router.post('/get-sections', async (req, res) => {
     const { class_id } = req.body; // Receiving class_id from the UI (frontend)
 
@@ -40,7 +41,7 @@ router.post('/get-sections', async (req, res) => {
 });
 
 //promotion code of students
-router.post('/getsec', async (req,res)=>{
+router.post('/getsec', async (req, res) => {
     const { class_id } = req.body;
     if (!class_id) {
         return res.status(400).json({ error: 'class_id is required' });
@@ -61,8 +62,8 @@ router.post('/getsec', async (req,res)=>{
 router.post('/promotestd', async (req, res) => {
     const { selectedClassId, selectedSectionId, originalSelectedClass, originalSelectedSection, studentIds } = req.body;
 
-    console.log('❤️',req.body);
-    
+    console.log('❤️', req.body);
+
     // Construct the SQL query
     const query = `
     UPDATE students

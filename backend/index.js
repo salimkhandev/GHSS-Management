@@ -1,14 +1,14 @@
 const express = require('express');
-const pool = require('./dbConfig')
+const pool = require('./Routes/dbConfig')
 const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 
-
-const classSectionRoutes = require('./Routes/classSectionRoutes'); // Adjust the path as needed
-const studentRoutes = require('./Routes/registerStudent');
-const bulkupload = require('./Routes/bulkupload')
-const studentsAttendance = require('./Routes/studentsAttendance');
+const teacherAdmin=require('./Routes/authRoutes/teacherAdminAuth')
+const classSectionRoutes = require('./Routes/ClassesSections/ClassesSections'); // Adjust the path as needed
+const studentRoutes = require('./Routes/Students/students');
+const bulkupload = require('./Routes/Students/bulkupload')
+const studentsAttendance = require('./Routes/attendanceRoutes/attendanceRoutes');
 const dailyAttenPercentage = require('./Routes/AttenPercentageForPieChart/dailyAttenPercentage');
 const monthlyAttenPercentage = require('./Routes/AttenPercentageForPieChart/monthlyAttenPercentage');
 const overallAttenPercentage = require('./Routes/AttenPercentageForPieChart/overallAttenPercentage');
@@ -35,10 +35,11 @@ app.use(express.json());
 
 app.use('/', classSectionRoutes);
 app.use('/', studentsAttendance);
+app.use('/', teacherAdmin);
+app.use('/', studentRoutes); // Use student routes
 app.use('/students/bulk', bulkupload);
 app.use('/verify-token-asAdmin', verifyTokenAsAdmin);
 app.use('/verify-token-asTeacher', verifyTokenAsTeacher);
-app.use('/', studentRoutes); // Use student routes
 app.use('/dailyAttenPercentage', dailyAttenPercentage); // Use attendance percentage routes
 app.use('/monthlyAttenPercentage', monthlyAttenPercentage); // Use attendance percentage routes
 app.use('/overallAttenPercentage', overallAttenPercentage); // Use attendance percentage routes
@@ -52,4 +53,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
    console.log(`Server is running on http://localhost:${port}`);
 });
+
 
