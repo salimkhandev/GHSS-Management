@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, Box, Typography } from "@mui/material";
+import { TextField, Button, Box, Typography,CircularProgress } from "@mui/material";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
@@ -61,7 +61,7 @@ const AdminLogin = () => {
     };
 
     if (isAuthenticated === null) {
-        return <div>Loading...</div>; // Show loading while checking authentication
+        return <div className="h-[805] justify-center align-middle flex"><CircularProgress/></div>; // Show loading while checking authentication
     }
 
     if (isAuthenticated) {
