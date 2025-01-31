@@ -74,6 +74,9 @@ const RegisterTeacher = () => {
         } catch (err) {
             setMessage('Error registering teacher');
         }
+finally {
+        setLoading(false); // Ensure loading is stopped after the request finishes
+    }
     };
 
     if (error) {
