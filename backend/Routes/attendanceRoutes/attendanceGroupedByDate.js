@@ -1,6 +1,7 @@
 const express =require('express')
 const router=express.Router()
 const pool=require('../dbConfig')
+const jwt=('jsonwebtoken')
 // const {authenticateToken}=require('../Middlewares/middlewares')
 
 router.get('/', async (req, res) => {
