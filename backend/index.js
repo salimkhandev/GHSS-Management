@@ -39,7 +39,7 @@ app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes
 app.use('/students/bulk', bulkupload);
-app.use('/attendanceGroupedByDate', attendanceGroupedByDate);
+// app.use('/attendanceGroupedByDate', attendanceGroupedByDate);
 app.use('/verify-token-asAdmin', verifyTokenAsAdmin);
 app.use('/verify-token-asTeacher', verifyTokenAsTeacher);
 app.use('/dailyAttenPercentage', dailyAttenPercentage); // Use attendance percentage routes
