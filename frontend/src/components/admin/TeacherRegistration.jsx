@@ -183,8 +183,8 @@ const RegisterTeacher = () => {
                     </Typography>
                 )}
 
-                <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-                    Register
+                <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth sx={{ mt: 2 }}>
+                    {loading?<CircularProgress size={24}/>:' Register'}       
                 </Button>
 
                 <Button
@@ -194,9 +194,9 @@ const RegisterTeacher = () => {
                     color="secondary"
                     fullWidth
                     sx={{ mt: 2 }}
-                    disabled={loading}
+                    
                 >
-                     {loading?<CircularProgress size={24}/>:' Register Admin'}                   
+                        Register Admin        
                 </Button>
             </Box>
         
