@@ -31,7 +31,6 @@ router.get('/attendanceGroupedByDate', async (req, res) => {
         class_id = decoded.class_id;
         section_id = decoded.section_id;
 
-        // Fetch attendance records grouped by date with student names
         const results = await pool.query(
             `SELECT 
                 TO_CHAR(a.attendance_date, 'YYYY-MM-DD') AS attendance_date,
@@ -66,7 +65,6 @@ router.get('/attendanceGroupedByDate', async (req, res) => {
 
 
 router.get('/lastAttendanceDate', async (req, res) => {
-    // Access the admin token from the cookies
     const TeacherToken = req.cookies.TeacherToken;
 
     // Verify the JWT token
@@ -143,20 +141,6 @@ router.get('/studentsAttendance', authenticateToken, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
-// Middleware to check if user is an admin
-
-
-
-
-// 😂😍🥰❤️📱😊😒🦞🦞🦞 
-// Ensure this points to your PostgreSQL pool
-
-
-
-
-// Express route to fetch attendance records grouped by date for a specific class and section
-
 
 
 router.put('/updateAttendance', async (req, res) => {
