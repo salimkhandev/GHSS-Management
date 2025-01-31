@@ -30,15 +30,14 @@ const AdminLogin = () => {
                     login(); // If authenticated, set global auth state
                 }
             } catch (error) {
-                logout()
-                setMessage("Error logging in",error)
+                logout() 
                 
             }
         };
-
+        
         verifyAuth();
     }, [login,logout]);
-
+    
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
     };
@@ -53,9 +52,10 @@ const AdminLogin = () => {
                 { username, password },
                 { withCredentials: true }
             );
-
+            
             login(); // Update auth state
         } catch (err) {
+            logout()  
             setMessage("Error logging in", err);
         }
     };
