@@ -12,6 +12,10 @@ router.post('/teacherLogin', async (req, res) => {
         const result = await pool.query('SELECT * FROM teachers WHERE username = $1', [username]);
         const teacher = result.rows[0];
 
+        if (teacher.role !== 'teacher') {
+            return res.status(403).json({ message: 'Only teachers can login here' });
+        }
+
         if (!teacher) {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
