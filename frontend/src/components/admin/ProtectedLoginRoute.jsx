@@ -58,7 +58,10 @@ const AdminLogin = () => {
         } catch (err) {
             logout()  
             setMessage("Error logging in", err);
-        }
+        };
+finally {
+        setLoading(false); // Ensure loading is stopped after the request finishes
+    }
     };
 
     if (isAuthenticated === null) {
