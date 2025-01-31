@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, InputLabel, Typography, MenuItem, Select, FormControl } from '@mui/material';
+import { TextField, Button, Box, InputLabel, Typography, MenuItem, Select, FormControl, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import InputAdornment from "@mui/material/InputAdornment";
@@ -17,6 +17,7 @@ const RegisterTeacher = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading]=useState(false)
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword); // Toggle the state
@@ -58,6 +59,7 @@ const RegisterTeacher = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
+        setLoading(true)
 
         try {
             const response = await axios.post('https://ghss-management-backend.vercel.app/register-teacher', {
@@ -192,8 +194,9 @@ const RegisterTeacher = () => {
                     color="secondary"
                     fullWidth
                     sx={{ mt: 2 }}
+                    disabled={loading}
                 >
-                    Register Admin
+                     {loading?<CircularProgress size={24}/>:' Register Admin'}                   
                 </Button>
             </Box>
         
