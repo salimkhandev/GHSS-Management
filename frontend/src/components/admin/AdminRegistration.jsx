@@ -1,4 +1,4 @@
-import { useState ,useEffect} from 'react';
+okimport { useState ,useEffect} from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,6 +11,7 @@ const AdminRegister = () => {
 
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [loading,setLoading]=useState(false);
     
    const [showPassword, setShowPassword] = useState(false);
 
@@ -22,6 +23,7 @@ const AdminRegister = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
+        setLoading(true)
 
         try {
             const response = await axios.post('https://ghss-management-backend.vercel.app/admin-register', {
@@ -33,6 +35,9 @@ const AdminRegister = () => {
         } catch (err) {
             setMessage('Error registering admin');
         }
+finally {
+        setLoading(false); // Ensure loading is stopped after the request finishes
+    }
     };
 
     return (
@@ -86,8 +91,8 @@ const AdminRegister = () => {
                     {message}
                 </Typography>
             )}
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-                Register
+            <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
+              {loading?<CircularProgress size={24}/> Register}
             </Button>
                 </Box>
              
