@@ -47,7 +47,9 @@ router.post('/teacherLogin', async (req, res) => {
 
 router.post('/register-teacher', isAdminToken, isAdmin, async (req, res) => {
     const { username, password, class_id, section_id, role } = req.body;
-
+if (!username || !password || !class_id || !section_id || !role) {
+        return res.status(400).json({ error: "All fields are required." });
+    }
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newRole = role || 'teacher'; // Default to 'teacher' if no role is provided
