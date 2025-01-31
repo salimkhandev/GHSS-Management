@@ -16,6 +16,7 @@ const AdminLogin = () => {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [loading,setLoading]=useState(false)
     // const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
 
     // Check if admin is already authenticated
@@ -45,7 +46,7 @@ const AdminLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage(""); // Clear any previous messages
-
+  setLoading(true)
         try {
             const response = await axios.post(
                 "https://ghss-management-backend.vercel.app/admin-login",
@@ -115,8 +116,8 @@ const AdminLogin = () => {
                     {message}
                 </Typography>
             )}
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-                Login
+            <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
+                {loading?<CircularProgress size={24} />: 'Login'}
             </Button>
         </Box>
     );
