@@ -92,7 +92,7 @@ finally {
                 </Typography>
             )}
             <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
-              {loading?<CircularProgress size={24}/> Register}
+              {loading?<CircularProgress size={24}/> :"Register"}
             </Button>
                 </Box>
              
