@@ -91,7 +91,7 @@ finally {
                     {message}
                 </Typography>
             )}
-            <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
+            <Button type="submit" variant="contained" color="primary" disabled={loading}  sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} fullWidth>
               {loading?<CircularProgress size={24}/> :"Register"}
             </Button>
                 </Box>
