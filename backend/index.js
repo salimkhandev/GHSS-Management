@@ -16,6 +16,7 @@ const attenBasedSectionsPerformance = require('./Routes/AttenPercentageForPieCha
 const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10StudentsAtten');
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
+const attendanceGroupedByDate =require('./Routes/attendanceRoutes/attendanceGroupedByDate')
 
 
 // Use cookie-parser middleware
@@ -38,6 +39,7 @@ app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes
 app.use('/students/bulk', bulkupload);
+app.use('/attendanceGroupedByDate', attendanceGroupedByDate);
 app.use('/verify-token-asAdmin', verifyTokenAsAdmin);
 app.use('/verify-token-asTeacher', verifyTokenAsTeacher);
 app.use('/dailyAttenPercentage', dailyAttenPercentage); // Use attendance percentage routes
@@ -48,7 +50,7 @@ app.use('/Top10StudentsAtten', Top10StudentsAtten); // Use attendance percentage
 
 
 app.get('/', (req, res) => {
-   res.json("Hello From Backend")
+   res.json("Hello from backend")
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
