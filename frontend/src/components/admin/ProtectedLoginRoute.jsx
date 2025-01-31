@@ -61,7 +61,7 @@ const AdminLogin = () => {
     };
 
     if (isAuthenticated === null) {
-        return <div className="h-[805] justify-center align-middle flex"><CircularProgress/></div>; // Show loading while checking authentication
+        return <div className="h-screen justify-center items-center flex"><CircularProgress/></div>; // Show loading while checking authentication
     }
 
     if (isAuthenticated) {
