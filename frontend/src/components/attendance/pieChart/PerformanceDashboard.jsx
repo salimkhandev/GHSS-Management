@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Container, Grid, CircularProgress } from '@mui/material';
+import { Box, Typography, Button, Container, Grid, LinearProgress } from '@mui/material';
 
 // Lazy load the components
 const ClassPerformance = React.lazy(() => import('./Container'));
 const AllClassesPerformance = React.lazy(() => import('./AllClassesPerformance'));
 const Top50StudentsAtten = React.lazy(() => import('./Top10StudentsAtten'));
-
+const Loader = () => (
+  <Box sx={{ width: '100%' }}>
+    <LinearProgress />
+  </Box>
+);
 const PerformanceDashboard = () => {
     const [activeComponent, setActiveComponent] = useState(null);
 
@@ -84,11 +88,7 @@ const PerformanceDashboard = () => {
 
             <Box sx={{ mt: 3 }}>
                 <React.Suspense
-                    fallback={
-                        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                            <CircularProgress size={50} />
-                        </Box>
-                    }
+                    fallback={<Loader/> }
                 >
                     {renderComponent()}
                 </React.Suspense>
