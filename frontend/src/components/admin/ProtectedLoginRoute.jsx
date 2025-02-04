@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, Box, Typography,CircularProgress } from "@mui/material";
+import { TextField, Button, Box, Typography,LinearProgress } from "@mui/material";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
@@ -20,6 +20,12 @@ const AdminLogin = () => {
     // const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
 
     // Check if admin is already authenticated
+    const Loader = () => (
+        <Box sx={{ width: '100%' }}>
+            <LinearProgress color="secondary" />
+        </Box>
+    );
+
     useEffect(() => {
         const verifyAuth = async () => {
             try {
@@ -67,7 +73,7 @@ finally {
     };
 
     if (isAuthenticated === null) {
-        return <div className="h-screen justify-center items-center flex"><CircularProgress/></div>; // Show loading while checking authentication
+        return <div>{<Loader/>}</div>; // Show loading while checking authentication
     }
 
     if (isAuthenticated) {
@@ -122,7 +128,7 @@ finally {
                 </Typography>
             )}
             <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
-                {loading?<CircularProgress size={24} />: 'Login'}
+                {loading?<Loader/>: 'Login'}
             </Button>
         </Box>
     );
