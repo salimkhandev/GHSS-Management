@@ -10,6 +10,10 @@ const redisClient = new Redis("rediss://default:ASdHAAIjcDFlNWNjNThhOWZlMGI0OTQ5
 redisClient.on('connect', () => console.log('Connected to Redis'));
 redisClient.on('error', (err) => console.log('Redis Client Error', err));
 
+ // Import ioredis
+
+
+
 // Route to fetch students with pagination and caching
 router.get('/mystudents', async (req, res) => {
     const { page = 1, limit = 100 } = req.query; // Default page is 1, and default limit is 100
@@ -31,7 +35,7 @@ router.get('/mystudents', async (req, res) => {
 
         // Calculate total number of pages
         const totalPages = Math.ceil(totalCount / limit);
-
+ 
         // Query for the students based on pagination
         const query = `
             SELECT students.id as id, students.name AS student_name, sections.name AS section_name, classes.name AS class_name
@@ -43,19 +47,30 @@ router.get('/mystudents', async (req, res) => {
         `;
         const result = await pool.query(query, [limit, offset]);
 
+        // Prepare the response object with pagination info
+        const response = {
+            rows: result.rows.map(student => ({
+                id: student.id,
+                student_name: student.student_name,
+                section_name: student.section_name,
+                class_name: student.class_name
+            })),
+            totalPages: totalPages,
+        };
+
         // Cache the result for 1 hour
-        await redisClient.setex(cacheKey, 3600, JSON.stringify(result.rows));
+        await redisClient.setex(cacheKey, 3600, JSON.stringify(response));
 
         // Return the student data along with pagination information
-        res.json({
-            rows: result.rows,
-            totalPages: totalPages,
-        });
+        res.json(response);
     } catch (err) {
         console.error('Error fetching student data:', err.stack);
         res.status(500).send('Server Error');
     }
 });
+
+module.exports = router;
+
 
 // Route to fetch all classes with caching
 router.get('/myclasses', async (req, res) => {
