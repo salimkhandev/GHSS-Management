@@ -16,7 +16,7 @@ const attenBasedSectionsPerformance = require('./Routes/AttenPercentageForPieCha
 const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10StudentsAtten');
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
-const myclasssection=require('./Routes/ClassesSections/ClassesSections copy')
+const myclasssection=require('./ClassesSectionsRedis')
 // const attendanceGroupedByDate =require('./Routes/attendanceRoutes/attendanceGroupedByDate')
 
 
