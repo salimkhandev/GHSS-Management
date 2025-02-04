@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../dbConfig'); // Import your database configuration
+const pool = require('../../Configs/dbConfig'); // Import your database configuration
 
 // GET route to fetch all classes
 router.get('/classes', async (req, res) => {

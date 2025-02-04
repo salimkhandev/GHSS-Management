@@ -1,12 +1,23 @@
-const pool = require('../dbConfig');
 const express = require('express');
 const router = express.Router();
-
+const pool = require('../../Configs/dbConfig');
+const client = require('../../Configs/redisConfig');
+// Route to fetch top students with attendance data, ranking, and caching
 router.get('/', async (req, res) => {
+    const cacheKey = 'attendance:top_students';
     try {
-        // Query to fetch all students with attendance data, their rank based on percentage, and the teacher's name
-        const result = await pool.query(
-            `
+        // Check if the data is already cached
+        const cachedData = await client.get(cacheKey);
+        if (cachedData) {
+            console.log('Serving top students from cache');
+            return res.json(JSON.parse(cachedData));
+        }
+
+        // Optimized SQL query:
+        // 1. Compute attendance metrics per student.
+        // 2. Rank the students using DENSE_RANK().
+        // 3. Select the top 10 distinct ranks (including ties) directly in SQL.
+        const query = `
             WITH student_attendance AS (
                 SELECT 
                     a.student_id,
@@ -38,6 +49,14 @@ router.get('/', async (req, res) => {
                 SELECT *,
                     DENSE_RANK() OVER (ORDER BY attendance_percentage DESC) AS rank
                 FROM student_attendance
+            ),
+            top_ranks AS (
+                -- Get the top 10 distinct ranks
+                SELECT rank
+                FROM ranked_students
+                GROUP BY rank
+                ORDER BY rank
+                LIMIT 10
             )
             SELECT 
                 student_id,
@@ -50,47 +69,21 @@ router.get('/', async (req, res) => {
                 rank,
                 teacher_name
             FROM ranked_students
+            WHERE rank IN (SELECT rank FROM top_ranks)
             ORDER BY rank;
-            `
-        );
+        `;
+
+        const result = await pool.query(query);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'No attendance data found.' });
         }
 
-        // Array to hold students to return, and a counter for total number of positions included
-        let studentsToReturn = [];
-        let currentRank = 1;
-        let totalPositions = 0;
+        // Cache the result for 1 hour (3600 seconds)
+        await client.setex(cacheKey, 3600, JSON.stringify(result.rows));
 
-        // Loop through the rows to process and collect students while handling ties
-        for (let i = 0; i < result.rows.length; i++) {
-            const student = result.rows[i];
-
-            // Only add students to the return array if the total number of positions selected is less than 10
-            if (totalPositions < 10) {
-                // If the student's rank is the same as the current rank, add them to the result
-                if (student.rank === currentRank) {
-                    studentsToReturn.push(student);
-                } else {
-                    // If we reached a new rank, update the current rank and add it as a new position
-                    currentRank = student.rank;
-                    studentsToReturn.push(student);
-                    totalPositions++; // Increment the position count when a new rank is encountered
-                }
-
-                // Increment total positions based on how many students are sharing the current rank
-                if (student.rank !== currentRank) {
-                    totalPositions++;
-                }
-            } else {
-                // If we've already selected 10 positions, break the loop
-                break;
-            }
-        }
-
-        // Send the final list of students (should not exceed 10 positions)
-        res.json(studentsToReturn);
+        // Return the final list of students (top 10 distinct ranking positions, including ties)
+        res.json(result.rows);
     } catch (error) {
         console.error('Error fetching top students:', error);
         res.status(500).send('Server Error');
@@ -98,4 +91,3 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
-

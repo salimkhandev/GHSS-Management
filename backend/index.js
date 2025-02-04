@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('./Routes/dbConfig')
+const pool = require('./Configs/dbConfig')
 const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
@@ -16,8 +16,6 @@ const attenBasedSectionsPerformance = require('./Routes/AttenPercentageForPieCha
 const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10StudentsAtten');
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
-const myclasssection=require('./ClassesSectionsRedis')
-// const attendanceGroupedByDate =require('./Routes/attendanceRoutes/attendanceGroupedByDate')
 
 
 // Use cookie-parser middleware
@@ -36,7 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/', classSectionRoutes);
-app.use('/', myclasssection);
 app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes

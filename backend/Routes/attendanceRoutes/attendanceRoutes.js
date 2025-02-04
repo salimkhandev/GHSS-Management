@@ -1,6 +1,6 @@
 const express =require('express')
 const router=express.Router()
-const pool=require('../dbConfig')
+const pool=require('../../Configs/dbConfig')
 const {authenticateToken}=require('../Middlewares/middlewares')
 const jwt = require('jsonwebtoken')
 

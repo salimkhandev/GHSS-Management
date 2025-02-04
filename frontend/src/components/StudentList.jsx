@@ -125,7 +125,7 @@ const StudentList = () => {
         const fetchStudents = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get('https://ghss-management-backend.vercel.app/mystudents',{params: {page:page}});
+                const response = await axios.get('https://ghss-management-backend.vercel.app/students',{params: {page:page}});
                 setStudents(response.data.rows);
                 setTotalpages(response.data.totalPages) // Update state with the fetched students data
                 

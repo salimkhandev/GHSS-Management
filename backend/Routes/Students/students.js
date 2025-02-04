@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../dbConfig');
+const pool = require('../../Configs/dbConfig');
+const redisClient = require('../../Configs/redisConfig');
+
 
 // POST route to save a new student
 router.post('/students', async (req, res) => {
+    
     const { name, section_id, class_id } = req.body;
+    
+    // Save the student data to the database
 
     console.log('Form data ❤️', req.body);
 
@@ -18,11 +23,20 @@ router.post('/students', async (req, res) => {
         console.error('Error saving student data:', err.stack);
         res.status(500).send('Server Error');
     }
+
 });
 // GET route to get all students
 router.get('/students', async (req, res) => {
     const { page = 1, limit = 100 } = req.query; // Default page is 1, and default limit is 10
     const offset = (page - 1) * limit;
+    
+    const cacheKey = `students:${page}:${limit}`;
+
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData) {
+        console.log('Serving top students from cache');
+        return res.json(JSON.parse(cachedData));
+    }
 
     const countQuery = 'SELECT COUNT(*) AS totalpages FROM students';
     const query = `
@@ -46,12 +60,15 @@ router.get('/students', async (req, res) => {
         const result = await pool.query(query, [limit, offset]);
 
         // Return the student data along with pagination information
-        res.json({
+        const response = {
             rows: result.rows,
             totalPages: totalPages
             // currentPage: parseInt(page, 10),
             // totalStudents: totalCount
-        });
+        }
+        
+        await redisClient.setex(cacheKey, 3600, JSON.stringify(response));
+        res.json(response);
     } catch (err) {
         console.error('Error fetching student data:', err.stack);
         res.status(500).send('Server Error');
