@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../../Configs/dbConfig'); // Import your database configuration
+const client = require('../../Configs/redisConfig');
+const clientRedis = require('../../Configs/redisConfig');
 
 // GET route to fetch all classes
 router.get('/classes', async (req, res) => {
+    const keyClasses = 'classes';
     try {
+        const cachedData = await clientRedis.get(keyClasses);
+        if (cachedData) {
+            console.log('Serving classes from cache');
+            return res.json(JSON.parse(cachedData));
+        }
+
         const result = await pool.query('SELECT * FROM Classes');
+        await clientRedis.set(keyClasses, JSON.stringify(result.rows));
         res.json(result.rows);
     } catch (err) {
         console.error(err.message);
@@ -15,9 +25,17 @@ router.get('/classes', async (req, res) => {
 
 // GET route to fetch all sections
 router.get('/sections', async (req, res) => {
+    const sectionsKey='sections';
+
     try {
+        const cachedData = await clientRedis.get(sectionsKey);
+        if (cachedData) {
+            console.log('Serving sections from cache');
+            return res.json(JSON.parse(cachedData));
+        }
         const result = await pool.query(' select * from sections');
         res.json(result.rows);
+        await clientRedis.set(sectionsKey, JSON.stringify(result.rows));
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

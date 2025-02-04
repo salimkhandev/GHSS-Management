@@ -1,12 +1,10 @@
 import { lazy, Suspense } from 'react';
-import { Route, BrowserRouter as Router, Routes} from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes, Link } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Home from './components/Home';
 import AdminLogin from "./components/admin/AdminLogin";
 import { AuthProvider } from "./components/admin/AuthProvider";
 import Protecter from "./components/admin/ProtectedLoginRoute";
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
 
 // Lazy-load components
 const StudentForm = lazy(() => import("./components/registration/StudentForm"));
@@ -18,13 +16,8 @@ const PerformanceDashboard = lazy(() => import("./components/attendance/pieChart
 const TakenAtten = lazy(() => import("./components/attendance/TakeAtten"));
 const ClassSelector = lazy(() => import("./components/studnetPromotion/ClassSelector"));
 
-// MUI Linear Progress Loader
-const Loader = () => (
-  <Box sx={{ width: '100%' }}>
-    <LinearProgress />
-  </Box>
-);
-
+// Prefetch function
+const prefetchComponent = (importFunction) => () => importFunction();
 
 function App() {
   return (
@@ -37,7 +30,7 @@ function App() {
             <Route
               path="/studentlist"
               element={
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<div>Loading Student List...</div>}>
                   <StudentList />
                 </Suspense>
               }
@@ -45,7 +38,7 @@ function App() {
             <Route
               path="/PerformanceDashboard"
               element={
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<div>Preparing Dashboard...</div>}>
                   <PerformanceDashboard />
                 </Suspense>
               }
@@ -53,7 +46,7 @@ function App() {
             <Route
               path="/TakeAtten"
               element={
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<div>Loading Attendance Page...</div>}>
                   <TakenAtten />
                 </Suspense>
               }
@@ -69,7 +62,7 @@ function App() {
               <Route
                 path="/contact"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<div>Loading Registration Form...</div>}>
                     <StudentForm />
                   </Suspense>
                 }
@@ -77,7 +70,7 @@ function App() {
               <Route
                 path="/promote"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<div>Loading Class Promotion...</div>}>
                     <ClassSelector />
                   </Suspense>
                 }
@@ -85,7 +78,7 @@ function App() {
               <Route
                 path="/admin/TeacherRegistration/AdminRegistration"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<div>Loading Admin Registration...</div>}>
                     <AdminRegistration />
                   </Suspense>
                 }
@@ -93,13 +86,26 @@ function App() {
               <Route
                 path="/admin/TeacherRegistration"
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<div>Loading Teacher Registration...</div>}>
                     <TeacherRegistration />
                   </Suspense>
                 }
               />
             </Route>
           </Routes>
+
+          {/* Prefetch Links */}
+          <nav>
+            <Link to="/studentlist" onMouseEnter={prefetchComponent(() => import("./components/StudentList"))}>
+              Go to Student List
+            </Link>
+            <Link to="/PerformanceDashboard" onMouseEnter={prefetchComponent(() => import("./components/attendance/pieChart/PerformanceDashboard"))}>
+              Performance Dashboard
+            </Link>
+            <Link to="/admin/TeacherRegistration" onMouseEnter={prefetchComponent(() => import("./components/admin/TeacherRegistration"))}>
+              Teacher Registration
+            </Link>
+          </nav>
         </main>
       </Router>
     </AuthProvider>
