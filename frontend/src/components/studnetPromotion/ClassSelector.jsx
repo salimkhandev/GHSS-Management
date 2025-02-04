@@ -25,7 +25,7 @@ const ClassSelector = () => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setShowNoStudentsMessage(filteredStudents.length === 0 && !loading && selectedClass && selectedSection &&selectedClassid && selectedSectionid);
+            setShowNoStudentsMessage(filteredStudents.length === 0 && !loading && selectedClass && selectedSection && selectedClassid && selectedSectionid);
         }, 1000);
         if (filteredStudents.length != 0) {
             setShowNoStudentsMessage(false)
@@ -78,31 +78,31 @@ const ClassSelector = () => {
 
     useEffect(() => {
 
-        
+
         const fetchClasses = async () => {
-         
-        setAllIds([])
+
+            setAllIds([])
             // setTotalDeptStudents([])
             setLoading(true)
-            
+
             try {
                 const responseCls = await axios.get('https://ghss-management-backend.vercel.app/filteredSectionStd',
-                    
+
                     {
                         params: {
                             class_id: selectedClassid,
                             section_id: selectedSectionid
                         }
                     })
-                    setLoading(false);
-                    if (selectedSection!='') {
-                        
-                        setStudents(responseCls.data.students);
-                    }else{
-                        setStudents([])
-                    }
-                    // setTesting(responseCls.data.allIds)
-                    setAllIds(responseCls.data.allIds);
+                setLoading(false);
+                if (selectedSection != '') {
+
+                    setStudents(responseCls.data.students);
+                } else {
+                    setStudents([])
+                }
+                // setTesting(responseCls.data.allIds)
+                setAllIds(responseCls.data.allIds);
                 setTotalDeptStudents(responseCls.data.total);
 
 
@@ -110,11 +110,11 @@ const ClassSelector = () => {
                 console.error("Error fetching the classes data:", error);
             }
         };
-     
+
         if (selectedClassid && selectedSectionid) {
             fetchClasses();
         }
-    }, [selectedClassid, selectedSectionid,selectedSection,]);
+    }, [selectedClassid, selectedSectionid, selectedSection,]);
 
 
 
@@ -124,16 +124,16 @@ const ClassSelector = () => {
             const totalStudentsInSelectedSection = result.filter(student => student.section_name.toLowerCase() === selectedSection.toLowerCase()).length;
             setStudentInSec(totalStudentsInSelectedSection);
         }
-     const clearTime=setTimeout(() => {
-    if (searchQuery) {
-        result = result.filter(student =>
-            student.student_name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-    }
-    setFilteredStudents(result);
-    
-}, 300);
-return () => clearTimeout(clearTime);
+        const clearTime = setTimeout(() => {
+            if (searchQuery) {
+                result = result.filter(student =>
+                    student.student_name.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+            setFilteredStudents(result);
+
+        }, 300);
+        return () => clearTimeout(clearTime);
 
 
     }, [selectedClass, searchQuery, students, selectedSection]);
@@ -150,14 +150,14 @@ return () => clearTimeout(clearTime);
         setSelectedSectionid('');
         setSections([]); // Clear the sections dropdown
 
-    
 
-            const getSelectedObj = classes.find(cls => cls.name === value)
-            if (getSelectedObj) {
-                handleGetSections(getSelectedObj.id)
-                setSelectedClassid(getSelectedObj.id)
-            }
-        
+
+        const getSelectedObj = classes.find(cls => cls.name === value)
+        if (getSelectedObj) {
+            handleGetSections(getSelectedObj.id)
+            setSelectedClassid(getSelectedObj.id)
+        }
+
     };
 
     const handleSectionsChange = async (e) => {
@@ -165,13 +165,13 @@ return () => clearTimeout(clearTime);
         setSelectedSection(value);
         setStudents([])
         setFilteredStudents([])
-setShowNoStudentsMessage(false)
-const getSelectedObj = sections.find(sec => sec.name === value);
-if (getSelectedObj) {
-    setSelectedSectionid(getSelectedObj.id)
+        setShowNoStudentsMessage(false)
+        const getSelectedObj = sections.find(sec => sec.name === value);
+        if (getSelectedObj) {
+            setSelectedSectionid(getSelectedObj.id)
 
         }
-        
+
     }
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -185,34 +185,34 @@ if (getSelectedObj) {
         );
     };
     let totalSelectedStudents = selectedStudentIds.length;
-   
+
 
     return (
-       
+
         <div className="p-4 min-h-screen bg-gray-100 flex flex-col items-center">
             <div className="relative">
                 <Box>
                     <Typography variant="h4" component="h2" gutterBottom className="whitespace-nowrap mb-6">
                         Promote Students
-              
+
                     </Typography>
 
-                                <Typography variant="h6" color="initial" className='flex justify-center'>
-                Promoting From
-            </Typography>
-                    
-                    
+                    <Typography variant="h6" color="initial" className='flex justify-center'>
+                        Promoting From
+                    </Typography>
+
+
                     <div className='flex w-full'>
                         <Typography variant="h6" color="initial">
                             {selectedClass && !selectedSection ? ` Students in ${selectedClass}: ${totalDeptStudents}` : ''}
                         </Typography>
-                        <Typography variant="span"  color="initial">
+                        <Typography variant="span" color="initial">
                             {selectedSection ? `Total students in ${selectedSection}: ${studentInSec}` : ''}
 
                         </Typography>
                     </div>
                 </Box>
-      
+
                 <TextField
 
 
@@ -232,7 +232,7 @@ if (getSelectedObj) {
             </div>
 
             <div className='sticky top-36 items-center'>
-              
+
                 <FormControl fullWidth variant="outlined" className="max-w-xs" style={{ marginTop: '-55px' }}>
                     <InputLabel htmlFor="class_select">Select Class</InputLabel>
                     <Select
@@ -250,7 +250,7 @@ if (getSelectedObj) {
                         ))}
                     </Select>
 
-                    
+
                     {sections.length > 0 && (
                         <FormControl fullWidth variant="outlined" className="max-w-xs" style={{ marginTop: '12px' }}>
                             <InputLabel htmlFor="select_section">Select Section</InputLabel>
@@ -262,7 +262,7 @@ if (getSelectedObj) {
                                 label="select section"
                                 className='w-36'
                             >
-                            
+
                                 {sections.map(cls => (
                                     <MenuItem key={cls.id} value={cls.name}>
 
@@ -284,86 +284,86 @@ if (getSelectedObj) {
             ) : (
                 <div>
 
-                        {selectedClass && selectedSection && filteredStudents.length >0 &&
+                    {selectedClass && selectedSection && filteredStudents.length > 0 &&
 
-                    <FormControlLabel
-                    control={
-                        <Checkbox
-                        checked={selectAll}
-                        onChange={handleSelectAllChange}
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectAll}
+                                    onChange={handleSelectAllChange}
+                                />
+                            }
+
+                            label={`Select All (${totalSelectedStudents}/${totalDeptStudents} selected)`}
+
                         />
                     }
-                    
-                                label={`Select All (${totalSelectedStudents}/${totalDeptStudents} selected)`}
-                    
-                    />
-                }   
 
                     <Grid container spacing={2}>
 
-                                  
-                            {showNoStudentsMessage &&  (
 
-                    <Typography variant="body1" className='h-[300px] justify-center flex items-center' color="textSecondary">
-                    No students found for the selected criteria.
-                    </Typography>
-                ) 
-                }
-                            <Grid container style={{ margin: 0, padding: '10px' }}  spacing={2}>
+                        {showNoStudentsMessage && (
 
-                        {filteredStudents.map(student => (
-                            <Grid  item xs={12} sm={6} md={4} key={student.id} >
-                                <Card className="shadow-lg" style={{minWidth:250}}>
-                                    <CardContent>
-                                        <Typography variant="h6" component="div" className="font-bold mb-2">
-                                            ID: {student.id}
-                                        </Typography>
-                                        <Typography variant="body1" color="textSecondary" className="mb-1">
-                                            Name: {student.student_name}
-                                        </Typography>
-                                        <Typography variant="body1" color="textSecondary" className="mb-1">
-                                            {student.class_name}
-                                        </Typography>
-                                        <Typography variant="body1" color="textSecondary">
-                                            Section: {student.section_name}
-                                        </Typography>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    checked={selectedStudentIds.includes(student.id)}
-                                                    onChange={() => handleCheckboxChange(student.id)}
-                                                />
-                                            }
-                                            label="Select"
-                                        />
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        ))}
+                            <Typography variant="body1" className='h-[300px] justify-center flex items-center' color="textSecondary">
+                                No students found for the selected criteria.
+                            </Typography>
+                        )
+                        }
+                        <Grid container style={{ margin: 0, padding: '10px' }} spacing={2}>
+
+                            {filteredStudents.map(student => (
+                                <Grid item xs={12} sm={6} md={4} key={student.id} >
+                                    <Card className="shadow-lg" style={{ minWidth: 250 }}>
+                                        <CardContent>
+                                            <Typography variant="h6" component="div" className="font-bold mb-2">
+                                                ID: {student.id}
+                                            </Typography>
+                                            <Typography variant="body1" color="textSecondary" className="mb-1">
+                                                Name: {student.student_name}
+                                            </Typography>
+                                            <Typography variant="body1" color="textSecondary" className="mb-1">
+                                                {student.class_name}
+                                            </Typography>
+                                            <Typography variant="body1" color="textSecondary">
+                                                Section: {student.section_name}
+                                            </Typography>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        checked={selectedStudentIds.includes(student.id)}
+                                                        onChange={() => handleCheckboxChange(student.id)}
+                                                    />
+                                                }
+                                                label="Select"
+                                            />
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
                     </Grid>
-            </Grid>
                 </div>
             )}
-            
+
             {filteredStudents.length > 0 && !loading && (
                 <>
-            <Typography variant="h6" color="initial" className='flex justify-center'>
-                Promoting To
-            </Typography>
-            <Classes
-                selectedClass={selectedClassid}
-                selectedSection={selectedSectionid}
-                studentIds={selectedStudentIds} 
-                selectedSectionName={selectedSection}
+                    <Typography variant="h6" color="initial" className='flex justify-center'>
+                        Promoting To
+                    </Typography>
+                    <Classes
+                        selectedClass={selectedClassid}
+                        selectedSection={selectedSectionid}
+                        studentIds={selectedStudentIds}
+                        selectedSectionName={selectedSection}
                         totalSelectedStudents={totalSelectedStudents}
                         setFilteredStudents={setFilteredStudents}
                         handleSelectAllChange={handleSelectAllChange}
-                />
+                    />
                 </>
             )}
         </div>
-                                
-                                    
+
+
     );
 };
 

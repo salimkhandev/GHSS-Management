@@ -7,7 +7,7 @@ const AllClassesPerformance = React.lazy(() => import('./AllClassesPerformance')
 const Top50StudentsAtten = React.lazy(() => import('./Top10StudentsAtten'));
 const Loader = () => (
   <Box sx={{ width: '100%' }}>
-    <LinearProgress />
+        <LinearProgress color="secondary" />
   </Box>
 );
 const PerformanceDashboard = () => {

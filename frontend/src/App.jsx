@@ -21,7 +21,7 @@ const ClassSelector = lazy(() => import("./components/studnetPromotion/ClassSele
 // MUI Linear Progress Loader
 const Loader = () => (
   <Box sx={{ width: '100%' }}>
-    <LinearProgress />
+    <LinearProgress color="secondary" />
   </Box>
 );
 
