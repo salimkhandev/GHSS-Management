@@ -39,6 +39,8 @@ const AdminLogin = () => {
         verifyAuth();
     }, [login,logout]);
     
+    // how to call a fxn
+    
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
     };

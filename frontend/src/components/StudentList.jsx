@@ -5,7 +5,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import ExportToExcel from './ExportToExcel';
 
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
-// import  Pagination from './Pagination'
 
 const StudentList = () => {
     
@@ -129,14 +128,10 @@ const StudentList = () => {
                 const response = await axios.get('https://ghss-management-backend.vercel.app/students',{params: {page:page}});
                 setStudents(response.data.rows);
                 setTotalpages(response.data.totalPages) // Update state with the fetched students data
-                // setLoading(false); 
                 
-                // Use requestAnimationFrame to delay the loading state change
-                // setTimeout(() => {
+               
+                    
                     setLoading(false);
-
-                // }, 3000);
-          
         
                 // Set loading to false once data is fetched
             } catch (error) {
@@ -169,12 +164,11 @@ const StudentList = () => {
                             page:page
                         }
                     })
-                    // setTimeout(() => {
+                
                         setLoading(false);
                         
-                    // }, 3000);
+                
                 setStudents(responseCls.data.students);
-                console.log('❤️❤️❤️❤️',responseCls.data.total);
                 setTotalDeptStudents(responseCls.data.totalCount);
                 setTotalpages(responseCls.data.totalPages) 
                 

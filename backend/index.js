@@ -16,6 +16,7 @@ const attenBasedSectionsPerformance = require('./Routes/AttenPercentageForPieCha
 const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10StudentsAtten');
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
+const myclasssection=require('./Routes/ClassesSections/ClassesSections copy')
 // const attendanceGroupedByDate =require('./Routes/attendanceRoutes/attendanceGroupedByDate')
 
 
@@ -35,6 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/', classSectionRoutes);
+app.use('/', myclasssection);
 app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes

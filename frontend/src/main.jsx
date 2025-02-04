@@ -17,3 +17,6 @@ createRoot(document.getElementById('root')).render(
       <App />
   </AuthProvider>
 )
+
+// how to call a function
+

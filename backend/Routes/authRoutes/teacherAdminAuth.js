@@ -116,7 +116,6 @@ router.post('/admin-login', async (req, res) => {
         }
 
         const token = jwt.sign({ id: admin.id, role: admin.role }, 'your_jwt_secret', { expiresIn: '1h' });
-        const isProduction = process.env.NODE_ENV === 'production';
 
         // Set a cookie on the response
         res.cookie('adminToken', token, {
