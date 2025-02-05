@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, Box, Typography,LinearProgress } from "@mui/material";
+import { TextField, Button, Box, Typography,LinearProgress, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
@@ -128,7 +128,7 @@ finally {
                 </Typography>
             )}
             <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
-                {loading?<Loader/>: 'Login'}
+                {loading?<CircularProgress size={24}/>: 'Login'}
             </Button>
         </Box>
     );
