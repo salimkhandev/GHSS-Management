@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close"; // Close icon
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
-
+    
     const menuItems = [
         { text: "Take Attendance", path: "/TakeAtten" },
         { text: "Attendance Detail", path: "/PerformanceDashboard" },

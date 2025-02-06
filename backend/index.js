@@ -16,6 +16,7 @@ const attenBasedSectionsPerformance = require('./Routes/AttenPercentageForPieCha
 const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10StudentsAtten');
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
+const TeachersList =require('./Routes/TeachersList')
 
 
 // Use cookie-parser middleware
@@ -37,6 +38,7 @@ app.use('/', classSectionRoutes);
 app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes
+app.use('/TeachersList', TeachersList); // Use student routes
 app.use('/students/bulk', bulkupload);
 // app.use('/attendanceGroupedByDate', attendanceGroupedByDate);
 app.use('/verify-token-asAdmin', verifyTokenAsAdmin);

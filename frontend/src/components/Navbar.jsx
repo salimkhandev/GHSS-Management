@@ -20,15 +20,16 @@ const Navbar = () => {
                     <Button component={Link} to="/" color="inherit" sx={{ textTransform: 'capitalize' }}>
                         Home
                     </Button>
-                    <Button component={Link} to="/promote" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                        Promote Students
+                        <Button component={Link} to="/PerformanceDashboard" color="inherit" sx={{ textTransform: 'capitalize' }}>
+                        Attendance Detail
                     </Button>
                     <Button component={Link} to="/studentlist" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                        Students List
+                        Overall Entrolled Students
                     </Button>
-                    <Button component={Link} to="/contact" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                        Student Form
+                        <Button component={Link} to="/TeachersList" color="inherit" sx={{ textTransform: 'capitalize' }}>
+                            TeachersList
                     </Button>
+
                 </div>
             </Toolbar>
         </AppBar>

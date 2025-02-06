@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
             console.log('No token provided');
             return res.status(401).json({ authenticated: false, message: 'No token provided' });
         }
+        
 
         jwt.verify(token, 'your_jwt_secret', async (err, decoded) => {
             if (err) {

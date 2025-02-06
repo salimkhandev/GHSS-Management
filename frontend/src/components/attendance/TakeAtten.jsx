@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Switch, TextField, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Container,CircularProgress, Typography } from '@mui/material';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
-import UpdateAttenStatusOfClsSec from './UpdateAttenStatusOfClsSec'
+// import { useNavigate } from 'react-router-dom';
+// import UpdateAttenStatusOfClsSec from './UpdateAttenStatusOfClsSec'
 const AttendanceList = () => {
 
 
@@ -12,8 +12,8 @@ const AttendanceList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [attendanceDate] = useState(dayjs().format('YYYY-MM-DD')); // Get the current date
 const [loading, setLoading]=useState(false)
-    const [authenticated, setAuthenticated] = useState(false);
-    const navigate = useNavigate();
+    // const [authenticated, setAuthenticated] = useState(false);
+    // const navigate = useNavigate();
     const [disableComponent, setDisableComponent] = useState(false); // Track if the component should be disabled
 
 // send class_id and seciton_id to backend so that if the today was same with the backend last date then it will disable the t
@@ -51,30 +51,7 @@ const [loading, setLoading]=useState(false)
         }
     }, [lastAttenDate]);
     // Role is set to 'teacher' by default and doesn't need to be changed
-    useEffect(() => {
-        const checkAuth = async () => { 
-            try {
-                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asTeacher', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-
-                const data = await response.json();
-                if (data.authenticated) {
-                    setAuthenticated(true);
-                } else {
-                    navigate('/teacherLogin');
-                }
-            } catch (error) {
-                console.error('Error verifying token:', error);
-                navigate('/teacherLogin');
-            } finally {
-                // setLoading(false);
-            }
-        };
-
-        checkAuth();
-    }, [navigate]);
+   
     useEffect(() => {
         setLoading(true)
         const fetchStudents = async () => {
@@ -148,15 +125,14 @@ try {
 if(disableComponent){
 return(<>
 
-    <UpdateAttenStatusOfClsSec/>
+    <h3>Attendance already taken</h3>
 </>)
 }
 
     return (
         
         <>
-        {authenticated && 
-          (  
+    
         <Container className="bg-white p-5 rounded-lg max-w-sm mx-auto">
               {loading ? (
                 <div className="flex justify-center items-center min-h-[444px]">
@@ -192,7 +168,7 @@ return(<>
             </List>
                     </>)}
 
-                    </Container>)}
+                    </Container>
         </>
     );
 };

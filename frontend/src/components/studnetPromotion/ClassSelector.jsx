@@ -231,7 +231,7 @@ const ClassSelector = () => {
 
                 {/* Student Cards */}
                 {loading ? (
-                  <Loader/>
+                    <Loader />
                 ) : (
                     <>
                         {selectedClass && selectedSection && (

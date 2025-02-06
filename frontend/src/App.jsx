@@ -7,16 +7,20 @@ import { AuthProvider } from "./components/admin/AuthProvider";
 import Protecter from "./components/admin/ProtectedLoginRoute";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import TeacherLogin from "./components/attendance/TeacherLogin";
+import CheckAsAteacher from "./components/attendance/CheckAsAteacher";
 
 // Lazy-load components
 const StudentForm = lazy(() => import("./components/registration/StudentForm"));
 const StudentList = lazy(() => import("./components/StudentList"));
 const TeacherRegistration = lazy(() => import("./components/admin/TeacherRegistration"));
-const TeacherLogin = lazy(() => import("./components/attendance/TeacherLogin"));
 const AdminRegistration = lazy(() => import("./components/admin/AdminRegistration"));
 const PerformanceDashboard = lazy(() => import("./components/attendance/pieChart/PerformanceDashboard"));
 const TakenAtten = lazy(() => import("./components/attendance/TakeAtten"));
 const ClassSelector = lazy(() => import("./components/studnetPromotion/ClassSelector"));
+const UpdateAttenStatusOfClsSec = lazy(() => import("./components/attendance/UpdateAttenStatusOfClsSec"));
+const TeachersList = lazy(() => import("./components/TeachersList"));
+
 
 // MUI Linear Progress Loader
 const Loader = () => (
@@ -51,18 +55,20 @@ function App() {
               }
             />
             <Route
-              path="/TakeAtten"
+              path="/TeachersList"
               element={
                 <Suspense fallback={<Loader />}>
-                  <TakenAtten />
+                  <TeachersList/>
                 </Suspense>
               }
             />
+           
             <Route path="/TeacherLogin" element={<TeacherLogin />} />
             <Route path="/admin" element={<AdminLogin />} />
 
             {/* Catch-all route */}
             <Route path="*" element={<h1>Not Found</h1>} />
+
 
             {/* Protected Routes */}
             <Route element={<Protecter />}>
@@ -99,7 +105,27 @@ function App() {
                 }
               />
             </Route>
+            <Route element={<CheckAsAteacher />}>
+              <Route
+                path="/TakeAtten"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <TakenAtten />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/updateAttenStatus"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <UpdateAttenStatusOfClsSec />
+                  </Suspense>
+                }
+              />
+            </Route>
+
           </Routes>
+         
         </main>
       </Router>
     </AuthProvider>
