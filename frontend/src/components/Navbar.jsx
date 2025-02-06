@@ -2,7 +2,7 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import HamburgerMenu from "./HamburgerMenu";
 import MobileHamberger from "./MobileHamberger";
 import { Link } from 'react-router-dom';
-import logo from "../images/ghssLogo.png"; // Adjust the path to your logo
+import logo from "/images/ghssLogo.png"; // Adjust the path to your logo
 
 const Navbar = () => {
     return (
