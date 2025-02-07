@@ -106,34 +106,42 @@ export default function TopDrawerWithToggle() {
                 <React.Fragment key={index}>
                     <List>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={() => toggleSection(index)}>
-                                <ListItemText
-                                    primary={
-                                        <Typography
-                                            variant="h6"
-                                            fontWeight="bold"
-                                            sx={{
-                                                backgroundColor: "#2B4A91",
-                                                color: "white",
-                                                padding: "8px 26px",
-                                                borderRadius: "4px",
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
-                                                width: "100%",
-                                            }}
-                                        >
-                                            {section.title}
-                                            {expandedSections[index] ? (
-                                                <ExpandLessIcon sx={{ fontSize: 22, marginLeft: 1 }} />
-                                            ) : (
-                                                <ExpandMoreIcon sx={{ fontSize: 22, marginLeft: 1 }} />
-                                            )}
-                                        </Typography>
-                                    }
-                                />
+                            <ListItemButton
+                                onClick={() => toggleSection(index)}
+                                sx={{
+                                    backgroundColor: "#2B4A91", // Ensures background color applies
+                                    borderRadius: "6px", // Ensures border radius applies
+                                    padding: "8px 26px", // Matches Tailwind padding
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    "&:hover": { backgroundColor: "#1E3A72" }, // MUI hover override
+                                }}
+                                >
+                                {section.title === 'Teachers Portal' ? (
+                                    <img
+                                        src="../../public/images/teacherIcon.png"
+                                        alt="Teacher Icon"
+                                        className="w-12 mr-1 h-12"
+                                    />
+                                ):   <img
+                                    src="../../public/images/adminIcon.png"
+                                    alt="Admin Icon"
+                                    className="w-14 mr-1 h-12"
+                                />}
+
+                                <ListItemText primary={section.title}  primaryTypographyProps={{
+                                    sx: { fontFamily: "Inter, sans-serif", fontWeight: "bold" },
+                                    className: "m-0",
+                                }} />
+                                {expandedSections[index] ? (
+                                    <ExpandLessIcon className="text-lg ml-2" />
+                                ) : (
+                                    <ExpandMoreIcon className="text-lg ml-2" />
+                                )}
                             </ListItemButton>
                         </ListItem>
+
                         <Collapse in={expandedSections[index]} timeout="auto" unmountOnExit>
                             {section.links.map((item, idx) => (
                                 <ListItem key={idx} disablePadding>
