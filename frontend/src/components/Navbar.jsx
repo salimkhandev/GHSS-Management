@@ -10,7 +10,7 @@ const Navbar = () => {
             <MobileHamberger/>
         <AppBar
             position="sticky"
-            className="bg-gradient-to-r navbarHide from-blue-500 to-blue-700 text-white shadow-lg"
+            className="bg-gradient-to-r  navbarHide from-blue-500 to-blue-700 text-white shadow-lg"
         >
             <Toolbar className="flex justify-between">
                 <HamburgerMenu />

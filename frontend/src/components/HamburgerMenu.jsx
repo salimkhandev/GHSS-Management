@@ -120,12 +120,12 @@ export default function TopDrawerWithToggle() {
                                 >
                                 {section.title === 'Teachers Portal' ? (
                                     <img
-                                        src="../../public/images/teacherIcon.png"
+                                        src="/images/teacherIcon.png"
                                         alt="Teacher Icon"
                                         className="w-12 mr-1 h-12"
                                     />
                                 ):   <img
-                                    src="../../public/images/adminIcon.png"
+                                    src="/images/adminIcon.png"
                                     alt="Admin Icon"
                                     className="w-14 mr-1 h-12"
                                 />}
