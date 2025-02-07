@@ -18,7 +18,6 @@ const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
 const TeachersList =require('./Routes/TeachersList')
 
-
 // Use cookie-parser middleware
 app.use(cookieParser());
 app.use(cors({
@@ -57,5 +56,6 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
    console.log(`Server is running on http://localhost:${port}`);
 });
+
 
 
