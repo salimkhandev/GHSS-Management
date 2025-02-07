@@ -30,7 +30,8 @@ function StudentForm() {
                                 md: '0px',  // Medium screens (960px - 1280px)
                                 lg: '0px',   // Large screens (1280px - 1920px)
                                 xl: '0px',   // Extra-large screens (1920px and above)
-                            },                            px: 2, 
+                            },
+                        
                             py: 1.26, 
                             fontFamily: "'Poppins', sans-serif" ,
                             // fontWeight:'bold',// Padding Left & Right (16px)

@@ -49,10 +49,10 @@ function StudentRegistrationForm() {
 
     return (
     
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-                <div className="w-full max-w-md bg-white 0 p-6 rounded-lg shadow-sm">
+        <div className="flex items-center justify-center min-h-screen bg-gray-100  p-4">
+            <div className="w-full shadow-[5px_5px_20px_5px_rgba(0,0,0,0.5)]   border-x-green-400  border-2 border-blue-500 max-w-md bg-white 0 p-6 rounded-lg">
                     <h2 className="text-center text-2xl mb-6 font-serif text-gray-800">Student Registration Form</h2>
-            <Formik 
+                <Formik 
                 initialValues={{ name: '', class_id: '', section_id: '' }}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
@@ -68,7 +68,7 @@ function StudentRegistrationForm() {
                 }}
             >
                 {({ setFieldValue, errors, touched }) => (
-                    <Form>
+                        <Form >
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-gray-700">Name:</label>
                             <Field type="text" id="name" name="name" className="mt-1 block w-full border border-gray-300 rounded-lg p-2" />
