@@ -109,25 +109,25 @@ export default function TopDrawerWithToggle() {
                             <ListItemButton
                                 onClick={() => toggleSection(index)}
                                 sx={{
-                                    backgroundColor: "#2B4A91", // Ensures background color applies
+                                    backgroundColor: expandedSections[index] ? "#4990CF" : "#2B4A91", // Only applies when expanded
                                     borderRadius: "6px", // Ensures border radius applies
                                     padding: "8px 26px", // Matches Tailwind padding
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "center",
-                                    "&:hover": { backgroundColor: "#1E3A72" }, // MUI hover override
+                                    "&:hover": { backgroundColor: "#4990CF" }, // MUI hover override
                                 }}
                                 >
                                 {section.title === 'Teachers Portal' ? (
                                     <img
                                         src="/images/teacherIcon.png"
                                         alt="Teacher Icon"
-                                        className="w-12 mr-1 h-12"
+                                        className="w-14 mr-2 h-12"
                                     />
                                 ):   <img
                                     src="/images/adminIcon.png"
                                     alt="Admin Icon"
-                                    className="w-14 mr-1 h-12"
+                                    className="w-13 mr-1 h-12"
                                 />}
 
                                 <ListItemText primary={section.title}  primaryTypographyProps={{
