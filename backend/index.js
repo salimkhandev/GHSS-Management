@@ -3,7 +3,6 @@ const pool = require('./Configs/dbConfig')
 const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
-
 const teacherAdmin=require('./Routes/authRoutes/teacherAdminAuth')
 const classSectionRoutes = require('./Routes/ClassesSections/ClassesSections'); // Adjust the path as needed
 const studentRoutes = require('./Routes/Students/students');
@@ -17,7 +16,7 @@ const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10Stu
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
 const TeachersList =require('./Routes/TeachersList')
-
+const teacherProfilePic=require('./Configs/supabaseStorage')
 // Use cookie-parser middleware
 app.use(cookieParser());
 app.use(cors({
@@ -27,13 +26,13 @@ app.use(cors({
    ],
    credentials: true // Allow cookies to be sent
 }));
-
 // app.use(cors());
+//  now use it here
+
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.json());
-
 app.use('/', classSectionRoutes);
+app.use('/api', teacherProfilePic);
 app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes
@@ -47,15 +46,11 @@ app.use('/monthlyAttenPercentage', monthlyAttenPercentage); // Use attendance pe
 app.use('/overallAttenPercentage', overallAttenPercentage); // Use attendance percentage routes
 app.use('/attenBasedSectionsPerformance', attenBasedSectionsPerformance); // Use attendance percentage routes
 app.use('/Top10StudentsAtten', Top10StudentsAtten); // Use attendance percentage routes
-
-
 app.get('/', (req, res) => {
    res.json("Hello from backend")
 });
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
    console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-

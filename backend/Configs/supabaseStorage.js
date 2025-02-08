@@ -1,14 +1,11 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const supabase = require('./supabaseClient'); // Your Supabase client
-const app = express();
-app.use(cookieParser());
-app.use(express.json());
+const router = express.Router();
 // Your secret key used to sign the JWT
 const JWT_SECRET = 'your_jwt_secret';
 // API to fetch public profile picture URL
-app.get('/api/teacher-profile-pic', async (req, res) => {
+router.get('/teacher-profile-pic', async (req, res) => {
     try {
         // Step 1: Extract the JWT token from cookies
         const token = req.cookies?.authToken; // Assuming the cookie is named 'authToken'
@@ -67,8 +64,4 @@ app.get('/api/teacher-profile-pic', async (req, res) => {
         });
     }
 });
-// Start the server
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+module.exports = router;
