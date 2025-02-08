@@ -8,7 +8,7 @@ const JWT_SECRET = 'your_jwt_secret';
 router.get('/teacher-profile-pic', async (req, res) => {
     try {
         // Step 1: Extract the JWT token from cookies
-        const token = req.cookies?.authToken; // Assuming the cookie is named 'authToken'
+        const token = req.cookies?.TeacherToken; // Assuming the cookie is named 'authToken'
         if (!token) {
             return res.status(401).json({
                 success: false,
