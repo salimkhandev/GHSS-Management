@@ -5,12 +5,12 @@
 
 @media (max-width: 768px) {
     .navbarHide {
-        display: none !important;
+        /* display: none !important; */
     }
 }
 @media (min-width: 768px) {
     .hideOnLargerScreen {
-        display: none !important;
+        /* display: none !important; */
     }
 }
 

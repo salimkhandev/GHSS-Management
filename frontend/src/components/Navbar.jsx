@@ -1,13 +1,13 @@
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import HamburgerMenu from "./HamburgerMenu";
-import MobileHamberger from "./MobileHamberger";
+// import MobileHamberger from "./MobileHamberger";
 import { Link } from 'react-router-dom';
 import logo from "/images/ghssLogo.png"; // Adjust the path to your logo
 
 const Navbar = () => {
     return (
         <div>
-            <MobileHamberger/>
+            {/* <MobileHamberger/> */}
         <AppBar
             position="sticky"
             className="bg-gradient-to-r  navbarHide from-blue-500 to-blue-700 text-white shadow-lg"
@@ -20,7 +20,7 @@ const Navbar = () => {
                             alt="School Logo"
                             className="h-10 w-10 object-contain transform transition-transform duration-300 hover:scale-110"
                         />
-                        <Typography variant="h6" sx={{ fontWeight: "bold", textTransform: "capitalize" }}>
+                        <Typography variant="h6" className='hidden sm:block' sx={{ fontWeight: "bold", textTransform: "capitalize" }}>
                             GHSS Luqman Banda
                         </Typography>
                     </div>
