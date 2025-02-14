@@ -31,7 +31,7 @@ const upload = multer({
 // Middleware to extract user ID from cookies
 const getUserIdFromCookie = (req) => {
     try {
-        const token = req.cookies.AdminToken;
+        const token = req.cookies.adminToken;
 
         if (!token) {
             throw new Error('Token not found');
