@@ -98,7 +98,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             const formData = new FormData();
             formData.append("profilePic", dataURLtoFile(croppedImageDataUrl, file.name));
 
-            const response = await axios.post("http://localhost:3000/upload-profile", formData, {
+            const response = await axios.post("https://ghss-management-backend.vercel.app/upload-profile", formData, {
                 withCredentials: true,
                 headers: { "Content-Type": "multipart/form-data" },
             });
