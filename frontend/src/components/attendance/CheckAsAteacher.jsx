@@ -28,31 +28,31 @@ const Login = () => {
         setShowPassword(!showPassword); // Toggle the state
     };
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asTeacher', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
+    // useEffect(() => {
+    //     const checkAuth = async () => {
+    //         try {
+    //             const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asTeacher', {
+    //                 method: 'GET',
+    //                 credentials: 'include'
+    //             });
 
-                const data = await response.json();
-                if (data.authenticated) {
-                    loginTeacher();
-                }
-                else{
-                    logoutTeacher();
-                }
-            } catch (error) {
-                console.error('Error verifying token:', error);
-                logoutTeacher();
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             const data = await response.json();
+    //             if (data.authenticated) {
+    //                 loginTeacher();
+    //             }
+    //             else{
+    //                 logoutTeacher();
+    //             }
+    //         } catch (error) {
+    //             console.error('Error verifying token:', error);
+    //             logoutTeacher();
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        checkAuth();
-    }, [loginTeacher, logoutTeacher]);
+    //     checkAuth();
+    // }, [loginTeacher, logoutTeacher]);
 
     const handleSubmit = async (e) => {
         setLoading(true);

@@ -8,11 +8,14 @@ const Navbar = () => {
     return (
         <div>
             {/* <MobileHamberger/> */}
+            
         <AppBar
             position="sticky"
             className="bg-gradient-to-r  navbarHide from-blue-500 to-blue-700 text-white shadow-lg"
-        >
+            >
+            
             <Toolbar className="flex justify-between">
+          
                 <HamburgerMenu />
                     <div className="flex items-center space-x-2"> {/* Flex container for logo and text */}
                         <img

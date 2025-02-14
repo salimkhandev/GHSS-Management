@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+// import { SnackbarProvider, useSnackbar } from "notistack";
 import { Link } from "react-router-dom";
 import {
     Box,
@@ -11,15 +14,45 @@ import {
     IconButton,
     Typography,
     Collapse,
+    CircularProgress
 } from "@mui/material";
+import { useAuth } from './admin/AuthProvider';
+
+
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ProfilePicManager from './teacher/ProfilePic.jsx'
 
 export default function TopDrawerWithToggle() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [expandedSections, setExpandedSections] = React.useState({});
+    const { isAuthenticated, isAuthenticatedTeacher, login, logout } = useAuth();
+    // const [keepProfilePicUpdated, setKeepProfilePicUpdated] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [username, setUsername] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        const fetchProfilePic = async () => {
+            setLoading(true);
+            try {
+                const response = await axios.get("https://ghss-management-backend.vercel.app/profile-pic", { withCredentials: true });
+                
+                if (response.data.imageUrl) {   
+                    setImageUrl(`${response.data.imageUrl}?t=${Date.now()}`);
+                }
+                setUsername(response.data.teacherName);
+            } catch (error) {
+                //   enqueueSnackbar("Failed to fetch profile picture.", { variant: "error" });
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProfilePic();
+    }, []);
 
     const toggleDrawer = (state) => (event) => {
         if (event?.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -34,6 +67,9 @@ export default function TopDrawerWithToggle() {
             [index]: !prev[index],
         }));
     };
+    
+
+
 
     // Menu Sections with Links
     const menuItems = [
@@ -56,7 +92,9 @@ export default function TopDrawerWithToggle() {
         },
     ];
 
+
     const list = () => (
+        
         <Box
             sx={{
                 width: 280,
@@ -71,6 +109,40 @@ export default function TopDrawerWithToggle() {
             }}
             role="presentation"
         >
+            {
+                (isAuthenticated || isAuthenticatedTeacher) && (<div className="text-center">
+                    <div onClick={() => setShowModal(true)} className="mb-2 cursor-pointer">
+                        <div className="w-20 h-20 rounded-full mx-auto border-blue-500 border-4 flex justify-center items-center overflow-hidden bg-gray-200">
+                            {loading ? (
+                                <CircularProgress sx={{ color: "green", width: "80%", height: "80%" }} />
+
+                            ) : imageUrl ? (
+                                <img key={imageUrl} src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                                <img src="/images/defaultPicPerson.svg" alt="Profile" className="w-full h-full object-cover" />
+
+                                
+                            )}
+                        </div>
+                        <h3 className="text-lg font-bold text-white mt-2">{username}</h3>
+                    </div>
+                </div>)
+            }
+             {/* Profile Picture */}
+            <Box className="flex flex-col items-center justify-center">
+                {/* <Avatar
+                    // src="/images/profilePic.jpg" // Change this to dynamic user image
+                    alt="User Profile"
+                    sx={{ width: 50, height: 50, border: "2px solid white", mr: 2 }}
+                /> */}
+                < ProfilePicManager showModal={showModal} setShowModal={setShowModal} imageUrl={imageUrl} setImageUrl={setImageUrl} onImageUpdate={setImageUrl} />
+                
+                   
+    
+            </Box>
+
+            <Divider sx={{ backgroundColor: "white" }} />
+
             {/* Close Button */}
             <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
                 <IconButton
@@ -102,6 +174,7 @@ export default function TopDrawerWithToggle() {
             </Box>
 
             {/* Menu Sections */}
+           
             {menuItems.map((section, index) => (
                 <React.Fragment key={index}>
                     <List>
@@ -163,6 +236,7 @@ export default function TopDrawerWithToggle() {
                                         }}
                                     >
                                         <ListItemText
+                                        
                                             primary={
                                                 <Typography
                                                     variant="body1"
@@ -176,8 +250,10 @@ export default function TopDrawerWithToggle() {
                                         />
                                     </ListItemButton>
                                 </ListItem>
+                                
                             ))}
                         </Collapse>
+                        
                     </List>
                     {index !== menuItems.length - 1 && <Divider sx={{ backgroundColor: "white" }} />}
                 </React.Fragment>
@@ -193,7 +269,10 @@ export default function TopDrawerWithToggle() {
             </IconButton>
             <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
                 {list()}
+               
             </Drawer>
         </div>
     );
 }
+
+

@@ -26,24 +26,24 @@ const AdminLogin = () => {
         </Box>
     );
 
-    useEffect(() => {
-        const verifyAuth = async () => {
-            try {
-                const response = await axios.get(
-                    "https://ghss-management-backend.vercel.app/verify-token-asAdmin",
-                    { withCredentials: true }
-                );
-              if (response.data.authenticated) {
-                    login(); // If authenticated, set global auth state
-                }
-            } catch (error) {
-                logout() 
+    // useEffect(() => {
+    //     const verifyAuth = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 "https://ghss-management-backend.vercel.app/verify-token-asAdmin",
+    //                 { withCredentials: true }
+    //             );
+    //           if (response.data.authenticated) {
+    //                 login(); // If authenticated, set global auth state
+    //             }
+    //         } catch (error) {
+    //             logout() 
                 
-            }
-        };
+    //         }
+    //     };
         
-        verifyAuth();
-    }, [login,logout]);
+    //     verifyAuth();
+    // }, [login,logout]);
     
     // how to call a fxn
     

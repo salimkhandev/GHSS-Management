@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../public/images/ghssLogo.png"; // Ensure the path to your logo is correct
+import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
 import Slider from "react-slick";
 import { Box, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
