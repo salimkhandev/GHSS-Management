@@ -167,11 +167,11 @@ router.delete('/delete-profile-pic', async (req, res) => {
 });
 
 // 📌 Route to Set Admin Token in Cookies (for testing)
-router.get('/', (req, res) => {
-    const token = jwt.sign({ id: '131', role: 'admin' }, SECRET_KEY, { expiresIn: '1h' });
-    res.cookie('AdminToken', token);
-    res.json({ message: "Admin token set successfully!" });
-});
+// router.get('/', (req, res) => {
+//     const token = jwt.sign({ id: '131', role: 'admin' }, SECRET_KEY, { expiresIn: '1h' });
+//     res.cookie('AdminToken', token);
+//     res.json({ message: "Admin token set successfully!" });
+// });
 
 module.exports = router;
 // Start server
