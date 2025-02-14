@@ -1,24 +1,26 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
+// routes for teacher profile picture
+const router = express.Router();
+// const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const fs = require('fs');
 const sharp = require('sharp'); // Import sharp for image compression
 const supabase = require('../../Configs/supabaseClient');
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
+// const cors = require('cors');
 
-// Initialize the Express app
-const app = express();
+// // Initialize the Express app
+// const app = express();
 
-// Middleware
-app.use(cookieParser());
-app.use(cors({
-    origin: [
-        'https://ghss-management.vercel.app', // Production frontend
-        'http://localhost:5173'               // Local development frontend
-    ],
-    credentials: true // Allow cookies to be sent
-}));
+// // Middleware
+// app.use(cookieParser());
+// app.use(cors({
+//     origin: [
+//         'https://ghss-management.vercel.app', // Production frontend
+//         'http://localhost:5173'               // Local development frontend
+//     ],
+//     credentials: true // Allow cookies to be sent
+// }));
 
 // Secret for JWT (change it to a secure value)
 const SECRET_KEY = 'your_jwt_secret';
@@ -45,7 +47,7 @@ const getUserIdFromCookie = (req) => {
 };
 
 // 📌 Route to Upload Profile Picture (handles both upload and update)
-app.post('/upload-profile', upload.single('profilePic'), async (req, res) => {
+router.post('/upload-profile', upload.single('profilePic'), async (req, res) => {
     const userId = getUserIdFromCookie(req);
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
@@ -87,7 +89,7 @@ app.post('/upload-profile', upload.single('profilePic'), async (req, res) => {
 });
 
 // 📌 Route to Get Profile Picture
-app.get('/profile-pic', async (req, res) => {
+router.get('/profile-pic', async (req, res) => {
     const userId = getUserIdFromCookie(req);
 
     if (!userId) {
@@ -143,7 +145,7 @@ app.get('/profile-pic', async (req, res) => {
 
 
 
-app.delete('/delete-profile-pic', async (req, res) => {
+router.delete('/delete-profile-pic', async (req, res) => {
     const userId = getUserIdFromCookie(req);
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
@@ -165,12 +167,13 @@ app.delete('/delete-profile-pic', async (req, res) => {
 });
 
 // 📌 Route to Set Admin Token in Cookies (for testing)
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     const token = jwt.sign({ id: '131', role: 'admin' }, SECRET_KEY, { expiresIn: '1h' });
     res.cookie('AdminToken', token);
     res.json({ message: "Admin token set successfully!" });
 });
 
+module.exports = router;
 // Start server
-app.listen(3000, () => console.log('Server running on port 3000'));
+// app.listen(3000, () => console.log('Server running on port 3000'));
 

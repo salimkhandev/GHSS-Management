@@ -16,7 +16,7 @@ const Top10StudentsAtten = require('./Routes/AttenPercentageForPieChart/Top10Stu
 const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
 const TeachersList =require('./Routes/TeachersList')
-const teacherProfilePic=require('./Configs/supabaseStorage')
+const teacherProfilePic=require('./Routes/TeacherProfilePic/TeacherProfilePic')
 // Use cookie-parser middleware
 app.use(cookieParser());
 app.use(cors({
@@ -32,7 +32,7 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', classSectionRoutes);
-app.use('/api', teacherProfilePic);
+app.use('/', teacherProfilePic);
 app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes
