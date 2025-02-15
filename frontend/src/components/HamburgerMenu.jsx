@@ -17,8 +17,6 @@ import {
     CircularProgress
 } from "@mui/material";
 import { useAuth } from './admin/AuthProvider';
-
-
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -28,12 +26,13 @@ import ProfilePicManager from './teacher/ProfilePic.jsx'
 export default function TopDrawerWithToggle() {
     const [open, setOpen] = useState(false);
     const [expandedSections, setExpandedSections] = React.useState({});
-    const { isAuthenticated, isAuthenticatedTeacher, login, logout } = useAuth();
+    const { isAuthenticated, isAuthenticatedTeacher, logEvent } = useAuth();
     // const [keepProfilePicUpdated, setKeepProfilePicUpdated] = useState(false);
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [username, setUsername] = useState('');
     const [showModal, setShowModal] = useState(false);
+    
 
     useEffect(() => {
         const fetchProfilePic = async () => {
@@ -52,7 +51,7 @@ export default function TopDrawerWithToggle() {
             }
         };
         fetchProfilePic();
-    }, []);
+        }, [logEvent]);
 
     const toggleDrawer = (state) => (event) => {
         if (event?.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {

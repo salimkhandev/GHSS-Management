@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import VisibilityOff from "@mui/icons-material/VisibilityOff"
+import { useAuth } from '../admin/AuthProvider';
+
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -14,6 +16,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const navigate=useNavigate()
   const [showPassword, setShowPassword] = useState(false);
+    const { loginTeacher } = useAuth();
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword); // Toggle the state
@@ -33,6 +36,7 @@ const Login = () => {
         if (response.status === 200) {
                 setLoading(false)
                 // Handle successful login
+                loginTeacher();
                 // Redirect the user or update the UI as needed
                 console.log('Login successful');
             localStorage.removeItem('attendanceSavedDate');

@@ -7,6 +7,7 @@ const AuthContext = createContext();
 // Create a provider to wrap around the app
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const [logEvent, setLogEvent] = useState(false);
     
         useEffect(() => {
             const verifyAuth = async () => {
@@ -15,11 +16,16 @@ export const AuthProvider = ({ children }) => {
                         "https://ghss-management-backend.vercel.app/verify-token-asAdmin",
                         { withCredentials: true }
                     );
+                    
                     if (response.data.authenticated) {
-                        login(); // If authenticated, set global auth state
+                        login();
+                        // setIsAuthenticated(true);
+                        //  // If authenticated, set global auth state
                     }
                 } catch (error) {
+                    console.error('Error verifying token:', error);
                     logout()
+                    // setIsAuthenticated(false);
     
                 }
             };
@@ -57,15 +63,21 @@ export const AuthProvider = ({ children }) => {
     // Function to log the user in (set global authentication state)
     const login = () => {
         setIsAuthenticated(true);
+        setLogEvent((prev) => !prev); // Toggle the boolean value
+
     };
     
   
  // Function to log the user out (set global authentication state)
     const logout = () => {
         setIsAuthenticated(false);
+        setLogEvent((prev) => !prev); // Toggle the boolean value
+
     };
         const loginTeacher = () => {
             setIsAuthenticatedTeacher(true);
+            setLogEvent((prev) => !prev); // Toggle the boolean value
+
         };
     const logoutTeacher = () => {
         setIsAuthenticatedTeacher(false);
@@ -78,7 +90,8 @@ export const AuthProvider = ({ children }) => {
             logout,
             isAuthenticatedTeacher,
             loginTeacher,
-            logoutTeacher
+            logoutTeacher,
+            logEvent
         }}>
             {children}
         </AuthContext.Provider>
