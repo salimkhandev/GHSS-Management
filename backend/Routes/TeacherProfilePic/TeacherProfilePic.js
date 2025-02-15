@@ -4,6 +4,7 @@ const multer = require('multer');
 const sharp = require('sharp'); // For image compression
 const supabase = require('../../Configs/supabaseClient');
 const jwt = require('jsonwebtoken');
+const pool = require('../../Configs/dbConfig'); // PostgreSQL connection
 
 const SECRET_KEY = 'your_jwt_secret';
 
@@ -16,134 +17,70 @@ const upload = multer({ storage: multer.memoryStorage() });
 const getUserIdFromCookie = (req) => {
     try {
         const token = req.cookies.adminToken || req.cookies.TeacherToken;
-
-        if (!token) {
-            console.error("[Auth Error] Token not found");
-            throw new Error("Token not found");
-        }
-
+        if (!token) throw new Error("Token not found");
         const decoded = jwt.verify(token, SECRET_KEY);
-        console.log("[Auth] User ID extracted:", decoded.id);
         return decoded.id;
     } catch (error) {
-        console.error("[Auth Error] Invalid or missing token:", error.message);
         return null;
     }
 };
 
 /**
- * 📌 Upload Profile Picture
+ * 📌 Upload Profile Picture & Store URL in PostgreSQL
  */
 router.post('/upload-profile', upload.single('profilePic'), async (req, res) => {
-    console.log("[Upload] Received profile picture upload request");
-
     const userId = getUserIdFromCookie(req);
+    // const userId = "131";
+    console.log("userId",userId);
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
     try {
-        console.log("[Upload] Processing image for user:", userId);
+        const fileBuffer = req.file.buffer;
+        const fileName = `users/${userId}/profile.jpg`;
 
-        const fileBuffer = req.file.buffer; // Get file buffer from memory
-        const fileName = 'profile.jpg';
-
-        // Compress and resize the image
+        // Compress image
         const compressedImageBuffer = await sharp(fileBuffer)
-            .resize(400) // Resize to 400px width
-            .jpeg({ quality: 80 }) // 80% compression
+            .resize(400)
+            .jpeg({ quality: 80 })
             .toBuffer();
 
-        console.log("[Upload] Image processed successfully");
-
-        // Upload to Supabase
-        const { error } = await supabase.storage
+        // Upload to Supabase Storage
+        const { error: uploadError } = await supabase.storage
             .from('ghss-profile-pics')
-            .upload(`users/${userId}/${fileName}`, compressedImageBuffer, {
-                upsert: true,
-                cacheControl: '0',
-            });
+            .upload(fileName, compressedImageBuffer, { upsert: true, cacheControl: '0' });
 
-        if (error) {
-            console.error("[Upload Error] Upload to Supabase failed:", error.message);
-            return res.status(500).json({ error: "Upload failed", details: error.message });
-        }
+        if (uploadError) return res.status(500).json({ error: "Upload failed", details: uploadError.message });
 
         // Get Public URL
-        const { data } = supabase.storage
-            .from('ghss-profile-pics')
-            .getPublicUrl(`users/${userId}/${fileName}`);
+        const { data } = supabase.storage.from('ghss-profile-pics').getPublicUrl(fileName);
+        const profilePicUrl = data.publicUrl;
 
-        console.log("[Upload] Image uploaded successfully:", data.publicUrl);
-        return res.json({ message: "Upload successful", imageUrl: data.publicUrl });
+        // Store URL in PostgreSQL
+        await pool.query("UPDATE teachers SET profile_pic_url = $1 WHERE id = $2", [profilePicUrl, userId]);
 
+        res.json({ message: "Upload successful", imageUrl: profilePicUrl });
     } catch (err) {
-        console.error("[Server Error] During file upload:", err.message);
-        return res.status(500).json({ error: "Server error", details: err.message });
+        res.status(500).json({ error: "Server error", details: err.message });
     }
 });
 
 /**
- * 📌 Get Profile Picture
+ * 📌 Get Profile Picture from Database
  */
 router.get('/profile-pic', async (req, res) => {
-    console.log("[Fetch] Request received for profile picture");
-
     const userId = getUserIdFromCookie(req);
-    if (!userId) {
-        console.error("[Fetch Error] User ID missing in cookies");
-        return res.status(400).json({ message: "User ID not found in cookies." });
-    }
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
     try {
-        console.log("[Fetch] Fetching teacher details for user:", userId);
+        const result = await pool.query("SELECT username, profile_pic_url FROM teachers WHERE id = $1", [userId]);
+        if (result.rows.length === 0) return res.status(404).json({ message: "User not found" });
 
-        // Fetch username
-        const { data: teacherData, error: teacherError } = await supabase
-            .from('teachers')
-            .select('username')
-            .eq('id', userId)
-            .single();
-
-        if (teacherError || !teacherData) {
-            console.error("[Fetch Error] Teacher not found in database");
-            return res.status(404).json({ message: "Teacher not found." });
-        }
-
-        console.log("[Fetch] Teacher found:", teacherData.username);
-
-        // Check if profile picture exists
-        const filePath = `users/${userId}/profile.jpg`;
-        const { data: files, error: fileError } = await supabase
-            .storage
-            .from('ghss-profile-pics')
-            .list(`users/${userId}/`);
-
-        if (fileError) {
-            console.error("[Fetch Error] Checking storage for profile picture failed:", fileError.message);
-            return res.status(500).json({ message: "Error checking profile picture." });
-        }
-
-        const fileExists = files.some(file => file.name === "profile.jpg");
-
-        if (!fileExists) {
-            console.log("[Fetch] No profile picture found for user:", userId);
-            return res.json({
-                message: "Profile picture not found.",
-                teacherName: teacherData.username,
-            });
-        }
-
-        // Generate public URL
-        const { data } = supabase.storage.from('ghss-profile-pics').getPublicUrl(filePath);
-
-        console.log("[Fetch] Returning profile picture URL:", data.publicUrl);
         res.json({
-            imageUrl: `${data.publicUrl}?timestamp=${Date.now()}`,
-            teacherName: teacherData.username,
+            teacherName: result.rows[0].username,
+            imageUrl: result.rows[0].profile_pic_url || null,
         });
-
     } catch (error) {
-        console.error("[Fetch Error] Internal server error:", error.message);
-        res.status(500).json({ message: "Internal server error", error: error.message });
+        res.status(500).json({ message: "Error fetching profile picture", error: error.message });
     }
 });
 
@@ -151,30 +88,29 @@ router.get('/profile-pic', async (req, res) => {
  * 📌 Delete Profile Picture
  */
 router.delete('/delete-profile-pic', async (req, res) => {
-    console.log("[Delete] Request received for profile picture deletion");
-
-    const userId = getUserIdFromCookie(req);
+    // const userId = getUserIdFromCookie(req);
+    const userId = "131";
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
     try {
-        console.log("[Delete] Deleting profile picture for user:", userId);
-
-        const fileName = 'profile.jpg';
-        const { error } = await supabase.storage
-            .from('ghss-profile-pics')
-            .remove([`users/${userId}/${fileName}`]);
-
-        if (error) {
-            console.error("[Delete Error] Failed to delete profile picture:", error.message);
-            return res.status(500).json({ error: "Failed to delete profile picture", details: error.message });
+        // Get profile pic URL from DB
+        const result = await pool.query("SELECT profile_pic_url FROM teachers WHERE id = $1", [userId]);
+        if (result.rows.length === 0 || !result.rows[0].profile_pic_url) {
+            return res.status(404).json({ message: "No profile picture found" });
         }
 
-        console.log("[Delete] Profile picture deleted successfully for user:", userId);
-        return res.json({ message: "Profile picture deleted successfully" });
+        const fileName = `users/${userId}/profile.jpg`;
 
+        // Delete from Supabase Storage
+        const { error } = await supabase.storage.from('ghss-profile-pics').remove([fileName]);
+        if (error) return res.status(500).json({ error: "Failed to delete image", details: error.message });
+
+        // Remove profile pic URL from DB
+        await pool.query("UPDATE teachers SET profile_pic_url = NULL WHERE id = $1", [userId]);
+
+        res.json({ message: "Profile picture deleted successfully" });
     } catch (err) {
-        console.error("[Delete Error] Server error:", err.message);
-        return res.status(500).json({ error: "Server error", details: err.message });
+        res.status(500).json({ error: "Server error", details: err.message });
     }
 });
 
