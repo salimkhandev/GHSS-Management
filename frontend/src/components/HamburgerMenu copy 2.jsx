@@ -67,7 +67,7 @@ export default function TopDrawerWithToggle() {
                 { label: "Assign Class", path: "/admin/TeacherRegistration" },
                 { label: "Register New Admin", path: "/admin/TeacherRegistration/AdminRegistration" },
                 { label: "Promote Students to Next Class", path: "/promote" },
-                { label: "Register New Students", path: "/contact" },
+                { label: "Register New Students", path: "/admission" },
             ],
         },
     ];

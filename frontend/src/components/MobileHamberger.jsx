@@ -22,7 +22,7 @@
 //         { text: "Home", path: "/" },
 //         { text: "Promote Students", path: "/promote" },
 //         { text: "Students List", path: "/studentlist" },
-//         { text: "Student Form", path: "/contact" },
+//         { text: "Student Form", path: "/admission" },
 //     ];
 
 //     // Toggle mobile drawer

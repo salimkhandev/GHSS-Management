@@ -73,7 +73,7 @@ function App() {
             {/* Protected Routes */}
             <Route element={<Protecter />}>
               <Route
-                path="/contact"
+                path="/admission"
                 element={
                   <Suspense fallback={<Loader />}>
                     <StudentForm />
