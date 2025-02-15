@@ -99,6 +99,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             formData.append("profilePic", dataURLtoFile(croppedImageDataUrl, file.name));
 
             const response = await axios.post("https://ghss-management-backend.vercel.app/upload-profile", formData, {
+            // const response = await axios.post("http://localhost:3000/upload-profile", formData, {
                 withCredentials: true,
                 headers: { "Content-Type": "multipart/form-data" },
             });
@@ -126,6 +127,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
         setDeleteLoading(true);
         try {
             await axios.delete("https://ghss-management-backend.vercel.app/delete-profile-pic", { withCredentials: true });
+            // await axios.delete("http://localhost:3000/delete-profile-pic", { withCredentials: true });
             setImageUrl(null);
             setShowModal(false);
             enqueueSnackbar("Profile picture deleted successfully!", { variant: "success" });
@@ -172,16 +174,19 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 bg-gray-800 bg-opacity-50  flex justify-center items-center z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-transparent border-2 border-blue-700 p-4 rounded-lg shadow-xl max-w-sm w-full relative">
+                        {/* Close Button */}
                         <button
                             onClick={() => setShowModal(false)}
-                            className="text-gray-800 px-4 py-2 relative left-[295px] top-[-18px] rounded-lg hover:bg-gray-200 transition"
+                            className="absolute top-[0px] right-0 text-red-200 hover:bg-blue-300 hover:text-red-500 p-1 m-1 rounded-full transition duration-300"
                         >
-                            <CloseIcon />
+                            <CloseIcon className="w-5 h-5" />
                         </button>
+
+                        {/* Image in condition */}
                         {image && (
-                            <div className="relative w-80 h-60">
+                            <div className="relative w-80 h-60 border-2  border-gray-400 rounded-md shadow-md hover:border-blue-400 transition duration-300">
                                 <Cropper
                                     image={image}
                                     crop={crop}
@@ -196,11 +201,13 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                             </div>
                         )}
 
-                        <div className="space-x-4 flex justify-center">
+                        {/* Action Buttons */}
+                        <div className="space-x-4 flex justify-center mt-4">
+                            {/* Delete Button (only visible when imageUrl exists) */}
                             {!image && imageUrl && (
                                 <button
                                     onClick={handleDelete}
-                                    className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition ease-in-out"
+                                    className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg border border-white hover:bg-red-600 focus:ring-2 focus:ring-red-400 transition duration-300 ease-in-out"
                                 >
                                     {deleteLoading ? "Deleting..." : (
                                         <span className="flex items-center">
@@ -210,21 +217,24 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     )}
                                 </button>
                             )}
+
+                            {/* Hidden File Input */}
                             <input type="file" accept="image/*" onChange={handleFileChange} id="fileInput" className="hidden" />
+
+                            {/* Upload & Done Buttons */}
                             {image ? (
                                 <button
                                     onClick={handleUpload}
-                                    className="bg-green-500 text-white mt-4 font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition ease-in-out"
+                                    className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-400 transition duration-300 ease-in-out"
                                 >
-                                    {loading ?  <CircularProgress size={20} color="inherit" />  : "Done"}
+                                    {loading ? <CircularProgress size={20} color="inherit" /> : "Done"}
                                 </button>
                             ) : (
                                 <label
                                     htmlFor="fileInput"
-                                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition ease-in-out cursor-pointer"
+                                    className="bg-blue-500 text-white border border-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition duration-300 ease-in-out cursor-pointer flex items-center"
                                 >
-                                    <UploadIcon className="mr-1" />
-                                    
+                                    <UploadIcon className="mr-2" />
                                     Upload
                                 </label>
                             )}
@@ -232,6 +242,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                     </div>
                 </div>
             )}
+
         </>
     );
     };
