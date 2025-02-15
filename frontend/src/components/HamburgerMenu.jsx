@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+// import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { SnackbarProvider, useSnackbar } from "notistack";
 import { Link } from "react-router-dom";
@@ -12,7 +14,11 @@ import {
     ListItemButton,
     ListItemText,
     IconButton,
+    Button,
     Typography,
+    Dialog,
+    DialogTitle,
+    DialogActions,
     Collapse,
     CircularProgress
 } from "@mui/material";
@@ -23,7 +29,27 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProfilePicManager from './teacher/ProfilePic.jsx'
 
+
 export default function TopDrawerWithToggle() {
+    const navigate = useNavigate();
+    
+    // const [RoleOpen, setRoleOpen] = useState(false);
+    const [showRoleModal, setShowRoleModal] = useState(false);
+    const [selectedRole, setSelectedRole] = useState(null);
+
+    // const toggleRoleDrawer = (state) => (event) => {
+    //     if (event?.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) return;
+    //     setRoleOpen(state);
+    // };
+
+
+    const handleRoleSelection = (role) => {
+        setSelectedRole(role);
+        setShowRoleModal(false); // Close modal after selection
+    };
+
+
+
     const [open, setOpen] = useState(false);
     const [expandedSections, setExpandedSections] = React.useState({});
     const { isAuthenticated, isAuthenticatedTeacher, logEvent } = useAuth();
@@ -32,15 +58,35 @@ export default function TopDrawerWithToggle() {
     const [imageUrl, setImageUrl] = useState(null);
     const [username, setUsername] = useState('');
     const [showModal, setShowModal] = useState(false);
-    
+
+    useEffect(() => {
+        if (selectedRole === "admin") {
+            navigate('/admin');
+            // close the modal
+            setShowRoleModal(false);
+            // close the drawer
+            setOpen(false);
+            // reset the selected role
+            setSelectedRole(null);
+            // close the role modal
+        } else if (selectedRole === "teacher") {
+            navigate('/teacherLogin');
+            // close the modal
+            setShowRoleModal(false);
+            // close the drawer
+            setOpen(false);
+            // reset the selected role
+            setSelectedRole(null);
+        }
+    }, [selectedRole, navigate]);
 
     useEffect(() => {
         const fetchProfilePic = async () => {
             setLoading(true);
             try {
                 const response = await axios.get("https://ghss-management-backend.vercel.app/profile-pic", { withCredentials: true });
-                
-                if (response.data.imageUrl) {   
+
+                if (response.data.imageUrl) {
                     setImageUrl(`${response.data.imageUrl}?t=${Date.now()}`);
                 }
                 setUsername(response.data.teacherName);
@@ -51,7 +97,7 @@ export default function TopDrawerWithToggle() {
             }
         };
         fetchProfilePic();
-        }, [logEvent]);
+    }, [logEvent]);
 
     const toggleDrawer = (state) => (event) => {
         if (event?.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -66,7 +112,7 @@ export default function TopDrawerWithToggle() {
             [index]: !prev[index],
         }));
     };
-    
+
 
 
 
@@ -76,7 +122,7 @@ export default function TopDrawerWithToggle() {
             title: "Teachers Portal",
             links: [
                 { label: "Take Attendance", path: "/TakeAtten" },
-                { label: "Login for your class", path: "/TeacherLogin" },
+                // { label: "Login for your class", path: "/TeacherLogin" },
                 { label: "Update Attendance Status", path: "/updateAttenStatus" },
             ],
         },
@@ -93,7 +139,7 @@ export default function TopDrawerWithToggle() {
 
 
     const list = () => (
-        
+
         <Box
             sx={{
                 width: 280,
@@ -108,26 +154,94 @@ export default function TopDrawerWithToggle() {
             }}
             role="presentation"
         >
+           {(isAuthenticated || isAuthenticatedTeacher) && (
+                <Button
+                    sx={{
+                        color: "white",
+                        backgroundColor: "#DC2626", 
+                        // Tailwind `red-600`
+                        textAlign: "left",
+                        fontSize: "0.875rem", // Equivalent to Tailwind `text-sm`
+                        textTransform: "capitalize",
+                        margin: "10px 6px",    
+                        width: "30%",
+                        padding: "3px 20px",
+                        borderRadius: "20px",
+                        
+                        "&:hover": {
+                            backgroundColor: "#B91C1C", // Tailwind `red-700`
+                        },
+                    }}
+                    onClick={() => navigate('/logout')}
+                >
+                    Logout
+                </Button>           )}
+           
             {
-                (isAuthenticated || isAuthenticatedTeacher) && (<div className="text-center">
+                (isAuthenticated || isAuthenticatedTeacher) ? (<div className="text-center">
                     <div onClick={() => setShowModal(true)} className="mb-2 cursor-pointer">
+                          
                         <div className="w-20 h-20 rounded-full mx-auto border-blue-500 border-4 flex justify-center items-center overflow-hidden bg-gray-200">
+
                             {loading ? (
                                 <CircularProgress sx={{ color: "green", width: "80%", height: "80%" }} />
 
                             ) : imageUrl ? (
+                                // for logo a btn
+                                // add a wraper
+                             
                                 <img key={imageUrl} src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
+                              
                             ) : (
+                                // for default profile picture
                                 <img src="/images/defaultPicPerson.svg" alt="Profile" className="w-full h-full object-cover" />
 
-                                
+
                             )}
                         </div>
                         <h3 className="text-lg font-bold text-white mt-2">{username}</h3>
                     </div>
-                </div>)
+                    
+                </div>) :
+                    <div>
+                        {/* <Drawer anchor="left" open={RoleOpen} onClose={toggleRoleDrawer(false)}> */}
+                            <Box sx={{ width: 280, backgroundColor: "#1E3A8A", color: "white", height: "100%" }}>
+                                <Button
+                                onClick={() => setShowRoleModal(true)}
+
+
+                                sx={{
+                                    color: "white",
+                                    fontWeight: "bold",
+                                    margin: "10px auto",
+                                    padding: "3px 20px",
+                                    borderRadius: "20px",
+                                    display: "flex",    
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    textTransform: "capitalize",
+                                    border: "2px solid white",
+                                    background: "linear-gradient(to bottom, #4d4dff, #1A8CFF)",
+                                    "&:hover": { background: "linear-gradient(to bottom, #4d4dff, #4d4dff)" },
+                                }}
+                            >
+                                Login
+                            </Button>
+                </Box>
+            {/* </Drawer> */}
+
+     
+            <Dialog open={showRoleModal} onClose={() => setShowRoleModal(false)}>
+                <DialogTitle>Login as:</DialogTitle>
+                <DialogActions>
+                    <Button onClick={() => handleRoleSelection("admin")} color="primary">Admin</Button>
+                    <Button onClick={() => handleRoleSelection("teacher")} color="secondary">Teacher</Button>
+                </DialogActions>
+            </Dialog>
+
+            </div>
             }
-             {/* Profile Picture */}
+            {/* Profile Picture */}
             <Box className="flex flex-col items-center justify-center">
                 {/* <Avatar
                     // src="/images/profilePic.jpg" // Change this to dynamic user image
@@ -135,9 +249,9 @@ export default function TopDrawerWithToggle() {
                     sx={{ width: 50, height: 50, border: "2px solid white", mr: 2 }}
                 /> */}
                 < ProfilePicManager showModal={showModal} setShowModal={setShowModal} imageUrl={imageUrl} setImageUrl={setImageUrl} onImageUpdate={setImageUrl} />
-                
-                   
-    
+
+
+
             </Box>
 
             <Divider sx={{ backgroundColor: "white" }} />
@@ -173,7 +287,7 @@ export default function TopDrawerWithToggle() {
             </Box>
 
             {/* Menu Sections */}
-           
+
             {menuItems.map((section, index) => (
                 <React.Fragment key={index}>
                     <List>
@@ -189,20 +303,20 @@ export default function TopDrawerWithToggle() {
                                     alignItems: "center",
                                     "&:hover": { backgroundColor: "#4990CF" }, // MUI hover override
                                 }}
-                                >
+                            >
                                 {section.title === 'Teachers Portal' ? (
                                     <img
                                         src="/images/teacherIcon.png"
                                         alt="Teacher Icon"
                                         className="w-14 mr-2 h-12"
                                     />
-                                ):   <img
+                                ) : <img
                                     src="/images/adminIcon.png"
                                     alt="Admin Icon"
                                     className="w-13 mr-1 h-12"
                                 />}
 
-                                <ListItemText primary={section.title}  primaryTypographyProps={{
+                                <ListItemText primary={section.title} primaryTypographyProps={{
                                     sx: { fontFamily: "Inter, sans-serif", fontWeight: "bold" },
                                     className: "m-0",
                                 }} />
@@ -235,13 +349,13 @@ export default function TopDrawerWithToggle() {
                                         }}
                                     >
                                         <ListItemText
-                                        
+
                                             primary={
                                                 <Typography
                                                     variant="body1"
-                                                    
+
                                                     component="span"
-                                                    sx={{ fontFamily: "Poppins",fontWeight: "normal", color: "white" }}
+                                                    sx={{ fontFamily: "Poppins", fontWeight: "normal", color: "white" }}
                                                 >
                                                     {item.label}
                                                 </Typography>
@@ -249,10 +363,10 @@ export default function TopDrawerWithToggle() {
                                         />
                                     </ListItemButton>
                                 </ListItem>
-                                
+
                             ))}
                         </Collapse>
-                        
+
                     </List>
                     {index !== menuItems.length - 1 && <Divider sx={{ backgroundColor: "white" }} />}
                 </React.Fragment>
@@ -268,10 +382,8 @@ export default function TopDrawerWithToggle() {
             </IconButton>
             <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
                 {list()}
-               
+
             </Drawer>
         </div>
     );
 }
-
-
