@@ -88,8 +88,8 @@ router.get('/profile-pic', async (req, res) => {
  * 📌 Delete Profile Picture
  */
 router.delete('/delete-profile-pic', async (req, res) => {
-    // const userId = getUserIdFromCookie(req);
-    const userId = "131";
+    const userId = getUserIdFromCookie(req);
+    // const userId = "131";
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
     try {
