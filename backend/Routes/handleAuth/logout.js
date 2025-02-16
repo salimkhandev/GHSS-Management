@@ -7,19 +7,26 @@ router.post("/", (req, res) => {
     if (!req.cookies) {
         return res.status(400).json({ error: "No cookies found" });
     }
-    console.log("Logo   ut request received");
-    res.clearCookie('adminToken', {
-        httpOnly: true,  // Set to false for simplicity
-        sameSite: 'None',
+    console.log("Logout request  received ok");
+    
+    res.clearCookie("adminToken", {
+        httpOnly: true,
         secure: true,
-        maxAge: 3600000 // 1 hour
+        sameSite: "None",
+        domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
+        path: "/", // 👈 Must match the path used when setting the cookie
     });
-    res.clearCookie('teacherToken', {
-        httpOnly: true,  // Set to false for simplicity
-        sameSite: 'None',
+    res.status(200).json({ message: "Logged out successfully" });
+
+    res.clearCookie("adminToken", {
+        httpOnly: true,
         secure: true,
-        maxAge: 3600000 // 1 hour
+        sameSite: "None",
+        domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
+        path: "/", // 👈 Must match the path used when setting the cookie
     });
+    res.status(200).json({ message: "Logged out successfully" });
+
     
     res.status(200).json({ message: "Logged out successfully" });
     // log
