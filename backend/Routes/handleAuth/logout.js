@@ -13,16 +13,16 @@ router.post("/", (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
-        path: "/", // 👈 Must match the path used when setting the cookie
+        // domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
+        // path: "/", // 👈 Must match the path used when setting the cookie
     });
 
     res.clearCookie("adminToken", {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
-        path: "/", // 👈 Must match the path used when setting the cookie
+        // domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
+        // path: "/", // 👈 Must match the path used when setting the cookie
     });
 
     
