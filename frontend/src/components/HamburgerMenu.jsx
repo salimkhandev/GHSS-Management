@@ -122,7 +122,6 @@ export default function TopDrawerWithToggle() {
             });
 
             navigate("/"); // Redirect to home
-            window.location.reload(); // Reload to clear user state
         } catch (error) {
             console.error("Logout failed:", error);
         }
