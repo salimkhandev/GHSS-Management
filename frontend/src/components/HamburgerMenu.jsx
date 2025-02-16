@@ -112,16 +112,22 @@ export default function TopDrawerWithToggle() {
             [index]: !prev[index],
         }));
     };
+// use fetch to logout
 
     const handleLogout = async () => {
         try {
-            await axios.post("https://ghss-management-backend.vercel.app/logout", {}, { withCredentials: true });
-            navigate("/");
-            window.location.reload();
+            await fetch("https://ghss-management-backend.vercel.app/logout", {
+                method: "POST",
+                credentials: "include", // Ensures cookies are sent
+            });
+
+            navigate("/"); // Redirect to home
+            window.location.reload(); // Reload to clear user state
         } catch (error) {
             console.error("Logout failed:", error);
         }
     };
+
 
 
 
