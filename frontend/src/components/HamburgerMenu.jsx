@@ -115,12 +115,14 @@ export default function TopDrawerWithToggle() {
 
     const handleLogout = async () => {
         try {
-            await axios.post("https://ghss-management-backend.vercel.app/logout", { withCredentials: true });
+            await axios.post("https://ghss-management-backend.vercel.app/logout", {}, { withCredentials: true });
             navigate("/");
+            window.location.reload();
         } catch (error) {
             console.error("Logout failed:", error);
         }
     };
+
 
 
 
