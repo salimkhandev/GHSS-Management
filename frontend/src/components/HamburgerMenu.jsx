@@ -78,6 +78,15 @@ export default function TopDrawerWithToggle() {
             // reset the selected role
             setSelectedRole(null);
         }
+        else if (selectedRole === "teacherAdmin") {
+            navigate('/teacherAdminLogin');
+            // close the modal
+            setShowRoleModal(false);
+            // close the drawer
+            setOpen(false);
+            // reset the selected role
+            setSelectedRole(null);
+        }
     }, [selectedRole, navigate]);
 
     useEffect(() => {
@@ -306,6 +315,20 @@ export default function TopDrawerWithToggle() {
                                 >
                                     Teacher
                                 </Button>
+                                <Button
+                                    onClick={() => handleRoleSelection("teacherAdmin")}
+                                    sx={{
+                                        backgroundColor: "#28A745",
+                                        color: "white",
+                                        fontWeight: "bold",
+                                        borderRadius: 2,
+                                        textTransform: "none",
+                                        "&:hover": { backgroundColor: "#218838" }
+                                    }}
+                                >
+                                    Teacher & Admin
+                                </Button>   
+                                
                             </DialogActions>
                         </Dialog>
 
