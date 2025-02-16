@@ -1,16 +1,49 @@
-import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    CssBaseline,
+    Grid,
+    IconButton,
+    InputAdornment,
+    Paper,
+    TextField,
+    Typography
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useState } from "react";
+
+const defaultTheme = createTheme();
 
 const LoginForm = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const [admin, setAdmin] = useState({ username: "", password: "" });
-    const [teacher, setTeacher] = useState({ username: "", password: "" });
     const [loading, setLoading] = useState(false);
+
+    const [admin, setAdmin] = useState({
+        username: "",
+        password: "",
+        showPassword: false
+    });
+
+    const [teacher, setTeacher] = useState({
+        username: "",
+        password: "",
+        showPassword: false
+    });
+
+    const togglePasswordVisibility = (type) => {
+        if (type === "admin") {
+            setAdmin({ ...admin, showPassword: !admin.showPassword });
+        } else {
+            setTeacher({ ...teacher, showPassword: !teacher.showPassword });
+        }
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setLoading(true); // Start loading
+        setLoading(true);
 
         try {
             const [adminRes, teacherRes] = await Promise.all([
@@ -18,101 +51,172 @@ const LoginForm = () => {
                     method: "POST",
                     credentials: "include",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(admin),
+                    body: JSON.stringify({ username: admin.username, password: admin.password }),
                 }),
                 fetch("https://ghss-management-backend.vercel.app/teacherLogin", {
                     method: "POST",
                     credentials: "include",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(teacher),
+                    body: JSON.stringify({ username: teacher.username, password: teacher.password }),
                 }),
             ]);
 
-            const adminData = await adminRes.json();
-            const teacherData = await teacherRes.json();
+            const [adminData, teacherData] = await Promise.all([
+                adminRes.json(),
+                teacherRes.json(),
+            ]);
 
             if (adminRes.ok) {
                 enqueueSnackbar("✅ Admin Login Successful!", { variant: "success" });
             } else {
-                enqueueSnackbar(`❌ Admin Login Failed: ${adminData.message}`, { variant: "error" });
+                enqueueSnackbar(`❌ Admin Error: ${adminData.message}`, { variant: "error" });
             }
 
             if (teacherRes.ok) {
                 enqueueSnackbar("✅ Teacher Login Successful!", { variant: "success" });
             } else {
-                enqueueSnackbar(`❌ Teacher Login Failed: ${teacherData.message}`, { variant: "error" });
+                enqueueSnackbar(`❌ Teacher Error: ${teacherData.message}`, { variant: "error" });
             }
         } catch (error) {
-            enqueueSnackbar("❌ Something went wrong. Please try again.", { variant: "error" });
-            console.error("Login failed:", error);
+            enqueueSnackbar("❌ Network Error. Please try again.", { variant: "error" });
+            console.error("Login error:", error);
         } finally {
-            setLoading(false); // Stop loading
+            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
-                <h2 className="text-2xl font-bold text-center text-gray-700">Admin & Teacher Login</h2>
+        <ThemeProvider theme={defaultTheme}>
+            <Grid container component="main" sx={{ height: "100vh" }}>
+                <CssBaseline />
+                <Grid
+                    item
+                    xs={12}
+                    container
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                        backgroundImage: "url(https://source.unsplash.com/random?school)",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundColor: (t) =>
+                            t.palette.mode === "light"
+                                ? t.palette.grey[50]
+                                : t.palette.grey[900],
+                    }}
+                >
+                    <Grid item xs={10} sm={8} md={5} component={Paper} elevation={6} square>
+                        <Box sx={{ p: 4, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <Typography component="h1" variant="h5" sx={{ mb: 2, textTransform: "capitalize" }}>
+                                Admin & Teacher Login
+                            </Typography>
 
-                <form onSubmit={handleLogin} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    {/* Admin Login */}
-                    <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-gray-600">Admin Login</h3>
-                        <input
-                            type="text"
-                            placeholder="Admin Username"
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={admin.username}
-                            onChange={(e) => setAdmin({ ...admin, username: e.target.value })}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Admin Password"
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={admin.password}
-                            onChange={(e) => setAdmin({ ...admin, password: e.target.value })}
-                        />
-                    </div>
+                            <Box component="form" onSubmit={handleLogin} noValidate sx={{ width: "100%" }}>
+                                {/* Admin Login Form */}
+                                <Paper sx={{ p: 3, mb: 3, width: "100%" }} elevation={3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        👨‍💼 Admin Login
+                                    </Typography>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        label="Admin Username"
+                                        autoComplete="username"
+                                        value={admin.username}
+                                        onChange={(e) =>
+                                            setAdmin({ ...admin, username: e.target.value })
+                                        }
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        label="Admin Password"
+                                        type={admin.showPassword ? "text" : "password"}
+                                        autoComplete="current-password"
+                                        value={admin.password}
+                                        onChange={(e) =>
+                                            setAdmin({ ...admin, password: e.target.value })
+                                        }
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={() => togglePasswordVisibility("admin")}>
+                                                        {admin.showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </Paper>
 
-                    {/* Teacher Login */}
-                    <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-gray-600">Teacher Login</h3>
-                        <input
-                            type="text"
-                            placeholder="Teacher Username"
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                            value={teacher.username}
-                            onChange={(e) => setTeacher({ ...teacher, username: e.target.value })}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Teacher Password"
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                            value={teacher.password}
-                            onChange={(e) => setTeacher({ ...teacher, password: e.target.value })}
-                        />
-                    </div>
+                                {/* Teacher Login Form */}
+                                <Paper sx={{ p: 3, mb: 3, width: "100%" }} elevation={3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        👨‍🏫 Teacher Login
+                                    </Typography>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        label="Teacher Username"
+                                        autoComplete="username"
+                                        value={teacher.username}
+                                        onChange={(e) =>
+                                            setTeacher({ ...teacher, username: e.target.value })
+                                        }
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        label="Teacher Password"
+                                        type={teacher.showPassword ? "text" : "password"}
+                                        autoComplete="current-password"
+                                        value={teacher.password}
+                                        onChange={(e) =>
+                                            setTeacher({ ...teacher, password: e.target.value })
+                                        }
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={() => togglePasswordVisibility("teacher")}>
+                                                        {teacher.showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </Paper>
 
-                    {/* Submit Button */}
-                    <div className="col-span-1 md:col-span-2">
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition flex items-center justify-center"
-                            disabled={loading}
-                        >
-                            {loading ? <CircularProgress size={24} color="inherit" /> : "Login Both"}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                                {/* textTranform */}
+
+                                {/* Submit Button */}
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    disabled={loading}
+                                    sx={{ textTransform: "capitalize" }}
+                                >
+                                    {loading ? <CircularProgress size={24} color="inherit" /> : "Login Both Accounts"}
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ThemeProvider>
     );
 };
 
-// Wrapping the component inside SnackbarProvider
 const App = () => (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+    >
         <LoginForm />
     </SnackbarProvider>
 );

@@ -262,7 +262,7 @@ export default function TopDrawerWithToggle() {
                                     // background: "linear-gradient(to bottom, #ffffff, #f8f9fa)",
                                     backgroundColor: "#ffffcc",
                                     padding: 2,
-                                    width: 350
+                                    width: 450
                                 }
                             }}
                         >
