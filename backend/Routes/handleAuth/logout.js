@@ -3,6 +3,7 @@ const router = express.Router();
 
 
 router.post("/", (req, res) => {
+    console.log("Logout request received");
     res.clearCookie('adminToken', {
         httpOnly: true,  // Set to false for simplicity
         sameSite: 'None',
