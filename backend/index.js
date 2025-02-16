@@ -3,7 +3,7 @@ const pool = require('./Configs/dbConfig')
 const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
-const teacherAdmin=require('./Routes/authRoutes/teacherAdminAuth')
+const teacherAdmin=require('./Routes/handleAuth/teacherAdminAuth')
 const classSectionRoutes = require('./Routes/ClassesSections/ClassesSections'); // Adjust the path as needed
 const studentRoutes = require('./Routes/Students/students');
 const bulkupload = require('./Routes/Students/bulkupload')
@@ -17,6 +17,7 @@ const verifyTokenAsAdmin=require('./Routes/RBA/verifyTokenAsAdmin')
 const verifyTokenAsTeacher=require('./Routes/RBA/verifyTokenAsTeacher')
 const TeachersList =require('./Routes/TeachersList')
 const teacherProfilePic=require('./Routes/TeacherProfilePic/TeacherProfilePic')
+const logout=require('./Routes/handleAuth/logout')
 // Use cookie-parser middleware
 app.use(cookieParser());
 app.use(cors({
@@ -36,6 +37,7 @@ app.use('/', teacherProfilePic);
 app.use('/', studentsAttendance);
 app.use('/', teacherAdmin);
 app.use('/', studentRoutes); // Use student routes
+app.use('/logout', logout);
 app.use('/TeachersList', TeachersList); // Use student routes
 app.use('/students/bulk', bulkupload);
 // app.use('/attendanceGroupedByDate', attendanceGroupedByDate);

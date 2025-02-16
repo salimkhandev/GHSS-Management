@@ -113,6 +113,15 @@ export default function TopDrawerWithToggle() {
         }));
     };
 
+    const handleLogout = async () => {
+        try {
+            await axios.post("https://ghss-management-backend.vercel.app/logout", { withCredentials: true });
+            navigate("/");
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
 
 
 
@@ -172,7 +181,7 @@ export default function TopDrawerWithToggle() {
                             backgroundColor: "#B91C1C", // Tailwind `red-700`
                         },
                     }}
-                    onClick={() => navigate('/logout')}
+                    onClick={handleLogout}
                 >
                     Logout
                 </Button>           )}
@@ -231,13 +240,72 @@ export default function TopDrawerWithToggle() {
             {/* </Drawer> */}
 
      
-            <Dialog open={showRoleModal} onClose={() => setShowRoleModal(false)}>
-                <DialogTitle>Login as:</DialogTitle>
-                <DialogActions>
-                    <Button onClick={() => handleRoleSelection("admin")} color="primary">Admin</Button>
-                    <Button onClick={() => handleRoleSelection("teacher")} color="secondary">Teacher</Button>
-                </DialogActions>
-            </Dialog>
+                        <Dialog
+                            open={showRoleModal}
+                            onClose={() => setShowRoleModal(false)}
+                            PaperProps={{
+                                sx: {
+                                    borderRadius: 3,
+                                    border: "1px solid #ddd",
+                                    boxShadow: 5,
+                                    // background: "linear-gradient(to bottom, #ffffff, #f8f9fa)",
+                                    backgroundColor: "#ffffcc",
+                                    padding: 2,
+                                    width: 350
+                                }
+                            }}
+                        >
+                            <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: 12,color: "#333" }}>
+                                🔑 For Admin: <span style={{ color: "#d9534f" }}>Username: admin | Password: admin</span>
+                            </Typography>
+                            <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: 12,color: "#333" }}>
+                                📚 For Teacher: <span style={{ color: "#5cb85c" }}>Username: Kamal | Password: Kamal</span>
+                            </Typography>
+                            <DialogTitle
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    fontFamily: "serif",
+                                    fontWeight: "bold",
+                                    fontSize: 20,
+                                    
+                                }}
+                            >
+                                Login as:
+                                <IconButton onClick={() => setShowRoleModal(false)} sx={{ color: "#555" }}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </DialogTitle>
+                            <DialogActions sx={{ justifyContent: "center", padding: "16px" }}>
+                                <Button
+                                    onClick={() => handleRoleSelection("admin")}
+                                    sx={{
+                                        backgroundColor: " #ff9999",
+                                        color: "white",
+                                        fontWeight: "bold",
+                                        borderRadius: 2,
+                                        textTransform: "none",
+                                        "&:hover": { backgroundColor: "#ff6666" }
+                                    }}
+                                >
+                                    Admin
+                                </Button>
+                                <Button
+                                    onClick={() => handleRoleSelection("teacher")}
+                                    sx={{
+                                        backgroundColor: "#28A745",
+                                        color: "white",
+                                        fontWeight: "bold",
+                                        borderRadius: 2,
+                                        textTransform: "none",
+                                        "&:hover": { backgroundColor: "#218838" }
+                                    }}
+                                >
+                                    Teacher
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
 
             </div>
             }
