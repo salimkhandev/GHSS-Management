@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Home from './components/Home';
 import AdminLogin from "./components/admin/AdminLogin";
+import TeacherAdminLogin from "./components/admin/TeacherAdminLogin";
 import { AuthProvider } from "./components/admin/AuthProvider";
 import Protecter from "./components/admin/ProtectedLoginRoute";
 import Box from '@mui/material/Box';
@@ -65,6 +66,7 @@ function App() {
            
             <Route path="/TeacherLogin" element={<TeacherLogin />} />
             <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/teacherAdminLogin" element={<TeacherAdminLogin />} />
 
             {/* Catch-all route */}
             <Route path="*" element={<h1>Not Found</h1>} />

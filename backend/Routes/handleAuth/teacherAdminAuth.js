@@ -73,7 +73,9 @@ router.post('/admin-register', async (req, res) => {
         return res.status(400).json({ message: "Username and password are required" });
     }
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(pa
+            
+            ssword, 10);
 
         // Insert the new admin into the database
         const result = await pool.query(

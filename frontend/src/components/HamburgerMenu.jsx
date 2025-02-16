@@ -127,11 +127,6 @@ export default function TopDrawerWithToggle() {
         }
     };
 
-
-
-
-
-
     // Menu Sections with Links
     const menuItems = [
         {

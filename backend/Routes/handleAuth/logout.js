@@ -17,7 +17,7 @@ router.post("/", (req, res) => {
         // path: "/", // 👈 Must match the path used when setting the cookie
     });
 
-    res.clearCookie("teacherToken", {
+    res.clearCookie("TeacherToken", {
         httpOnly: true,
         secure: true,
         sameSite: "None",
