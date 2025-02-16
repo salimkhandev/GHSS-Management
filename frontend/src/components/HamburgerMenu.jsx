@@ -1,38 +1,124 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // import { SnackbarProvider, useSnackbar } from "notistack";
-import { Link } from "react-router-dom";
 import {
-    Box,
-    Drawer,
-    List,
-    Divider,
-    ListItem,
-    ListItemButton,
-    ListItemText,
-    IconButton,
-    Button,
-    Typography,
-    Dialog,
-    DialogTitle,
-    DialogActions,
-    Collapse,
-    CircularProgress
-} from "@mui/material";
-import { useAuth } from './admin/AuthProvider';
-import MenuIcon from "@mui/icons-material/Menu";
+    AdminPanelSettings as AdminIcon,
+    Key as KeyIcon,
+    ExitToApp as LogoutIcon,
+    School as SchoolIcon,
+    SupervisorAccount as TeacherAdminIcon
+} from '@mui/icons-material';
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ProfilePicManager from './teacher/ProfilePic.jsx'
+import MenuIcon from "@mui/icons-material/Menu";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Collapse,
+    Dialog,
+    Divider,
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Typography
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import { useAuth } from './admin/AuthProvider';
+import ProfilePicManager from './teacher/ProfilePic.jsx';
 
+const THEME_COLORS = {
+    primary: '#1a237e', // Deep indigo
+    secondary: '#303f9f',
+    accent: '#3949ab',
+    hover: '#283593',
+    text: '#ffffff',
+    danger: '#d32f2f'
+};
+
+// Add these modal styles
+const modalStyles = {
+    dialog: {
+        '& .MuiDialog-paper': {
+            borderRadius: 3,
+            border: 'none',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+            background: 'linear-gradient(135deg, #ffffff, #f8f9fa)',
+            padding: { xs: 2, sm: 3 },
+            width: { xs: '95%', sm: '80%', md: '70%' },
+            maxWidth: '800px',
+            minWidth: { sm: '400px' },
+            overflow: 'hidden',
+            animation: 'modalFadeIn 0.3s ease-out'
+        },
+        '& .MuiBackdrop-root': {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(5px)'
+        }
+    },
+    credentialsBox: {
+        backgroundColor: 'rgba(255, 248, 220, 0.9)',
+        borderRadius: 2,
+        padding: { xs: 1.5, sm: 2 },
+        margin: { xs: 1, sm: 2 },
+        border: '1px solid #ffe4b5',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        animation: 'slideDown 0.3s ease-out'
+    },
+    title: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: { xs: 1, sm: 2 },
+        borderBottom: '2px solid #f0f0f0',
+        marginBottom: 2
+    },
+    buttonsContainer: {
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: { xs: 1.5, sm: 2 },
+        padding: { xs: 2, sm: 3 },
+        justifyContent: 'center',
+        width: '100%'
+    },
+    button: (color) => ({
+        minWidth: { xs: '100%', sm: '180px' },
+        padding: '12px 24px',
+        borderRadius: 2,
+        fontWeight: 600,
+        textTransform: 'none',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        backgroundColor: color,
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1.5,
+        '& .MuiSvgIcon-root': {
+            fontSize: '24px',
+            transition: 'transform 0.3s ease'
+        },
+        '&:hover': {
+            transform: 'translateY(-2px)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            backgroundColor: `${color}dd`, // Adding transparency to hover color
+            '& .MuiSvgIcon-root': {
+                transform: 'scale(1.1) rotate(10deg)'
+            }
+        }
+    })
+};
 
 export default function TopDrawerWithToggle() {
     const navigate = useNavigate();
-    
+
     // const [RoleOpen, setRoleOpen] = useState(false);
     const [showRoleModal, setShowRoleModal] = useState(false);
     const [selectedRole, setSelectedRole] = useState(null);
@@ -121,7 +207,7 @@ export default function TopDrawerWithToggle() {
             [index]: !prev[index],
         }));
     };
-// use fetch to logout
+    // use fetch to logout
 
     const handleLogout = async () => {
         try {
@@ -164,43 +250,51 @@ export default function TopDrawerWithToggle() {
             sx={{
                 width: 280,
                 height: "100%",
-                backgroundColor: "#1E3A8A", // Deep Blue Background
-                color: "white", // White Text
+                backgroundColor: THEME_COLORS.primary,
+                color: THEME_COLORS.text,
                 display: "flex",
                 flexDirection: "column",
-                boxShadow: "4px 0 10px rgba(0, 0, 0, 0.2)", // Subtle shadow for depth
-                borderRight: "3px solid #fff", // Elegant border
-                overflowY: "auto", // Make the drawer scrollable
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                borderRight: "none",
+                overflowY: "auto",
+                '&::-webkit-scrollbar': {
+                    width: '8px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '4px',
+                }
             }}
             role="presentation"
         >
-           {(isAuthenticated || isAuthenticatedTeacher) && (
+            {(isAuthenticated || isAuthenticatedTeacher) && (
                 <Button
+                    startIcon={<LogoutIcon />}
                     sx={{
-                        color: "white",
-                        backgroundColor: "#DC2626", 
-                        // Tailwind `red-600`
+                        color: THEME_COLORS.text,
+                        backgroundColor: THEME_COLORS.danger,
                         textAlign: "left",
-                        fontSize: "0.875rem", // Equivalent to Tailwind `text-sm`
-                        textTransform: "capitalize",
-                        margin: "10px 6px",    
-                        width: "30%",
-                        padding: "3px 20px",
-                        borderRadius: "20px",
-                        
+                        fontSize: "0.875rem",
+                        fontFamily: "'Poppins', sans-serif",
+                        textTransform: "none",
+                        margin: "16px",
+                        padding: "8px 16px",
+                        borderRadius: "8px",
+                        transition: "all 0.2s ease",
                         "&:hover": {
-                            backgroundColor: "#B91C1C", // Tailwind `red-700`
+                            backgroundColor: "#b71c1c",
+                            transform: "translateY(-1px)",
                         },
                     }}
                     onClick={handleLogout}
                 >
                     Logout
-                </Button>           )}
-           
+                </Button>)}
+
             {
                 (isAuthenticated || isAuthenticatedTeacher) ? (<div className="text-center">
                     <div onClick={() => setShowModal(true)} className="mb-2 cursor-pointer">
-                          
+
                         <div className="w-20 h-20 rounded-full mx-auto border-blue-500 border-4 flex justify-center items-center overflow-hidden bg-gray-200">
 
                             {loading ? (
@@ -209,9 +303,9 @@ export default function TopDrawerWithToggle() {
                             ) : imageUrl ? (
                                 // for logo a btn
                                 // add a wraper
-                             
+
                                 <img key={imageUrl} src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
-                              
+
                             ) : (
                                 // for default profile picture
                                 <img src="/images/defaultPicPerson.svg" alt="Profile" className="w-full h-full object-cover" />
@@ -221,12 +315,12 @@ export default function TopDrawerWithToggle() {
                         </div>
                         <h3 className="text-lg font-bold text-white mt-2">{username}</h3>
                     </div>
-                    
+
                 </div>) :
                     <div>
                         {/* <Drawer anchor="left" open={RoleOpen} onClose={toggleRoleDrawer(false)}> */}
-                            <Box sx={{ width: 280, backgroundColor: "#1E3A8A", color: "white", height: "100%" }}>
-                                <Button
+                        <Box sx={{ width: 280, backgroundColor: "#1E3A8A", color: "white", height: "100%" }}>
+                            <Button
                                 onClick={() => setShowRoleModal(true)}
 
 
@@ -236,7 +330,7 @@ export default function TopDrawerWithToggle() {
                                     margin: "10px auto",
                                     padding: "3px 20px",
                                     borderRadius: "20px",
-                                    display: "flex",    
+                                    display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
                                     textTransform: "capitalize",
@@ -247,92 +341,98 @@ export default function TopDrawerWithToggle() {
                             >
                                 Login
                             </Button>
-                </Box>
-            {/* </Drawer> */}
+                        </Box>
+                        {/* </Drawer> */}
 
-     
+
                         <Dialog
                             open={showRoleModal}
                             onClose={() => setShowRoleModal(false)}
-                            PaperProps={{
-                                sx: {
-                                    borderRadius: 3,
-                                    border: "1px solid #ddd",
-                                    boxShadow: 5,
-                                    // background: "linear-gradient(to bottom, #ffffff, #f8f9fa)",
-                                    backgroundColor: "#ffffcc",
-                                    padding: 2,
-                                    width: 450
-                                }
-                            }}
+                            sx={modalStyles.dialog}
                         >
-                            <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: 12,color: "#333" }}>
-                                🔑 For Admin: <span style={{ color: "#d9534f" }}>Username: admin | Password: admin</span>
-                            </Typography>
-                            <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: 12,color: "#333" }}>
-                                📚 For Teacher: <span style={{ color: "#5cb85c" }}>Username: Kamal | Password: Kamal</span>
-                            </Typography>
-                            <DialogTitle
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    fontFamily: "serif",
-                                    fontWeight: "bold",
-                                    fontSize: 20,
-                                    
-                                }}
-                            >
-                                Login as:
-                                <IconButton onClick={() => setShowRoleModal(false)} sx={{ color: "#555" }}>
+                            <Box sx={modalStyles.credentialsBox}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                    <KeyIcon sx={{ color: '#ffa000', fontSize: 24 }} />
+                                    <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555' }}>
+                                        Demo Credentials
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        <AdminIcon sx={{ color: '#d9534f', fontSize: 20 }} />
+                                        <Typography variant="body2" sx={{ color: '#666' }}>
+                                            Admin: <span style={{ color: '#d9534f', fontWeight: 500 }}>Username: admin | Password: admin</span>
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        <SchoolIcon sx={{ color: '#5cb85c', fontSize: 20 }} />
+                                        <Typography variant="body2" sx={{ color: '#666' }}>
+                                            Teacher: <span style={{ color: '#5cb85c', fontWeight: 500 }}>Username: Kamal | Password: Kamal</span>
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Box>
+
+                            <Box sx={modalStyles.title}>
+                                <Typography variant="h5" sx={{ 
+                                    fontWeight: 700,
+                                    fontFamily: "'Poppins', sans-serif",
+                                    color: '#2c3e50'
+                                }}>
+                                    Select Role
+                                </Typography>
+                                <IconButton 
+                                    onClick={() => setShowRoleModal(false)}
+                                    sx={{ 
+                                        color: '#555',
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'rotate(90deg)',
+                                            backgroundColor: 'rgba(0,0,0,0.05)'
+                                        }
+                                    }}
+                                >
                                     <CloseIcon />
                                 </IconButton>
-                            </DialogTitle>
-                            <DialogActions sx={{ justifyContent: "center", padding: "16px" }}>
+                            </Box>
+
+                            <Box sx={modalStyles.buttonsContainer}>
                                 <Button
                                     onClick={() => handleRoleSelection("admin")}
-                                    sx={{
-                                        backgroundColor: " #ff9999",
-                                        color: "white",
-                                        fontWeight: "bold",
-                                        borderRadius: 2,
-                                        textTransform: "none",
-                                        "&:hover": { backgroundColor: "#ff6666" }
-                                    }}
+                                    startIcon={<AdminIcon />}
+                                    sx={modalStyles.button('#ff6b6b')}
                                 >
                                     Admin
                                 </Button>
                                 <Button
                                     onClick={() => handleRoleSelection("teacher")}
-                                    sx={{
-                                        backgroundColor: "#28A745",
-                                        color: "white",
-                                        fontWeight: "bold",
-                                        borderRadius: 2,
-                                        textTransform: "none",
-                                        "&:hover": { backgroundColor: "#218838" }
-                                    }}
+                                    startIcon={<SchoolIcon />}
+                                    sx={modalStyles.button('#4CAF50')}
                                 >
                                     Teacher
                                 </Button>
                                 <Button
                                     onClick={() => handleRoleSelection("teacherAdmin")}
-                                    sx={{
-                                        backgroundColor: "#28A745",
-                                        color: "white",
-                                        fontWeight: "bold",
-                                        borderRadius: 2,
-                                        textTransform: "none",
-                                        "&:hover": { backgroundColor: "#218838" }
-                                    }}
+                                    startIcon={<TeacherAdminIcon />}
+                                    sx={modalStyles.button('#2196F3')}
                                 >
                                     Teacher & Admin
-                                </Button>   
-                                
-                            </DialogActions>
+                                </Button>
+                            </Box>
+
+                            <style jsx global>{`
+                                @keyframes modalFadeIn {
+                                    from { opacity: 0; transform: scale(0.95); }
+                                    to { opacity: 1; transform: scale(1); }
+                                }
+                                @keyframes slideDown {
+                                    from { opacity: 0; transform: translateY(-10px); }
+                                    to { opacity: 1; transform: translateY(0); }
+                                }
+                            `}</style>
                         </Dialog>
 
-            </div>
+                    </div>
             }
             {/* Profile Picture */}
             <Box className="flex flex-col items-center justify-center">
@@ -388,35 +488,37 @@ export default function TopDrawerWithToggle() {
                             <ListItemButton
                                 onClick={() => toggleSection(index)}
                                 sx={{
-                                    backgroundColor: expandedSections[index] ? "#4990CF" : "#2B4A91", // Only applies when expanded
-                                    borderRadius: "6px", // Ensures border radius applies
-                                    padding: "8px 26px", // Matches Tailwind padding
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    "&:hover": { backgroundColor: "#4990CF" }, // MUI hover override
+                                    backgroundColor: expandedSections[index] ? THEME_COLORS.accent : THEME_COLORS.secondary,
+                                    margin: "4px 8px",
+                                    borderRadius: "8px",
+                                    padding: "12px 16px",
+                                    transition: "all 0.2s ease",
+                                    "&:hover": {
+                                        backgroundColor: THEME_COLORS.hover,
+                                        transform: "translateX(4px)",
+                                    },
                                 }}
                             >
                                 {section.title === 'Teachers Portal' ? (
-                                    <img
-                                        src="/images/teacherIcon.png"
-                                        alt="Teacher Icon"
-                                        className="w-14 mr-2 h-12"
-                                    />
-                                ) : <img
-                                    src="/images/adminIcon.png"
-                                    alt="Admin Icon"
-                                    className="w-13 mr-1 h-12"
-                                />}
-
-                                <ListItemText primary={section.title} primaryTypographyProps={{
-                                    sx: { fontFamily: "Inter, sans-serif", fontWeight: "bold" },
-                                    className: "m-0",
-                                }} />
-                                {expandedSections[index] ? (
-                                    <ExpandLessIcon className="text-lg ml-2" />
+                                    <SchoolIcon sx={{ mr: 2, fontSize: 24 }} />
                                 ) : (
-                                    <ExpandMoreIcon className="text-lg ml-2" />
+                                    <AdminIcon sx={{ mr: 2, fontSize: 24 }} />
+                                )}
+
+                                <ListItemText
+                                    primary={section.title}
+                                    primaryTypographyProps={{
+                                        sx: {
+                                            fontFamily: "'Poppins', sans-serif",
+                                            fontWeight: 600,
+                                            fontSize: "1rem"
+                                        },
+                                    }}
+                                />
+                                {expandedSections[index] ? (
+                                    <ExpandLessIcon />
+                                ) : (
+                                    <ExpandMoreIcon />
                                 )}
                             </ListItemButton>
                         </ListItem>
@@ -429,26 +531,30 @@ export default function TopDrawerWithToggle() {
                                         to={item.path}
                                         onClick={toggleDrawer(false)}
                                         sx={{
-                                            fontFamily: "Poppins",
-                                            paddingLeft: 3,
-
-                                            borderRadius: "0 25px 25px 0",
-
-
-                                            marginBottom: "5px",
-                                            backgroundColor: "#1E40AF",
-                                            paddingRight: 2,
-                                            "&:hover": { backgroundColor: "#800080" },
+                                            fontFamily: "'Poppins', sans-serif",
+                                            padding: "8px 16px",
+                                            marginLeft: "24px",
+                                            marginRight: "8px",
+                                            marginY: "2px",
+                                            borderRadius: "8px",
+                                            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                                            transition: "all 0.2s ease",
+                                            "&:hover": {
+                                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                                transform: "translateX(4px)",
+                                            },
                                         }}
                                     >
                                         <ListItemText
-
                                             primary={
                                                 <Typography
-                                                    variant="body1"
-
-                                                    component="span"
-                                                    sx={{ fontFamily: "Poppins", fontWeight: "normal", color: "white" }}
+                                                    variant="body2"
+                                                    sx={{
+                                                        fontFamily: "'Poppins', sans-serif",
+                                                        fontWeight: 400,
+                                                        color: THEME_COLORS.text,
+                                                        fontSize: "0.875rem"
+                                                    }}
                                                 >
                                                     {item.label}
                                                 </Typography>
@@ -456,12 +562,12 @@ export default function TopDrawerWithToggle() {
                                         />
                                     </ListItemButton>
                                 </ListItem>
-
                             ))}
                         </Collapse>
-
                     </List>
-                    {index !== menuItems.length - 1 && <Divider sx={{ backgroundColor: "white" }} />}
+                    {index !== menuItems.length - 1 && (
+                        <Divider sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', margin: "8px 16px" }} />
+                    )}
                 </React.Fragment>
             ))}
         </Box>

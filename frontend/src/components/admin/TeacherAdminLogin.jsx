@@ -1,4 +1,9 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+    AdminPanelSettings,
+    School,
+    Visibility,
+    VisibilityOff
+} from "@mui/icons-material";
 import {
     Box,
     Button,
@@ -12,211 +17,348 @@ import {
     Typography
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useFormik } from "formik";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import * as Yup from "yup";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#2196f3',  // Professional blue
+            dark: '#1976d2',
+        },
+        secondary: {
+            main: '#f50057',
+        },
+        background: {
+            default: '#f8f9fa'
+        }
+    }
+});
+
+// Updated Validation schema
+const validationSchema = Yup.object({
+    adminUsername: Yup.string()
+        .required('Admin username is required')
+        .min(5, 'Username must be at least 5 characters'),
+    adminPassword: Yup.string()
+        .required('Admin password is required')
+        .min(5, 'Password must be at least 5 characters'),
+    teacherUsername: Yup.string()
+        .required('Teacher username is required')
+        .min(5, 'Username must be at least 5 characters'),
+    teacherPassword: Yup.string()
+        .required('Teacher password is required')
+        .min(5, 'Password must be at least 5 characters'),
+});
 
 const LoginForm = () => {
     const { enqueueSnackbar } = useSnackbar();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-
-    const [admin, setAdmin] = useState({
-        username: "",
-        password: "",
-        showPassword: false
+    const [showPasswords, setShowPasswords] = useState({
+        admin: false,
+        teacher: false
     });
 
-    const [teacher, setTeacher] = useState({
-        username: "",
-        password: "",
-        showPassword: false
+    const formik = useFormik({
+        initialValues: {
+            adminUsername: '',
+            adminPassword: '',
+            teacherUsername: '',
+            teacherPassword: '',
+        },
+        validationSchema,
+        onSubmit: async (values) => {
+            setLoading(true);
+            try {
+                const [adminRes, teacherRes] = await Promise.all([
+                    fetch("https://ghss-management-backend.vercel.app/admin-login", {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ 
+                            username: values.adminUsername, 
+                            password: values.adminPassword 
+                        }),
+                    }),
+                    fetch("https://ghss-management-backend.vercel.app/teacherLogin", {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ 
+                            username: values.teacherUsername, 
+                            password: values.teacherPassword 
+                        }),
+                    }),
+                ]);
+
+                const [adminData, teacherData] = await Promise.all([
+                    adminRes.json(),
+                    teacherRes.json(),
+                ]);
+
+                if (adminRes.ok && teacherRes.ok) {
+                    enqueueSnackbar("✅ Login Successful! Welcome to the system", { 
+                        variant: "success",
+                        autoHideDuration: 3000
+                    });
+                    navigate('/');
+                } else {
+                    if (!adminRes.ok) {
+                        enqueueSnackbar(`❌ Admin Error: ${adminData.message}`, { 
+                            variant: "error",
+                            autoHideDuration: 3000
+                        });
+                    }
+                    if (!teacherRes.ok) {
+                        enqueueSnackbar(`❌ Teacher Error: ${teacherData.message}`, { 
+                            variant: "error",
+                            autoHideDuration: 3000
+                        });
+                    }
+                }
+            } catch (error) {
+                enqueueSnackbar("❌ Network Error. Please try again.", { 
+                    variant: "error",
+                    autoHideDuration: 3000
+                });
+                console.error("Login error:", error);
+            } finally {
+                setLoading(false);
+            }
+        },
     });
 
     const togglePasswordVisibility = (type) => {
-        if (type === "admin") {
-            setAdmin({ ...admin, showPassword: !admin.showPassword });
-        } else {
-            setTeacher({ ...teacher, showPassword: !teacher.showPassword });
-        }
-    };
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-
-        try {
-            const [adminRes, teacherRes] = await Promise.all([
-                fetch("https://ghss-management-backend.vercel.app/admin-login", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username: admin.username, password: admin.password }),
-                }),
-                fetch("https://ghss-management-backend.vercel.app/teacherLogin", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username: teacher.username, password: teacher.password }),
-                }),
-            ]);
-
-            const [adminData, teacherData] = await Promise.all([
-                adminRes.json(),
-                teacherRes.json(),
-            ]);
-
-            if (adminRes.ok) {
-                enqueueSnackbar("✅ Admin Login Successful!", { variant: "success" });
-            } else {
-                enqueueSnackbar(`❌ Admin Error: ${adminData.message}`, { variant: "error" });
-            }
-
-            if (teacherRes.ok) {
-                enqueueSnackbar("✅ Teacher Login Successful!", { variant: "success" });
-            } else {
-                enqueueSnackbar(`❌ Teacher Error: ${teacherData.message}`, { variant: "error" });
-            }
-        } catch (error) {
-            enqueueSnackbar("❌ Network Error. Please try again.", { variant: "error" });
-            console.error("Login error:", error);
-        } finally {
-            setLoading(false);
-        }
+        setShowPasswords(prev => ({
+            ...prev,
+            [type]: !prev[type]
+        }));
     };
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: "100vh" }}>
+            <Grid 
+                container 
+                component="main" 
+                sx={{ 
+                    minHeight: "100vh",
+                    background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                    justifyContent: "center", 
+                    alignItems: "center",
+                    p: { xs: 2, sm: 4 }
+                }}
+            >
                 <CssBaseline />
-                <Grid
-                    item
-                    xs={12}
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{
-                        backgroundImage: "url(https://source.unsplash.com/random?school)",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundColor: (t) =>
-                            t.palette.mode === "light"
-                                ? t.palette.grey[50]
-                                : t.palette.grey[900],
+                <Paper 
+                    elevation={3} 
+                    sx={{ 
+                        p: { xs: 3, sm: 4 },
+                        width: "100%", 
+                        maxWidth: 450,
+                        borderRadius: 2,
+                        background: 'rgba(255, 255, 255, 0.98)',
+                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
                     }}
                 >
-                    <Grid item xs={10} sm={8} md={5} component={Paper} elevation={6} square>
-                        <Box sx={{ p: 4, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <Typography component="h1" variant="h5" sx={{ mb: 2, textTransform: "capitalize" }}>
-                                Admin & Teacher Login
+                    <Typography 
+                        component="h1" 
+                        variant="h5" 
+                        sx={{ 
+                            mb: 4,
+                            textAlign: "center",
+                            fontWeight: 600,
+                            color: 'primary.main'
+                        }}
+                    >
+                        Admin & Teacher Login
+                    </Typography>
+
+                    <Box 
+                        component="form" 
+                        onSubmit={formik.handleSubmit} 
+                        sx={{ 
+                            display: "flex", 
+                            flexDirection: "column", 
+                            gap: 3 
+                        }}
+                    >
+                        <Box 
+                            sx={{ 
+                                p: 2.5,
+                                borderRadius: 2,
+                                border: '1px solid',
+                                borderColor: 'rgba(0, 0, 0, 0.12)',
+                                '&:hover': {
+                                    borderColor: 'primary.main',
+                                    boxShadow: '0 0 0 1px rgba(33, 150, 243, 0.2)'
+                                }
+                            }}
+                        >
+                            <Typography 
+                                variant="h6" 
+                                sx={{ 
+                                    mb: 2,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1,
+                                    color: 'primary.dark',
+                                    fontSize: '1.1rem',
+                                    fontWeight: 500
+                                }}
+                            >
+                                <AdminPanelSettings sx={{ mr: 1 }} /> Admin Login
                             </Typography>
 
-                            <Box component="form" onSubmit={handleLogin} noValidate sx={{ width: "100%" }}>
-                                {/* Admin Login Form */}
-                                <Paper sx={{ p: 3, mb: 3, width: "100%" }} elevation={3}>
-                                    <Typography variant="h6" gutterBottom>
-                                        👨‍💼 Admin Login
-                                    </Typography>
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        label="Admin Username"
-                                        autoComplete="username"
-                                        value={admin.username}
-                                        onChange={(e) =>
-                                            setAdmin({ ...admin, username: e.target.value })
-                                        }
-                                    />
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        label="Admin Password"
-                                        type={admin.showPassword ? "text" : "password"}
-                                        autoComplete="current-password"
-                                        value={admin.password}
-                                        onChange={(e) =>
-                                            setAdmin({ ...admin, password: e.target.value })
-                                        }
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton onClick={() => togglePasswordVisibility("admin")}>
-                                                        {admin.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                </Paper>
-
-                                {/* Teacher Login Form */}
-                                <Paper sx={{ p: 3, mb: 3, width: "100%" }} elevation={3}>
-                                    <Typography variant="h6" gutterBottom>
-                                        👨‍🏫 Teacher Login
-                                    </Typography>
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        label="Teacher Username"
-                                        autoComplete="username"
-                                        value={teacher.username}
-                                        onChange={(e) =>
-                                            setTeacher({ ...teacher, username: e.target.value })
-                                        }
-                                    />
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        label="Teacher Password"
-                                        type={teacher.showPassword ? "text" : "password"}
-                                        autoComplete="current-password"
-                                        value={teacher.password}
-                                        onChange={(e) =>
-                                            setTeacher({ ...teacher, password: e.target.value })
-                                        }
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton onClick={() => togglePasswordVisibility("teacher")}>
-                                                        {teacher.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                </Paper>
-
-                                {/* textTranform */}
-
-                                {/* Submit Button */}
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    disabled={loading}
-                                    sx={{ textTransform: "capitalize" }}
-                                >
-                                    {loading ? <CircularProgress size={24} color="inherit" /> : "Login Both Accounts"}
-                                </Button>
-                            </Box>
+                            <TextField
+                                fullWidth
+                                size="small"
+                                label="Admin Username"
+                                name="adminUsername"
+                                value={formik.values.adminUsername}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.adminUsername && Boolean(formik.errors.adminUsername)}
+                                helperText={formik.touched.adminUsername && formik.errors.adminUsername}
+                                sx={{ mb: 2 }}
+                            />
+                            <TextField
+                                fullWidth
+                                size="small"
+                                label="Admin Password"
+                                name="adminPassword"
+                                type={showPasswords.admin ? "text" : "password"}
+                                value={formik.values.adminPassword}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.adminPassword && Boolean(formik.errors.adminPassword)}
+                                helperText={formik.touched.adminPassword && formik.errors.adminPassword}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton 
+                                                onClick={() => togglePasswordVisibility('admin')}
+                                                edge="end"
+                                                size="small"
+                                                aria-label="toggle password visibility"
+                                            >
+                                                {showPasswords.admin ? 
+                                                    <VisibilityOff fontSize="small" /> : 
+                                                    <Visibility fontSize="small" />
+                                                }
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
                         </Box>
-                    </Grid>
-                </Grid>
+
+                        <Box 
+                            sx={{ 
+                                p: 2.5,
+                                borderRadius: 2,
+                                border: '1px solid',
+                                borderColor: 'rgba(0, 0, 0, 0.12)',
+                                '&:hover': {
+                                    borderColor: 'primary.main',
+                                    boxShadow: '0 0 0 1px rgba(33, 150, 243, 0.2)'
+                                }
+                            }}
+                        >
+                            <Typography 
+                                variant="h6" 
+                                sx={{ 
+                                    mb: 2,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1,
+                                    color: 'primary.dark',
+                                    fontSize: '1.1rem',
+                                    fontWeight: 500
+                                }}
+                            >
+                                <School sx={{ mr: 1 }} /> Teacher Login
+                            </Typography>
+
+                            <TextField
+                                fullWidth
+                                size="small"
+                                label="Teacher Username"
+                                name="teacherUsername"
+                                value={formik.values.teacherUsername}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.teacherUsername && Boolean(formik.errors.teacherUsername)}
+                                helperText={formik.touched.teacherUsername && formik.errors.teacherUsername}
+                                sx={{ mb: 2 }}
+                            />
+                            <TextField
+                                fullWidth
+                                size="small"
+                                label="Teacher Password"
+                                name="teacherPassword"
+                                type={showPasswords.teacher ? "text" : "password"}
+                                value={formik.values.teacherPassword}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.teacherPassword && Boolean(formik.errors.teacherPassword)}
+                                helperText={formik.touched.teacherPassword && formik.errors.teacherPassword}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton 
+                                                onClick={() => togglePasswordVisibility('teacher')}
+                                                edge="end"
+                                                size="small"
+                                                aria-label="toggle password visibility"
+                                            >
+                                                {showPasswords.teacher ? 
+                                                    <VisibilityOff fontSize="small" /> : 
+                                                    <Visibility fontSize="small" />
+                                                }
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Box>
+
+                        <Button 
+                            type="submit"
+                            fullWidth 
+                            variant="contained"
+                            disabled={loading || !formik.isValid}
+                            sx={{
+                                mt: 1,
+                                py: 1.2,
+                                textTransform: 'none',
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                borderRadius: 1.5,
+                                boxShadow: '0 4px 12px rgba(33, 150, 243, 0.2)',
+                                '&:hover': {
+                                    boxShadow: '0 6px 16px rgba(33, 150, 243, 0.3)'
+                                }
+                            }}
+                        >
+                            {loading ? (
+                                <CircularProgress size={24} color="inherit" />
+                            ) : (
+                                "Login Both Accounts"
+                            )}
+                        </Button>
+                    </Box>
+                </Paper>
             </Grid>
         </ThemeProvider>
     );
 };
 
 const App = () => (
-    <SnackbarProvider
-        maxSnack={3}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-    >
+    <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
         <LoginForm />
     </SnackbarProvider>
 );

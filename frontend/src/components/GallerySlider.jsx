@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
-import Slider from "react-slick";
-import { Box, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { Box, Typography } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Don't forget to import AOS CSS
-import "slick-carousel/slick/slick.css";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
 
 const images = [
     { src: "/images/carousel1.jpg", alt: "School Building" },

@@ -9,15 +9,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const images = [
-  // { src: "/images/carousel1.jpg", alt: "School Building" },
-  // { src: "/images/carousel2.jpg", alt: "School Building" },
-  // { src: "/images/carousel3.jpg", alt: "School Building" },
-  // { src: "/images/carousel4.jpg", alt: "School Building" },
-  // { src: "/images/carousel5.jpg", alt: "School Building" },
-  // { src: "/images/carousel6.jpg", alt: "School Building" },
-  // { src: "/images/carousel7.jpg", alt: "School Building" },
-  // { src: "/images/carousel8.jpg", alt: "School Building" },
-  // { src: "/images/carousel9.jpg", alt: "School Building" },
+  { src: "/images/carousel1.jpg", alt: "School Building" },
+  { src: "/images/carousel2.jpg", alt: "School Building" },
+  { src: "/images/carousel3.jpg", alt: "School Building" },
+  { src: "/images/carousel4.jpg", alt: "School Building" },
+  { src: "/images/carousel5.jpg", alt: "School Building" },
+  { src: "/images/carousel6.jpg", alt: "School Building" },
+  { src: "/images/carousel7.jpg", alt: "School Building" },
+  { src: "/images/carousel8.jpg", alt: "School Building" },
+  { src: "/images/carousel9.jpg", alt: "School Building" },
 ];
 
 const NextArrow = ({ onClick }) => (

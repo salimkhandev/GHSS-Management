@@ -1,22 +1,49 @@
-import { useState, useEffect } from 'react';
-import { Switch, TextField, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Container,CircularProgress, Typography } from '@mui/material';
+import {
+    HowToReg as AttendanceIcon,
+    EventAvailable as CalendarIcon,
+    CheckCircle as CheckIcon,
+    PersonOutline as PersonIcon,
+    Save as SaveIcon,
+    Search as SearchIcon,
+    Warning as WarningIcon
+} from '@mui/icons-material';
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    Divider,
+    InputAdornment,
+    List,
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
+    Paper,
+    Switch,
+    TextField,
+    Typography,
+    useTheme
+} from '@mui/material';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import UpdateAttenStatusOfClsSec from './UpdateAttenStatusOfClsSec'
+
 const AttendanceList = () => {
-
-
+    const theme = useTheme();
+    const { enqueueSnackbar } = useSnackbar();
     const [students, setStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [attendanceDate] = useState(dayjs().format('YYYY-MM-DD')); // Get the current date
-const [loading, setLoading]=useState(false)
+    const [loading, setLoading] = useState(false);
     // const [authenticated, setAuthenticated] = useState(false);
     // const navigate = useNavigate();
     const [disableComponent, setDisableComponent] = useState(false); // Track if the component should be disabled
 
-// send class_id and seciton_id to backend so that if the today was same with the backend last date then it will disable the t
+    // send class_id and seciton_id to backend so that if the today was same with the backend last date then it will disable the t
     const [lastAttenDate, setLastAttenDate] = useState(null);
 
     useEffect(() => {
@@ -32,14 +59,15 @@ const [loading, setLoading]=useState(false)
                     setLastAttenDate('No records found');
                 }
             } catch (error) {
-                console.error('Error fetching last attendance date:', error);
+                enqueueSnackbar('Error fetching attendance date', { variant: 'error' });
             } finally {
                 setLoading(false);
             }
         };
 
         fetchLastDate();
-    }, []);
+    }, [enqueueSnackbar]);
+
     useEffect(() => {
         const storedDate = localStorage.getItem('attendanceSavedDate');
         const today = dayjs().format('YYYY-MM-DD');
@@ -55,18 +83,18 @@ const [loading, setLoading]=useState(false)
     useEffect(() => {
         setLoading(true)
         const fetchStudents = async () => {
-try {
-    const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', {withCredentials: true });
-    setLoading(false)
-    setStudents(response.data);
-} catch (error) {
-    console.error('Error fetching student data:', error);
-    setLoading(false)
+            try {
+                const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', {withCredentials: true });
+                setLoading(false)
+                setStudents(response.data);
+            } catch (error) {
+                enqueueSnackbar('Error fetching student data', { variant: 'error' });
+                setLoading(false)
             }
         };
 
         fetchStudents();
-    }, []);
+    }, [enqueueSnackbar]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -109,11 +137,14 @@ try {
         try {
             await axios.post('https://ghss-management-backend.vercel.app/saveAttendance', { attendanceData, attendanceDate });
             setLoading(false)
-            alert('Attendance saved successfully!');
             localStorage.setItem('attendanceSavedDate', dayjs().format('YYYY-MM-DD')); // Store today's date in local storage
             setDisableComponent(true);
+            enqueueSnackbar('Attendance saved successfully!', { 
+                variant: 'success',
+                anchorOrigin: { vertical: 'top', horizontal: 'center' }
+            });
         } catch (error) {
-            console.error('Error saving attendance:', error);
+            enqueueSnackbar('Error saving attendance', { variant: 'error' });
             setLoading(false)
         }
     };
@@ -122,55 +153,202 @@ try {
         student.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-if(disableComponent){
-return(<>
-
-    <h3>Attendance already taken</h3>
-</>)
-}
+    if(disableComponent){
+        return (
+            <Container maxWidth="sm">
+                <Paper 
+                    elevation={3}
+                    sx={{
+                        p: 4,
+                        mt: 14,
+                        textAlign: 'center',
+                        background: 'linear-gradient(to bottom, #fff, #f8f9fa)',
+                        borderRadius: 2,
+                        border: '1px solid',
+                        borderColor: 'warning.light'
+                    }}
+                >
+                    <WarningIcon 
+                        sx={{ 
+                            fontSize: 48, 
+                            color: 'warning.main', 
+                            mb: 2,
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+                        }} 
+                    />
+                    <Typography variant="h5" color="warning.dark" gutterBottom fontWeight="600">
+                        Attendance Already Taken
+                    </Typography>
+                    <Typography color="text.secondary">
+                        Today's attendance has been recorded
+                    </Typography>
+                </Paper>
+            </Container>
+        );
+    }
 
     return (
         
-        <>
-    
-        <Container className="bg-white p-5 rounded-lg max-w-sm mx-auto">
-              {loading ? (
-                <div className="flex justify-center items-center min-h-[444px]">
-                    <CircularProgress />
-                </div>
-            ):(
-                <>
-            <div className="flex justify-between mb-4">
-                <Button variant="contained" color="success" onClick={handleSaveAttendance}>
-                    Save Attendance
-                </Button>
-            </div>
-            <TextField
-                variant="outlined"
-                placeholder="Search"
-                fullWidth
-                margin="normal"
-                onChange={handleSearchChange}
-                value={searchTerm}
-            />
-            <List className="space-y-2">
-                {filteredStudents.map((student, index) => (
-                    <ListItem key={student.id} className="bg-gray-100 rounded-md">
-                        <ListItemText primary={`${index + 1}. ${student.name}`} />
-                        <ListItemSecondaryAction>
-                            <Switch
-                                checked={selectedStudents.some(selected => selected.student_id === student.id)}
-                                onChange={() => handleToggle(student, 'Present')}
-                            />
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
-                    </>)}
+        <Container maxWidth="sm" sx={{ py: 4 }}>
+            <Paper 
+                elevation={3} 
+                sx={{ 
+                    borderRadius: 2, 
+                    overflow: 'hidden',
+                    background: 'linear-gradient(to bottom, #fff, #f8f9fa)'
+                }}
+            >
+                <Box 
+                    sx={{ 
+                        p: 3, 
+                        background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                        color: 'white',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                    }}
+                >
+                    <Typography 
+                        variant="h5" 
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 1,
+                            fontWeight: 600
+                        }}
+                    >
+                        <AttendanceIcon />
+                        Attendance Sheet
+                    </Typography>
+                    <Typography 
+                        variant="subtitle1" 
+                        sx={{ 
+                            mt: 1, 
+                            opacity: 0.9,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1
+                        }}
+                    >
+                        <CalendarIcon fontSize="small" />
+                        {dayjs(attendanceDate).format('MMMM D, YYYY')}
+                    </Typography>
+                </Box>
 
-                    </Container>
-        </>
+                <Box sx={{ p: 3 }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleSaveAttendance}
+                        disabled={loading}
+                        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+                        fullWidth
+                        sx={{
+                            mb: 3,
+                            py: 1.5,
+                            background: 'linear-gradient(45deg, #2e7d32 30%, #4caf50 90%)',
+                            color: 'white',
+                            fontWeight: 600,
+                            '&:hover': {
+                                background: 'linear-gradient(45deg, #1b5e20 30%, #2e7d32 90%)'
+                            },
+                            '&:disabled': {
+                                opacity: 0.7
+                            }
+                        }}
+                    >
+                        Save Attendance
+                    </Button>
+
+                    <TextField
+                        variant="outlined"
+                        placeholder="Search students..."
+                        fullWidth
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon color="action" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        sx={{ 
+                            mb: 3,
+                            '& .MuiOutlinedInput-root': {
+                                '&:hover fieldset': {
+                                    borderColor: theme.palette.primary.main,
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.primary.main,
+                                }
+                            }
+                        }}
+                    />
+
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <List sx={{ bgcolor: 'background.paper' }}>
+                            {filteredStudents.map((student, index) => (
+                                <Box key={student.id}>
+                                    {index > 0 && <Divider />}
+                                    <ListItem 
+                                        sx={{ 
+                                            py: 1.5,
+                                            transition: 'all 0.2s',
+                                            '&:hover': {
+                                                bgcolor: 'action.hover'
+                                            }
+                                        }}
+                                    >
+                                        <ListItemText
+                                            primary={
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <PersonIcon color="action" />
+                                                    <Typography sx={{ fontWeight: 500 }}>
+                                                        {`${index + 1}. ${student.name}`}
+                                                    </Typography>
+                                                </Box>
+                                            }
+                                        />
+                                        <ListItemSecondaryAction>
+                                            <Switch
+                                                edge="end"
+                                                checked={selectedStudents.some(
+                                                    selected => selected.student_id === student.id
+                                                )}
+                                                onChange={() => handleToggle(student, 'Present')}
+                                                color="success"
+                                                checkedIcon={<CheckIcon />}
+                                                sx={{
+                                                    '& .MuiSwitch-switchBase.Mui-checked': {
+                                                        color: '#4caf50'
+                                                    },
+                                                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                                                        backgroundColor: '#4caf50'
+                                                    }
+                                                }}
+                                            />
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                </Box>
+                            ))}
+                        </List>
+                    )}
+                </Box>
+            </Paper>
+        </Container>
     );
 };
 
-export default AttendanceList;
+const AttendanceListWithSnackbar = () => (
+    <SnackbarProvider 
+        maxSnack={3} 
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+        <AttendanceList />
+    </SnackbarProvider>
+);
+
+export default AttendanceListWithSnackbar;

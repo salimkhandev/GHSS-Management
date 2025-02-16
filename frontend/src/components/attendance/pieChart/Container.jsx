@@ -1,12 +1,35 @@
-import { useEffect, useState, useMemo, lazy, Suspense } from "react";
-import { Card, CardContent, Typography, Grid, CircularProgress, Button } from "@mui/material";
+import {
+    Assessment as AssessmentIcon,
+    CalendarMonth as CalendarIcon,
+    Class as ClassIcon,
+    DateRange as DateRangeIcon,
+    Error as ErrorIcon,
+    School as SchoolIcon,
+    Timeline as TimelineIcon
+} from '@mui/icons-material';
+import { Box, Button, Card, CardContent, CircularProgress, Grid, Paper, Skeleton, Typography, useTheme } from "@mui/material";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 
 // Lazy load the Pie Chart components
 const DailyAttenPieChart = lazy(() => import("./DailyAttenPieChart"));
 const TheMonthlyAttenPieChart = lazy(() => import("./TheMonthlyAttenPieChart"));
 const OverallAtten = lazy(() => import("./OverallAtten"));
 
+const LoadingFallback = () => (
+    <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+        <CircularProgress 
+            sx={{ 
+                color: 'primary.main',
+                '& .MuiCircularProgress-circle': {
+                    strokeLinecap: 'round'
+                }
+            }} 
+        />
+    </Box>
+);
+
 export default function ClassSectionDisplay() {
+    const theme = useTheme();
     const [classes, setClasses] = useState([]);
     const [sections, setSections] = useState([]);
     const [selectedClassId, setSelectedClassId] = useState(null);
@@ -119,84 +142,179 @@ export default function ClassSectionDisplay() {
     };
 
     return (
-        <div className="p-8">
-            <Typography variant="h4" sx={{ my: 3, fontWeight: 'bold', color: '#333' }}
->
-                Classes
-            </Typography>
+        <Box sx={{ p: 4 }}>
+            <Paper 
+                elevation={3}
+                sx={{ 
+                    p: 3,
+                    mb: 4,
+                    background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                    borderRadius: 2,
+                    color: 'white'
+                }}
+            >
+                <Typography 
+                    variant="h4" 
+                    sx={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        fontWeight: 700
+                    }}
+                >
+                    <AssessmentIcon fontSize="large" />
+                    Classes Performance
+                </Typography>
+            </Paper>
 
-            {loading && (
-                <div className="fixed h-[80%] mt-44 inset-0 flex items-center justify-center">
-                    <CircularProgress />
-                </div>
-
-            )}
-
-            {error && <Typography color="error" className="text-center text-lg">{error}</Typography>}
-
-            {!loading && !selectedClassId && (
-                <Grid container spacing={2}>
+            {loading ? (
+                <Grid container spacing={3}>
+                    {[1, 2, 3, 4].map((item) => (
+                        <Grid item xs={12} sm={6} md={4} key={item}>
+                            <Skeleton 
+                                variant="rectangular" 
+                                height={120} 
+                                sx={{ 
+                                    borderRadius: 2,
+                                    bgcolor: 'rgba(0,0,0,0.04)'
+                                }} 
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            ) : error ? (
+                <Paper 
+                    sx={{ 
+                        p: 4, 
+                        textAlign: 'center',
+                        bgcolor: theme.palette.error.light,
+                        color: theme.palette.error.dark,
+                        borderRadius: 2
+                    }}
+                >
+                    <ErrorIcon sx={{ fontSize: 48, mb: 2 }} />
+                    <Typography variant="h6">{error}</Typography>
+                </Paper>
+            ) : !selectedClassId ? (
+                <Grid container spacing={3}>
                     {classes.map((classItem) => (
                         <Grid item xs={12} sm={6} md={4} key={classItem.id}>
-                            <Card
+                            <Card 
                                 onClick={() => handleClassClick(classItem.id, classItem.name)}
-                                className="cursor-pointer hover:shadow-xl transition-shadow"
+                                sx={{ 
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.2s, box-shadow 0.2s',
+                                    '&:hover': {
+                                        transform: 'translateY(-4px)',
+                                        boxShadow: 6
+                                    }
+                                }}
                             >
-                                <CardContent className="bg-gray-100">
-                                    <Typography variant="h6" className="text-center">{classItem.name}</Typography>
+                                <CardContent sx={{ 
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 2,
+                                    p: 3
+                                }}>
+                                    <ClassIcon color="primary" sx={{ fontSize: 32 }} />
+                                    <Typography variant="h6">{classItem.name}</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
                     ))}
                 </Grid>
-            )}
-
-            {selectedClassId && !selectedSectionId && (
-                <>
-                    <Typography variant="h5" className="mb-4 text-center">
+            ) : !selectedSectionId ? (
+                <Box>
+                    <Typography 
+                        variant="h5" 
+                        sx={{ 
+                            mb: 3,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            color: theme.palette.primary.main,
+                            fontWeight: 600
+                        }}
+                    >
+                        <SchoolIcon />
                         Sections for {selectedClassName}
                     </Typography>
-                    <Grid container spacing={2}>
-                        {sections.length == 0 && !loading &&  (
+                    <Grid container spacing={3}>
+                        {sections.length === 0 && !loading ? (
                             <Grid item xs={12}>
-                                <Typography className="text-center">No sections available for this class.</Typography>
+                                <Paper 
+                                    sx={{ 
+                                        p: 4,
+                                        textAlign: 'center',
+                                        bgcolor: theme.palette.grey[50]
+                                    }}
+                                >
+                                    <Typography color="textSecondary">
+                                        No sections available for this class.
+                                    </Typography>
+                                </Paper>
                             </Grid>
-                          
-                        ) }
-{
-                            sections.length > 0 && !loading &&       (
-
-
-  sections.map((section) => (
-            <Grid item xs={12} sm={6} md={4} key={section.id}>
-                <Card
-                    onClick={() => handleSectionClick(section.id)}
-                    className="cursor-pointer hover:shadow-xl transition-shadow"
-                >
-                    <CardContent>
-                        <Typography variant="h6" className="text-center">{section.name}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-            ))
-                        )
-                        
-                        }
+                        ) : (
+                            sections.map((section) => (
+                                <Grid item xs={12} sm={6} md={4} key={section.id}>
+                                    <Card 
+                                        onClick={() => handleSectionClick(section.id)}
+                                        sx={{ 
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s',
+                                            '&:hover': {
+                                                transform: 'translateY(-4px)',
+                                                boxShadow: 6
+                                            }
+                                        }}
+                                    >
+                                        <CardContent sx={{ 
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 2,
+                                            p: 3
+                                        }}>
+                                            <SchoolIcon color="primary" sx={{ fontSize: 32 }} />
+                                            <Typography variant="h6">{section.name}</Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))
+                        )}
                     </Grid>
-                </>
-            )}
-
-            {selectedSectionId && (
-                <>
-                    <Typography variant="h5" className="mb-4 text-center">
+                </Box>
+            ) : (
+                <Box>
+                    <Typography 
+                        variant="h5" 
+                        sx={{ 
+                            mb: 4,
+                            textAlign: 'center',
+                            color: theme.palette.primary.main,
+                            fontWeight: 600,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 1
+                        }}
+                    >
+                        <SchoolIcon />
                         {selectedClassName} Section {sectionName}
                     </Typography>
-                    <Grid container spacing={2} justifyContent="center">
+                    <Grid container spacing={2} justifyContent="center" sx={{ mb: 4 }}>
                         <Grid item>
                             <Button
                                 variant={attendanceOption === "daily" ? "contained" : "outlined"}
                                 onClick={() => handleAttendanceOption("daily")}
-                                className="px-6 py-2"
+                                startIcon={<CalendarIcon />}
+                                sx={{
+                                    px: 3,
+                                    py: 1.5,
+                                    borderRadius: 2,
+                                    ...(attendanceOption === "daily" && {
+                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                    })
+                                }}
                             >
                                 Daily Attendance
                             </Button>
@@ -205,7 +323,15 @@ export default function ClassSectionDisplay() {
                             <Button
                                 variant={attendanceOption === "monthly" ? "contained" : "outlined"}
                                 onClick={() => handleAttendanceOption("monthly")}
-                                className="px-6 py-2"
+                                startIcon={<DateRangeIcon />}
+                                sx={{
+                                    px: 3,
+                                    py: 1.5,
+                                    borderRadius: 2,
+                                    ...(attendanceOption === "monthly" && {
+                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                    })
+                                }}
                             >
                                 Monthly Attendance
                             </Button>
@@ -214,20 +340,34 @@ export default function ClassSectionDisplay() {
                             <Button
                                 variant={attendanceOption === "overall" ? "contained" : "outlined"}
                                 onClick={() => handleAttendanceOption("overall")}
-                                className="px-6 py-2"
+                                startIcon={<TimelineIcon />}
+                                sx={{
+                                    px: 3,
+                                    py: 1.5,
+                                    borderRadius: 2,
+                                    ...(attendanceOption === "overall" && {
+                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                    })
+                                }}
                             >
                                 Overall Attendance
                             </Button>
                         </Grid>
                     </Grid>
 
-                    <Suspense>
-                        {attendanceOption === "monthly" && attendanceData.length >0 && <TheMonthlyAttenPieChart  data={attendanceData} />}
-                        {attendanceOption === "daily" && attendanceData.length > 0 && <DailyAttenPieChart  data={attendanceData} />}
-                        {attendanceOption === "overall" && attendanceData.length > 0 && <OverallAtten data={attendanceData} startDate={startDate} endDate={endDate} />}
+                    <Suspense fallback={<LoadingFallback />}>
+                        {attendanceOption === "monthly" && attendanceData.length > 0 && (
+                            <TheMonthlyAttenPieChart data={attendanceData} />
+                        )}
+                        {attendanceOption === "daily" && attendanceData.length > 0 && (
+                            <DailyAttenPieChart data={attendanceData} />
+                        )}
+                        {attendanceOption === "overall" && attendanceData.length > 0 && (
+                            <OverallAtten data={attendanceData} startDate={startDate} endDate={endDate} />
+                        )}
                     </Suspense>
-                </>
+                </Box>
             )}
-        </div>
+        </Box>
     );
 }

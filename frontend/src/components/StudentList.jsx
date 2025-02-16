@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
+import { ArrowBack, ArrowForward, Class as ClassIcon, Download as DownloadIcon, Groups as GroupsIcon, Person as PersonIcon, School as SchoolIcon, Search as SearchIcon } from '@mui/icons-material';
+import { Box, Button, Card, CardContent, CircularProgress, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Skeleton } from '@mui/material';
 import axios from 'axios';
-import { Typography, Card, Button, CardContent, Grid, CircularProgress, FormControl, InputLabel, Select, MenuItem, TextField, InputAdornment, Box } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { useEffect, useState } from 'react';
 import ExportToExcel from './ExportToExcel';
-
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 const StudentList = () => {
     
@@ -238,171 +236,304 @@ const StudentList = () => {
 
 
     return (
-        <div className="p-4 min-h-screen bg-gray-100 flex flex-col items-center">
-            <div className="relative">
-              
-            <div className='flex w-full'>
-                <Typography variant="h6" color="initial">
-                   {selectedClass && !selectedSection?` Students in ${selectedClass}: ${totalDeptStudents}`:''}
-                </Typography>
-                </div>
+        <div className="p-4 min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+            <div className="max-w-7xl mx-auto">
+                <div className="relative mb-8">
+                    <Box className="flex justify-between items-center mb-6">
+                        <Typography 
+                            variant="h4" 
+                            sx={{
+                                fontWeight: 700,
+                                background: 'linear-gradient(45deg, #1976d2, #9c27b0)',
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                color: 'transparent',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 2
+                            }}
+                        >
+                            <GroupsIcon fontSize="large" sx={{ color: '#1976d2' }} />
+                            Student List
+                        </Typography>
 
-  <Box> 
-    <Typography variant="h4" component="h2" gutterBottom className="whitespace-nowrap mb-6">
-                    Student List
-                </Typography>
-                        </Box>
-                <TextField
+                        <TextField
+                            variant="outlined"
+                            placeholder="Search students..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            size="small"
+                            sx={{
+                                width: { xs: '100%', sm: '300px' },
+                                '& .MuiOutlinedInput-root': {
+                                    borderRadius: 2,
+                                    backgroundColor: 'white',
+                                    '&:hover': {
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: '#1976d2',
+                                        }
+                                    }
+                                }
+                            }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon color="primary" />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Box>
 
-                    variant="outlined"
-                    placeholder="Search students"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
-                    }}
-                    
-                    style={{ marginLeft: '960px', marginTop: '0px' }} // Optional: add some spacing
-                />
+                    {selectedClass && !selectedSection && (
+                        <Typography 
+                            variant="h6" 
+                            sx={{ 
+                                color: '#1976d2',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                                mb: 2
+                            }}
+                        >
+                            <SchoolIcon />
+                            Students in {selectedClass}: {totalDeptStudents}
+                        </Typography>
+                    )}
 
-            </div>
-
-
-                    <div className='sticky top-36  items-center'>
-                <FormControl fullWidth variant="outlined" className="max-w-xs" style={{ marginTop: '-55px' }}>
-                    <InputLabel htmlFor="class_select">Select Class</InputLabel>
-                    <Select
-                        id="class_select"
-                        value={selectedClass || 'All Classes'}
-                        onChange={handleClassChange}
-                        label="Select Class"
-                    >
-                        <MenuItem value="All Classes" >All Classes</MenuItem>
-                        {classes.map(cls => (
-                            <MenuItem key={cls.id} value={cls.name}>
-
-                                    {cls.name}
-                                 
-                                
-                            </MenuItem>
-                        ))}
-                    </Select>
-                        {sections.length > 0 && (
-                        <FormControl fullWidth variant="outlined" className="max-w-xs" style={{ marginTop: '12px' }}>
-                            <InputLabel htmlFor="select_section">Select Section</InputLabel>
-                            
+                    <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                        <FormControl 
+                            variant="outlined" 
+                            sx={{ 
+                                minWidth: 200,
+                                backgroundColor: 'white',
+                                borderRadius: 1
+                            }}
+                        >
+                            <InputLabel>Select Class</InputLabel>
                             <Select
-                        id="select_section"
-                                value={selectedSection || 'All Sections'}
-                                                        onChange={handleSectionsChange}
-                        label="select section"
-                    >
-                                <MenuItem value="All Sections" >All Sections</MenuItem>
-                        {sections.map(cls => (
-                            <MenuItem key={cls.id} value={cls.name}>
+                                value={selectedClass || 'All Classes'}
+                                onChange={handleClassChange}
+                                label="Select Class"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <ClassIcon color="primary" />
+                                    </InputAdornment>
+                                }
+                            >
+                                <MenuItem value="All Classes">All Classes</MenuItem>
+                                {classes.map(cls => (
+                                    <MenuItem key={cls.id} value={cls.name}>
+                                        {cls.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
 
-                                    {cls.name}
-                                 
-                                
-                            </MenuItem>
-                        ))}
-                    </Select>
-                    </FormControl>
-
+                        {sections.length > 0 && (
+                            <FormControl 
+                                variant="outlined" 
+                                sx={{ 
+                                    minWidth: 200,
+                                    backgroundColor: 'white',
+                                    borderRadius: 1
+                                }}
+                            >
+                                <InputLabel>Select Section</InputLabel>
+                                <Select
+                                    value={selectedSection || 'All Sections'}
+                                    onChange={handleSectionsChange}
+                                    label="Select Section"
+                                >
+                                    <MenuItem value="All Sections">All Sections</MenuItem>
+                                    {sections.map(cls => (
+                                        <MenuItem key={cls.id} value={cls.name}>
+                                            {cls.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         )}
-                        
-                </FormControl>
-              
+                    </div>
                 </div>
 
+                {showNoStudentsMessage && (
+                    <Box 
+                        sx={{ 
+                            height: 300,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                            gap: 2,
+                            color: 'text.secondary'
+                        }}
+                    >
+                        <PersonIcon sx={{ fontSize: 48, opacity: 0.5 }} />
+                        <Typography>No students found for the selected criteria.</Typography>
+                    </Box>
+                )}
 
-           
-            
-                
-                    
-                { showNoStudentsMessage && (
+                {loading ? (
+                    <Grid container spacing={3}>
+                        {[1, 2, 3, 4, 5, 6].map((item) => (
+                            <Grid item xs={12} sm={6} md={4} key={item}>
+                                <Card sx={{ 
+                                    height: '100%',
+                                    transition: 'transform 0.2s, box-shadow 0.2s',
+                                    '&:hover': {
+                                        transform: 'translateY(-4px)',
+                                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+                                    }
+                                }}>
+                                    <CardContent>
+                                        {/* Student ID with Icon Skeleton */}
+                                        <Box sx={{ 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            gap: 1,
+                                            mb: 2 
+                                        }}>
+                                            <Skeleton variant="circular" width={24} height={24} />
+                                            <Skeleton 
+                                                variant="text" 
+                                                width={120} 
+                                                sx={{ 
+                                                    height: 32,
+                                                    background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                                    opacity: 0.1
+                                                }} 
+                                            />
+                                        </Box>
 
-                    <Typography variant="body1" className='h-[300px] justify-center flex items-center' color="textSecondary">
-                    No students found for the selected criteria.
-                    </Typography>
-                ) 
-                }
-            
-            
-            
-            
-            {loading ? (
-                <div className="flex justify-center items-center min-h-[444px]">
-                    <CircularProgress />
-                </div>
-            ) : (<>
-          
-                <Grid container spacing={2}>
-                    {filteredStudents.map(student => (
-                        <Grid item xs={12} sm={6} md={4} key={student.id}>
-                            <Card className="shadow-lg">
-                                <CardContent>
-                                    <Typography variant="h6" component="div" className="font-bold mb-2">
-                                        ID: {student.id}
-                                    </Typography>
-                                    <Typography variant="body1" color="textSecondary" className="mb-1">
-                                        Name: {student.student_name}
-                                    </Typography>
-                                    <Typography variant="body1" color="textSecondary" className="mb-1">
-                                         {student.class_name}
-                                    </Typography>
-                                    <Typography variant="body1" color="textSecondary">
-                                        Section: {student.section_name}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                        {/* Student Name Skeleton */}
+                                        <Box sx={{ mb: 1 }}>
+                                            <Skeleton variant="text" width="90%" height={24} />
+                                        </Box>
+
+                                        {/* Class Name Skeleton */}
+                                        <Box sx={{ mb: 1 }}>
+                                            <Skeleton variant="text" width="60%" height={24} />
+                                        </Box>
+
+                                        {/* Section Skeleton */}
+                                        <Box>
+                                            <Skeleton variant="text" width="40%" height={24} />
+                                        </Box>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                ) : (
+                    <>
+                        <Grid container spacing={3}>
+                            {filteredStudents.map(student => (
+                                <Grid item xs={12} sm={6} md={4} key={student.id}>
+                                    <Card 
+                                        sx={{ 
+                                            height: '100%',
+                                            transition: 'transform 0.2s, box-shadow 0.2s',
+                                            '&:hover': {
+                                                transform: 'translateY(-4px)',
+                                                boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+                                            }
+                                        }}
+                                    >
+                                        <CardContent>
+                                            <Typography 
+                                                variant="h6" 
+                                                sx={{ 
+                                                    fontWeight: 600,
+                                                    color: '#1976d2',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: 1,
+                                                    mb: 2
+                                                }}
+                                            >
+                                                <PersonIcon />
+                                                ID: {student.id}
+                                            </Typography>
+                                            <Typography variant="body1" sx={{ mb: 1 }}>
+                                                Name: {student.student_name}
+                                            </Typography>
+                                            <Typography variant="body1" sx={{ mb: 1 }}>
+                                                {student.class_name}
+                                            </Typography>
+                                            <Typography variant="body1">
+                                                Section: {student.section_name}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
                         </Grid>
-                    ))}
- 
-                </Grid>
-{!selectedSection && filteredStudents.length != 0 && !loading &&
 
+                        {!selectedSection && filteredStudents.length > 0 && !loading && (
                             <Box
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="center"
-                                p={2}
-                                mt={2}
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 2,
+                                    mt: 4
+                                }}
                             >
                                 <Button
                                     variant="contained"
-                                    color="primary"
                                     onClick={() => setPage(page - 1)}
                                     disabled={page <= 1 || loading}
                                     startIcon={<ArrowBack />}
+                                    sx={{
+                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        '&:hover': {
+                                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)'
+                                        }
+                                    }}
                                 >
                                     Previous
                                 </Button>
-                                <Typography variant="body1" mx={2}>
-                                    {page}/{totalpages}
+                                <Typography variant="body1" sx={{ mx: 2 }}>
+                                    Page {page} of {totalpages}
                                 </Typography>
                                 <Button
                                     variant="contained"
-                                    color="primary"
                                     onClick={() => setPage(page + 1)}
                                     disabled={page >= totalpages || loading}
                                     endIcon={<ArrowForward />}
+                                    sx={{
+                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        '&:hover': {
+                                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)'
+                                        }
+                                    }}
                                 >
                                     Next
                                 </Button>
                             </Box>
-                        }
-  </>
-            )}
-            { selectedClass && selectedClassid && selectedSection && selectedSectionid && !loading && filteredStudents.length>0 &&
-                <ExportToExcel students={filteredStudents} />
+                        )}
+                    </>
+                )}
 
-            }
-
+                {selectedClass && selectedClassid && selectedSection && selectedSectionid && !loading && filteredStudents.length > 0 && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            startIcon={<DownloadIcon />}
+                            sx={{
+                                background: 'linear-gradient(45deg, #2e7d32 30%, #4caf50 90%)',
+                                '&:hover': {
+                                    background: 'linear-gradient(45deg, #1b5e20 30%, #2e7d32 90%)'
+                                }
+                            }}
+                        >
+                            <ExportToExcel students={filteredStudents} />
+                        </Button>
+                    </Box>
+                )}
+            </div>
         </div>
     );
 };

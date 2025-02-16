@@ -1,50 +1,185 @@
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import HamburgerMenu from "./HamburgerMenu";
-// import MobileHamberger from "./MobileHamberger";
+import { 
+    AdminPanelSettings as AdminIcon,
+    Home as HomeIcon,
+    MenuBook as AttendanceIcon,
+    People as StudentsIcon,
+    School as TeachersIcon 
+} from '@mui/icons-material';
+import { 
+    AppBar, 
+    Button, 
+    IconButton, 
+    Menu, 
+    MenuItem, 
+    Toolbar, 
+    Typography, 
+    useMediaQuery, 
+    useTheme 
+} from '@mui/material';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from "/images/ghssLogo.png"; // Adjust the path to your logo
+import HamburgerMenu from "./HamburgerMenu";
+import logo from "/images/ghssLogo.png";
 
 const Navbar = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const navItems = [
+        { label: 'Home', path: '/', icon: <HomeIcon /> },
+        { label: 'Attendance Detail', path: '/PerformanceDashboard', icon: <AttendanceIcon /> },
+        { label: 'Overall Enrolled Students', path: '/studentlist', icon: <StudentsIcon /> },
+        { label: 'Teachers List', path: '/TeachersList', icon: <TeachersIcon /> }
+    ];
+
     return (
         <div>
-            {/* <MobileHamberger/> */}
-            
-        <AppBar
-            position="sticky"
-            className="bg-gradient-to-r  navbarHide from-blue-500 to-blue-700 text-white shadow-lg"
+            <AppBar 
+                sx={{
+                    background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                    transition: 'all 0.3s ease-in-out',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 50,
+                    '&:hover': {
+                        background: 'linear-gradient(135deg, #1e3c72 10%, #2a5298 90%)',
+                    }
+                }}
             >
-            
-            <Toolbar className="flex justify-between">
-          
-                <HamburgerMenu />
-                    <div className="flex items-center space-x-2"> {/* Flex container for logo and text */}
+                <Toolbar sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    padding: { xs: '0.5rem 1rem', md: '0.5rem 2rem' }
+                }}>
+                    {!isMobile && <HamburgerMenu />}
+                    
+                    <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '1rem'
+                    }}>
                         <img
                             src={logo}
                             alt="School Logo"
-                            className="h-10 w-10 object-contain transform transition-transform duration-300 hover:scale-110"
+                            style={{
+                                height: '48px',
+                                width: '48px',
+                                objectFit: 'contain',
+                                transition: 'transform 0.3s ease',
+                                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+                                '&:hover': {
+                                    transform: 'scale(1.1)'
+                                }
+                            }}
                         />
-                        <Typography variant="h6" className='hidden sm:block' sx={{ fontWeight: "bold", textTransform: "capitalize" }}>
+                        <Typography 
+                            variant={isMobile ? "h6" : "h5"}
+                            sx={{ 
+                                fontFamily: "'Playfair Display', serif",
+                                fontWeight: 700,
+                                letterSpacing: '0.5px',
+                                background: 'linear-gradient(45deg, #ffffff 30%, #e0e0e0 90%)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
+                                marginLeft: '0.5rem'
+                            }}
+                        >
                             GHSS Luqman Banda
                         </Typography>
                     </div>
-                <div className="flex space-x-4">
-                    <Button component={Link} to="/" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                        Home
-                    </Button>
-                        <Button component={Link} to="/PerformanceDashboard" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                        Attendance Detail
-                    </Button>
-                    <Button component={Link} to="/studentlist" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                        Overall Entrolled Students
-                    </Button>
-                        <Button component={Link} to="/TeachersList" color="inherit" sx={{ textTransform: 'capitalize' }}>
-                            TeachersList
-                    </Button>
 
-                </div>
-            </Toolbar>
-        </AppBar>
-            </div>
+                    {isMobile ? (
+                        <>
+                            <IconButton
+                                onClick={handleMenuOpen}
+                                sx={{ 
+                                    color: 'white',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255,255,255,0.1)'
+                                    }
+                                }}
+                            >
+                                <AdminIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={handleMenuClose}
+                                PaperProps={{
+                                    sx: {
+                                        backgroundColor: '#fff',
+                                        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                                        borderRadius: '8px',
+                                        mt: 1
+                                    }
+                                }}
+                            >
+                                {navItems.map((item) => (
+                                    <MenuItem 
+                                        key={item.path}
+                                        onClick={handleMenuClose}
+                                        component={Link}
+                                        to={item.path}
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                            padding: '0.75rem 1.5rem',
+                                            fontFamily: "'Poppins', sans-serif",
+                                            color: '#333',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0,0,0,0.04)'
+                                            }
+                                        }}
+                                    >
+                                        {item.icon}
+                                        {item.label}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </>
+                    ) : (
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            {navItems.map((item) => (
+                                <Button
+                                    key={item.path}
+                                    component={Link}
+                                    to={item.path}
+                                    startIcon={item.icon}
+                                    sx={{
+                                        color: 'white',
+                                        textTransform: 'none',
+                                        fontFamily: "'Poppins', sans-serif",
+                                        fontWeight: 500,
+                                        padding: '0.5rem 1rem',
+                                        borderRadius: '8px',
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255,255,255,0.1)',
+                                            transform: 'translateY(-2px)'
+                                        }
+                                    }}
+                                >
+                                    {item.label}
+                                </Button>
+                            ))}
+                        </div>
+                    )}
+                </Toolbar>
+            </AppBar>
+        </div>
     );
 };
 

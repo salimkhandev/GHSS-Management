@@ -1,14 +1,37 @@
-import SearchIcon from '@mui/icons-material/Search';
+import { 
+    ArrowForward as ArrowIcon,
+    Class as ClassIcon,
+    Groups as GroupsIcon,
+    Person as PersonIcon,
+    Search as SearchIcon,
+    School as SchoolIcon,
+    SwitchLeft as PromoteIcon 
+} from '@mui/icons-material';
 import {
-    Box, Card, CardContent, Checkbox, LinearProgress, FormControl,
-    FormControlLabel, Grid, InputAdornment, InputLabel, MenuItem,
-    Select, TextField, Typography
+    Box, 
+    Card, 
+    CardContent, 
+    Checkbox,
+    CircularProgress,
+    FormControl,
+    FormControlLabel, 
+    Grid, 
+    InputAdornment, 
+    InputLabel, 
+    MenuItem,
+    Paper,
+    Select, 
+    Skeleton,
+    TextField, 
+    Typography,
+    useTheme
 } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Classes from './setClassIdSectionId';
 
 const ClassSelector = () => {
+    const theme = useTheme();
     const [students, setStudents] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [classes, setClasses] = useState([]);
@@ -35,8 +58,21 @@ const ClassSelector = () => {
     ).length;
 
     const Loader = () => (
-        <Box sx={{ width: '100%' }}>
-            <LinearProgress color="secondary" />
+        <Box sx={{ width: '100%', p: 4 }}>
+            <Grid container spacing={3}>
+                {[1, 2, 3].map((item) => (
+                    <Grid item xs={12} sm={6} md={4} key={item}>
+                        <Skeleton 
+                            variant="rectangular" 
+                            height={200} 
+                            sx={{ 
+                                borderRadius: 2,
+                                bgcolor: 'rgba(0,0,0,0.04)'
+                            }} 
+                        />
+                    </Grid>
+                ))}
+            </Grid>
         </Box>
     );
 
@@ -164,36 +200,84 @@ const ClassSelector = () => {
     };
 
     return (
-        <div className="p-4 min-h-screen bg-gray-100 flex flex-col items-center">
-            {/* Header Section */}
-            <Box className="w-full max-w-6xl">
-                <Typography variant="h4" gutterBottom className="text-center mb-6">
-                    Promote Students
-                </Typography>
-
-                <Box className="flex justify-between items-center mb-6">
-                    <Typography variant="h6">
-                        Promoting From {selectedClass && `- ${selectedClass}`}
+        <Box sx={{ 
+            p: 4, 
+            minHeight: '100vh',
+            background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
+        }}>
+            <Paper 
+                elevation={3}
+                sx={{ 
+                    maxWidth: '1200px', 
+                    mx: 'auto',
+                    p: 3,
+                    borderRadius: 2
+                }}
+            >
+                {/* Header Section */}
+                <Box sx={{ 
+                    mb: 4,
+                    textAlign: 'center',
+                    background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                    p: 3,
+                    borderRadius: 2,
+                    color: 'white'
+                }}>
+                    <Typography 
+                        variant="h4" 
+                        sx={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 2,
+                            fontWeight: 700,
+                            mb: 1
+                        }}
+                    >
+                        <PromoteIcon fontSize="large" />
+                        Promote Students
                     </Typography>
+                    {selectedClass && (
+                        <Typography variant="subtitle1" sx={{ opacity: 0.9 }}>
+                            Promoting From {selectedClass}
+                        </Typography>
+                    )}
+                </Box>
 
+                {/* Search Bar */}
+                <Box sx={{ 
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    mb: 3
+                }}>
                     <TextField
                         variant="outlined"
-                        placeholder="Search students"
+                        placeholder="Search students..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        size="small"
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchIcon />
+                                    <SearchIcon color="action" />
                                 </InputAdornment>
                             ),
                         }}
-                        className="w-64"
+                        sx={{ 
+                            width: { xs: '100%', sm: '300px' },
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: 2,
+                                bgcolor: 'white',
+                                '&:hover fieldset': {
+                                    borderColor: theme.palette.primary.main,
+                                }
+                            }
+                        }}
                     />
                 </Box>
 
                 {/* Class/Section Selectors */}
-                <Grid container spacing={3} className="mb-6">
+                <Grid container spacing={3} sx={{ mb: 4 }}>
                     <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                             <InputLabel>Select Class</InputLabel>
@@ -201,6 +285,11 @@ const ClassSelector = () => {
                                 value={selectedClass}
                                 onChange={handleClassChange}
                                 label="Select Class"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <ClassIcon color="primary" />
+                                    </InputAdornment>
+                                }
                             >
                                 {classes.map(cls => (
                                     <MenuItem key={cls.id} value={cls.name}>
@@ -218,6 +307,11 @@ const ClassSelector = () => {
                                 value={selectedSection}
                                 onChange={handleSectionChange}
                                 label="Select Section"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <SchoolIcon color="primary" />
+                                    </InputAdornment>
+                                }
                             >
                                 {sections.map(sec => (
                                     <MenuItem key={sec.id} value={sec.name}>
@@ -229,68 +323,116 @@ const ClassSelector = () => {
                     </Grid>
                 </Grid>
 
+                {/* Student Selection Section */}
+                {selectedClass && selectedSection && (
+                    <Box sx={{ mb: 3 }}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectAll}
+                                    onChange={handleSelectAll}
+                                    color="primary"
+                                />
+                            }
+                            label={
+                                <Typography sx={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center',
+                                    gap: 1,
+                                    color: theme.palette.text.primary
+                                }}>
+                                    <GroupsIcon color="primary" fontSize="small" />
+                                    {`Select All (${totalSelectedStudents}/${allIds.length} selected)`}
+                                </Typography>
+                            }
+                        />
+                    </Box>
+                )}
+
                 {/* Student Cards */}
                 {loading ? (
                     <Loader />
+                ) : showNoStudentsMessage ? (
+                    <Box sx={{ 
+                        height: 300,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        gap: 2,
+                        color: theme.palette.text.secondary
+                    }}>
+                        <PersonIcon sx={{ fontSize: 48, opacity: 0.5 }} />
+                        <Typography>No students found for the selected criteria.</Typography>
+                    </Box>
                 ) : (
-                    <>
-                        {selectedClass && selectedSection && (
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={selectAll}
-                                        onChange={handleSelectAll}
-                                    />
-                                }
-                                label={`Select All (${totalSelectedStudents}/${allIds.length} selected)`}
-                                className="mb-4"
-                            />
-                        )}
-
-                        {showNoStudentsMessage ? (
-                            <Typography className="h-[300px] flex items-center justify-center">
-                                No students found for the selected criteria.
-                            </Typography>
-                        ) : (
-                            <Grid container spacing={2}>
-                                {filteredStudents.map(student => (
-                                    <Grid item xs={12} sm={6} md={4} key={student.id}>
-                                        <Card className="shadow-lg">
-                                            <CardContent>
-                                                <Typography variant="h6" gutterBottom>
-                                                    ID: {student.id}
-                                                </Typography>
-                                                <Typography gutterBottom>
-                                                    Name: {student.student_name}
-                                                </Typography>
-                                                <Typography gutterBottom>
-                                                    Class: {student.class_name}
-                                                </Typography>
-                                                <Typography gutterBottom>
-                                                    Section: {student.section_name}
-                                                </Typography>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            checked={selectedStudentIds.includes(student.id)}
-                                                            onChange={() => handleCheckboxChange(student.id)}
-                                                        />
-                                                    }
-                                                    label="Select"
+                    <Grid container spacing={2}>
+                        {filteredStudents.map(student => (
+                            <Grid item xs={12} sm={6} md={4} key={student.id}>
+                                <Card sx={{ 
+                                    boxShadow: 3,
+                                    borderRadius: 2,
+                                    transition: 'transform 0.2s',
+                                    '&:hover': {
+                                        transform: 'translateY(-4px)',
+                                        boxShadow: 6
+                                    }
+                                }}>
+                                    <CardContent>
+                                        <Box sx={{ 
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 1,
+                                            mb: 2,
+                                            color: theme.palette.primary.main
+                                        }}>
+                                            <PersonIcon />
+                                            <Typography variant="h6">
+                                                ID: {student.id}
+                                            </Typography>
+                                        </Box>
+                                        <Typography sx={{ mb: 1 }}>
+                                            Name: {student.student_name}
+                                        </Typography>
+                                        <Typography sx={{ mb: 1 }}>
+                                            Class: {student.class_name}
+                                        </Typography>
+                                        <Typography sx={{ mb: 2 }}>
+                                            Section: {student.section_name}
+                                        </Typography>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={selectedStudentIds.includes(student.id)}
+                                                    onChange={() => handleCheckboxChange(student.id)}
+                                                    color="primary"
                                                 />
-                                            </CardContent>
-                                        </Card>
-                                    </Grid>
-                                ))}
+                                            }
+                                            label="Select for Promotion"
+                                        />
+                                    </CardContent>
+                                </Card>
                             </Grid>
-                        )}
-                    </>
+                        ))}
+                    </Grid>
                 )}
 
                 {/* Promotion Target Section */}
                 {filteredStudents.length > 0 && !loading && (
-                    <Box className="mt-8 w-full">
-                        <Typography variant="h6" className="text-center mb-4">
+                    <Box sx={{ mt: 6, textAlign: 'center' }}>
+                        <Typography 
+                            variant="h5" 
+                            sx={{ 
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: 1,
+                                mb: 3,
+                                color: theme.palette.primary.main,
+                                fontWeight: 600
+                            }}
+                        >
+                            <ArrowIcon />
                             Promoting To
                         </Typography>
                         <Classes
@@ -304,8 +446,8 @@ const ClassSelector = () => {
                         />
                     </Box>
                 )}
-            </Box>
-        </div>
+            </Paper>
+        </Box>
     );
 };
 
