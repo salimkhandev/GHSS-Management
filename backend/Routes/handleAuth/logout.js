@@ -18,6 +18,8 @@ router.post("/", (req, res) => {
     });
     
     res.status(200).json({ message: "Logged out successfully" });
+    // log
+    console.log("Logout successful");
 });
 
 module.exports = router;
