@@ -16,7 +16,6 @@ router.post("/", (req, res) => {
         domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
         path: "/", // 👈 Must match the path used when setting the cookie
     });
-    res.status(200).json({ message: "Logged out successfully" });
 
     res.clearCookie("adminToken", {
         httpOnly: true,
@@ -25,7 +24,6 @@ router.post("/", (req, res) => {
         domain: "ghss-management-backend.vercel.app", // 👈 Must match backend domain
         path: "/", // 👈 Must match the path used when setting the cookie
     });
-    res.status(200).json({ message: "Logged out successfully" });
 
     
     res.status(200).json({ message: "Logged out successfully" });
