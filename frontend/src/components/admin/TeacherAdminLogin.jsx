@@ -15,7 +15,6 @@ const LoginForm = () => {
         try {
             const [adminRes, teacherRes] = await Promise.all([
                 fetch("https://ghss-management-backend.vercel.app/admin-login", {
-
                     method: "POST",
                     credentials: "include",
                     headers: { "Content-Type": "application/json" },
@@ -52,11 +51,11 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="min-h-screen flex  items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
                 <h2 className="text-2xl font-bold text-center text-gray-700">Admin & Teacher Login</h2>
 
-                <form onSubmit={handleLogin} className=" flex flex-col md:grid-cols-2 gap-6 mt-6">
+                <form onSubmit={handleLogin} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     {/* Admin Login */}
                     <div className="space-y-4">
                         <h3 className="text-lg font-semibold text-gray-600">Admin Login</h3>

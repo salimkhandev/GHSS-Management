@@ -15,7 +15,6 @@ const LoginForm = () => {
         try {
             const [adminRes, teacherRes] = await Promise.all([
                 fetch("https://ghss-management-backend.vercel.app/admin-login", {
-                    
                     method: "POST",
                     credentials: "include",
                     headers: { "Content-Type": "application/json" },
