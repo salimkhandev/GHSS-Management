@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-router.get("/", (req, res) => {
+router.post("/", (req, res) => {
     // error handling
     if (!req.cookies) {
         return res.status(400).json({ error: "No cookies found" });
