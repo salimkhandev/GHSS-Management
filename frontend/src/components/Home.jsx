@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
-import Slider from "react-slick";
-import { Box, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { Box, Typography } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Don't forget to import AOS CSS
-import "slick-carousel/slick/slick.css";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
 
 const images = [
   { src: "/images/carousel1.jpg", alt: "School Building" },
@@ -24,17 +24,28 @@ const NextArrow = ({ onClick }) => (
   <ArrowForwardIos
     onClick={onClick}
     sx={{
-      position: "absolute",
-      top: "50%",
-      right: "35px",
-      transform: "translateY(-50%)",
-      color: "#fff",
-      fontSize: "2rem",
-      cursor: "pointer",
+      position: 'absolute',
+      top: '50%',
+      right: { xs: '-20px', sm: '-30px', md: '-40px' },
+      transform: 'translateY(-50%)',
+      color: '#fff',
+      fontSize: { xs: '2.5rem', sm: '3rem' },
+      cursor: 'pointer',
       zIndex: 2,
-      backgroundColor: "rgba(0,0,0,0.5)",
-      borderRadius: "50%",
-      padding: "8px",
+      backgroundColor: 'rgba(25, 118, 210, 0.7)',
+      borderRadius: '50%',
+      padding: { xs: '12px', sm: '15px' },
+      transition: 'all 0.3s ease',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: { xs: '45px', sm: '55px' },
+      height: { xs: '45px', sm: '55px' },
+      '&:hover': {
+        backgroundColor: 'rgba(25, 118, 210, 0.9)',
+        transform: 'translateY(-50%) scale(1.1)',
+        boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
+      },
     }}
   />
 );
@@ -43,17 +54,28 @@ const PrevArrow = ({ onClick }) => (
   <ArrowBackIos
     onClick={onClick}
     sx={{
-      position: "absolute",
-      top: "50%",
-      left: "35px",
-      transform: "translateY(-50%)",
-      color: "#fff",
-      fontSize: "2rem",
-      cursor: "pointer",
+      position: 'absolute',
+      top: '50%',
+      left: { xs: '-20px', sm: '-30px', md: '-40px' },
+      transform: 'translateY(-50%)',
+      color: '#fff',
+      fontSize: { xs: '2.5rem', sm: '3rem' },
+      cursor: 'pointer',
       zIndex: 2,
-      backgroundColor: "rgba(0,0,0,0.5)",
-      borderRadius: "50%",
-      padding: "8px",
+      backgroundColor: 'rgba(25, 118, 210, 0.7)',
+      borderRadius: '50%',
+      padding: { xs: '12px', sm: '15px' },
+      transition: 'all 0.3s ease',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: { xs: '45px', sm: '55px' },
+      height: { xs: '45px', sm: '55px' },
+      '&:hover': {
+        backgroundColor: 'rgba(25, 118, 210, 0.9)',
+        transform: 'translateY(-50%) scale(1.1)',
+        boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
+      },
     }}
   />
 );
@@ -82,7 +104,11 @@ const GallerySlider = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center justify-center" 
+      style={{ 
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)' 
+      }}
+    >
       {/* Welcome Message */}
       {!showSlider && (
         <div
@@ -107,42 +133,100 @@ const GallerySlider = () => {
       {showSlider && (
         <Box
           sx={{
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#f4f4f4",
+            width: '100%',
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)',
+            padding: { xs: '40px 20px', sm: '60px 40px' },
           }}
         >
-          {/* Gallery */}
-          <Slider {...settings} style={{ width: "100vw", position: 'absolute', top: '30px', maxWidth: "100vw" }}>
-            {images.map((image, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100vh", // Ensures the slider takes up full viewport height
-                }}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  style={{
-                    width: "100%",
-                    height: "100vh", // Ensure it fills the screen height
-                    objectFit: "cover", // Ensures the image fully covers the screen
-                    border: "none", // No border around the image
-                    borderRadius: "0", // No rounded corners
-                    boxSizing: "border-box", // Ensures proper layout without border overflow
+          {/* Gallery with Frame Design */}
+          <Box
+            sx={{
+              width: '85%',
+              maxWidth: '1200px',
+              margin: '0 auto',
+              padding: '20px',
+              backgroundColor: '#ffffff',
+              borderRadius: '16px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+              position: 'relative',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: '12px',
+                left: '12px',
+                right: '12px',
+                bottom: '12px',
+                border: '2px solid #1976d2',
+                borderRadius: '12px',
+                pointerEvents: 'none',
+                opacity: 0.3
+              },
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                top: '6px',
+                left: '6px',
+                right: '6px',
+                bottom: '6px',
+                border: '1px solid #1976d2',
+                borderRadius: '14px',
+                pointerEvents: 'none',
+                opacity: 0.2
+              }
+            }}
+          >
+            <Slider {...settings}>
+              {images.map((image, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '75vh',
+                    padding: '25px', // Increased padding for frame effect
+                    backgroundColor: '#ffffff',
                   }}
-                />
-              </Box>
-            ))}
-          </Slider>
+                >
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '65vh',
+                      position: 'relative',
+                      '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        top: '-8px',
+                        left: '-8px',
+                        right: '-8px',
+                        bottom: '-8px',
+                        border: '1px solid #1976d2',
+                        borderRadius: '14px',
+                        opacity: 0.2
+                      }
+                    }}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                      }}
+                    />
+                  </Box>
+                </Box>
+              ))}
+            </Slider>
+          </Box>
         </Box>
       )}
     </div>
