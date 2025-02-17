@@ -25,6 +25,7 @@ app.use(cors({
       'https://ghss-management.vercel.app', // Production frontend
       'http://localhost:5173'               // Local development frontend
    ],
+
    credentials: true // Allow cookies to be sent
 }));
 // app.use(cors());
