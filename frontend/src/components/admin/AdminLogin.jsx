@@ -9,33 +9,34 @@ import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from './AuthProvider';
+import { SnackbarProvider } from 'notistack';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
-  username: Yup.string()
-    .required('Username is required')
-    .min(4, 'Username must be at least 4 characters'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(5, 'Password must be at least 5 characters'),
+    username: Yup.string()
+        .required('Username is required')
+        .min(4, 'Username must be at least 4 characters'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(5, 'Password must be at least 5 characters'),
 });
 
 const AdminLogin = () => {
-    const { login } = useAuth();
-    const [message, setMessage] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
+    const { enqueueSnackbar } = useSnackbar();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        setMessage('');
         try {
             const response = await axios.post(
                 'https://ghss-management-backend.vercel.app/admin-login',
@@ -48,11 +49,19 @@ const AdminLogin = () => {
                 }
             );
             login();
-            navigate('/admin/TeacherRegistration');
-            setMessage(response.data.message);
+            enqueueSnackbar('Login successful!', { variant: 'success' });
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
         } catch (err) {
             console.error('Login error:', err);
-            setMessage('Invalid credentials. Please try again.');
+            enqueueSnackbar('Invalid credentials. Please try again.', {
+                variant: 'error',
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center',
+                }
+            });
         }
         setSubmitting(false);
     };
@@ -214,27 +223,6 @@ const AdminLogin = () => {
                                         }}
                                     />
 
-                                    {message && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: -10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.3 }}
-                                        >
-                                            <Typography
-                                                color={message.includes('Invalid') ? 'error' : 'primary'}
-                                                variant="body2"
-                                                sx={{
-                                                    mt: 1,
-                                                    mb: 2,
-                                                    textAlign: 'center',
-                                                    fontWeight: 500,
-                                                }}
-                                            >
-                                                {message}
-                                            </Typography>
-                                        </motion.div>
-                                    )}
-
                                     <Button
                                         type="submit"
                                         variant="contained"
@@ -287,4 +275,14 @@ const AdminLogin = () => {
     );
 };
 
-export default AdminLogin;
+const AdminLoginWithSnackbar = () => (
+    <SnackbarProvider
+        maxSnack={3}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Adjusted position for snackbar
+    >
+        <AdminLogin />
+    </SnackbarProvider>
+);
+
+export default AdminLoginWithSnackbar;

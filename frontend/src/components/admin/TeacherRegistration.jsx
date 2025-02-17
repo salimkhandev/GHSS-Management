@@ -1,14 +1,17 @@
-import { CheckCircleOutline, Class, ErrorOutline, Person, School, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { School as ClassIcon, Lock as LockIcon, Person, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const RegisterTeacher = () => {
+    const { enqueueSnackbar } = useSnackbar();
+    const navigate = useNavigate();
     const [classes, setClasses] = useState([]);
     const [sectionsOfClsId, setSectionsOfClsId] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
@@ -52,9 +55,21 @@ const RegisterTeacher = () => {
                 }, { withCredentials: true });
 
                 formik.resetForm();
-                formik.setStatus({ success: response.data.message });
+                enqueueSnackbar('Teacher registered successfully!', { 
+                    variant: 'success',
+                    autoHideDuration: 2000
+                });
+
+                // Navigate to home after 1.5 seconds
+                setTimeout(() => {
+                    navigate('/');
+                }, 1500);
+
             } catch (err) {
-                formik.setStatus({ error: 'Error registering teacher. Please try again.' });
+                enqueueSnackbar('Error registering teacher. Please try again.', { 
+                    variant: 'error',
+                    autoHideDuration: 2000
+                });
             } finally {
                 setLoading(false);
             }
@@ -106,11 +121,12 @@ const RegisterTeacher = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: '100vh',
-                gap: 2.5,
-                maxWidth: 450,
-                margin: '0 auto',
-                padding: 4,
+                minHeight: '80vh',
+                gap: 3,
+                width: '90%',
+                maxWidth: '500px',
+                margin: '40px auto',
+                padding: { xs: 3, sm: 4 },
                 backgroundColor: 'white',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
                 borderRadius: 3,
@@ -187,7 +203,7 @@ const RegisterTeacher = () => {
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <School color="primary" />
+                            <LockIcon color="primary" />
                         </InputAdornment>
                     ),
                     endAdornment: (
@@ -238,7 +254,7 @@ const RegisterTeacher = () => {
                     label="Select Class"
                     startAdornment={
                         <InputAdornment position="start">
-                            <Class color="primary" />
+                            <ClassIcon sx={{ color: '#1976d2' }} />
                         </InputAdornment>
                     }
                 >
@@ -293,44 +309,6 @@ const RegisterTeacher = () => {
                 )}
             </FormControl>
 
-            {formik.status && formik.status.success && (
-                <Typography 
-                    color="success.main" 
-                    sx={{ 
-                        mt: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                        padding: 1,
-                        borderRadius: 1,
-                        backgroundColor: 'success.light',
-                        color: 'success.dark'
-                    }}
-                >
-                    <CheckCircleOutline fontSize="small" />
-                    {formik.status.success}
-                </Typography>
-            )}
-
-            {formik.status && formik.status.error && (
-                <Typography 
-                    color="error" 
-                    sx={{ 
-                        mt: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                        padding: 1,
-                        borderRadius: 1,
-                        backgroundColor: 'error.light',
-                        color: 'error.dark'
-                    }}
-                >
-                    <ErrorOutline fontSize="small" />
-                    {formik.status.error}
-                </Typography>
-            )}
-
             <Button
                 type="submit"
                 variant="contained"
@@ -347,46 +325,24 @@ const RegisterTeacher = () => {
                     transition: 'all 0.3s ease-in-out',
                 }}
             >
-                {loading ? (
-                    <CircularProgress 
-                        size={24} 
-                        sx={{ 
-                            color: 'white',
-                            animation: 'spin 1s linear infinite',
-                            '@keyframes spin': {
-                                '0%': { transform: 'rotate(0deg)' },
-                                '100%': { transform: 'rotate(360deg)' }
-                            }
-                        }} 
-                    />
-                ) : 'Register'}
+                {loading ? 'Registering...' : 'Register'}
             </Button>
 
-            <Button
-                component={Link}
-                to="/admin/TeacherRegistration/AdminRegistration"
-                variant="outlined"
-                color="secondary"
-                fullWidth
-                sx={{
-                    mt: 2,
-                    py: 1.5,
-                    borderWidth: 2,
-                    borderColor: '#9c27b0',
-                    color: '#9c27b0',
-                    '&:hover': {
-                        borderWidth: 2,
-                        borderColor: '#7b1fa2',
-                        backgroundColor: 'rgba(156, 39, 176, 0.08)',
-                        transform: 'translateY(-1px)',
-                    },
-                    transition: 'all 0.3s ease-in-out',
-                }}
-            >
-                Register Admin
-            </Button>
         </Box>
     );
 };
 
-export default RegisterTeacher;
+export default function TeacherRegistrationWithSnackbar() {
+    return (
+        <SnackbarProvider 
+            maxSnack={3} 
+            autoHideDuration={2000}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+        >
+            <RegisterTeacher />
+        </SnackbarProvider>
+    );
+}

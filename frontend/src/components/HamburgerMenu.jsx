@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 // import { SnackbarProvider, useSnackbar } from "notistack";
 import {
@@ -138,7 +139,7 @@ export default function TopDrawerWithToggle() {
 
     const [open, setOpen] = useState(false);
     const [expandedSections, setExpandedSections] = React.useState({});
-    const { isAuthenticated, isAuthenticatedTeacher, logEvent } = useAuth();
+    const { isAuthenticated, isAuthenticatedTeacher, logEvent, setLogEventHandler } = useAuth();
     // const [keepProfilePicUpdated, setKeepProfilePicUpdated] = useState(false);
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -187,6 +188,7 @@ export default function TopDrawerWithToggle() {
                 setUsername(response.data.teacherName);
             } catch (error) {
                 //   enqueueSnackbar("Failed to fetch profile picture.", { variant: "error" });
+                console.error("Failed to fetch profile picture:", error);
             } finally {
                 setLoading(false);
             }
@@ -215,8 +217,11 @@ export default function TopDrawerWithToggle() {
                 method: "POST",
                 credentials: "include", // Ensures cookies are sent
             });
-
+            setLogEventHandler();
+            setImageUrl(null);
+            setUsername('');
             navigate("/"); // Redirect to home
+            
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -235,8 +240,8 @@ export default function TopDrawerWithToggle() {
         {
             title: "Admin Portal",
             links: [
-                { label: "Assign Class", path: "/admin/TeacherRegistration" },
-                { label: "Register New Admin", path: "/admin/TeacherRegistration/AdminRegistration" },
+                { label: "Assign Class", path: "/TeacherRegistration" },
+                { label: "Register New Admin", path: "/AdminRegistration" },
                 { label: "Promote Students to Next Class", path: "/promote" },
                 { label: "Register New Students", path: "/admission" },
             ],
@@ -268,6 +273,7 @@ export default function TopDrawerWithToggle() {
             role="presentation"
         >
             {(isAuthenticated || isAuthenticatedTeacher) && (
+              
                 <Button
                     startIcon={<LogoutIcon />}
                     sx={{
@@ -289,7 +295,11 @@ export default function TopDrawerWithToggle() {
                     onClick={handleLogout}
                 >
                     Logout
-                </Button>)}
+            
+                </Button>
+                  
+
+            )}
 
             {
                 (isAuthenticated || isAuthenticatedTeacher) ? (<div className="text-center">
@@ -319,7 +329,13 @@ export default function TopDrawerWithToggle() {
                 </div>) :
                     <div>
                         {/* <Drawer anchor="left" open={RoleOpen} onClose={toggleRoleDrawer(false)}> */}
-                        <Box sx={{ width: 280, backgroundColor: "#1E3A8A", color: "white", height: "100%" }}>
+                        <Box sx={{ width: 280, color: "white", height: "100%" }}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+
                             <Button
                                 onClick={() => setShowRoleModal(true)}
 
@@ -328,7 +344,7 @@ export default function TopDrawerWithToggle() {
                                     color: "white",
                                     fontWeight: "bold",
                                     margin: "10px auto",
-                                    padding: "3px 20px",
+                                    padding: "10px 30px",
                                     borderRadius: "20px",
                                     display: "flex",
                                     justifyContent: "center",
@@ -338,9 +354,10 @@ export default function TopDrawerWithToggle() {
                                     background: "linear-gradient(to bottom, #4d4dff, #1A8CFF)",
                                     "&:hover": { background: "linear-gradient(to bottom, #4d4dff, #4d4dff)" },
                                 }}
-                            >
+                                >
                                 Login
                             </Button>
+                                </motion.div>
                         </Box>
                         {/* </Drawer> */}
 
@@ -348,7 +365,12 @@ export default function TopDrawerWithToggle() {
                         <Dialog
                             open={showRoleModal}
                             onClose={() => setShowRoleModal(false)}
-                            sx={modalStyles.dialog}
+                            sx={{
+                                ...modalStyles.dialog,
+                                '& .MuiDialog-paper': {
+                                    animation: 'modalFadeIn 0.3s ease-out'
+                                }
+                            }}
                         >
                             <Box sx={modalStyles.credentialsBox}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -420,16 +442,109 @@ export default function TopDrawerWithToggle() {
                                 </Button>
                             </Box>
 
-                            <style jsx global>{`
-                                @keyframes modalFadeIn {
-                                    from { opacity: 0; transform: scale(0.95); }
-                                    to { opacity: 1; transform: scale(1); }
+                            <Box sx={{
+                                '@keyframes modalFadeIn': {
+                                    from: { 
+                                        opacity: 0, 
+                                        transform: 'scale(0.95)' 
+                                    },
+                                    to: { 
+                                        opacity: 1, 
+                                        transform: 'scale(1)' 
+                                    }
+                                },
+                                '@keyframes slideDown': {
+                                    from: { 
+                                        opacity: 0, 
+                                        transform: 'translateY(-10px)' 
+                                    },
+                                    to: { 
+                                        opacity: 1, 
+                                        transform: 'translateY(0)' 
+                                    }
                                 }
-                                @keyframes slideDown {
-                                    from { opacity: 0; transform: translateY(-10px); }
-                                    to { opacity: 1; transform: translateY(0); }
-                                }
-                            `}</style>
+                            }}>
+                                <Dialog
+                                    open={showRoleModal}
+                                    onClose={() => setShowRoleModal(false)}
+                                    sx={{
+                                        ...modalStyles.dialog,
+                                        '& .MuiDialog-paper': {
+                                            animation: 'modalFadeIn 0.3s ease-out'
+                                        }
+                                    }}
+                                >
+                                    <Box sx={modalStyles.credentialsBox}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                            <KeyIcon sx={{ color: '#ffa000', fontSize: 24 }} />
+                                            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555' }}>
+                                                Demo Credentials
+                                            </Typography>
+                                        </Box>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <AdminIcon sx={{ color: '#d9534f', fontSize: 20 }} />
+                                                <Typography variant="body2" sx={{ color: '#666' }}>
+                                                    Admin: <span style={{ color: '#d9534f', fontWeight: 500 }}>Username: admin | Password: admin</span>
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <SchoolIcon sx={{ color: '#5cb85c', fontSize: 20 }} />
+                                                <Typography variant="body2" sx={{ color: '#666' }}>
+                                                    Teacher: <span style={{ color: '#5cb85c', fontWeight: 500 }}>Username: Kamal | Password: Kamal</span>
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    </Box>
+
+                                    <Box sx={modalStyles.title}>
+                                        <Typography variant="h5" sx={{ 
+                                            fontWeight: 700,
+                                            fontFamily: "'Poppins', sans-serif",
+                                            color: '#2c3e50'
+                                        }}>
+                                            Select Role
+                                        </Typography>
+                                        <IconButton 
+                                            onClick={() => setShowRoleModal(false)}
+                                            sx={{ 
+                                                color: '#555',
+                                                transition: 'all 0.3s ease',
+                                                '&:hover': {
+                                                    transform: 'rotate(90deg)',
+                                                    backgroundColor: 'rgba(0,0,0,0.05)'
+                                                }
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </Box>
+
+                                    <Box sx={modalStyles.buttonsContainer}>
+                                        <Button
+                                            onClick={() => handleRoleSelection("admin")}
+                                            startIcon={<AdminIcon />}
+                                            sx={modalStyles.button('#ff6b6b')}
+                                        >
+                                            Admin
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleRoleSelection("teacher")}
+                                            startIcon={<SchoolIcon />}
+                                            sx={modalStyles.button('#4CAF50')}
+                                        >
+                                            Teacher
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleRoleSelection("teacherAdmin")}
+                                            startIcon={<TeacherAdminIcon />}
+                                            sx={modalStyles.button('#2196F3')}
+                                        >
+                                            Teacher & Admin
+                                        </Button>
+                                    </Box>
+                                </Dialog>
+                            </Box>
                         </Dialog>
 
                     </div>

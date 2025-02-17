@@ -74,6 +74,11 @@ export const AuthProvider = ({ children }) => {
         setLogEvent((prev) => !prev); // Toggle the boolean value
 
     };
+    const setLogEventHandler = () => {
+        setLogEvent((prev) => !prev); 
+        setIsAuthenticated(false);
+        setIsAuthenticatedTeacher(false);
+    };
         const loginTeacher = () => {
             setIsAuthenticatedTeacher(true);
             setLogEvent((prev) => !prev); // Toggle the boolean value
@@ -91,7 +96,8 @@ export const AuthProvider = ({ children }) => {
             isAuthenticatedTeacher,
             loginTeacher,
             logoutTeacher,
-            logEvent
+            logEvent,
+            setLogEventHandler
         }}>
             {children}
         </AuthContext.Provider>

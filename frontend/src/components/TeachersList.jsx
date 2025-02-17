@@ -123,7 +123,7 @@ const TeachersList = () => {
                 mx: 'auto',
                 background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                 borderRadius: 2,
-                p: { xs: 2, sm: 3 },
+                p: { xs: 2, sm: 3, md: ['8px'] },
                 color: 'white',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
             }}>
@@ -136,12 +136,12 @@ const TeachersList = () => {
                         justifyContent: 'center',
                         gap: 2,
                         fontWeight: 700,
-                        fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' },
+                        fontSize: { xs: '1rem', sm: '1rem', md: '1.6rem' },
                         fontFamily: "'Poppins', sans-serif",
                         textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                     }}
                 >
-                    <TeacherIcon sx={{ fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' } }} />
+                    <TeacherIcon sx={{ fontSize: { xs: '1rem', sm: '1.5rem', md: '2rem' } }} />
                     Teachers List
                 </Typography>
             </Box>
@@ -222,9 +222,7 @@ const TeachersList = () => {
                                                 gap: 1,
                                                 color: theme.palette.text.secondary
                                             }}>
-                                                <SchoolIcon sx={{ 
-                                                    fontSize: { xs: '1.25rem', sm: '1.5rem' }
-                                                }} />
+                                                
                                                 <Typography sx={{
                                                     fontSize: { xs: '0.875rem', sm: '1rem' }
                                                 }}>

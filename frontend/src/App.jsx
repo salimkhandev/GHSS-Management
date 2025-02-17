@@ -33,104 +33,104 @@ const Loader = () => (
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/studentlist"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <StudentList />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/PerformanceDashboard"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <PerformanceDashboard />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/TeachersList"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <TeachersList/>
-                </Suspense>
-              }
-            />
+      <AuthProvider>
+        <Router>
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/studentlist"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <StudentList />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/PerformanceDashboard"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <PerformanceDashboard />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/TeachersList"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <TeachersList/>
+                  </Suspense>
+                }
+              />
+             
+              <Route path="/TeacherLogin" element={<TeacherLogin />} />
+              <Route path="/admin" element={<AdminLogin/>} />
+              <Route path="/teacherAdminLogin" element={<TeacherAdminLogin />} />
+
+              {/* Catch-all route */}
+              <Route path="*" element={<h1>Not Found</h1>} />
+
+
+              {/* Protected Routes */}
+              <Route element={<Protecter />}>
+                <Route
+                  path="/admission"
+                  element={
+                    <Suspense fallback={<Loader />}>
+                      <StudentForm />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/promote"
+                  element={
+                    <Suspense fallback={<Loader />}>
+                      <ClassSelector />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/AdminRegistration"
+                  element={
+                    <Suspense fallback={<Loader />}>
+                      <AdminRegistration />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/TeacherRegistration"
+                  element={
+                    <Suspense fallback={<Loader />}>
+                      <TeacherRegistration />
+                    </Suspense>
+                  }
+                />
+              </Route>
+              <Route element={<CheckAsAteacher />}>
+                <Route
+                  path="/TakeAtten"
+                  element={
+                    <Suspense fallback={<Loader />}>
+                      <TakenAtten />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/updateAttenStatus"
+                  element={
+                    <Suspense fallback={<Loader />}>
+                      <UpdateAttenStatusOfClsSec />
+                    </Suspense>
+                  }
+                />
+              </Route>
+
+            </Routes>
            
-            <Route path="/TeacherLogin" element={<TeacherLogin />} />
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/teacherAdminLogin" element={<TeacherAdminLogin />} />
-
-            {/* Catch-all route */}
-            <Route path="*" element={<h1>Not Found</h1>} />
-
-
-            {/* Protected Routes */}
-            <Route element={<Protecter />}>
-              <Route
-                path="/admission"
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <StudentForm />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/promote"
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <ClassSelector />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/admin/TeacherRegistration/AdminRegistration"
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <AdminRegistration />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/admin/TeacherRegistration"
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <TeacherRegistration />
-                  </Suspense>
-                }
-              />
-            </Route>
-            <Route element={<CheckAsAteacher />}>
-              <Route
-                path="/TakeAtten"
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <TakenAtten />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/updateAttenStatus"
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <UpdateAttenStatusOfClsSec />
-                  </Suspense>
-                }
-              />
-            </Route>
-
-          </Routes>
-         
-        </main>
-      </Router>
-    </AuthProvider>
+          </main>
+        </Router>
+      </AuthProvider>
   );
 }
 

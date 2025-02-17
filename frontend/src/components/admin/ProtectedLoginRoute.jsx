@@ -1,137 +1,312 @@
-import { useState, useEffect } from "react";
-import { TextField, Button, Box, Typography,LinearProgress, CircularProgress } from "@mui/material";
+import {
+    AdminPanelSettings as AdminPanelSettingsIcon,
+    Lock as LockIcon,
+    Person as PersonIcon,
+    Visibility,
+    VisibilityOff
+} from '@mui/icons-material';
+import {
+    Box,
+    Button,
+    IconButton,
+    InputAdornment,
+    LinearProgress,
+    Paper,
+    TextField,
+    Typography
+} from "@mui/material";
 import axios from "axios";
+import { Form, Formik } from 'formik';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useSnackbar } from 'notistack';
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import * as Yup from 'yup';
 import { useAuth } from "./AuthProvider";
-// import { useAuth } from "./AuthProvider";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const AdminLogin = () => {
-    // const { login } = useAuth();
-    const { login, logout,isAuthenticated } = useAuth(); 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+const validationSchema = Yup.object({
+    username: Yup.string()
+        .required('Username is required')
+        .min(4, 'Username must be at least 4 characters'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(5, 'Password must be at least 5 characters'),
+});
+
+const ProtectedLoginRoute = () => {
+    const { login, logout, isAuthenticated } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-    const [loading,setLoading]=useState(false)
-    // const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
+    const { enqueueSnackbar } = useSnackbar();
 
-    // Check if admin is already authenticated
     const Loader = () => (
         <Box sx={{ width: '100%' }}>
             <LinearProgress color="secondary" />
         </Box>
     );
 
-    // useEffect(() => {
-    //     const verifyAuth = async () => {
-    //         try {
-    //             const response = await axios.get(
-    //                 "https://ghss-management-backend.vercel.app/verify-token-asAdmin",
-    //                 { withCredentials: true }
-    //             );
-    //           if (response.data.authenticated) {
-    //                 login(); // If authenticated, set global auth state
-    //             }
-    //         } catch (error) {
-    //             logout() 
-                
-    //         }
-    //     };
-        
-    //     verifyAuth();
-    // }, [login,logout]);
-    
-    // how to call a fxn
-    
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setMessage(""); // Clear any previous messages
-  setLoading(true)
+    const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            const response = await axios.post(
+            await axios.post(
                 "https://ghss-management-backend.vercel.app/admin-login",
-                { username, password },
+                { 
+                    username: values.username, 
+                    password: values.password 
+                },
                 { withCredentials: true }
             );
-            
-            login(); // Update auth state
+            login();
+            enqueueSnackbar('Login successful!', { 
+                variant: 'success',
+                autoHideDuration: 2000,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center',
+                }
+            });
         } catch (err) {
-            logout()  
-            setMessage("Error logging in", err);
+            logout();
+            enqueueSnackbar('Invalid credentials. Please try again.', { 
+                variant: 'error',
+                autoHideDuration: 3000,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center',
+                }
+            });
+        } finally {
+            setSubmitting(false);
         }
-finally {
-        setLoading(false);
-    }
     };
 
     if (isAuthenticated === null) {
-        return <div>{<Loader/>}</div>; // Show loading while checking authentication
+        return <div><Loader/></div>;
     }
 
     if (isAuthenticated) {
-        return <Outlet />; // If authenticated, render protected content
+        return <Outlet />;
     }
 
     return (
-        <Box
-            component="form"
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100vh",
-                gap: 2,
-                maxWidth: 400,
-                margin: "0 auto",
-            }}
-            onSubmit={handleSubmit}
-        >
-            <Typography variant="h4">Admin Login</Typography>
-            <TextField
-                label="Username"
-                autoComplete="username"
-                variant="outlined"
-                fullWidth
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
-                label="Password"
-                autoComplete="current-password"
-                variant="outlined"
-                type={showPassword ? "text" : "password"}
-                fullWidth
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton onClick={handleTogglePassword} edge="end">
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                            </IconButton>
-                        </InputAdornment>
-                    ),
-                }}
-            />
-            {message && (
-                <Typography color="error" variant="body2">
-                    {message}
-                </Typography>
-            )}
-            <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
-                {loading?<CircularProgress size={24}/>: 'Login'}
-            </Button>
-        </Box>
+        <AnimatePresence>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        minHeight: '100vh',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)',
+                        padding: '20px',
+                        backgroundImage: 'url("/images/pattern.png")',
+                        backgroundBlendMode: 'overlay',
+                    }}
+                >
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                    >
+                        <Paper
+                            elevation={12}
+                            sx={{
+                                padding: { xs: 3, sm: 4 },
+                                borderRadius: 3,
+                                maxWidth: 450,
+                                width: '100%',
+                                backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                                backdropFilter: 'blur(10px)',
+                                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: 3,
+                                }}
+                            >
+                                <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <AdminPanelSettingsIcon
+                                        sx={{
+                                            fontSize: 80,
+                                            color: '#1a237e',
+                                            filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
+                                        }}
+                                    />
+                                </motion.div>
+
+                                <Typography
+                                    variant="h4"
+                                    sx={{
+                                        fontFamily: '"Poppins", sans-serif',
+                                        fontWeight: 700,
+                                        color: '#1a237e',
+                                        textAlign: 'center',
+                                        textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                        letterSpacing: '-0.5px',
+                                    }}
+                                >
+                                    Admin Login
+                                </Typography>
+
+                                <Formik
+                                    initialValues={{ username: '', password: '' }}
+                                    validationSchema={validationSchema}
+                                    onSubmit={handleSubmit}
+                                >
+                                    {({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
+                                        <Form style={{ width: '100%' }}>
+                                            <TextField
+                                                label="Username"
+                                                name="username"
+                                                autoComplete="username"
+                                                variant="outlined"
+                                                fullWidth
+                                                value={values.username}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                error={touched.username && Boolean(errors.username)}
+                                                helperText={touched.username && errors.username}
+                                                sx={{
+                                                    mb: 3,
+                                                    '& .MuiOutlinedInput-root': {
+                                                        '&:hover fieldset': {
+                                                            borderColor: '#1a237e',
+                                                        },
+                                                        '&.Mui-focused fieldset': {
+                                                            borderColor: '#1a237e',
+                                                        },
+                                                    },
+                                                    '& .MuiInputLabel-root.Mui-focused': {
+                                                        color: '#1a237e',
+                                                    },
+                                                }}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <PersonIcon sx={{ color: '#1a237e' }} />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+
+                                            <TextField
+                                                label="Password"
+                                                name="password"
+                                                autoComplete="current-password"
+                                                variant="outlined"
+                                                type={showPassword ? "text" : "password"}
+                                                fullWidth
+                                                value={values.password}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                error={touched.password && Boolean(errors.password)}
+                                                helperText={touched.password && errors.password}
+                                                sx={{
+                                                    mb: 3,
+                                                    '& .MuiOutlinedInput-root': {
+                                                        '&:hover fieldset': {
+                                                            borderColor: '#1a237e',
+                                                        },
+                                                        '&.Mui-focused fieldset': {
+                                                            borderColor: '#1a237e',
+                                                        },
+                                                    },
+                                                    '& .MuiInputLabel-root.Mui-focused': {
+                                                        color: '#1a237e',
+                                                    },
+                                                }}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <LockIcon sx={{ color: '#1a237e' }} />
+                                                        </InputAdornment>
+                                                    ),
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                onClick={handleTogglePassword}
+                                                                edge="end"
+                                                                sx={{
+                                                                    '&:hover': {
+                                                                        backgroundColor: 'rgba(26, 35, 126, 0.1)',
+                                                                    },
+                                                                }}
+                                                            >
+                                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        fullWidth
+                                        disabled={isSubmitting}
+                                        sx={{
+                                            mt: 2,
+                                            mb: 2,
+                                            py: 1.5,
+                                            background: 'linear-gradient(45deg, #1a237e 30%, #0d47a1 90%)',
+                                            color: 'white',
+                                            fontWeight: 600,
+                                            fontSize: '1.1rem',
+                                            textTransform: 'none',
+                                            borderRadius: '10px',
+                                            boxShadow: '0 4px 12px rgba(26, 35, 126, 0.4)',
+                                            transition: 'all 0.3s ease',
+                                            '&:hover': {
+                                                background: 'linear-gradient(45deg, #0d47a1 30%, #1a237e 90%)',
+                                                boxShadow: '0 6px 15px rgba(26, 35, 126, 0.5)',
+                                                transform: 'translateY(-2px)',
+                                            },
+                                            '&:active': {
+                                                transform: 'translateY(0)',
+                                            },
+                                            '&.Mui-disabled': {
+                                                background: 'rgba(0, 0, 0, 0.12)',
+                                            },
+                                        }}
+                                    >
+                                        {isSubmitting ? (
+                                            <motion.div
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ duration: 0.3 }}
+                                            >
+                                                Logging in...
+                                            </motion.div>
+                                        ) : (
+                                            'Login'
+                                        )}
+                                    </Button>
+                                </Form>
+                            )}
+                        </Formik>
+                            </Box>
+                        </Paper>
+                    </motion.div>
+                </Box>
+            </motion.div>
+        </AnimatePresence>
     );
 };
 
-export default AdminLogin;
+export default ProtectedLoginRoute;
