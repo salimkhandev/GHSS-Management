@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Button, Typography, Box, Grid } from '@mui/material';
-import StudentRegistrationForm from './StudentRegistrationForm';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import StudentBulkUpload from './StudentBulkUpload';
+import StudentRegistrationForm from './StudentRegistrationForm';
 
 function StudentForm() {
     const [formType, setFormType] = useState(null);

@@ -1,22 +1,22 @@
-import { 
+import {
     AdminPanelSettings as AdminIcon,
-    Home as HomeIcon,
     MenuBook as AttendanceIcon,
+    Home as HomeIcon,
     People as StudentsIcon,
-    School as TeachersIcon 
+    School as TeachersIcon
 } from '@mui/icons-material';
-import { 
-    AppBar, 
-    Button, 
-    IconButton, 
-    Menu, 
-    MenuItem, 
-    Toolbar, 
-    Typography, 
-    useMediaQuery, 
-    useTheme 
+import {
+    AppBar,
+    Button,
+    IconButton,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography,
+    useMediaQuery,
+    useTheme
 } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import HamburgerMenu from "./HamburgerMenu";
 import logo from "/images/ghssLogo.png";
@@ -62,7 +62,7 @@ const Navbar = () => {
                     alignItems: 'center',
                     padding: { xs: '0.5rem 1rem', md: '0.5rem 2rem' }
                 }}>
-                    {!isMobile && <HamburgerMenu />}
+                    {<HamburgerMenu />}
                     
                     <div style={{ 
                         display: 'flex', 
