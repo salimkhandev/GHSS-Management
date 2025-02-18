@@ -1,8 +1,8 @@
-import { Assessment, DateRange, Error as ErrorIcon, Timeline } from '@mui/icons-material';
-import { Box, Card, CardContent, CircularProgress, Grid, Skeleton, Typography, useTheme } from '@mui/material';
+import { Assessment, Error as ErrorIcon, Timeline } from '@mui/icons-material';
+import { Box, Card, CardContent, Grid, Skeleton, Typography, useTheme } from '@mui/material';
 import axios from 'axios';
 import { format } from 'date-fns';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
 const AttendancePieChart = () => {
@@ -92,6 +92,8 @@ const AttendancePieChart = () => {
                 <Typography
                     variant="h4"
                     sx={{ 
+                        fontSize: { md: '1.8rem', xs: '1.12rem' },
+                        whiteSpace: 'nowrap',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -115,7 +117,7 @@ const AttendancePieChart = () => {
                             opacity: 0.9
                         }}
                     >
-                        <DateRange />
+                       
                         {`${dateRange.startDate} to ${dateRange.endDate}`}
                     </Typography>
                 )}
@@ -238,9 +240,9 @@ const AttendancePieChart = () => {
                                                     />
                                                     <Legend 
                                                         verticalAlign="bottom" 
-                                                        height={36}
+                                                        height={36} 
                                                         formatter={(value) => (
-                                                            <span style={{ color: theme.palette.text.primary, fontWeight: 500 }}>
+                                                            <span style={{ color: theme.palette.text.primary, fontWeight: 500, marginRight: '40px' }}>
                                                                 {value}
                                                             </span>
                                                         )}

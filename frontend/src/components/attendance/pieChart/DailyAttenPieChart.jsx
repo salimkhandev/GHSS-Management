@@ -1,4 +1,3 @@
-import { CalendarToday as CalendarIcon } from '@mui/icons-material';
 import { Box, Card, CardContent, Grid, Typography, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -50,29 +49,7 @@ const AttendancePieChart = ({ data }) => {
 
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
-            <Box sx={{ 
-                mb: 4, 
-                textAlign: 'center',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
-                borderRadius: 2,
-                p: 3,
-                color: 'white',
-                boxShadow: theme.shadows[4]
-            }}>
-                <Typography
-                    variant="h4"
-                    sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 2,
-                        fontWeight: 700
-                    }}
-                >
-                    <CalendarIcon fontSize="large" />
-                    Daily Attendance Overview
-                </Typography>
-            </Box>
+            
 
             <Grid container spacing={3}>
                 {data.map((entry, index) => (
@@ -104,15 +81,15 @@ const AttendancePieChart = ({ data }) => {
                                     })}
                                 </Typography>
 
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <PieChart width={getPieChartWidth()} height={250}>
+                                <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+                                    <PieChart width={getPieChartWidth()} height={280}>
                                         <Pie
                                             data={[
                                                 { name: 'Present', value: parseFloat(entry.present_percentage) },
                                                 { name: 'Absent', value: parseFloat(entry.absent_percentage) }
                                             ]}
                                             cx="50%"
-                                            cy="50%"
+                                            cy="45%"
                                             labelLine={false}
                                             label={renderCustomizedLabel}
                                             outerRadius={getOuterRadius()}
@@ -130,52 +107,59 @@ const AttendancePieChart = ({ data }) => {
                                         <Tooltip 
                                             formatter={(value) => `${value.toFixed(1)}%`}
                                             contentStyle={{
-                                                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                                                border: 'none',
+                                                backgroundColor: '#ffffff',
+                                                border: '1px solid rgba(0,0,0,0.1)',
                                                 borderRadius: 8,
-                                                boxShadow: theme.shadows[3],
-                                                padding: '8px 12px'
+                                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                                                padding: '8px 16px',
+                                                fontSize: '14px',
+                                                fontWeight: 500,
+                                                textAlign: 'center'
+                                            }}
+                                            position={{ y: 10 }}
+                                            wrapperStyle={{
+                                                zIndex: 100,
+                                                width: '100%',
+                                                display: 'flex',
+                                                justifyContent: 'center'
                                             }}
                                         />
-                                        <Legend 
-                                            verticalAlign="bottom" 
-                                            height={36}
-                                            formatter={(value) => (
-                                                <span style={{ 
-                                                    color: theme.palette.text.primary,
-                                                    fontWeight: 500
-                                                }}>
-                                                    {value}
-                                                </span>
-                                            )}
-                                        />
+                                   
                                     </PieChart>
-                                </Box>
 
-                                <Box sx={{ 
-                                    mt: 2,
-                                    display: 'flex',
-                                    justifyContent: 'space-around',
-                                    bgcolor: theme.palette.grey[50],
-                                    p: 2,
-                                    borderRadius: 1
-                                }}>
-                                    <Typography 
-                                        sx={{ 
-                                            color: theme.palette.success.main,
-                                            fontWeight: 500
-                                        }}
-                                    >
-                                        {entry.present_percentage}% Present
-                                    </Typography>
-                                    <Typography 
-                                        sx={{ 
-                                            color: theme.palette.error.main,
-                                            fontWeight: 500
-                                        }}
-                                    >
-                                        {entry.absent_percentage}% Absent
-                                    </Typography>
+                                    <Box sx={{ 
+                                        mt: 2,
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        gap: 1,
+                                        bgcolor: 'transparent',
+                                        p: 2,
+                                        borderRadius: 2,
+                                        width: 'fit-content',
+                                        minWidth: '150px'
+                                    }}>
+                                        <Typography 
+                                            sx={{ 
+                                                color: theme.palette.success.main,
+                                                fontWeight: 600,
+                                                fontSize: '1rem',
+                                                textAlign: 'center'
+                                            }}
+                                        >
+                                            Present: {entry.present_percentage}%
+                                        </Typography>
+                                        <Typography 
+                                            sx={{ 
+                                                color: theme.palette.error.main,
+                                                fontWeight: 600,
+                                                fontSize: '1rem',
+                                                textAlign: 'center'
+                                            }}
+                                        >
+                                            Absent: {entry.absent_percentage}%
+                                        </Typography>
+                                    </Box>
                                 </Box>
                             </CardContent>
                         </Card>

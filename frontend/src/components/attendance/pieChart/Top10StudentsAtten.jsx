@@ -16,7 +16,7 @@ import {
     Typography,
     useTheme
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
 const AttendancePieChart = () => {
@@ -231,7 +231,9 @@ const AttendancePieChart = () => {
                 <Typography
                     variant="h4"
                     sx={{ 
-                        display: 'flex',
+                        fontSize: {md:'1.8rem', xs:'1.12rem'},
+                        whiteSpace: 'nowrap',
+                        display: 'flex',    
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: 2,
@@ -383,7 +385,7 @@ const AttendancePieChart = () => {
                                                     verticalAlign="bottom" 
                                                     height={36}
                                                     formatter={(value) => (
-                                                        <span style={{ color: theme.palette.text.primary, fontWeight: 500 }}>
+                                                        <span style={{ color: theme.palette.text.primary, fontWeight: 500, marginRight: '40px' }}>
                                                             {value}
                                                         </span>
                                                     )}

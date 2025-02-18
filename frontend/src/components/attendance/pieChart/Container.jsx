@@ -8,7 +8,7 @@ import {
     Timeline as TimelineIcon
 } from '@mui/icons-material';
 import { Box, Button, Card, CardContent, CircularProgress, Grid, Paper, Skeleton, Typography, useTheme } from "@mui/material";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
 
 // Lazy load the Pie Chart components
 const DailyAttenPieChart = lazy(() => import("./DailyAttenPieChart"));
@@ -158,8 +158,11 @@ export default function ClassSectionDisplay() {
                     sx={{ 
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 2,
-                        fontWeight: 700
+                        gap: 1,
+                        fontWeight: 700,
+
+                        fontSize: {md:'1.8rem', xs:'1rem'},
+                        whiteSpace: 'nowrap',
                     }}
                 >
                     <AssessmentIcon fontSize="large" />
@@ -228,15 +231,14 @@ export default function ClassSectionDisplay() {
                     <Typography 
                         variant="h5" 
                         sx={{ 
+                            fontSize: {md:'1.8rem', xs:'1.12rem'},
                             mb: 3,
                             display: 'flex',
                             alignItems: 'center',
-                            gap: 1,
                             color: theme.palette.primary.main,
                             fontWeight: 600
                         }}
                     >
-                        <SchoolIcon />
                         Sections for {selectedClassName}
                     </Typography>
                     <Grid container spacing={3}>

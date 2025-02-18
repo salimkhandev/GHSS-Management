@@ -42,20 +42,24 @@ const Navbar = () => {
     ];
 
     return (
-        <div>
-            <AppBar 
+        <div className='flex justify-start mb-16'>
+            <AppBar
                 sx={{
                     background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                     transition: 'all 0.3s ease-in-out',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                    position: 'sticky',
-                    top: 0,
+                    position: '!sticky',
+                    top: 0,  // Sticks to the top of the viewport
                     zIndex: 50,
                     '&:hover': {
                         background: 'linear-gradient(135deg, #1e3c72 10%, #2a5298 90%)',
                     }
                 }}
+            
             >
+           
+
+
                 <Toolbar sx={{ 
                     display: 'flex', 
                     justifyContent: 'space-between', 

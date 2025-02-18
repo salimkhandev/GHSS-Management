@@ -1,20 +1,21 @@
-import { 
+import {
     AddAPhoto as AddPhotoIcon,
     Close as CloseIcon,
     Delete as DeleteIcon,
     PhotoCamera as PhotoCameraIcon,
-    Upload as UploadIcon 
+    Upload as UploadIcon
 } from "@mui/icons-material";
-import { 
+import {
     Box,
-    Button, 
+    Button,
     CircularProgress,
     IconButton,
-    Typography 
+    Typography
 } from "@mui/material";
 import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { memo, useCallback, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
 // import { useAuth } from '../admin/AuthProvider';
 
@@ -28,29 +29,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    // const [showModal, setShowModal] = useState(false); // Modal state
-    // const [keepProfilePicUpdated, setKeepProfilePicUpdated] = useState(false);
-    // const [username, setUsername] = useState('');
-    // const { isAuthenticated, isAuthenticatedTeacher, login, logout } = useAuth();
-
-    // Fetch the current profile picture
-    // useEffect(() => {
-    //     const fetchProfilePic = async () => {
-    //         setLoading(true);
-    //         try {
-    //             const response = await axios.get("http://localhost:3000/profile-pic", { withCredentials: true });
-    //             setImageUrl(`${response.data.imageUrl}?t=${Date.now()}`);
-    //             setUsername(response.data.teacherName);
-    //         } catch (error) {
-    //         //   enqueueSnackbar("Failed to fetch profile picture.", { variant: "error" });
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchProfilePic();
-    // }, [keepProfilePicUpdated]);
-
-    // Handle file selection
+  
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
@@ -167,22 +146,6 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
     return (
         <>
          
-
-{/* {(isAuthenticated || isAuthenticatedTeacher) && (<div className="text-center">
-    <div onClick={() => setShowModal(true)} className="mb-2 cursor-pointer">
-        <div className="w-20 h-20 rounded-full mx-auto border-blue-500 border-4 flex justify-center items-center overflow-hidden bg-gray-200">
-            {loading ? (
-                <CircularProgress sx={{ color: "green", width: "80%", height: "80%" }} />
-                
-            ) : imageUrl ? (
-                <img key={imageUrl} src={imageUrl} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-                <img src="/images/defaultPicPerson.svg" alt="Profile" className="w-full h-full object-cover" />
-            )}
-        </div>
-        <h3 className="text-lg font-bold text-white mt-2">{username}</h3>
-    </div>
-</div>)} */}
 
 
             {/* Modal */}
@@ -341,7 +304,15 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
 
         </>
     );
-    };
+};
+
+ProfilePicManager.propTypes = {
+    showModal: PropTypes.bool.isRequired,
+    setShowModal: PropTypes.func.isRequired,
+    imageUrl: PropTypes.string,
+    setImageUrl: PropTypes.func.isRequired,
+    onImageUpdate: PropTypes.func.isRequired
+};
 
 const ProfilePicManagerWithSnackbar = (props) => (
     <SnackbarProvider maxSnack={3}>

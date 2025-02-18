@@ -1,7 +1,7 @@
 import { ArrowBack, ArrowForward, Class as ClassIcon, Download as DownloadIcon, Groups as GroupsIcon, Person as PersonIcon, School as SchoolIcon, Search as SearchIcon } from '@mui/icons-material';
 import { Box, Button, Card, CardContent, CircularProgress, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Skeleton } from '@mui/material';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ExportToExcel from './ExportToExcel';
 
 const StudentList = () => {
@@ -238,7 +238,7 @@ const StudentList = () => {
     return (
         <div className="p-4 min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
             <div className="max-w-7xl mx-auto">
-                <div className="relative mb-8">
+                <div className=" bg-gradient-to-br from-blue-50 to-purple-5 sticky top-16  mb-8">
                     <Box className="flex justify-between items-center mb-6">
                         <Typography 
                             variant="h4" 
@@ -248,6 +248,7 @@ const StudentList = () => {
                                 backgroundClip: 'text',
                                 WebkitBackgroundClip: 'text',
                                 color: 'transparent',
+                                
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: 2

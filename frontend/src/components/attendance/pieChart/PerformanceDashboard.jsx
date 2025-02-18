@@ -81,6 +81,7 @@ const PerformanceDashboard = () => {
                     <Typography
                         variant="h4"
                         sx={{ 
+                            fontSize: {md:'1.8rem', xs:'1.3rem'},
                             fontWeight: 700,
                             letterSpacing: 0.5,
                             textShadow: '0 2px 4px rgba(0,0,0,0.2)'
@@ -88,9 +89,7 @@ const PerformanceDashboard = () => {
                     >
                         Performance Dashboard
                     </Typography>
-                    <Typography variant="subtitle1" sx={{ opacity: 0.9, mt: 0.5 }}>
-                        Track and analyze attendance performance
-                    </Typography>
+                 
                 </Box>
             </Paper>
 
@@ -98,7 +97,7 @@ const PerformanceDashboard = () => {
                 elevation={2}
                 sx={{
                     position: 'sticky',
-                    top: 0,
+                    top: 64,
                     zIndex: 1000,
                     backgroundColor: 'white',
                     mb: 4,

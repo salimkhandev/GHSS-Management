@@ -1,3 +1,4 @@
+import React from 'react';
 import { DateRange as DateIcon } from '@mui/icons-material';
 import { Box, Card, CardContent, Grid, Typography, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -49,29 +50,7 @@ const AttendancePieChart = ({ data }) => {
 
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
-            <Box sx={{ 
-                mb: 4, 
-                textAlign: 'center',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
-                borderRadius: 2,
-                p: 3,
-                color: 'white',
-                boxShadow: theme.shadows[4]
-            }}>
-                <Typography
-                    variant="h4"
-                    sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 2,
-                        fontWeight: 700
-                    }}
-                >
-                    <DateIcon fontSize="large" />
-                    Monthly Attendance Overview
-                </Typography>
-            </Box>
+            
 
             <Grid container spacing={3}>
                 {data.map((entry, index) => (
@@ -131,27 +110,18 @@ const AttendancePieChart = ({ data }) => {
                                                 padding: '8px 12px'
                                             }}
                                         />
-                                        <Legend 
-                                            verticalAlign="bottom" 
-                                            height={36}
-                                            formatter={(value) => (
-                                                <span style={{ 
-                                                    color: theme.palette.text.primary,
-                                                    fontWeight: 500
-                                                }}>
-                                                    {value}
-                                                </span>
-                                            )}
-                                        />
+                                       
                                     </PieChart>
                                 </Box>
 
                                 <Box sx={{ 
+
                                     mt: 2,
                                     display: 'flex',
+                                    flexDirection: 'row',
                                     justifyContent: 'space-around',
-                                    bgcolor: theme.palette.grey[50],
-                                    p: 2,
+                                    // bgcolor: theme.palette.grey[50],
+                                    // p: 2,
                                     borderRadius: 1
                                 }}>
                                     <Typography 

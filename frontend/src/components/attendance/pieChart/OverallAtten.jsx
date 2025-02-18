@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
-import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
-import { Typography, Box, Card, CardContent, Grid, useTheme } from '@mui/material';
+import { DateRange as DateIcon } from '@mui/icons-material';
+import { Box, Card, CardContent, Grid, Typography, useTheme } from '@mui/material';
 import { format } from 'date-fns'; // Import the date-fns library
-import { Assessment as AssessmentIcon, DateRange as DateIcon } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
 const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName }) => {
     const theme = useTheme();
@@ -63,38 +64,50 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                 color: 'white',
                 boxShadow: theme.shadows[4]
             }}>
-                <Typography
-                    variant="h4"
-                    sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 2,
-                        fontWeight: 700,
-                        mb: 2
-                    }}
-                >
-                    <AssessmentIcon fontSize="large" />
-                    Overall Attendance Overview
-                </Typography>
+               
 
                 <Box sx={{ 
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: 1,
-                    opacity: 0.9
+                    gap: 2,
+                    opacity: 0.9,
+                    padding: '16px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    backdropFilter: 'blur(4px)',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
                 }}>
-                    <Typography sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1
-                    }}>
+                    <Typography 
+                        sx={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            color: 'white',
+                            fontWeight: 500,
+                            fontSize: '1rem',
+                            '& .MuiSvgIcon-root': {
+                                color: 'white'
+                            }
+                        }}
+                    >
                         <DateIcon fontSize="small" />
-                        {formattedStartDate} to {formattedEndDate}
+                        <span style={{ fontWeight: 600 }}>{formattedStartDate}</span>
+                        <span style={{ margin: '0 4px' }}>to</span>
+                        <span style={{ fontWeight: 600 }}>{formattedEndDate}</span>
                     </Typography>
-                    <Typography>
-                        Class: {className} | Section: {sectionName}
+                    <Typography 
+                        sx={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            color: 'text.secondary',
+                            fontSize: '0.95rem'
+                        }}
+                    >
+                        <span style={{ fontWeight: 500, color: 'white' }}>Class: {className}</span>
+                        <span style={{ color: '#666' }}>|</span>
+                        <span style={{ fontWeight: 500, color: 'white' }}>Section: {sectionName}</span>
                     </Typography>
                 </Box>
             </Box>
@@ -115,11 +128,11 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                     boxShadow: theme.shadows[6]
                                 }
                             }}>
-                                <CardContent>
+                                <CardContent sx={{ p: 0 }}>
                                     <Typography
                                         variant="h6"
                                         sx={{ 
-                                            mb: 2,
+                                            mt: 2,
                                             color: theme.palette.primary.main,
                                             fontWeight: 600,
                                             textAlign: 'center'
@@ -164,14 +177,25 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                             <Legend 
                                                 verticalAlign="bottom" 
                                                 height={36}
+                                                align="center"
                                                 formatter={(value) => (
                                                     <span style={{ 
                                                         color: theme.palette.text.primary,
-                                                        fontWeight: 500
+                                                        fontWeight: 500,
+                                                        display: 'inline-block',
+                                                        textAlign: 'center',
+                                                        // width: '100%',
+                                                        // padding: '0 8px'
                                                     }}>
                                                         {value}
                                                     </span>
                                                 )}
+                                                wrapperStyle={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    width: '100%',
+                                                    margin: '0 auto'
+                                                }}
                                             />
                                         </PieChart>
                                     </Box>
@@ -180,14 +204,15 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                         mt: 2,
                                         display: 'flex',
                                         justifyContent: 'space-around',
-                                        bgcolor: theme.palette.grey[50],
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
                                         p: 2,
                                         borderRadius: 1
                                     }}>
                                         <Typography 
                                             sx={{ 
                                                 color: theme.palette.success.main,
-                                                fontWeight: 500
+                                                fontWeight: 500,
                                             }}
                                         >
                                             {overallPercentage}% Present

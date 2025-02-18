@@ -255,7 +255,7 @@ export default function TopDrawerWithToggle() {
             sx={{
                 width: 280,
                 height: "100%",
-                backgroundColor: THEME_COLORS.primary,
+                backgroundColor: "#1F3E76",
                 color: THEME_COLORS.text,
                 display: "flex",
                 flexDirection: "column",
@@ -279,12 +279,17 @@ export default function TopDrawerWithToggle() {
                     sx={{
                         color: THEME_COLORS.text,
                         backgroundColor: THEME_COLORS.danger,
+                        // use light red bg color
+
+                        // backgroundColor: "#b71c1c",
+                        // bg
+                        // backgroundColor: "#1A8CFF",
                         textAlign: "left",
                         fontSize: "0.875rem",
                         fontFamily: "'Poppins', sans-serif",
                         textTransform: "none",
                         margin: "16px",
-                        padding: "8px 16px",
+                        padding: "8px 12px",
                         borderRadius: "8px",
                         transition: "all 0.2s ease",
                         "&:hover": {
@@ -352,7 +357,12 @@ export default function TopDrawerWithToggle() {
                                     textTransform: "capitalize",
                                     border: "2px solid white",
                                     background: "linear-gradient(to bottom, #4d4dff, #1A8CFF)",
+                                    // backgroundColor: "#1A8CFF",
+                                    // for transatin
+                                    // use light blue bg color
+                                    // backgroundColor: "#1A8CFF",
                                     "&:hover": { background: "linear-gradient(to bottom, #4d4dff, #4d4dff)" },
+                                    transition: "all 0.3s ease",
                                 }}
                                 >
                                 Login

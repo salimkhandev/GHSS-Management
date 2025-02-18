@@ -5,7 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from "../admin/AuthProvider";
 
@@ -64,7 +64,7 @@ const Login = () => {
         <Box
             sx={{
                 display: 'flex',
-                minHeight: '100vh',
+                minHeight: '80vh',
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
@@ -85,7 +85,7 @@ const Login = () => {
                     sx={{
                         padding: { xs: 4, sm: 5 },
                         borderRadius: 3,
-                        width: { xs: '300px', sm: '380px', md: '480px' },
+                        width: { xs: '340px', sm: '380px', md: '480px' },
                         backgroundColor: 'rgba(255, 255, 255, 0.98)',
                         backdropFilter: 'blur(10px)',
                         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',

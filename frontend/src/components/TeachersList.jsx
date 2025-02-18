@@ -12,7 +12,7 @@ import {
     useTheme
 } from '@mui/material';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const TeachersList = () => {
     const theme = useTheme();
@@ -37,18 +37,20 @@ const TeachersList = () => {
 
     if (loading) {
         return (
-            <Box sx={{ p: { xs: 2, sm: 4 } }}>
+            <Box sx={{ p: { xs: 4, sm: 6 } }}>
                 {/* Header Skeleton */}
                 <Skeleton 
                     variant="rectangular"
                     sx={{
-                        height: { xs: 80, sm: 100 },
-                        maxWidth: 800,
+                        height: { xs: 60, sm: 80 },
+                        width: '50%',
                         mx: 'auto',
                         mb: 4,
                         borderRadius: 2,
                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
-                        opacity: 0.1
+                        opacity: 0.1,
+                        // p: { xs: 2, sm: 3, md: ['8px'] },
+                      
                     }}
                 />
                 

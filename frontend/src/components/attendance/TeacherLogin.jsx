@@ -8,7 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from '../admin/AuthProvider';
@@ -87,9 +87,11 @@ const Login = () => {
                     component="form"
                     onSubmit={formik.handleSubmit}
                     sx={{
-                        padding: { xs: 6, sm: 8 },
+                        padding: { xs: 4, sm: 6 },
+                        
                         borderRadius: 3,
-                        width: { xs: '300px', sm: '380px', md: '480px' },
+                        height: { xs: '80vh' },
+                        width: { xs: '340px', sm: '380px', md: '480px' },
                         backgroundColor: 'rgba(255, 255, 255, 0.98)',
                         // backgroundColor: 'red',
                         backdropFilter: 'blur(10px)',
