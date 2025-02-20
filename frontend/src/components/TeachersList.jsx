@@ -34,6 +34,8 @@ const TeachersList = () => {
 
         fetchTeachers();
     }, []);
+    
+// fetch profile pic from the database
 
     if (loading) {
         return (
@@ -166,6 +168,8 @@ const TeachersList = () => {
                                 borderLeft: `4px solid ${theme.palette.primary.main}`
                             }}
                         >
+                            {/* code for profile pic */}
+
                             <SchoolIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }} />
                             {className}
                         </Typography>
@@ -200,10 +204,53 @@ const TeachersList = () => {
                                                 alignItems: 'center',
                                                 gap: 1
                                             }}>
-                                                <TeacherIcon sx={{ 
-                                                    color: theme.palette.primary.main,
-                                                    fontSize: { xs: '1.5rem', sm: '1.75rem' }
-                                                }} />
+                                                {/* code for profile pic */}
+                                                
+                                                {teacher.profile_pic_url ? (
+                                                    <Box
+                                                        component="img"
+                                                        src={teacher.profile_pic_url}
+                                                        alt="Teacher"
+                                                        sx={{
+                                                            width: { xs: 45, sm: 48 },
+                                                            height: { xs: 45, sm: 48 },
+                                                            borderRadius: '50%',
+                                                            objectFit: 'cover',
+                                                            border: '2px solid #fff',
+                                                            boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
+                                                            backgroundColor: '#f5f5f5',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            margin: '4px 8px',
+                                                            verticalAlign: 'middle',
+                                                            '&:hover': {
+                                                                transform: 'scale(1.05)',
+                                                                transition: 'transform 0.2s ease-in-out',
+                                                                boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                                                            }
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <TeacherIcon 
+                                                        sx={{ 
+                                                            color: theme.palette.primary.main,
+                                                            fontSize: { xs: '1.8rem', sm: '2rem' },
+                                                            backgroundColor: '#f5f5f5',
+                                                            padding: '5px',
+                                                            borderRadius: '50%',
+                                                            border: '2px solid #fff',
+                                                            boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
+                                                            margin: '4px 8px',
+                                                            verticalAlign: 'middle',
+                                                            '&:hover': {
+                                                                transform: 'scale(1.05)',
+                                                                transition: 'transform 0.2s ease-in-out',
+                                                                boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                                                            }
+                                                        }} 
+                                                    />
+                                                )}
                                                 <Typography 
                                                     className="teacher-name"
                                                     variant="h6" 
@@ -216,8 +263,8 @@ const TeachersList = () => {
                                                 >
                                                     {teacher.teacher_name}
                                                 </Typography>
-                                            </Box>
 
+                                            </Box>
                                             <Box sx={{ 
                                                 display: 'flex',
                                                 alignItems: 'center',
