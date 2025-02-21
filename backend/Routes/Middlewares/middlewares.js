@@ -69,4 +69,4 @@ const extractClassAndSection = async (req, res, next) => {
     }
 };
 
-module.exports={authenticateToken,isAdmin,isAdminToken,extractClassAndSection}
+module.exports={isAdmin,isAdminToken,extractClassAndSection}
