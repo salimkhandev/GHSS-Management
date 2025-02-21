@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CircularProgress, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography, useTheme, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
@@ -35,13 +35,13 @@ const DailyAttenPieChart = () => {
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
         return (
-            <text 
-                x={x} 
-                y={y} 
-                fill="white" 
-                textAnchor="middle" 
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor="middle"
                 dominantBaseline="central"
-                style={{ 
+                style={{
                     fontSize: '14px',
                     fontWeight: 'bold',
                     textShadow: '0 1px 2px rgba(0,0,0,0.5)'
@@ -85,8 +85,8 @@ const DailyAttenPieChart = () => {
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
             <Grid container justifyContent="center">
                 <Grid item xs={12} sm={8} md={6}>
-                    <Card sx={{ 
-                        boxShadow: theme.shadows[3], 
+                    <Card sx={{
+                        boxShadow: theme.shadows[3],
                         borderRadius: 2,
                         transition: 'transform 0.2s',
                         '&:hover': {
@@ -97,7 +97,7 @@ const DailyAttenPieChart = () => {
                         <CardContent>
                             <Typography
                                 variant="h6"
-                                sx={{ 
+                                sx={{
                                     mb: 2,
                                     color: theme.palette.primary.main,
                                     fontWeight: 600,
@@ -124,15 +124,15 @@ const DailyAttenPieChart = () => {
                                         dataKey="value"
                                     >
                                         {chartData.map((entry, index) => (
-                                            <Cell 
-                                                key={`cell-${index}`} 
+                                            <Cell
+                                                key={`cell-${index}`}
                                                 fill={COLORS[index]}
                                                 stroke={theme.palette.background.paper}
                                                 strokeWidth={2}
                                             />
                                         ))}
                                     </Pie>
-                                    <Tooltip 
+                                    <Tooltip
                                         formatter={(value) => `${value.toFixed(1)}%`}
                                         contentStyle={{
                                             backgroundColor: '#ffffff',
@@ -147,7 +147,7 @@ const DailyAttenPieChart = () => {
                                     />
                                 </PieChart>
 
-                                <Box sx={{ 
+                                <Box sx={{
                                     mt: 2,
                                     display: 'flex',
                                     justifyContent: 'space-around',

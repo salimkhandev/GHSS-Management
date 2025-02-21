@@ -27,9 +27,9 @@ import {
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { SnackbarProvider, useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
-// import UpdateAttenStatusOfClsSec from './UpdateAttenStatusOfClsSec'
+import TodayAttenPie from './pieChart/DailyAttenAfterSuccess';
 
 const AttendanceList = () => {
     const theme = useTheme();
@@ -39,12 +39,15 @@ const AttendanceList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [attendanceDate] = useState(dayjs().format('YYYY-MM-DD')); // Get the current date
     const [loading, setLoading] = useState(false);
+
     // const [authenticated, setAuthenticated] = useState(false);
     // const navigate = useNavigate();
     const [disableComponent, setDisableComponent] = useState(false); // Track if the component should be disabled
+    const [pieModal, setPieModal] = useState(false); // Track if the component should be disabled
 
     // send class_id and seciton_id to backend so that if the today was same with the backend last date then it will disable the t
     const [lastAttenDate, setLastAttenDate] = useState(null);
+
 
     useEffect(() => {
         const fetchLastDate = async () => {
@@ -59,14 +62,15 @@ const AttendanceList = () => {
                     setLastAttenDate('No records found');
                 }
             } catch (error) {
-                enqueueSnackbar('Error fetching attendance date', { variant: 'error' });
+                console.error('Error fetching last attendance date:', error);
+                enqueueSnackbar('Error fetching attendance data', { variant: 'error' });
             } finally {
                 setLoading(false);
             }
         };
 
         fetchLastDate();
-    }, [enqueueSnackbar]);
+    }, []);
 
     useEffect(() => {
         const storedDate = localStorage.getItem('attendanceSavedDate');
@@ -85,6 +89,7 @@ const AttendanceList = () => {
         const fetchStudents = async () => {
             try {
                 const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', {withCredentials: true });
+                // const response = await axios.get('http://localhost:3000/studentsAttendance', {withCredentials: true });
                 setLoading(false)
                 setStudents(response.data);
             } catch (error) {
@@ -137,9 +142,16 @@ const AttendanceList = () => {
         try {
             await axios.post('https://ghss-management-backend.vercel.app/saveAttendance', { attendanceData, attendanceDate });
             setLoading(false)
-            localStorage.setItem('attendanceSavedDate', dayjs().format('YYYY-MM-DD')); // Store today's date in local storage
-            setDisableComponent(true);
+            localStorage.setItem('attendanceSavedDate', dayjs().format('YYYY-MM-DD'));
+            setPieModal(true);
+            // setDisableComponent(true);
+            
             enqueueSnackbar('Attendance saved successfully!', { 
+                // color should be blue
+                style: {
+                    backgroundColor: '#2196f3',
+                    color: 'white'
+                },
                 variant: 'success',
                 anchorOrigin: { vertical: 'top', horizontal: 'center' }
             });
@@ -152,6 +164,36 @@ const AttendanceList = () => {
     const filteredStudents = students.filter(student =>
         student.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const CountdownTimer = () => {
+        const [timeLeft, setTimeLeft] = useState('');
+
+        useEffect(() => {
+            const calculateTimeLeft = () => {
+                const now = dayjs();
+                const tomorrow = dayjs().add(1, 'day').startOf('day'); // Get start of next day
+                const diff = tomorrow.diff(now);
+
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                return `${hours}h ${minutes}m ${seconds}s`;
+            };
+
+            // Update timer immediately
+            setTimeLeft(calculateTimeLeft());
+
+            // Update timer every second
+            const timer = setInterval(() => {
+                setTimeLeft(calculateTimeLeft());
+            }, 1000);
+
+            return () => clearInterval(timer);
+        }, []);
+
+        return timeLeft;
+    };
 
     if(disableComponent){
         return (
@@ -179,12 +221,39 @@ const AttendanceList = () => {
                     <Typography variant="h5" color="warning.dark" gutterBottom fontWeight="600">
                         Attendance Already Taken
                     </Typography>
-                    <Typography color="text.secondary">
-                        Today's attendance has been recorded
-                    </Typography>
+              
+                    <Box sx={{ 
+                        mt: 3, 
+                        p: 2, 
+                        bgcolor: 'rgba(0,0,0,0.04)', 
+                        borderRadius: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        background: 'linear-gradient(to bottom, #fff, #f8f9fa)',
+                        gap: 1
+                    }}>
+                        <Typography variant="subtitle1" color="primary.main" fontWeight="500">
+                            Next attendance can be taken in:
+                        </Typography>
+                        <Typography 
+                            variant="h4" 
+                            color="primary.dark"
+                            sx={{ 
+                                fontFamily: 'monospace',
+                                fontWeight: 'bold',
+                                
+                            }}
+                        >
+                            <CountdownTimer />
+                        </Typography>
+                    </Box>
                 </Paper>
             </Container>
         );
+    }
+  
+    if(pieModal){
+        return <TodayAttenPie/>
     }
 
     return (
@@ -307,6 +376,7 @@ const AttendanceList = () => {
                                                     <PersonIcon color="action" />
                                                     <Typography sx={{ fontWeight: 500 }}>
                                                         {`${index + 1}. ${student.name}`}
+                                                        
                                                     </Typography>
                                                 </Box>
                                             }
@@ -336,6 +406,7 @@ const AttendanceList = () => {
                         </List>
                     )}
                 </Box>
+              
             </Paper>
         </Container>
     );
