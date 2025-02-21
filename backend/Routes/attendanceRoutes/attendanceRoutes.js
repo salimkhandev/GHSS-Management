@@ -1,35 +1,42 @@
-const express =require('express')
-const router=express.Router()
-const pool=require('../../Configs/dbConfig')
-const {authenticateToken}=require('../Middlewares/middlewares')
-const jwt = require('jsonwebtoken')
+const express = require('express');
+const router = express.Router();
+const pool = require('../../Configs/dbConfig');
+const { authenticateToken } = require('../Middlewares/middlewares');
+const jwt = require('jsonwebtoken');
 
-
-router.get('/attendanceGroupedByDate', async (req, res) => {
+// Middleware to extract class and section IDs from token
+const extractClassAndSection = async (req, res, next) => {
     const token = req.cookies.TeacherToken;
-
+    
     if (!token) {
         return res.status(401).json({ error: 'No token provided' });
     }
 
-    let class_id;
-    let section_id;
-
     try {
-        // Verify the JWT token
         const decoded = await new Promise((resolve, reject) => {
             jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-                if (err) {
-                    return reject(err);
-
-                }
+                if (err) reject(err);
                 resolve(decoded);
             });
         });
 
-        // Extract class_id and section_id from the decoded token
-        class_id = decoded.class_id;
-        section_id = decoded.section_id;
+        // Attach to request object for use in routes
+        req.teacherInfo = {
+            class_id: decoded.class_id,
+            section_id: decoded.section_id
+        };
+        
+        next();
+    } catch (error) {
+        console.error('Token verification failed:', error);
+        res.status(403).json({ error: 'Invalid token' });
+    }
+};
+
+// Apply middleware to all routes that need class and section IDs
+router.get('/attendanceGroupedByDate', extractClassAndSection, async (req, res) => {
+    try {
+        const { class_id, section_id } = req.teacherInfo;
 
         const results = await pool.query(
             `SELECT 
@@ -41,63 +48,41 @@ router.get('/attendanceGroupedByDate', async (req, res) => {
                         'status', a.status
                     )
                 ) AS records
-            FROM 
-                attendance a
-            INNER JOIN 
-                students s ON a.student_id = s.id
-            WHERE 
-                a.class_id = $1 AND a.section_id = $2
-            GROUP BY 
-                a.attendance_date
-            ORDER BY 
-                a.attendance_date DESC`,
+            FROM attendance a
+            INNER JOIN students s ON a.student_id = s.id
+            WHERE a.class_id = $1 AND a.section_id = $2
+            GROUP BY a.attendance_date
+            ORDER BY a.attendance_date DESC`,
             [class_id, section_id]
         );
 
-        // Send the results as JSON
         res.json(results.rows);
-
     } catch (error) {
         console.error('Error fetching grouped attendance records:', error);
         res.status(500).json({ error: 'Failed to fetch records' });
     }
 });
 
+router.get('/lastAttendanceDate', extractClassAndSection, async (req, res) => {
+    try {
+        const { class_id, section_id } = req.teacherInfo;
 
-router.get('/lastAttendanceDate', async (req, res) => {
-    const TeacherToken = req.cookies.TeacherToken;
+        const result = await pool.query(
+            `SELECT TO_CHAR(attendance_date, 'YYYY-MM-DD') AS attendance_last_date
+             FROM attendance 
+             WHERE class_id = $1 AND section_id = $2
+             ORDER BY attendance_date DESC 
+             LIMIT 1`,
+            [class_id, section_id]
+        );
 
-    // Verify the JWT token
-    jwt.verify(TeacherToken, 'your_jwt_secret', async (err, decoded) => {
-        if (err) {
-            return res.sendStatus(403); // Forbidden if token is invalid
-        }
-
-        // Extract class_id and section_id from the decoded token
-        const { class_id, section_id } = decoded;
-
-        try {
-            // Fetch the last attendance date for the given class and section, formatted as 'YYYY-MM-DD'
-            const result = await pool.query(
-                `SELECT  
-                    TO_CHAR(attendance_date, 'YYYY-MM-DD') AS attendance_last_date
-                 FROM attendance 
-                 WHERE class_id = $1 AND section_id = $2
-                 ORDER BY attendance_date DESC 
-                 LIMIT 1`,
-                [class_id, section_id]
-            );
-
-            if (result.rows.length > 0) {
-                res.json({ last_attendance_date: result.rows[0].attendance_last_date });
-            } else {
-                res.json({ last_attendance_date: null });
-            }
-        } catch (error) {
-            console.error('Error fetching last attendance date:', error);
-            res.status(500).json({ error: 'Failed to fetch last attendance date' });
-        }
-    });
+        res.json({ 
+            last_attendance_date: result.rows[0]?.attendance_last_date || null 
+        });
+    } catch (error) {
+        console.error('Error fetching last attendance date:', error);
+        res.status(500).json({ error: 'Failed to fetch last attendance date' });
+    }
 });
 
 router.post('/saveAttendance', async (req, res) => {
@@ -123,12 +108,9 @@ router.post('/saveAttendance', async (req, res) => {
     }
 })
 
-
-router.get('/studentsAttendance', authenticateToken, async (req, res) => {
+router.get('/studentsAttendance', extractClassAndSection, async (req, res) => {
     try {
-        const { class_id, section_id } = req.DECODED;
-
-        console.log("😂😍🥰❤️📱😊😒🦞🦞🦞 ", req.DECODED);
+        const { class_id, section_id } = req.teacherInfo;
 
         const result = await pool.query(
             'SELECT id, name, class_id, section_id FROM students WHERE class_id = $1 AND section_id = $2',
@@ -136,12 +118,11 @@ router.get('/studentsAttendance', authenticateToken, async (req, res) => {
         );
 
         res.json(result.rows);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+    } catch (error) {
+        console.error('Error fetching students:', error);
+        res.status(500).json({ error: 'Server Error' });
     }
 });
-
 
 router.put('/updateAttendance', async (req, res) => {
     const { id, status } = req.body;
@@ -163,5 +144,35 @@ router.put('/updateAttendance', async (req, res) => {
     }
 });
 
+router.get('/todayAttenPieModal', extractClassAndSection, async (req, res) => {
+    try {
+        const { class_id, section_id } = req.teacherInfo;
 
-module.exports=router
+        const result = await pool.query(`
+            SELECT
+                class_id,
+                section_id,
+                TO_CHAR(attendance_date, 'YYYY-MM-DD') AS attendance_date,
+                ROUND(SUM(CASE WHEN status = 'Present' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 0) AS present_percentage,
+                ROUND(SUM(CASE WHEN status = 'Absent' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 0) AS absent_percentage
+            FROM attendance
+            WHERE class_id = $1 
+                AND section_id = $2
+                AND attendance_date = (
+                    SELECT MAX(attendance_date) 
+                    FROM attendance 
+                    WHERE class_id = $1 AND section_id = $2
+                )
+            GROUP BY class_id, section_id, attendance_date
+            ORDER BY attendance_date DESC
+            LIMIT 1
+        `, [class_id, section_id]);
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error fetching attendance percentages:', error);
+        res.status(500).json({ error: 'Failed to fetch attendance statistics' });
+    }
+});
+
+module.exports = router;

@@ -57,11 +57,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Route to get profile pic from the database
-router.get('/:teacherId', async (req, res) => {
-    const { teacherId } = req.params;
-    const profilePic = await pool.query('SELECT profile_pic_url FROM teachers WHERE id = $1', [teacherId]);
-});
+
 
 // Export the router
 module.exports = router;
