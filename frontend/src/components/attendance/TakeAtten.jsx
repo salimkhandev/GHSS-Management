@@ -76,19 +76,19 @@ const AttendanceList = () => {
         const storedDate = localStorage.getItem('attendanceSavedDate');
         const today = dayjs().format('YYYY-MM-DD');
 
-        if (storedDate === today || today===lastAttenDate) {
+        if (storedDate === today || today === lastAttenDate) {
             setDisableComponent(true); // Disable the component if the button has been clicked today
         } else {
             setDisableComponent(false); // Enable the component if the date has changed 
         }
     }, [lastAttenDate]);
     // Role is set to 'teacher' by default and doesn't need to be changed
-   
+
     useEffect(() => {
         setLoading(true)
         const fetchStudents = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', {withCredentials: true });
+                const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', { withCredentials: true });
                 // const response = await axios.get('http://localhost:3000/studentsAttendance', {withCredentials: true });
                 setLoading(false)
                 setStudents(response.data);
@@ -106,8 +106,8 @@ const AttendanceList = () => {
     };
 
     const handleToggle = (student, status) => {
-       
-    
+
+
         setSelectedStudents(prevSelected => {
             const isSelected = prevSelected.some(selected => selected.student_id === student.id);
             if (isSelected) {
@@ -145,8 +145,8 @@ const AttendanceList = () => {
             localStorage.setItem('attendanceSavedDate', dayjs().format('YYYY-MM-DD'));
             setPieModal(true);
             // setDisableComponent(true);
-            
-            enqueueSnackbar('Attendance saved successfully!', { 
+
+            enqueueSnackbar('Attendance saved successfully!', {
                 // color should be blue
                 style: {
                     backgroundColor: '#2196f3',
@@ -195,10 +195,10 @@ const AttendanceList = () => {
         return timeLeft;
     };
 
-    if(disableComponent){
+    if (disableComponent) {
         return (
             <Container maxWidth="sm">
-                <Paper 
+                <Paper
                     elevation={3}
                     sx={{
                         p: 4,
@@ -210,22 +210,22 @@ const AttendanceList = () => {
                         borderColor: 'warning.light'
                     }}
                 >
-                    <WarningIcon 
-                        sx={{ 
-                            fontSize: 48, 
-                            color: 'warning.main', 
+                    <WarningIcon
+                        sx={{
+                            fontSize: 48,
+                            color: 'warning.main',
                             mb: 2,
                             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
-                        }} 
+                        }}
                     />
                     <Typography variant="h5" color="warning.dark" gutterBottom fontWeight="600">
                         Attendance Already Taken
                     </Typography>
-              
-                    <Box sx={{ 
-                        mt: 3, 
-                        p: 2, 
-                        bgcolor: 'rgba(0,0,0,0.04)', 
+
+                    <Box sx={{
+                        mt: 3,
+                        p: 2,
+                        bgcolor: 'rgba(0,0,0,0.04)',
                         borderRadius: 1,
                         display: 'flex',
                         flexDirection: 'column',
@@ -235,13 +235,13 @@ const AttendanceList = () => {
                         <Typography variant="subtitle1" color="primary.main" fontWeight="500">
                             Next attendance can be taken in:
                         </Typography>
-                        <Typography 
-                            variant="h4" 
+                        <Typography
+                            variant="h4"
                             color="primary.dark"
-                            sx={{ 
+                            sx={{
                                 fontFamily: 'monospace',
                                 fontWeight: 'bold',
-                                
+
                             }}
                         >
                             <CountdownTimer />
@@ -251,35 +251,35 @@ const AttendanceList = () => {
             </Container>
         );
     }
-  
-    if(pieModal){
-        return <TodayAttenPie/>
+
+    if (pieModal) {
+        return <TodayAttenPie />
     }
 
     return (
-        
+
         <Container maxWidth="sm" sx={{ py: 4 }}>
-            <Paper 
-                elevation={3} 
-                sx={{ 
-                    borderRadius: 2, 
+            <Paper
+                elevation={3}
+                sx={{
+                    borderRadius: 2,
                     overflow: 'hidden',
                     background: 'linear-gradient(to bottom, #fff, #f8f9fa)'
                 }}
             >
-                <Box 
-                    sx={{ 
-                        p: 3, 
+                <Box
+                    sx={{
+                        p: 3,
                         background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                         color: 'white',
                         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                     }}
                 >
-                    <Typography 
-                        variant="h5" 
-                        sx={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
                             gap: 1,
                             fontWeight: 600
                         }}
@@ -287,10 +287,10 @@ const AttendanceList = () => {
                         <AttendanceIcon />
                         Attendance Sheet
                     </Typography>
-                    <Typography 
-                        variant="subtitle1" 
-                        sx={{ 
-                            mt: 1, 
+                    <Typography
+                        variant="subtitle1"
+                        sx={{
+                            mt: 1,
                             opacity: 0.9,
                             display: 'flex',
                             alignItems: 'center',
@@ -339,7 +339,7 @@ const AttendanceList = () => {
                                 </InputAdornment>
                             ),
                         }}
-                        sx={{ 
+                        sx={{
                             mb: 3,
                             '& .MuiOutlinedInput-root': {
                                 '&:hover fieldset': {
@@ -361,8 +361,8 @@ const AttendanceList = () => {
                             {filteredStudents.map((student, index) => (
                                 <Box key={student.id}>
                                     {index > 0 && <Divider />}
-                                    <ListItem 
-                                        sx={{ 
+                                    <ListItem
+                                        sx={{
                                             py: 1.5,
                                             transition: 'all 0.2s',
                                             '&:hover': {
@@ -376,7 +376,7 @@ const AttendanceList = () => {
                                                     <PersonIcon color="action" />
                                                     <Typography sx={{ fontWeight: 500 }}>
                                                         {`${index + 1}. ${student.name}`}
-                                                        
+
                                                     </Typography>
                                                 </Box>
                                             }
@@ -406,15 +406,15 @@ const AttendanceList = () => {
                         </List>
                     )}
                 </Box>
-              
+
             </Paper>
         </Container>
     );
 };
 
 const AttendanceListWithSnackbar = () => (
-    <SnackbarProvider 
-        maxSnack={3} 
+    <SnackbarProvider
+        maxSnack={3}
         autoHideDuration={3000}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     >

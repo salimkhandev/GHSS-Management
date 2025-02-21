@@ -34,14 +34,14 @@ const TeachersList = () => {
 
         fetchTeachers();
     }, []);
-    
-// fetch profile pic from the database
+
+    // fetch profile pic from the database
 
     if (loading) {
         return (
             <Box sx={{ p: { xs: 4, sm: 6 } }}>
                 {/* Header Skeleton */}
-                <Skeleton 
+                <Skeleton
                     variant="rectangular"
                     sx={{
                         height: { xs: 60, sm: 80 },
@@ -52,15 +52,15 @@ const TeachersList = () => {
                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
                         opacity: 0.1,
                         // p: { xs: 2, sm: 3, md: ['8px'] },
-                      
+
                     }}
                 />
-                
+
                 {/* Class Title Skeleton */}
-                <Skeleton 
-                    variant="text" 
+                <Skeleton
+                    variant="text"
                     width={200}
-                    sx={{ 
+                    sx={{
                         height: 40,
                         mb: 3,
                         borderRadius: 1
@@ -85,7 +85,7 @@ const TeachersList = () => {
                                         <Skeleton variant="circular" width={32} height={32} />
                                         <Skeleton variant="text" width="70%" height={32} />
                                     </Box>
-                                    
+
                                     {/* Section Info */}
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                         <Skeleton variant="circular" width={24} height={24} />
@@ -102,10 +102,10 @@ const TeachersList = () => {
 
     if (error) {
         return (
-            <Box sx={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 height: '100vh',
                 color: theme.palette.error.main
             }}>
@@ -115,12 +115,12 @@ const TeachersList = () => {
     }
 
     return (
-        <Box sx={{ 
-            flexGrow: 1, 
+        <Box sx={{
+            flexGrow: 1,
             p: { xs: 2, sm: 4 },
             background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
         }}>
-            <Box sx={{ 
+            <Box sx={{
                 mb: { xs: 4, sm: 6 },
                 textAlign: 'center',
                 width: '50%',
@@ -131,9 +131,9 @@ const TeachersList = () => {
                 color: 'white',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
             }}>
-                <Typography 
-                    variant="h3" 
-                    sx={{ 
+                <Typography
+                    variant="h3"
+                    sx={{
                         display: 'flex',
                         alignItems: 'center',
                         width: '100%',
@@ -145,7 +145,7 @@ const TeachersList = () => {
                         textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                     }}
                 >
-                    <TeacherIcon sx={{ fontSize: { xs: '1rem', sm: '1.5rem', md: '2rem' } }} />
+                    <TeacherIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.9rem', md: '2rem' } }} />
                     Teachers List
                 </Typography>
             </Box>
@@ -153,9 +153,9 @@ const TeachersList = () => {
             <Grid container spacing={4}>
                 {Object.keys(teachers).map((className, index) => (
                     <Grid item xs={12} key={index}>
-                        <Typography 
-                            variant="h4" 
-                            sx={{ 
+                        <Typography
+                            variant="h4"
+                            sx={{
                                 mb: 3,
                                 fontWeight: 600,
                                 fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
@@ -193,19 +193,19 @@ const TeachersList = () => {
                                         },
                                         background: 'linear-gradient(135deg, white, #fafafa)'
                                     }}>
-                                        <CardContent sx={{ 
-                                            display: 'flex', 
+                                        <CardContent sx={{
+                                            display: 'flex',
                                             flexDirection: 'column',
                                             gap: 2,
                                             p: { xs: 2, sm: 3 }
                                         }}>
-                                            <Box sx={{ 
+                                            <Box sx={{
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: 1
                                             }}>
                                                 {/* code for profile pic */}
-                                                
+
                                                 {teacher.profile_pic_url ? (
                                                     <Box
                                                         component="img"
@@ -232,8 +232,8 @@ const TeachersList = () => {
                                                         }}
                                                     />
                                                 ) : (
-                                                    <TeacherIcon 
-                                                        sx={{ 
+                                                    <TeacherIcon
+                                                        sx={{
                                                             color: theme.palette.primary.main,
                                                             fontSize: { xs: '1.8rem', sm: '2rem' },
                                                             backgroundColor: '#f5f5f5',
@@ -248,12 +248,12 @@ const TeachersList = () => {
                                                                 transition: 'transform 0.2s ease-in-out',
                                                                 boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
                                                             }
-                                                        }} 
+                                                        }}
                                                     />
                                                 )}
-                                                <Typography 
+                                                <Typography
                                                     className="teacher-name"
-                                                    variant="h6" 
+                                                    variant="h6"
                                                     sx={{
                                                         fontWeight: 600,
                                                         fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
@@ -265,13 +265,13 @@ const TeachersList = () => {
                                                 </Typography>
 
                                             </Box>
-                                            <Box sx={{ 
+                                            <Box sx={{
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: 1,
                                                 color: theme.palette.text.secondary
                                             }}>
-                                                
+
                                                 <Typography sx={{
                                                     fontSize: { xs: '0.875rem', sm: '1rem' }
                                                 }}>
