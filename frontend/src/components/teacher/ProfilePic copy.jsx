@@ -1,8 +1,8 @@
 import {
     AddAPhoto as AddPhotoIcon,
-    ChangeCircle as ChangeCircleIcon,
     Close as CloseIcon,
     Delete as DeleteIcon,
+    PhotoCamera as PhotoCameraIcon,
     Upload as UploadIcon
 } from "@mui/icons-material";
 import {
@@ -16,7 +16,6 @@ import axios from "axios";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import Cropper from "react-easy-crop";
 // import { useAuth } from '../admin/AuthProvider';
 
@@ -30,11 +29,12 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+  
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
-            if (selectedFile.size > 1000000) { // 1MB limit
-                enqueueSnackbar("File size should be less than 1MB", { variant: "error" });
+            if (selectedFile.size > 5000000) { // 5MB limit
+                enqueueSnackbar("File size should be less than 5MB", { variant: "error" });
                 return;
             }
             setFile(selectedFile);
@@ -77,7 +77,6 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                 img.src = image;
             });
         } catch (error) {
-            console.error('Crop error:', error);
             enqueueSnackbar("Error processing image", { variant: "error" });
             throw error;
         }
@@ -110,48 +109,27 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             setImage(null);
             enqueueSnackbar("Profile picture updated successfully!", { variant: "success" });
         } catch (error) {
-            console.error('Upload error:', error);
             enqueueSnackbar("Failed to upload profile picture", { variant: "error" });
         } finally {
             setLoading(false);
         }
     };
-    const onDrop = useCallback((acceptedFiles) => {
-        const file = acceptedFiles[0];
-        if (file) {
-            if (file.size > 1000000) { // 1MB limit
-                enqueueSnackbar("File size should be less than 1MB", { variant: "error" });
-                return;
-            }
-            setFile(file);
-            const reader = new FileReader();
-            reader.onloadend = () => setImage(reader.result);
-            reader.readAsDataURL(file);
-        }
-    }, [enqueueSnackbar]);
+
     // Delete Profile Picture
     const handleDelete = async () => {
         setDeleteLoading(true);
         try {
             await axios.delete("https://ghss-management-backend.vercel.app/delete-profile-pic", { withCredentials: true });
+            // await axios.delete("http://localhost:3000/delete-profile-pic", { withCredentials: true });
             setImageUrl(null);
             setShowModal(false);
             enqueueSnackbar("Profile picture deleted successfully!", { variant: "success" });
         } catch (error) {
-            console.error('Delete error:', error);
             enqueueSnackbar("Failed to delete profile picture", { variant: "error" });
         } finally {
             setDeleteLoading(false);
         }
     };
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
-        accept: {
-            'image/*': ['.jpeg', '.jpg', '.png']
-        },
-        maxSize: 1000000, // 1MB in bytes
-        multiple: false
-    });
 
     // Convert dataURL to File
     const dataURLtoFile = (dataUrl, filename) => {
@@ -204,8 +182,8 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                 right: 8,
                                 color: 'grey.500',
                                 '&:hover': {
-                                    color: 'black',
-                                    backgroundColor: 'rgb(255, 182, 182)'
+                                    color: 'error.main',
+                                    backgroundColor: 'error.light'
                                 }
                             }}
                         >
@@ -240,8 +218,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                 />
                             </Box>
                         ) : (
-                            <Box 
-                                {...getRootProps()}
+                            <Box
                                 sx={{
                                     height: 200,
                                     display: 'flex',
@@ -251,25 +228,17 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     backgroundColor: '#f5f5f5',
                                     borderRadius: 1,
                                     border: '2px dashed #1976d2',
-                                    mb: 2,
-                                    cursor: 'pointer',
-                                    '&:hover': {
-                                        backgroundColor: '#e3f2fd',
-                                        borderColor: '#1565c0'
-                                    }
+                                    mb: 2
                                 }}
                             >
                                 <AddPhotoIcon sx={{ fontSize: 48, color: '#1976d2', mb: 1 }} />
-                                <Typography color="textSecondary" align="center">
-                                    Drag and drop an image here, or click to select
-                                </Typography>
-                                <Typography variant="caption" color="textSecondary">
-                                    Maximum file size: 1MB
+                                <Typography color="textSecondary">
+                                    Click to select an image
                                 </Typography>
                             </Box>
                         )}
 
-                        <Box     sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'center' }}>
+                        <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'center' }}>
                             {!image && imageUrl && (
                                 <Button
                                     onClick={handleDelete}
@@ -278,14 +247,13 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     color="error"
                                     startIcon={deleteLoading ? <CircularProgress size={20} /> : <DeleteIcon />}
                                     sx={{
-                                        textTransform: 'capitalize',
                                         background: 'linear-gradient(45deg, #f44336 30%, #e57373 90%)',
                                         '&:hover': {
                                             background: 'linear-gradient(45deg, #d32f2f 30%, #f44336 90%)'
                                         }
                                     }}
                                 >
-                                    Delete existing profile picture
+                                    Delete
                                 </Button>
                             )}
 
@@ -294,17 +262,15 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                 accept="image/*"
                                 onChange={handleFileChange}
                                 id="fileInput"
-                                {...getInputProps()}
                                 style={{ display: 'none' }}
                             />
 
-                            {image && (
-                                <>
+                            {image ? (
                                 <Button
                                     onClick={handleUpload}
                                     disabled={loading}
                                     variant="contained"
-                                    startIcon={loading ? <CircularProgress color="success" size={20} /> : <UploadIcon />}
+                                    startIcon={loading ? <CircularProgress size={20} /> : <UploadIcon />}
                                     sx={{
                                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
                                         '&:hover': {
@@ -312,27 +278,25 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                         }
                                     }}
                                 >
-                                    {/* change to uploading... if loading */}
-                                    {loading ? "Uploading..." : "Upload"}
+                                    Upload
                                 </Button>
-                                <Button
-                                    disabled={loading}
-                                    variant="contained"
-                                    startIcon={ <ChangeCircleIcon />}
-                                    sx={{
-                                        textTransform: 'capitalize',
-                                        background: 'linear-gradient(45deg, #4caf50 30%, #81c784 90%)',
-                                        '&:hover': {
-                                            background: 'linear-gradient(45deg, #388e3c 30%, #4caf50 90%)'
-                                        }
-                                    }}
-                                    {...getRootProps()}
-                                >
-                                    Choose Different Photo
-                                </Button>
-                                </>
-                            )
-                            }
+                            ) : (
+                                <label htmlFor="fileInput">
+                                    <Button
+                                        component="span"
+                                        variant="contained"
+                                        startIcon={<PhotoCameraIcon />}
+                                        sx={{
+                                            background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                            '&:hover': {
+                                                background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)'
+                                            }
+                                        }}
+                                    >
+                                        Select Image
+                                    </Button>
+                                </label>
+                            )}
                         </Box>
                     </Box>
                 </Box>

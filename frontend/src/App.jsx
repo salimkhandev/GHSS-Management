@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from './components/Home';
 import AdminLogin from "./components/admin/AdminLogin";
 import TeacherAdminLogin from "./components/admin/TeacherAdminLogin";
-import { AuthProvider } from "./components/admin/AuthProvider";
+// import { AuthProvider } from "./components/admin/AuthProvider";
 import Protecter from "./components/admin/ProtectedLoginRoute";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -33,7 +33,7 @@ const Loader = () => (
 
 function App() {
   return (
-      <AuthProvider>
+      // <AuthProvider>
         <Router>
           <Navbar />
           <main>
@@ -130,7 +130,7 @@ function App() {
            
           </main>
         </Router>
-      </AuthProvider>
+      // </AuthProvider>
   );
 }
 
