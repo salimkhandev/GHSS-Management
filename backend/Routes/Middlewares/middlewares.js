@@ -41,5 +41,32 @@ function isAdmin(req, res, next) {
         res.status(403).json({ message: 'Access denied. Admins only.' });
     }
 }
+const extractClassAndSection = async (req, res, next) => {
+    const token = req.cookies.TeacherToken;
 
-module.exports={authenticateToken,isAdmin,isAdminToken}
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    try {
+        const decoded = await new Promise((resolve, reject) => {
+            jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
+                if (err) reject(err);
+                resolve(decoded);
+            });
+        });
+
+        // Attach to request object for use in routes
+        req.teacherInfo = {
+            class_id: decoded.class_id,
+            section_id: decoded.section_id
+        };
+
+        next();
+    } catch (error) {
+        console.error('Token verification failed:', error);
+        res.status(403).json({ error: 'Invalid token' });
+    }
+};
+
+module.exports={authenticateToken,isAdmin,isAdminToken,extractClassAndSection}

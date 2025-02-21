@@ -1,37 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../../Configs/dbConfig');
-const { authenticateToken } = require('../Middlewares/middlewares');
-const jwt = require('jsonwebtoken');
+const { extractClassAndSection } = require('../Middlewares/middlewares');
+// const jwt = require('jsonwebtoken');
 
 // Middleware to extract class and section IDs from token
-const extractClassAndSection = async (req, res, next) => {
-    const token = req.cookies.TeacherToken;
-    
-    if (!token) {
-        return res.status(401).json({ error: 'No token provided' });
-    }
 
-    try {
-        const decoded = await new Promise((resolve, reject) => {
-            jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
-                if (err) reject(err);
-                resolve(decoded);
-            });
-        });
-
-        // Attach to request object for use in routes
-        req.teacherInfo = {
-            class_id: decoded.class_id,
-            section_id: decoded.section_id
-        };
-        
-        next();
-    } catch (error) {
-        console.error('Token verification failed:', error);
-        res.status(403).json({ error: 'Invalid token' });
-    }
-};
 
 // Apply middleware to all routes that need class and section IDs
 router.get('/attendanceGroupedByDate', extractClassAndSection, async (req, res) => {
