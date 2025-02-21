@@ -66,8 +66,9 @@ const PerformanceDashboard = () => {
             <Paper 
                 elevation={3}
                 sx={{
-                    p: 3,
-                    mb: 4,
+                    // also for mobile
+                    p: 1,
+                    // mb: ,
                     background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                     borderRadius: 2,
                     color: 'white',

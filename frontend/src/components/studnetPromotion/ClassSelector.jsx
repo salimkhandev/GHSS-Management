@@ -202,7 +202,7 @@ const ClassSelector = () => {
     return (
         <Box sx={{ 
             p: 4, 
-            minHeight: '100vh',
+            minHeight: '90vh',
             background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
         }}>
             <Paper 

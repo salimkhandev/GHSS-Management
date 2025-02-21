@@ -101,7 +101,7 @@ const ProtectedLoginRoute = () => {
                 <Box
                     sx={{
                         display: 'flex',
-                        minHeight: '100vh',
+                        minHeight: '90vh',
                         alignItems: 'center',
                         justifyContent: 'center',
                         background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)',

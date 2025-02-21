@@ -42,7 +42,7 @@ const Navbar = () => {
     ];
 
     return (
-        <div className='flex justify-start mb-16'>
+        <div className='flex  justify-start mb-16'>
             <AppBar
                 sx={{
                     background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',

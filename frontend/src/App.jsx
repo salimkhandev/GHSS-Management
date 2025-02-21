@@ -20,7 +20,7 @@ const PerformanceDashboard = lazy(() => import("./components/attendance/pieChart
 const TakenAtten = lazy(() => import("./components/attendance/TakeAtten"));
 const ClassSelector = lazy(() => import("./components/studnetPromotion/ClassSelector"));
 const UpdateAttenStatusOfClsSec = lazy(() => import("./components/attendance/UpdateAttenStatusOfClsSec"));
-const TeachersList = lazy(() => import("./components/TeachersList"));
+const TeachersList = lazy(() => import("./components/teacher/TeachersList"));
 
 
 // MUI Linear Progress Loader

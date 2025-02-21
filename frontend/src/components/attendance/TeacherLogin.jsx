@@ -67,7 +67,7 @@ const Login = () => {
         <Box
             sx={{
                 display: 'flex',
-                minHeight: '100vh',
+                minHeight: '90vh',
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',

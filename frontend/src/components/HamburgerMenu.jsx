@@ -15,7 +15,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
     Box,
     Button,
@@ -34,6 +33,7 @@ import {
 import { Link } from "react-router-dom";
 import { useAuth } from './admin/AuthProvider';
 import ProfilePicManager from './teacher/ProfilePic.jsx';
+import MenuIcon from "@mui/icons-material/Menu";
 
 const THEME_COLORS = {
     primary: '#1a237e', // Deep indigo
@@ -117,6 +117,88 @@ const modalStyles = {
     })
 };
 
+// Add this new styled menu icon component
+const AnimatedMenuIcon = ({ isOpen, onClick }) => (
+  <motion.div
+    initial={false}
+    animate={isOpen ? "open" : "closed"}
+    onClick={onClick}
+    className="cursor-pointer"
+    style={{
+      width: 40,
+      height: 40,
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(5px)',
+    }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    <motion.div
+      style={{
+        width: 20,
+        height: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}
+    >
+      {[0, 1, 2].map((index) => (
+        <motion.span
+          key={index}
+          style={{
+            width: '100%',
+            height: 2,
+            borderRadius: 10,
+            backgroundColor: 'white',
+            transformOrigin: 'left',
+          }}
+          variants={{
+            open: {
+              y: index === 1 ? 0 : 0,
+              rotate: index === 1 ? 0 : index === 0 ? 45 : -45,
+              x: index === 1 ? 20 : 0,
+              opacity: index === 1 ? 0 : 1,
+            },
+            closed: {
+              y: 0,
+              rotate: 0,
+              x: 0,
+              opacity: 1,
+            },
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        />
+      ))}
+    </motion.div>
+  </motion.div>
+);
+
+const MenuIconButton = ({ onClick }) => (
+  <IconButton
+    onClick={onClick}
+    sx={{
+      width: 45,
+      height: 45,
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(5px)',
+      borderRadius: '12px',
+      '&:hover': {
+        background: 'rgba(255, 255, 255, 0.2)',
+      },
+      '& .MuiSvgIcon-root': {
+        fontSize: 28,
+        color: 'white',
+      },
+    }}
+  >
+    <MenuIcon />
+  </IconButton>
+);
+
 export default function TopDrawerWithToggle() {
     const navigate = useNavigate();
 
@@ -145,6 +227,7 @@ export default function TopDrawerWithToggle() {
     const [imageUrl, setImageUrl] = useState(null);
     const [username, setUsername] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         if (selectedRole === "admin") {
@@ -196,11 +279,13 @@ export default function TopDrawerWithToggle() {
         fetchProfilePic();
     }, [logEvent]);
 
+    // Update the toggleDrawer function
     const toggleDrawer = (state) => (event) => {
         if (event?.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
             return;
         }
         setOpen(state);
+        setIsMenuOpen(state);
     };
 
     const toggleSection = (index) => {
@@ -378,11 +463,13 @@ export default function TopDrawerWithToggle() {
                             sx={{
                                 ...modalStyles.dialog,
                                 '& .MuiDialog-paper': {
-                                    animation: 'modalFadeIn 0.3s ease-out'
-                                }
+                                    animation: 'modalFadeIn 0.3s ease-out',
+                                    backgroundColor: '#E9F1FD',
+                                },
                             }}
                         >
-                            <Box sx={modalStyles.credentialsBox}>
+                            <Box sx={modalStyles.credentialsBox }
+                            >
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                     <KeyIcon sx={{ color: '#ffa000', fontSize: 24 }} />
                                     <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555' }}>
@@ -446,114 +533,15 @@ export default function TopDrawerWithToggle() {
                                 <Button
                                     onClick={() => handleRoleSelection("teacherAdmin")}
                                     startIcon={<TeacherAdminIcon />}
-                                    sx={modalStyles.button('#2196F3')}
+                                    // use nowrap   
+                                    sx={{
+                                        ...modalStyles.button('#2196F3'),
+                                        whiteSpace: 'nowrap'
+                                    }}
+
                                 >
                                     Teacher & Admin
                                 </Button>
-                            </Box>
-
-                            <Box sx={{
-                                '@keyframes modalFadeIn': {
-                                    from: { 
-                                        opacity: 0, 
-                                        transform: 'scale(0.95)' 
-                                    },
-                                    to: { 
-                                        opacity: 1, 
-                                        transform: 'scale(1)' 
-                                    }
-                                },
-                                '@keyframes slideDown': {
-                                    from: { 
-                                        opacity: 0, 
-                                        transform: 'translateY(-10px)' 
-                                    },
-                                    to: { 
-                                        opacity: 1, 
-                                        transform: 'translateY(0)' 
-                                    }
-                                }
-                            }}>
-                                <Dialog
-                                    open={showRoleModal}
-                                    onClose={() => setShowRoleModal(false)}
-                                    sx={{
-                                        ...modalStyles.dialog,
-                                        '& .MuiDialog-paper': {
-                                            animation: 'modalFadeIn 0.3s ease-out'
-                                        }
-                                    }}
-                                >
-                                    <Box sx={modalStyles.credentialsBox}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                                            <KeyIcon sx={{ color: '#ffa000', fontSize: 24 }} />
-                                            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555' }}>
-                                                Demo Credentials
-                                            </Typography>
-                                        </Box>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                <AdminIcon sx={{ color: '#d9534f', fontSize: 20 }} />
-                                                <Typography variant="body2" sx={{ color: '#666' }}>
-                                                    Admin: <span style={{ color: '#d9534f', fontWeight: 500 }}>Username: admin | Password: admin</span>
-                                                </Typography>
-                                            </Box>
-                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                <SchoolIcon sx={{ color: '#5cb85c', fontSize: 20 }} />
-                                                <Typography variant="body2" sx={{ color: '#666' }}>
-                                                    Teacher: <span style={{ color: '#5cb85c', fontWeight: 500 }}>Username: Kamal | Password: Kamal</span>
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                    </Box>
-
-                                    <Box sx={modalStyles.title}>
-                                        <Typography variant="h5" sx={{ 
-                                            fontWeight: 700,
-                                            fontFamily: "'Poppins', sans-serif",
-                                            color: '#2c3e50'
-                                        }}>
-                                            Select Role
-                                        </Typography>
-                                        <IconButton 
-                                            onClick={() => setShowRoleModal(false)}
-                                            sx={{ 
-                                                color: '#555',
-                                                transition: 'all 0.3s ease',
-                                                '&:hover': {
-                                                    transform: 'rotate(90deg)',
-                                                    backgroundColor: 'rgba(0,0,0,0.05)'
-                                                }
-                                            }}
-                                        >
-                                            <CloseIcon />
-                                        </IconButton>
-                                    </Box>
-
-                                    <Box sx={modalStyles.buttonsContainer}>
-                                        <Button
-                                            onClick={() => handleRoleSelection("admin")}
-                                            startIcon={<AdminIcon />}
-                                            sx={modalStyles.button('#ff6b6b')}
-                                        >
-                                            Admin
-                                        </Button>
-                                        <Button
-                                            onClick={() => handleRoleSelection("teacher")}
-                                            startIcon={<SchoolIcon />}
-                                            sx={modalStyles.button('#4CAF50')}
-                                        >
-                                            Teacher
-                                        </Button>
-                                        <Button
-                                            onClick={() => handleRoleSelection("teacherAdmin")}
-                                            startIcon={<TeacherAdminIcon />}
-                                            sx={modalStyles.button('#2196F3')}
-                                        >
-                                            Teacher & Admin
-                                        </Button>
-                                    </Box>
-                                </Dialog>
                             </Box>
                         </Dialog>
 
@@ -700,13 +688,13 @@ export default function TopDrawerWithToggle() {
 
     return (
         <div>
-            {/* Button to Open Drawer */}
-            <IconButton onClick={toggleDrawer(true)} sx={{ color: "white" }}>
-                <MenuIcon />
-            </IconButton>
-            <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+            <MenuIconButton onClick={toggleDrawer(true)} />
+            <Drawer 
+                anchor="left" 
+                open={open} 
+                onClose={toggleDrawer(false)}
+            >
                 {list()}
-
             </Drawer>
         </div>
     );

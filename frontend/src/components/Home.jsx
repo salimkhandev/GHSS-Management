@@ -1,7 +1,6 @@
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import AOS from "aos";
-import "aos/dist/aos.css"; // Don't forget to import AOS CSS
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,15 +8,17 @@ import "slick-carousel/slick/slick.css";
 import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
 
 const images = [
-  { src: "/images/carousel1.jpg", alt: "School Building" },
-  { src: "/images/carousel2.jpg", alt: "School Building" },
-  { src: "/images/carousel3.jpg", alt: "School Building" },
-  { src: "/images/carousel4.jpg", alt: "School Building" },
-  { src: "/images/carousel5.jpg", alt: "School Building" },
-  { src: "/images/carousel6.jpg", alt: "School Building" },
-  { src: "/images/carousel7.jpg", alt: "School Building" },
-  { src: "/images/carousel8.jpg", alt: "School Building" },
-  { src: "/images/carousel9.jpg", alt: "School Building" },
+  { src: "/images/c1.png", alt: "School Building" },
+  { src: "/images/c1.png", alt: "School Building" },
+  { src: "/images/c1.png", alt: "School Building" },
+  // { src: "/images/carousel2.jpg", alt: "School Building" },
+  // { src: "/images/carousel3.jpg", alt: "School Building" },
+  // { src: "/images/carousel4.jpg", alt: "School Building" },
+  // { src: "/images/carousel5.jpg", alt: "School Building" },
+  // { src: "/images/carousel6.jpg", alt: "School Building" },
+  // { src: "/images/carousel7.jpg", alt: "School Building" },
+  // { src: "/images/carousel8.jpg", alt: "School Building" },
+  // { src: "/images/carousel9.jpg", alt: "School Building" },
 ];
 
 const NextArrow = ({ onClick }) => (
@@ -26,7 +27,7 @@ const NextArrow = ({ onClick }) => (
     sx={{
       position: 'absolute',
       top: '50%',
-      right: { xs: '-20px', sm: '-30px', md: '-40px' },
+      right: { xs: '-20px', sm: '0px', md: '40px' },
       transform: 'translateY(-50%)',
       color: '#fff',
       fontSize: { xs: '2.5rem', sm: '3rem' },
@@ -56,7 +57,7 @@ const PrevArrow = ({ onClick }) => (
     sx={{
       position: 'absolute',
       top: '50%',
-      left: { xs: '-20px', sm: '-30px', md: '-40px' },
+      left: { xs: '-20px', sm: '0px', md: '40px' },
       transform: 'translateY(-50%)',
       color: '#fff',
       fontSize: { xs: '2.5rem', sm: '3rem' },
@@ -84,12 +85,11 @@ const GallerySlider = () => {
   const [showSlider, setShowSlider] = useState(false);
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
     const timer = setTimeout(() => {
       setShowSlider(true);
-    }, 3000); // Show slider after 3 seconds
+    }, 3000);
 
-    return () => clearTimeout(timer); // Clean up timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
 
   const settings = {
@@ -104,131 +104,155 @@ const GallerySlider = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center" 
-      style={{ 
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)' 
+    <div className="h-[83vh] flex flex-col items-center justify-center"
+      style={{
+        // background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)'
       }}
     >
-      {/* Welcome Message */}
-      {!showSlider && (
-        <div
-          className="flex items-center flex-col justify-center w-full h-screen bg-gray-100"
-          data-aos="fade-in"
-          data-aos-duration="2000"
-        >
-          <div>
-            <img
-              src={logo}
-              alt="School Logo"
-              className="h-60 w-60 object-contain mx-auto mb-32" // Larger logo size
-            />
-          </div>
-          <Typography variant="h1" align="center" sx={{ fontSize: "3rem", color: "#3f51b5", fontWeight: "bold" }}>
-            Welcome to GHSS Luqman Banda
-          </Typography>
-        </div>
-      )}
-
-      {/* Main Content */}
-      {showSlider && (
-        <Box
-          sx={{
-            width: '100%',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)',
-            padding: { xs: '40px 20px', sm: '60px 40px' },
-          }}
-        >
-          {/* Gallery with Frame Design */}
-          <Box
-            sx={{
-              width: '85%',
-              maxWidth: '1200px',
-              margin: '0 auto',
-              padding: '20px',
-              backgroundColor: '#ffffff',
-              borderRadius: '16px',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-              position: 'relative',
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                top: '12px',
-                left: '12px',
-                right: '12px',
-                bottom: '12px',
-                border: '2px solid #1976d2',
-                borderRadius: '12px',
-                pointerEvents: 'none',
-                opacity: 0.3
-              },
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                top: '6px',
-                left: '6px',
-                right: '6px',
-                bottom: '6px',
-                border: '1px solid #1976d2',
-                borderRadius: '14px',
-                pointerEvents: 'none',
-                opacity: 0.2
-              }
-            }}
+      <AnimatePresence mode="wait">
+        {!showSlider && (
+          <motion.div
+            className="flex items-center flex-col  justify-center w-full"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <Slider {...settings}>
-              {images.map((image, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '75vh',
-                    padding: '25px', // Increased padding for frame effect
-                    backgroundColor: '#ffffff',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '65vh',
-                      position: 'relative',
-                      '&::before': {
-                        content: '""',
-                        position: 'absolute',
-                        top: '-8px',
-                        left: '-8px',
-                        right: '-8px',
-                        bottom: '-8px',
-                        border: '1px solid #1976d2',
-                        borderRadius: '14px',
-                        opacity: 0.2
-                      }
-                    }}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <img
+                src={logo}
+                alt="School Logo"
+                className="h-60 w-60 object-contain mx-auto mb-32"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            >
+              <Typography 
+                variant="h1" 
+                align="center" 
+                sx={{ fontSize: "3rem", color: "#3f51b5", fontWeight: "bold" }}
+              >
+                Welcome to GHSS Luqman Banda
+              </Typography>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {showSlider && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ width: '100%' }}
+          >
+            <Box
+              sx={{
+                width: '100%',
+                minHeight: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)',
+              
+                padding: { xs: '40px 20px', sm: '60px 40px' },
+              }}
+            >
+              {/* Gallery with Frame Design */}
+              <Box
+                sx={{
+                  width: '65%',
+                  maxWidth: '1400px',
+                  margin: '0 auto',
+                  padding: '10px',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+                  position: 'relative',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: '8px',
+                    left: '8px',
+                    right: '8px',
+                    bottom: '8px',
+                    border: '2px solid #1976d2',
+                    borderRadius: '12px',
+                    pointerEvents: 'none',
+                    opacity: 0.3
+                  },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    top: '4px',
+                    left: '4px',
+                    right: '4px',
+                    bottom: '4px',
+                    border: '1px solid #1976d2',
+                    borderRadius: '14px',
+                    pointerEvents: 'none',
+                    opacity: 0.2
+                  }
+                }}
+              >
+                <Slider {...settings}>
+                  {images.map((image, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '70vh',
+                        padding: '15px',
+                        backgroundColor: '#ffffff',
                       }}
-                    />
-                  </Box>
-                </Box>
-              ))}
-            </Slider>
-          </Box>
-        </Box>
-      )}
+                    >
+                      <Box
+                        sx={{
+                          width: '100%',
+                          height: '100%',
+                          position: 'relative',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: '-4px',
+                            left: '-4px',
+                            right: '-4px',
+                            bottom: '-4px',
+                            border: '1px solid #1976d2',
+                            borderRadius: '14px',
+                            opacity: 0.2
+                          }
+                        }}
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                            borderRadius: '12px',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  ))}
+                </Slider>
+              </Box>
+            </Box>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -145,7 +145,7 @@ const LoginForm = () => {
                 container 
                 component="main" 
                 sx={{ 
-                    minHeight: "100vh",
+                    minHeight: "90vh",
                     background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
                     justifyContent: "center", 
                     alignItems: "center",

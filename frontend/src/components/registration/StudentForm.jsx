@@ -93,15 +93,15 @@ function StudentForm() {
                 </Grid>
                 <Grid item xs={12} sx={{
                     mt: {
-                        xs: '-111px',  // Extra-small screens (default breakpoint is 0px - 600px)
-                        sm: '-138px',  // Small screens (600px - 960px)
-                        md: '-180px',  // Medium screens (960px - 1280px)
-                        lg: '-180px',   // Large screens (1280px - 1920px)
-                        xl: '-180px',   // Extra-large screens (1920px and above)
+                        // xs: '-111px',  // Extra-small screens (default breakpoint is 0px - 600px)
+                        // sm: '-138px',  // Small screens (600px - 960px)
+                        // md: '-180px',  // Medium screens (960px - 1280px)
+                        // lg: '-180px',   // Large screens (1280px - 1920px)
+                        // xl: '-180px',   // Extra-large screens (1920px and above)
                     }
 }}>
-                    {formType === 'manual' && <StudentRegistrationForm />}
-                    {formType === 'bulk' && <StudentBulkUpload />}
+                        {formType === 'manual' && <StudentRegistrationForm />}
+                        {formType === 'bulk' && <StudentBulkUpload />}
                 </Grid>
             </Grid>
         </Box>
