@@ -62,7 +62,7 @@ const Login = () => {
     if('vibrate' in navigator){
         setTimeout(() => {
             navigator.vibrate(100);
-        }, 1000);
+        }, 500);
     }
 
     return (
