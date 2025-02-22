@@ -90,10 +90,13 @@ const ProtectedLoginRoute = () => {
     if (isAuthenticated) {
         return <Outlet />;
     }
-    
-    if('vibrate' in navigator){
-        navigator.vibrate(100);
+
+    if ('vibrate' in navigator) {
+        setTimeout(() => {
+            navigator.vibrate(50);
+        }, 500);
     }
+
 
     return (
         <AnimatePresence>
