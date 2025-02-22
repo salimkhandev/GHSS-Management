@@ -49,7 +49,7 @@ const ProtectedLoginRoute = () => {
         }
         isFirstMount.current = false;
         
-    }, []);
+    }, [isAuthenticated]);
 
     const Loader = () => (
         <Box sx={{ width: '100%' }}>

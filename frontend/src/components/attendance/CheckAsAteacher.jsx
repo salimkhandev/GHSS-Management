@@ -5,7 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from "../admin/AuthProvider";
 
@@ -23,10 +23,23 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const isFirstMount = useRef(true);
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
     };
+    useEffect(() => {
+        if (isFirstMount.current && isAuthenticatedTeacher === false) {
+            if ('vibrate' in navigator) {
+                setTimeout(() => {
+                    navigator.vibrate(50);
+                }, 500);
+            }
+        }
+        isFirstMount.current = false;
+
+    }, []);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
