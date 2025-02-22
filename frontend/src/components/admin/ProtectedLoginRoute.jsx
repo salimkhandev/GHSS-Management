@@ -23,7 +23,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import * as Yup from 'yup';
 import { useAuth } from "./AuthProvider";
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const validationSchema = Yup.object({
     username: Yup.string()
@@ -38,6 +38,18 @@ const ProtectedLoginRoute = () => {
     const { login, logout, isAuthenticated } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
+    const isFirstMount = useRef(true);
+    useEffect(() => {
+        if(isFirstMount.current){
+            if ('vibrate' in navigator) {
+                setTimeout(() => {
+                    navigator.vibrate(50);
+                }, 500);
+            }
+        }
+        isFirstMount.current = false;
+        
+    }, []);
 
     const Loader = () => (
         <Box sx={{ width: '100%' }}>
@@ -91,11 +103,7 @@ const ProtectedLoginRoute = () => {
         return <Outlet />;
     }
 
-    if ('vibrate' in navigator) {
-        setTimeout(() => {
-            navigator.vibrate(50);
-        }, 500);
-    }
+  
 
 
     return (
