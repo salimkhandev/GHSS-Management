@@ -221,7 +221,7 @@ export default function TopDrawerWithToggle() {
 
     const [open, setOpen] = useState(false);
     const [expandedSections, setExpandedSections] = React.useState({});
-    const { isAuthenticated, isAuthenticatedTeacher, logEvent, setLogEventHandler } = useAuth();
+    const { isAuthenticatedAdmin, isAuthenticatedTeacher, logEvent, setLogEventHandler } = useAuth();
     // const [keepProfilePicUpdated, setKeepProfilePicUpdated] = useState(false);
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -357,7 +357,7 @@ export default function TopDrawerWithToggle() {
             }}
             role="presentation"
         >
-            {(isAuthenticated || isAuthenticatedTeacher) && (
+                {(isAuthenticatedAdmin || isAuthenticatedTeacher) && (
               
                 <Button
                     startIcon={<LogoutIcon />}
@@ -392,7 +392,7 @@ export default function TopDrawerWithToggle() {
             )}
 
             {
-                (isAuthenticated || isAuthenticatedTeacher) ? (<div className="text-center">
+                (isAuthenticatedAdmin || isAuthenticatedTeacher) ? (<div className="text-center">
                     <div onClick={() => setShowModal(true)} className="mb-2 cursor-pointer">
 
                         <div className="w-20 h-20 rounded-full mx-auto border-blue-500 border-4 flex justify-center items-center overflow-hidden bg-gray-200">

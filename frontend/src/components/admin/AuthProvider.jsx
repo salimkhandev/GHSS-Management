@@ -6,7 +6,8 @@ const AuthContext = createContext();
 
 // Create a provider to wrap around the app
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(null);
+    const [isAuthenticatedTeacher, setIsAuthenticatedTeacher] = useState(null);
     const [logEvent, setLogEvent] = useState(false);
     
         useEffect(() => {
@@ -57,12 +58,11 @@ export const AuthProvider = ({ children }) => {
 
         checkAuth();
     }, []);
-    const [isAuthenticatedTeacher, setIsAuthenticatedTeacher] = useState(null);
 
 
     // Function to log the user in (set global authentication state)
     const login = () => {
-        setIsAuthenticated(true);
+        setIsAuthenticatedAdmin(true);
         setLogEvent((prev) => !prev); // Toggle the boolean value
 
     };
@@ -70,13 +70,13 @@ export const AuthProvider = ({ children }) => {
   
  // Function to log the user out (set global authentication state)
     const logout = () => {
-        setIsAuthenticated(false);
+        setIsAuthenticatedAdmin(false);
         setLogEvent((prev) => !prev); // Toggle the boolean value
 
     };
     const setLogEventHandler = () => {
         setLogEvent((prev) => !prev); 
-        setIsAuthenticated(false);
+        setIsAuthenticatedAdmin(false);
         setIsAuthenticatedTeacher(false);
     };
         const loginTeacher = () => {
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            isAuthenticated,
+            isAuthenticatedAdmin    ,
             login,
             logout,
             isAuthenticatedTeacher,

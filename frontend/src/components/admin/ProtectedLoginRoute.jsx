@@ -35,12 +35,12 @@ const validationSchema = Yup.object({
 });
 
 const ProtectedLoginRoute = () => {
-    const { login, logout, isAuthenticated } = useAuth();
+    const { login, logout, isAuthenticatedAdmin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const isFirstMount = useRef(true);
     useEffect(() => {
-        if(isFirstMount.current && isAuthenticated === false){
+        if(isFirstMount.current && isAuthenticatedAdmin === false){
             if ('vibrate' in navigator) {
                 setTimeout(() => {
                     navigator.vibrate(50);
@@ -49,7 +49,7 @@ const ProtectedLoginRoute = () => {
         }
         isFirstMount.current = false;
         
-    }, [isAuthenticated]);
+    }, [isAuthenticatedAdmin]);
 
     const Loader = () => (
         <Box sx={{ width: '100%' }}>
@@ -95,11 +95,11 @@ const ProtectedLoginRoute = () => {
         }
     };
 
-    if (isAuthenticated === null) {
+    if (isAuthenticatedAdmin === null) {
         return <div><Loader/></div>;
     }
 
-    if (isAuthenticated) {
+        if (isAuthenticatedAdmin) {
         return <Outlet />;
     }
 

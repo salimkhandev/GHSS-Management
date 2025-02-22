@@ -38,7 +38,7 @@ const Login = () => {
         }
         isFirstMount.current = false;
 
-    }, []);
+    }, [isAuthenticatedTeacher]);
 
 
     const handleSubmit = async (e) => {
