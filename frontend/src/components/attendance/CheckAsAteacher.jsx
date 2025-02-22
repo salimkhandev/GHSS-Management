@@ -72,11 +72,7 @@ const Login = () => {
     if (isAuthenticatedTeacher) {
         return <Outlet />;
     }
-    if('vibrate' in navigator){
-        setTimeout(() => {
-            navigator.vibrate(50);
-        }, 500);
-    }
+   
 
     return (
         <Box
