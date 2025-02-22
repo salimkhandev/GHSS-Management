@@ -5,7 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
+import React from "react";
 const AdminRegister = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

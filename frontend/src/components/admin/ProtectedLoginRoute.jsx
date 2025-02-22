@@ -23,6 +23,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import * as Yup from 'yup';
 import { useAuth } from "./AuthProvider";
+import React from 'react';
 
 const validationSchema = Yup.object({
     username: Yup.string()
@@ -88,6 +89,10 @@ const ProtectedLoginRoute = () => {
 
     if (isAuthenticated) {
         return <Outlet />;
+    }
+    
+    if('vibrate' in navigator){
+        navigator.vibrate(100);
     }
 
     return (

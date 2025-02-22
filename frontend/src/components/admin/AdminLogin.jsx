@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from './AuthProvider';
 import { SnackbarProvider } from 'notistack';
+import React from 'react';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
