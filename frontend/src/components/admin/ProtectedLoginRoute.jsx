@@ -40,7 +40,7 @@ const ProtectedLoginRoute = () => {
     const { enqueueSnackbar } = useSnackbar();
     const isFirstMount = useRef(true);
     useEffect(() => {
-        if(isFirstMount.current){
+        if(isFirstMount.current && isAuthenticated === false){
             if ('vibrate' in navigator) {
                 setTimeout(() => {
                     navigator.vibrate(50);
