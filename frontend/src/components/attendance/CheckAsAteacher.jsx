@@ -21,7 +21,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const isFirstMount = useRef(true);
 
