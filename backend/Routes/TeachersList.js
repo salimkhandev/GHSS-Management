@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
 
         // Group the teachers by class and section
         const groupedTeachers = result.rows.reduce((acc, row) => {
-            const { class_name, section_name, teacher_name,profile_pic_url } = row;
+            const { id ,class_name, section_name, teacher_name,profile_pic_url } = row;
 
             if (!acc[class_name]) {
                 acc[class_name] = [];
