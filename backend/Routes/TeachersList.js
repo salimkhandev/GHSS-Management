@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
         // If no cache found, query the database and group the teachers by class and section
         const result = await pool.query(
             `SELECT 
+                  teachers.id as id,
                 classes.name AS class_name, 
                 sections.name AS section_name, 
                 teachers.username AS teacher_name,
