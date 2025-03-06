@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
                 acc[class_name] = [];
             }
 
-            acc[class_name].push({ section_name, teacher_name,profile_pic_url });
+            acc[class_name].push({id, section_name, teacher_name,profile_pic_url });
 
             return acc;
         }, {});
