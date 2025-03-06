@@ -23,7 +23,8 @@ app.use(cookieParser());
 app.use(cors({
    origin: [
       'https://ghss-management.vercel.app', // Production frontend
-      'http://localhost:5173'               // Local development frontend
+      'http://localhost:5173'  ,
+      'https://pwa-testing1234.vercel.app'
    ],
 
    credentials: true // Allow cookies to be sent
