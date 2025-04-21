@@ -24,7 +24,6 @@ app.use(cors({
    origin: [
       'https://ghss-management.vercel.app', // Production frontend
       'http://localhost:5173' ,
-      'https://pwa-frontend2-orcin.vercel.app' ,
     'https://pwa-frontend-123.vercel.app'
    ],
 
