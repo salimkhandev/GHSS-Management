@@ -8,9 +8,9 @@ import "slick-carousel/slick/slick.css";
 import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
 
 const images = [
-  { src: "/images/c1.png", alt: "School Building" },
-  { src: "/images/c1.png", alt: "School Building" },
-  { src: "/images/c1.png", alt: "School Building" },
+  { src: "/images/image.png", alt: "School Building" },
+  { src: "/images/image.png", alt: "School Building" },
+  { src: "/images/image.png", alt: "School Building" },
   // { src: "/images/carousel2.jpg", alt: "School Building" },
   // { src: "/images/carousel3.jpg", alt: "School Building" },
   // { src: "/images/carousel4.jpg", alt: "School Building" },
