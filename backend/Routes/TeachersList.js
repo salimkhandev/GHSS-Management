@@ -7,16 +7,16 @@ const redisClient = require('../Configs/redisConfig');
 router.get('/', async (req, res) => {
     try {
         // Cache key for teachers' information
-        const cacheKey = 'teachersAssigned';
+        // const cacheKey = 'teachersAssigned';
 
-        // Check if data is already cached in Redis
-        const cachedData = await redisClient.get(cacheKey);
+        // // Check if data is already cached in Redis
+        // const cachedData = await redisClient.get(cacheKey);
 
-        if (cachedData) {
-            // If cached data exists, send it as response
-            console.log('Data retrieved from cache');
-            return res.json(JSON.parse(cachedData));
-        }
+        // if (cachedData) {
+        //     // If cached data exists, send it as response
+        //     console.log('Data retrieved from cache');
+        //     return res.json(JSON.parse(cachedData));
+        // }
 
         // If no cache found, query the database and group the teachers by class and section
         const result = await pool.query(
