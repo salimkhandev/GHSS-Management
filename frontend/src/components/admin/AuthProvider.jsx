@@ -25,10 +25,11 @@ export const AuthProvider = ({ children }) => {
                         //  // If authenticated, set global auth state
                     }
                 } catch (error) {
-                    console.error('Error verifying token:', error);
+                    // Silently handle 401 errors when user is not authenticated
+                    if (error.response?.status !== 401) {
+                        console.error('Error verifying token:', error);
+                    }
                     logout()
-                    // setIsAuthenticated(false);
-
                 }
             };
 
