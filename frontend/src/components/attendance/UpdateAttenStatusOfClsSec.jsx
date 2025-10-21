@@ -79,22 +79,22 @@ const UpdateAttenStatusOfClsSec = () => {
     if (loading) {
         return (
             <Container sx={{ py: 4 }}>
-                <Skeleton 
-                    variant="text" 
-                    width="300px" 
-                    height={60} 
-                    sx={{ mb: 4 }} 
+                <Skeleton
+                    variant="text"
+                    width="300px"
+                    height={60}
+                    sx={{ mb: 4 }}
                 />
                 {[1, 2, 3].map((item) => (
-                    <Skeleton 
+                    <Skeleton
                         key={item}
-                        variant="rectangular" 
-                        height={100} 
-                        sx={{ 
+                        variant="rectangular"
+                        height={100}
+                        sx={{
                             mb: 2,
                             borderRadius: 2,
                             bgcolor: 'rgba(0,0,0,0.04)'
-                        }} 
+                        }}
                     />
                 ))}
             </Container>
@@ -103,7 +103,7 @@ const UpdateAttenStatusOfClsSec = () => {
 
     if (error) {
         return (
-            <Box sx={{ 
+            <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -116,35 +116,38 @@ const UpdateAttenStatusOfClsSec = () => {
     }
 
     return (
-        <Container sx={{ py: 4 }}>
-            <Box sx={{ 
-                mb: 4,
+        <Container sx={{ py: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2 } }}>
+            <Box sx={{
+                mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
                 background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                 borderRadius: 2,
-                p: 3,
+                p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',
                 boxShadow: theme.shadows[4]
             }}>
-                <Typography 
-                    variant="h4" 
-                    sx={{ 
+                <Typography
+                    variant="h4"
+                    sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: 2,
+                        gap: { xs: 1, sm: 1.5, md: 2 },
                         fontWeight: 700,
-                        fontFamily: "'Poppins', sans-serif"
+                        fontSize: { xs: '1.1rem', sm: '1.5rem', md: '2rem' },
+                        fontFamily: "'Poppins', sans-serif",
+                        whiteSpace: 'nowrap',
+                        flexWrap: 'nowrap'
                     }}
                 >
-                    <UpdateIcon fontSize="large" />
+                    <UpdateIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.75rem', md: '2.5rem' } }} />
                     Attendance Records
                 </Typography>
             </Box>
 
             {attendanceData.length === 0 ? (
-                <Typography 
-                    variant="h6" 
+                <Typography
+                    variant="h6"
                     align="center"
                     color="text.secondary"
                 >
@@ -152,35 +155,49 @@ const UpdateAttenStatusOfClsSec = () => {
                 </Typography>
             ) : (
                 attendanceData.map((attendanceGroup) => (
-                    <Card 
-                        key={attendanceGroup.attendance_date} 
-                        sx={{ 
-                            mb: 2,
+                    <Card
+                        key={attendanceGroup.attendance_date}
+                        sx={{
+                            mb: { xs: 1.5, sm: 2 },
                             borderRadius: 2,
                             boxShadow: theme.shadows[3]
                         }}
                     >
-                        <CardContent>
+                        <CardContent sx={{ p: { xs: 1.5, sm: 2, md: 3 } }}>
                             <Grid container alignItems="center" justifyContent="space-between">
-                                <Grid item>
-                                    <Typography 
-                                        variant="h6" 
-                                        sx={{ 
+                                <Grid item xs>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: 1,
+                                            gap: { xs: 0.5, sm: 1 },
                                             color: theme.palette.primary.main,
                                             fontFamily: "'Poppins', sans-serif",
-                                            fontWeight: 600
+                                            fontWeight: 600,
+                                            fontSize: { xs: '0.9rem', sm: '1rem', md: '1.25rem' }
                                         }}
                                     >
-                                        <DateIcon />
-                                        {new Date(attendanceGroup.attendance_date).toLocaleDateString('en-US', {
-                                            weekday: 'long',
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
+                                        <DateIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
+                                        <Box component="span" sx={{
+                                            display: { xs: 'none', sm: 'inline' }
+                                        }}>
+                                            {new Date(attendanceGroup.attendance_date).toLocaleDateString('en-US', {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}
+                                        </Box>
+                                        <Box component="span" sx={{
+                                            display: { xs: 'inline', sm: 'none' }
+                                        }}>
+                                            {new Date(attendanceGroup.attendance_date).toLocaleDateString('en-US', {
+                                                month: 'short',
+                                                day: 'numeric',
+                                                year: 'numeric'
+                                            })}
+                                        </Box>
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -198,13 +215,13 @@ const UpdateAttenStatusOfClsSec = () => {
                             </Grid>
 
                             <Collapse in={expandedDate === attendanceGroup.attendance_date} timeout="auto">
-                                <Box sx={{ mt: 2 }}>
+                                <Box sx={{ mt: { xs: 1.5, sm: 2 } }}>
                                     {attendanceGroup.records.map((record) => (
-                                        <Paper 
-                                            key={record.id} 
-                                            sx={{ 
-                                                p: 2, 
-                                                mb: 2,
+                                        <Paper
+                                            key={record.id}
+                                            sx={{
+                                                p: { xs: 1.5, sm: 2 },
+                                                mb: { xs: 1.5, sm: 2 },
                                                 borderRadius: 2,
                                                 transition: 'transform 0.2s',
                                                 '&:hover': {
@@ -213,18 +230,22 @@ const UpdateAttenStatusOfClsSec = () => {
                                                 }
                                             }}
                                         >
-                                            <Grid container spacing={2} alignItems="center">
+                                            <Grid container spacing={{ xs: 1.5, sm: 2 }} alignItems="center">
                                                 <Grid item xs={12} sm={4}>
-                                                    <Box sx={{ 
+                                                    <Box sx={{
                                                         display: 'flex',
                                                         alignItems: 'center',
-                                                        gap: 1
+                                                        gap: { xs: 0.75, sm: 1 }
                                                     }}>
-                                                        <StudentIcon color="primary" />
-                                                        <Typography 
-                                                            sx={{ 
+                                                        <StudentIcon
+                                                            color="primary"
+                                                            sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }}
+                                                        />
+                                                        <Typography
+                                                            sx={{
                                                                 fontWeight: 500,
-                                                                fontFamily: "'Poppins', sans-serif"
+                                                                fontFamily: "'Poppins', sans-serif",
+                                                                fontSize: { xs: '0.875rem', sm: '1rem' }
                                                             }}
                                                         >
                                                             {record.student_name}
@@ -232,38 +253,52 @@ const UpdateAttenStatusOfClsSec = () => {
                                                     </Box>
                                                 </Grid>
                                                 <Grid item xs={12} sm={4}>
-                                                    <Typography color="text.secondary">
+                                                    <Typography
+                                                        color="text.secondary"
+                                                        sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem', md: '1rem' } }}
+                                                    >
                                                         ID: {record.id}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} sm={4}>
-                                                    <FormControl fullWidth>
-                                                        <InputLabel>Status</InputLabel>
+                                                    <FormControl fullWidth size="small">
+                                                        <InputLabel sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>Status</InputLabel>
                                                         <Select
                                                             value={record.status}
                                                             onChange={(e) => handleStatusChange(record.id, e.target.value)}
                                                             label="Status"
                                                             sx={{
+                                                                fontSize: { xs: '0.875rem', sm: '1rem' },
                                                                 '.MuiSelect-select': {
-                                                                    color: record.status === 'Absent' ? 
-                                                                        theme.palette.error.main : 
+                                                                    color: record.status === 'Absent' ?
+                                                                        theme.palette.error.main :
                                                                         theme.palette.success.main,
                                                                     fontWeight: 500
                                                                 },
                                                                 '.MuiOutlinedInput-notchedOutline': {
-                                                                    borderColor: record.status === 'Absent' ? 
-                                                                        theme.palette.error.main : 
+                                                                    borderColor: record.status === 'Absent' ?
+                                                                        theme.palette.error.main :
                                                                         theme.palette.success.main,
                                                                 },
                                                                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                                    borderColor: record.status === 'Absent' ? 
-                                                                        theme.palette.error.dark : 
+                                                                    borderColor: record.status === 'Absent' ?
+                                                                        theme.palette.error.dark :
                                                                         theme.palette.success.dark,
                                                                 },
                                                             }}
                                                         >
-                                                            <MenuItem value="Present">Present</MenuItem>
-                                                            <MenuItem value="Absent">Absent</MenuItem>
+                                                            <MenuItem
+                                                                value="Present"
+                                                                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                                                            >
+                                                                Present
+                                                            </MenuItem>
+                                                            <MenuItem
+                                                                value="Absent"
+                                                                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                                                            >
+                                                                Absent
+                                                            </MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                 </Grid>

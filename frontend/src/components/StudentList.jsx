@@ -2,7 +2,9 @@ import {
     ArrowBack,
     ArrowForward,
     Class as ClassIcon,
+    Close as CloseIcon,
     Download as DownloadIcon,
+    FilterList as FilterListIcon,
     Groups as GroupsIcon,
     Person as PersonIcon,
     School as SchoolIcon,
@@ -14,6 +16,7 @@ import {
     Card,
     CardContent,
     CircularProgress,
+    Collapse,
     FormControl,
     Grid,
     InputAdornment,
@@ -55,6 +58,7 @@ const StudentList = () => {
     const [showNoStudentsMessage, setShowNoStudentsMessage] = useState(false);
     const [page, setPage] = useState(1);
     const [totalpages, setTotalpages] = useState();
+    const [showFilters, setShowFilters] = useState(false);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -275,6 +279,21 @@ const StudentList = () => {
                         </Typography>
 
                         <Stack direction="row" spacing={1} alignItems="center">
+                            {isMobile && (
+                                <IconButton
+                                    onClick={() => setShowFilters(!showFilters)}
+                                    sx={{
+                                        bgcolor: showFilters ? 'primary.main' : 'background.paper',
+                                        color: showFilters ? 'white' : 'primary.main',
+                                        boxShadow: 2,
+                                        '&:hover': {
+                                            bgcolor: showFilters ? 'primary.dark' : 'action.hover',
+                                        }
+                                    }}
+                                >
+                                    {showFilters ? <CloseIcon /> : <FilterListIcon />}
+                                </IconButton>
+                            )}
                             <Chip
                                 icon={<GroupsIcon />}
                                 label={`${filteredStudents.length || students.length} Students`}
@@ -289,8 +308,9 @@ const StudentList = () => {
                     </Stack>
 
                     {/* Filters Section */}
-                    <Card sx={{ mb: 0, p: { xs: 2, md: 3 }, borderRadius: 3, boxShadow: 3 }}>
-                        <Grid container spacing={{ xs: 2, md: 3 }}>
+                    <Collapse in={!isMobile || showFilters} timeout="auto">
+                        <Card sx={{ mb: 0, p: { xs: 2, md: 3 }, borderRadius: 3, boxShadow: 3 }}>
+                            <Grid container spacing={{ xs: 2, md: 3 }}>
                             {/* Search Field */}
                             <Grid item xs={12} md={4}>
                                 <TextField
@@ -375,8 +395,9 @@ const StudentList = () => {
                                     </Select>
                                 </FormControl>
                             </Grid>
-                        </Grid>
-                    </Card>
+                            </Grid>
+                        </Card>
+                    </Collapse>
                 </Box>
 
                 {/* Students Grid */}

@@ -80,7 +80,7 @@ const AttendanceList = () => {
         if (storedDate === today || today === lastAttenDate) {
             setDisableComponent(true); // Disable the component if the button has been clicked today
         } else {
-            setDisableComponent(false); // Enable the component if the date has changed 
+            setDisableComponent(false); // Enable the component if the date has changed
         }
     }, [lastAttenDate]);
     // Role is set to 'teacher' by default and doesn't need to be changed
@@ -198,12 +198,12 @@ const AttendanceList = () => {
 
     if (disableComponent) {
         return (
-            <Container maxWidth="sm">
+            <Container maxWidth="sm" sx={{ px: { xs: 1, sm: 2 } }}>
                 <Paper
                     elevation={3}
                     sx={{
-                        p: 4,
-                        mt: 14,
+                        p: { xs: 2.5, sm: 3, md: 4 },
+                        mt: { xs: 8, sm: 10, md: 14 },
                         textAlign: 'center',
                         background: 'linear-gradient(to bottom, #fff, #f8f9fa)',
                         borderRadius: 2,
@@ -213,27 +213,38 @@ const AttendanceList = () => {
                 >
                     <WarningIcon
                         sx={{
-                            fontSize: 48,
+                            fontSize: { xs: 40, sm: 48 },
                             color: 'warning.main',
                             mb: 2,
                             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
                         }}
                     />
-                    <Typography variant="h5" color="warning.dark" gutterBottom fontWeight="600">
+                    <Typography
+                        variant="h5"
+                        color="warning.dark"
+                        gutterBottom
+                        fontWeight="600"
+                        sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}
+                    >
                         Attendance Already Taken
                     </Typography>
 
                     <Box sx={{
-                        mt: 3,
-                        p: 2,
+                        mt: { xs: 2, sm: 3 },
+                        p: { xs: 1.5, sm: 2 },
                         bgcolor: 'rgba(0,0,0,0.04)',
                         borderRadius: 1,
                         display: 'flex',
                         flexDirection: 'column',
                         background: 'linear-gradient(to bottom, #fff, #f8f9fa)',
-                        gap: 1
+                        gap: { xs: 0.75, sm: 1 }
                     }}>
-                        <Typography variant="subtitle1" color="primary.main" fontWeight="500">
+                        <Typography
+                            variant="subtitle1"
+                            color="primary.main"
+                            fontWeight="500"
+                            sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                        >
                             Next attendance can be taken in:
                         </Typography>
                         <Typography
@@ -242,7 +253,7 @@ const AttendanceList = () => {
                             sx={{
                                 fontFamily: 'monospace',
                                 fontWeight: 'bold',
-
+                                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
                             }}
                         >
                             <CountdownTimer />
@@ -259,7 +270,7 @@ const AttendanceList = () => {
 
     return (
 
-        <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Container maxWidth="sm" sx={{ py: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2 } }}>
             <Paper
                 elevation={3}
                 sx={{
@@ -270,7 +281,7 @@ const AttendanceList = () => {
             >
                 <Box
                     sx={{
-                        p: 3,
+                        p: { xs: 2, sm: 2.5, md: 3 },
                         background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                         color: 'white',
                         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
@@ -281,11 +292,12 @@ const AttendanceList = () => {
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: 1,
-                            fontWeight: 600
+                            gap: { xs: 0.75, sm: 1 },
+                            fontWeight: 600,
+                            fontSize: { xs: '1.25rem', sm: '1.5rem' }
                         }}
                     >
-                        <AttendanceIcon />
+                        <AttendanceIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem' } }} />
                         Attendance Sheet
                     </Typography>
                     <Typography
@@ -295,15 +307,16 @@ const AttendanceList = () => {
                             opacity: 0.9,
                             display: 'flex',
                             alignItems: 'center',
-                            gap: 1
+                            gap: { xs: 0.5, sm: 1 },
+                            fontSize: { xs: '0.875rem', sm: '1rem' }
                         }}
                     >
-                        <CalendarIcon fontSize="small" />
+                        <CalendarIcon sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }} />
                         {dayjs(attendanceDate).format('MMMM D, YYYY')}
                     </Typography>
                 </Box>
 
-                <Box sx={{ p: 3 }}>
+                <Box sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
                     <Button
                         variant="contained"
                         onClick={handleSaveAttendance}
@@ -311,13 +324,15 @@ const AttendanceList = () => {
                         startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
                         fullWidth
                         sx={{
-                            mb: 3,
-                            py: 1.5,
-                            background: 'linear-gradient(45deg, #2e7d32 30%, #4caf50 90%)',
+                            mb: { xs: 2, sm: 2.5, md: 3 },
+                            py: { xs: 1.25, sm: 1.5 },
+                            background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
                             color: 'white',
                             fontWeight: 600,
+                            fontSize: { xs: '0.9rem', sm: '1rem' },
                             '&:hover': {
-                                background: 'linear-gradient(45deg, #1b5e20 30%, #2e7d32 90%)'
+                                background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                                boxShadow: '0 4px 8px rgba(25, 118, 210, 0.3)'
                             },
                             '&:disabled': {
                                 opacity: 0.7
@@ -331,18 +346,20 @@ const AttendanceList = () => {
                         variant="outlined"
                         placeholder="Search students..."
                         fullWidth
+                        size="small"
                         value={searchTerm}
                         onChange={handleSearchChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchIcon color="action" />
+                                    <SearchIcon color="action" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
                                 </InputAdornment>
                             ),
                         }}
                         sx={{
-                            mb: 3,
+                            mb: { xs: 2, sm: 2.5, md: 3 },
                             '& .MuiOutlinedInput-root': {
+                                fontSize: { xs: '0.875rem', sm: '1rem' },
                                 '&:hover fieldset': {
                                     borderColor: theme.palette.primary.main,
                                 },
@@ -364,7 +381,8 @@ const AttendanceList = () => {
                                     {index > 0 && <Divider />}
                                     <ListItem
                                         sx={{
-                                            py: 1.5,
+                                            py: { xs: 1, sm: 1.5 },
+                                            px: { xs: 1, sm: 2 },
                                             transition: 'all 0.2s',
                                             '&:hover': {
                                                 bgcolor: 'action.hover'
@@ -373,9 +391,12 @@ const AttendanceList = () => {
                                     >
                                         <ListItemText
                                             primary={
-                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                    <PersonIcon color="action" />
-                                                    <Typography sx={{ fontWeight: 500 }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75, sm: 1 } }}>
+                                                    <PersonIcon color="action" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
+                                                    <Typography sx={{
+                                                        fontWeight: 500,
+                                                        fontSize: { xs: '0.875rem', sm: '1rem' }
+                                                    }}>
                                                         {`${index + 1}. ${student.name}`}
 
                                                     </Typography>
@@ -390,8 +411,9 @@ const AttendanceList = () => {
                                                 )}
                                                 onChange={() => handleToggle(student, 'Present')}
                                                 color="success"
-                                                checkedIcon={<CheckIcon />}
+                                                checkedIcon={<CheckIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />}
                                                 sx={{
+                                                    transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
                                                     '& .MuiSwitch-switchBase.Mui-checked': {
                                                         color: '#4caf50'
                                                     },

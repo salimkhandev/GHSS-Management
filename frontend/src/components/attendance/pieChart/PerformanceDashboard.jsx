@@ -1,19 +1,19 @@
-import { 
+import {
     Assessment as AssessmentIcon,
     BarChart as BarChartIcon,
     Leaderboard as LeaderboardIcon,
     PieChart as PieChartIcon,
-    School as SchoolIcon 
+    School as SchoolIcon
 } from '@mui/icons-material';
-import { 
-    Box, 
-    Button, 
-    Container, 
-    Grid, 
-    LinearProgress, 
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    LinearProgress,
     Paper,
     Typography,
-    useTheme 
+    useTheme
 } from '@mui/material';
 import React, { Suspense, useState } from 'react';
 
@@ -24,14 +24,14 @@ const Top50StudentsAtten = React.lazy(() => import('./Top10StudentsAtten'));
 
 const Loader = () => (
     <Box sx={{ width: '100%', mt: 2 }}>
-        <LinearProgress 
-            sx={{ 
+        <LinearProgress
+            sx={{
                 height: 6,
                 borderRadius: 3,
                 '& .MuiLinearProgress-bar': {
                     backgroundImage: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
                 }
-            }} 
+            }}
         />
     </Box>
 );
@@ -62,27 +62,26 @@ const PerformanceDashboard = () => {
     ];
 
     return (
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-            <Paper 
+        <Container maxWidth="lg" sx={{ py: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2 } }}>
+            <Paper
                 elevation={3}
                 sx={{
-                    // also for mobile
-                    p: 1,
-                    // mb: ,
+                    p: { xs: 1.5, sm: 2 },
+                    mb: { xs: 2, sm: 3 },
                     background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                     borderRadius: 2,
                     color: 'white',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 2
+                    gap: { xs: 1, sm: 2 }
                 }}
             >
-                <AssessmentIcon sx={{ fontSize: 40 }} />
+                <AssessmentIcon sx={{ fontSize: { xs: 32, sm: 36, md: 40 } }} />
                 <Box>
                     <Typography
                         variant="h4"
-                        sx={{ 
-                            fontSize: {md:'1.8rem', xs:'1.3rem'},
+                        sx={{
+                            fontSize: { xs: '1.1rem', sm: '1.5rem', md: '1.8rem' },
                             fontWeight: 700,
                             letterSpacing: 0.5,
                             textShadow: '0 2px 4px rgba(0,0,0,0.2)'
@@ -90,40 +89,42 @@ const PerformanceDashboard = () => {
                     >
                         Performance Dashboard
                     </Typography>
-                 
                 </Box>
             </Paper>
 
-            <Paper 
+            <Paper
                 elevation={2}
                 sx={{
                     position: 'sticky',
-                    top: 64,
+                    top: { xs: 56, sm: 64 },
                     zIndex: 1000,
                     backgroundColor: 'white',
-                    mb: 4,
+                    mb: { xs: 2, sm: 3, md: 4 },
                     borderRadius: 2,
-                    p: 2
+                    p: { xs: 1, sm: 1.5, md: 2 }
                 }}
             >
                 <Grid
                     container
-                    spacing={2}
+                    spacing={{ xs: 1, sm: 1.5, md: 2 }}
                     justifyContent="center"
                 >
                     {menuItems.map((item) => (
-                        <Grid item key={item.id}>
+                        <Grid item key={item.id} xs={12} sm="auto">
                             <Button
                                 variant={activeComponent === item.id ? "contained" : "outlined"}
                                 onClick={() => setActiveComponent(item.id)}
                                 startIcon={item.icon}
+                                fullWidth
                                 sx={{
-                                    px: 3,
-                                    py: 1.5,
+                                    px: { xs: 2, sm: 2.5, md: 3 },
+                                    py: { xs: 1, sm: 1.25, md: 1.5 },
                                     borderRadius: 2,
                                     textTransform: 'none',
                                     fontWeight: 600,
-                                    fontSize: '1rem',
+                                    fontSize: { xs: '0.85rem', sm: '0.9rem', md: '1rem' },
+                                    whiteSpace: 'nowrap',
+                                    minWidth: 'fit-content',
                                     ...(activeComponent === item.id ? {
                                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
                                         boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)',
@@ -143,37 +144,41 @@ const PerformanceDashboard = () => {
                 </Grid>
             </Paper>
 
-            <Paper 
-                elevation={2} 
-                sx={{ 
-                    p: 3,
+            <Paper
+                elevation={2}
+                sx={{
+                    p: { xs: 2, sm: 2.5, md: 3 },
                     borderRadius: 2,
-                    minHeight: 400,
+                    minHeight: { xs: 300, sm: 350, md: 400 },
                     backgroundColor: theme.palette.background.default
                 }}
             >
                 {!activeComponent ? (
-                    <Box 
-                        sx={{ 
+                    <Box
+                        sx={{
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            height: 400,
-                            gap: 2
+                            height: { xs: 300, sm: 350, md: 400 },
+                            gap: { xs: 1.5, sm: 2 }
                         }}
                     >
-                        <SchoolIcon 
-                            sx={{ 
-                                fontSize: 60,
+                        <SchoolIcon
+                            sx={{
+                                fontSize: { xs: 48, sm: 54, md: 60 },
                                 color: theme.palette.grey[400],
-                                mb: 2
-                            }} 
+                                mb: { xs: 1, sm: 2 }
+                            }}
                         />
-                        <Typography 
-                            variant="h6" 
+                        <Typography
+                            variant="h6"
                             color="textSecondary"
                             align="center"
+                            sx={{
+                                fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
+                                px: { xs: 2, sm: 0 }
+                            }}
                         >
                             Select an option above to view performance data
                         </Typography>

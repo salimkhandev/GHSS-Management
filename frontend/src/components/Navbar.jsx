@@ -43,7 +43,7 @@ const Navbar = () => {
     const navItems = [
         { label: 'Home', path: '/', icon: <HomeIcon /> },
         { label: 'Attendance Detail', path: '/PerformanceDashboard', icon: <AttendanceIcon /> },
-        { label: 'Overall Enrolled Students', path: '/studentlist', icon: <StudentsIcon /> },
+        { label: 'Registered Students', path: '/studentlist', icon: <StudentsIcon /> },
         { label: 'Teachers List', path: '/TeachersList', icon: <TeachersIcon /> }
     ];
 
@@ -200,11 +200,15 @@ const Navbar = () => {
                                                     padding: '1rem 1.5rem',
                                                     margin: '0.25rem 0.75rem',
                                                     borderRadius: '12px',
+                                                    backgroundColor: 'rgba(255,255,255,0.08)',
+                                                    backdropFilter: 'blur(10px)',
+                                                    border: '1px solid rgba(255,255,255,0.12)',
                                                     transition: 'all 0.3s ease',
                                                     '&:hover': {
-                                                        backgroundColor: 'rgba(255,255,255,0.15)',
+                                                        backgroundColor: 'rgba(255,255,255,0.18)',
                                                         transform: 'translateX(-8px)',
-                                                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                                                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                                                        border: '1px solid rgba(255,255,255,0.2)'
                                                     }
                                                 }}
                                             >
