@@ -168,7 +168,7 @@ const Navbar = () => {
                                                 fontSize: '1rem',
                                             }}
                                         >
-                                            Navigation
+                                            Main Menu
                                         </Typography>
                                     </Box>
                                     <IconButton
