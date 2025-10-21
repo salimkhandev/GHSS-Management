@@ -1,24 +1,16 @@
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
+import logo from "/images/ghssLogo.png";
 
 const images = [
   { src: "/images/image.png", alt: "School Building" },
   { src: "/images/image.png", alt: "School Building" },
   { src: "/images/image.png", alt: "School Building" },
-  // { src: "/images/carousel2.jpg", alt: "School Building" },
-  // { src: "/images/carousel3.jpg", alt: "School Building" },
-  // { src: "/images/carousel4.jpg", alt: "School Building" },
-  // { src: "/images/carousel5.jpg", alt: "School Building" },
-  // { src: "/images/carousel6.jpg", alt: "School Building" },
-  // { src: "/images/carousel7.jpg", alt: "School Building" },
-  // { src: "/images/carousel8.jpg", alt: "School Building" },
-  // { src: "/images/carousel9.jpg", alt: "School Building" },
 ];
 
 const NextArrow = ({ onClick }) => (
@@ -27,25 +19,19 @@ const NextArrow = ({ onClick }) => (
     sx={{
       position: 'absolute',
       top: '50%',
-      right: { xs: '-20px', sm: '0px', md: '40px' },
+      right: { xs: '10px', md: '20px' },
       transform: 'translateY(-50%)',
       color: '#fff',
-      fontSize: { xs: '2.5rem', sm: '3rem' },
+      fontSize: { xs: '1.5rem', md: '2rem' },
       cursor: 'pointer',
       zIndex: 2,
-      backgroundColor: 'rgba(25, 118, 210, 0.7)',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       borderRadius: '50%',
-      padding: { xs: '12px', sm: '15px' },
+      padding: { xs: '8px', md: '12px' },
       transition: 'all 0.3s ease',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: { xs: '45px', sm: '55px' },
-      height: { xs: '45px', sm: '55px' },
       '&:hover': {
-        backgroundColor: 'rgba(25, 118, 210, 0.9)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         transform: 'translateY(-50%) scale(1.1)',
-        boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
       },
     }}
   />
@@ -57,25 +43,19 @@ const PrevArrow = ({ onClick }) => (
     sx={{
       position: 'absolute',
       top: '50%',
-      left: { xs: '-20px', sm: '0px', md: '40px' },
+      left: { xs: '10px', md: '20px' },
       transform: 'translateY(-50%)',
       color: '#fff',
-      fontSize: { xs: '2.5rem', sm: '3rem' },
+      fontSize: { xs: '1.5rem', md: '2rem' },
       cursor: 'pointer',
       zIndex: 2,
-      backgroundColor: 'rgba(25, 118, 210, 0.7)',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       borderRadius: '50%',
-      padding: { xs: '12px', sm: '15px' },
+      padding: { xs: '8px', md: '12px' },
       transition: 'all 0.3s ease',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: { xs: '45px', sm: '55px' },
-      height: { xs: '45px', sm: '55px' },
       '&:hover': {
-        backgroundColor: 'rgba(25, 118, 210, 0.9)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         transform: 'translateY(-50%) scale(1.1)',
-        boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
       },
     }}
   />
@@ -101,147 +81,113 @@ const GallerySlider = () => {
     autoplaySpeed: 3000,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    fade: true,
+    cssEase: 'linear',
   };
 
   return (
-    <div className="h-[83vh] flex flex-col items-center justify-center"
-      style={{
-        // background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)'
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: '#f5f5f5',
+        py: { xs: 2, md: 4 },
       }}
     >
       <AnimatePresence mode="wait">
         {!showSlider && (
           <motion.div
-            className="flex items-center flex-col  justify-center w-full"
+            key="welcome"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
+            style={{ width: '100%', textAlign: 'center' }}
           >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <img
-                src={logo}
-                alt="School Logo"
-                className="h-60 w-60 object-contain mx-auto mb-32"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            >
-              <Typography 
-                variant="h1" 
-                align="center" 
-                sx={{ fontSize: "3rem", color: "#3f51b5", fontWeight: "bold" }}
+            <Container maxWidth="md">
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8 }}
               >
-                Welcome to GHSS Luqman Banda
-              </Typography>
-            </motion.div>
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="School Logo"
+                  sx={{
+                    height: { xs: 120, sm: 180, md: 240 },
+                    width: { xs: 120, sm: 180, md: 240 },
+                    objectFit: 'contain',
+                    mx: 'auto',
+                    mb: { xs: 3, md: 6 },
+                  }}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' },
+                    fontWeight: 700,
+                    color: '#333',
+                    px: 2,
+                  }}
+                >
+                  Welcome to GHSS Luqman Banda
+                </Typography>
+              </motion.div>
+            </Container>
           </motion.div>
         )}
 
         {showSlider && (
           <motion.div
+            key="slider"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            style={{ width: '100%' }}
+            style={{ width: '100%', height: '100%' }}
           >
-            <Box
+            <Container
+              maxWidth="xl"
               sx={{
-                width: '100%',
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'linear-gradient(135deg, #f5f7fa 0%, #e3eeff 100%)',
-              
-                padding: { xs: '40px 20px', sm: '60px 40px' },
+                px: { xs: 2, sm: 3, md: 4 },
+                height: '100%',
               }}
             >
-              {/* Gallery with Frame Design */}
               <Box
                 sx={{
-                  width: '65%',
-                  maxWidth: '1400px',
-                  margin: '0 auto',
-                  padding: '10px',
-                  backgroundColor: '#ffffff',
-                  borderRadius: '16px',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                  position: 'relative',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '8px',
-                    left: '8px',
-                    right: '8px',
-                    bottom: '8px',
-                    border: '2px solid #1976d2',
-                    borderRadius: '12px',
-                    pointerEvents: 'none',
-                    opacity: 0.3
-                  },
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '4px',
-                    left: '4px',
-                    right: '4px',
-                    bottom: '4px',
-                    border: '1px solid #1976d2',
-                    borderRadius: '14px',
-                    pointerEvents: 'none',
-                    opacity: 0.2
-                  }
+                  width: '100%',
+                  maxWidth: '1200px',
+                  mx: 'auto',
+                  height: '100%',
                 }}
               >
                 <Slider {...settings}>
                   {images.map((image, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '70vh',
-                        padding: '15px',
-                        backgroundColor: '#ffffff',
-                      }}
-                    >
+                    <Box key={index}>
                       <Box
                         sx={{
-                          width: '100%',
-                          height: '100%',
-                          position: 'relative',
-                          '&::before': {
-                            content: '""',
-                            position: 'absolute',
-                            top: '-4px',
-                            left: '-4px',
-                            right: '-4px',
-                            bottom: '-4px',
-                            border: '1px solid #1976d2',
-                            borderRadius: '14px',
-                            opacity: 0.2
-                          }
+                          height: { xs: '50vh', sm: '60vh', md: '70vh' },
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}
                       >
-                        <img
+                        <Box
+                          component="img"
                           src={image.src}
                           alt={image.alt}
-                          style={{
+                          sx={{
                             width: '100%',
                             height: '100%',
                             objectFit: 'contain',
-                            borderRadius: '12px',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                           }}
                         />
                       </Box>
@@ -249,11 +195,11 @@ const GallerySlider = () => {
                   ))}
                 </Slider>
               </Box>
-            </Box>
+            </Container>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Box>
   );
 };
 
