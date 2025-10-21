@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import { Box, Button, Card, CardContent, CircularProgress, Grid, Paper, Skeleton, Typography, useTheme } from "@mui/material";
 import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import apiBase from '../../../config/api';
 
 // Lazy load the Pie Chart components
 const DailyAttenPieChart = lazy(() => import("./DailyAttenPieChart"));
@@ -51,7 +52,7 @@ export default function ClassSectionDisplay() {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch("https://ghss-management-backend.vercel.app/classes");
+                const response = await fetch(`${apiBase}/classes`);
                 if (!response.ok) throw new Error("Failed to fetch classes");
                 const data = await response.json();
                 setClasses(data);
@@ -70,7 +71,7 @@ export default function ClassSectionDisplay() {
                 setLoading(true);
                 setError(null);
                 try {
-                    const response = await fetch("https://ghss-management-backend.vercel.app/getsec", {
+                    const response = await fetch(`${apiBase}/getsec`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -133,9 +134,9 @@ export default function ClassSectionDisplay() {
         setAttendanceData([])
 
         const urls = {
-            daily: `https://ghss-management-backend.vercel.app/dailyAttenPercentage?class_id=${selectedClassId}&section_id=${selectedSectionId}`,
-            monthly: `https://ghss-management-backend.vercel.app/monthlyAttenPercentage?class_id=${selectedClassId}&section_id=${selectedSectionId}`,
-            overall: `https://ghss-management-backend.vercel.app/overallAttenPercentage?class_id=${selectedClassId}&section_id=${selectedSectionId}`,
+            daily: `${apiBase}/dailyAttenPercentage?class_id=${selectedClassId}&section_id=${selectedSectionId}`,
+            monthly: `${apiBase}/monthlyAttenPercentage?class_id=${selectedClassId}&section_id=${selectedSectionId}`,
+            overall: `${apiBase}/overallAttenPercentage?class_id=${selectedClassId}&section_id=${selectedSectionId}`,
         };
 
         fetchAttendanceData(urls[option]);

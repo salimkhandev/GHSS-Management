@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import axios from 'axios';
+import apiBase from '../../config/api';
 
 // Create the context
 const AuthContext = createContext();
@@ -9,15 +10,15 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(null);
     const [isAuthenticatedTeacher, setIsAuthenticatedTeacher] = useState(null);
     const [logEvent, setLogEvent] = useState(false);
-    
+
         useEffect(() => {
             const verifyAuth = async () => {
                 try {
                     const response = await axios.get(
-                        "https://ghss-management-backend.vercel.app/verify-token-asAdmin",
+                        `${apiBase}/verify-token-asAdmin`,
                         { withCredentials: true }
                     );
-                    
+
                     if (response.data.authenticated) {
                         login();
                         // setIsAuthenticated(true);
@@ -27,16 +28,16 @@ export const AuthProvider = ({ children }) => {
                     console.error('Error verifying token:', error);
                     logout()
                     // setIsAuthenticated(false);
-    
+
                 }
             };
-    
+
             verifyAuth();
         }, []);
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await fetch('https://ghss-management-backend.vercel.app/verify-token-asTeacher', {
+                const response = await fetch(`${apiBase}/verify-token-asTeacher`, {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -66,8 +67,8 @@ export const AuthProvider = ({ children }) => {
         setLogEvent((prev) => !prev); // Toggle the boolean value
 
     };
-    
-  
+
+
  // Function to log the user out (set global authentication state)
     const logout = () => {
         setIsAuthenticatedAdmin(false);
@@ -75,7 +76,7 @@ export const AuthProvider = ({ children }) => {
 
     };
     const setLogEventHandler = () => {
-        setLogEvent((prev) => !prev); 
+        setLogEvent((prev) => !prev);
         setIsAuthenticatedAdmin(false);
         setIsAuthenticatedTeacher(false);
     };

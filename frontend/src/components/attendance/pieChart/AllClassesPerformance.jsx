@@ -4,6 +4,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
+import apiBase from '../../../config/api';
 
 const AttendancePieChart = () => {
     const theme = useTheme();
@@ -58,7 +59,7 @@ const AttendancePieChart = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/attenBasedSectionsPerformance');
+                const response = await axios.get(`${apiBase}/attenBasedSectionsPerformance`);
                 setData(response.data);
 
                 if (response.data.length > 0) {

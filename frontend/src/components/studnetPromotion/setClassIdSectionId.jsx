@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import apiBase from '../../config/api';
 import { 
   Button, CircularProgress, MenuItem, Select, 
   Typography, FormControl, InputLabel, Snackbar 
@@ -31,7 +32,7 @@ const Classes = ({
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('https://ghss-management-backend.vercel.app/classes');
+        const response = await axios.get(`${apiBase}/classes`);
         setClasses(response.data);
       } catch (error) {
         console.error("Error fetching classes:", error);
@@ -48,7 +49,7 @@ const Classes = ({
       try {
         const externalSection = getExternalSection(originalClass, selectedSectionName);
         const response = await axios.post(
-          'https://ghss-management-backend.vercel.app/getsec',
+          `${apiBase}/getsec`,
           { class_id: targetClassId }
         );
 
@@ -83,7 +84,7 @@ const Classes = ({
 
     setLoading(true);
     try {
-      await axios.post('https://ghss-management-backend.vercel.app/promotestd', {
+      await axios.post(`${apiBase}/promotestd`, {
         selectedClassId: targetClassId,
         selectedSectionId: targetSectionId,
         originalSelectedClass: originalClass,

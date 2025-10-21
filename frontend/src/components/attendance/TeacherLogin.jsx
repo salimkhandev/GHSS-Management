@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAuth } from '../admin/AuthProvider';
+import apiBase from '../../config/api';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,18 +32,18 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            username: '',
-            password: '',
+            username: 'Kamal',
+            password: 'Kamal',
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             setLoading(true);
             try {
-                const response = await axios.post('https://ghss-management-backend.vercel.app/teacherLogin', {
+                const response = await axios.post(`${apiBase}/teacherLogin`, {
                     username: values.username,
                     password: values.password,
                 }, { withCredentials: true });
-                
+
                 if (response.status === 200) {
                     setLoading(false);
                     loginTeacher();
@@ -88,7 +89,7 @@ const Login = () => {
                     onSubmit={formik.handleSubmit}
                     sx={{
                         padding: { xs: 4, sm: 6 },
-                        
+
                         borderRadius: 3,
                         height: { xs: '80vh' },
                         width: { xs: '340px', sm: '380px', md: '480px' },
@@ -120,9 +121,9 @@ const Login = () => {
                             />
                         </motion.div>
 
-                        <Typography 
-                            variant="h4" 
-                            sx={{ 
+                        <Typography
+                            variant="h4"
+                            sx={{
                                 fontFamily: '"Poppins", sans-serif',
                                 fontWeight: 700,
                                 fontSize: { xs: '2rem', sm: '2.5rem' },
@@ -174,7 +175,7 @@ const Login = () => {
                                     },
                                 }}
                             />
-                            
+
                             <TextField
                                 fullWidth
                                 id="password"
@@ -225,10 +226,10 @@ const Login = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <Typography 
-                                    color="error" 
-                                    variant="body2" 
-                                    sx={{ 
+                                <Typography
+                                    color="error"
+                                    variant="body2"
+                                    sx={{
                                         fontFamily: '"Poppins", sans-serif',
                                         textAlign: 'center',
                                         fontWeight: 500,
@@ -240,9 +241,9 @@ const Login = () => {
                             </motion.div>
                         )}
 
-                        <Button 
+                        <Button
                             type="submit"
-                            variant="contained" 
+                            variant="contained"
                             fullWidth
                             disabled={loading || !formik.isValid}
                             sx={{

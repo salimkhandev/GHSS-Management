@@ -2,6 +2,7 @@ import { Box, Card, CardContent, Grid, Typography, useTheme, CircularProgress } 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
+import apiBase from '../../../config/api';
 
 const DailyAttenPieChart = () => {
     const theme = useTheme();
@@ -15,7 +16,7 @@ const DailyAttenPieChart = () => {
     useEffect(() => {
         const fetchPieData = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/todayAttenPieModal', {
+                const response = await axios.get(`${apiBase}/todayAttenPieModal`, {
                     withCredentials: true
                 });
                 setPieData(response.data[0]);

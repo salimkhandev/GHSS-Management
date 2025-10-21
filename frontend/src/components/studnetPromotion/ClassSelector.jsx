@@ -29,6 +29,7 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Classes from './setClassIdSectionId';
+import apiBase from '../../config/api';
 
 const ClassSelector = () => {
     const theme = useTheme();
@@ -80,7 +81,7 @@ const ClassSelector = () => {
     useEffect(() => {
         const fetchClasses = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/classes');
+                const response = await axios.get(`${apiBase}/classes`);
                 setClasses(response.data);
             } catch (error) {
                 console.error('Error fetching classes:', error);
@@ -96,7 +97,7 @@ const ClassSelector = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                'https://ghss-management-backend.vercel.app/get-sections',
+                `${apiBase}/get-sections`,
                 { class_id: classId }
             );
             setSections(response.data);
@@ -115,7 +116,7 @@ const ClassSelector = () => {
             setLoading(true);
             try {
                 const response = await axios.get(
-                    'https://ghss-management-backend.vercel.app/filteredSectionStd',
+                    `${apiBase}/filteredSectionStd`,
                     {
                         params: {
                             class_id: selectedClassId,

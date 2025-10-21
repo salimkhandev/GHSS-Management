@@ -22,6 +22,7 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
+import apiBase from '../../config/api';
 
 const defaultTheme = createTheme({
     palette: {
@@ -65,32 +66,32 @@ const LoginForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            adminUsername: '',
-            adminPassword: '',
-            teacherUsername: '',
-            teacherPassword: '',
+            adminUsername: 'admin',
+            adminPassword: 'admin',
+            teacherUsername: 'Kamal',
+            teacherPassword: 'Kamal',
         },
         validationSchema,
         onSubmit: async (values) => {
             setLoading(true);
             try {
                 const [adminRes, teacherRes] = await Promise.all([
-                    fetch("https://ghss-management-backend.vercel.app/admin-login", {
+                    fetch(`${apiBase}/admin-login`, {
                         method: "POST",
                         credentials: "include",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ 
-                            username: values.adminUsername, 
-                            password: values.adminPassword 
+                        body: JSON.stringify({
+                            username: values.adminUsername,
+                            password: values.adminPassword
                         }),
                     }),
-                    fetch("https://ghss-management-backend.vercel.app/teacherLogin", {
+                    fetch(`${apiBase}/teacherLogin`, {
                         method: "POST",
                         credentials: "include",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ 
-                            username: values.teacherUsername, 
-                            password: values.teacherPassword 
+                        body: JSON.stringify({
+                            username: values.teacherUsername,
+                            password: values.teacherPassword
                         }),
                     }),
                 ]);
@@ -101,27 +102,27 @@ const LoginForm = () => {
                 ]);
 
                 if (adminRes.ok && teacherRes.ok) {
-                    enqueueSnackbar("✅ Login Successful! Welcome to the system", { 
+                    enqueueSnackbar("✅ Login Successful! Welcome to the system", {
                         variant: "success",
                         autoHideDuration: 3000
                     });
                     navigate('/');
                 } else {
                     if (!adminRes.ok) {
-                        enqueueSnackbar(`❌ Admin Error: ${adminData.message}`, { 
+                        enqueueSnackbar(`❌ Admin Error: ${adminData.message}`, {
                             variant: "error",
                             autoHideDuration: 3000
                         });
                     }
                     if (!teacherRes.ok) {
-                        enqueueSnackbar(`❌ Teacher Error: ${teacherData.message}`, { 
+                        enqueueSnackbar(`❌ Teacher Error: ${teacherData.message}`, {
                             variant: "error",
                             autoHideDuration: 3000
                         });
                     }
                 }
             } catch (error) {
-                enqueueSnackbar("❌ Network Error. Please try again.", { 
+                enqueueSnackbar("❌ Network Error. Please try again.", {
                     variant: "error",
                     autoHideDuration: 3000
                 });
@@ -141,33 +142,33 @@ const LoginForm = () => {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid 
-                container 
-                component="main" 
-                sx={{ 
+            <Grid
+                container
+                component="main"
+                sx={{
                     minHeight: "90vh",
                     background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-                    justifyContent: "center", 
+                    justifyContent: "center",
                     alignItems: "center",
                     p: { xs: 2, sm: 4 }
                 }}
             >
                 <CssBaseline />
-                <Paper 
-                    elevation={3} 
-                    sx={{ 
+                <Paper
+                    elevation={3}
+                    sx={{
                         p: { xs: 3, sm: 4 },
-                        width: "100%", 
+                        width: "100%",
                         maxWidth: 450,
                         borderRadius: 2,
                         background: 'rgba(255, 255, 255, 0.98)',
                         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
                     }}
                 >
-                    <Typography 
-                        component="h1" 
-                        variant="h5" 
-                        sx={{ 
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                        sx={{
                             mb: 4,
                             textAlign: "center",
                             fontWeight: 600,
@@ -177,17 +178,17 @@ const LoginForm = () => {
                         Admin & Teacher Login
                     </Typography>
 
-                    <Box 
-                        component="form" 
-                        onSubmit={formik.handleSubmit} 
-                        sx={{ 
-                            display: "flex", 
-                            flexDirection: "column", 
-                            gap: 3 
+                    <Box
+                        component="form"
+                        onSubmit={formik.handleSubmit}
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 3
                         }}
                     >
-                        <Box 
-                            sx={{ 
+                        <Box
+                            sx={{
                                 p: 2.5,
                                 borderRadius: 2,
                                 border: '1px solid',
@@ -198,9 +199,9 @@ const LoginForm = () => {
                                 }
                             }}
                         >
-                            <Typography 
-                                variant="h6" 
-                                sx={{ 
+                            <Typography
+                                variant="h6"
+                                sx={{
                                     mb: 2,
                                     display: 'flex',
                                     alignItems: 'center',
@@ -239,14 +240,14 @@ const LoginForm = () => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <IconButton 
+                                            <IconButton
                                                 onClick={() => togglePasswordVisibility('admin')}
                                                 edge="end"
                                                 size="small"
                                                 aria-label="toggle password visibility"
                                             >
-                                                {showPasswords.admin ? 
-                                                    <VisibilityOff fontSize="small" /> : 
+                                                {showPasswords.admin ?
+                                                    <VisibilityOff fontSize="small" /> :
                                                     <Visibility fontSize="small" />
                                                 }
                                             </IconButton>
@@ -256,8 +257,8 @@ const LoginForm = () => {
                             />
                         </Box>
 
-                        <Box 
-                            sx={{ 
+                        <Box
+                            sx={{
                                 p: 2.5,
                                 borderRadius: 2,
                                 border: '1px solid',
@@ -268,9 +269,9 @@ const LoginForm = () => {
                                 }
                             }}
                         >
-                            <Typography 
-                                variant="h6" 
-                                sx={{ 
+                            <Typography
+                                variant="h6"
+                                sx={{
                                     mb: 2,
                                     display: 'flex',
                                     alignItems: 'center',
@@ -309,14 +310,14 @@ const LoginForm = () => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <IconButton 
+                                            <IconButton
                                                 onClick={() => togglePasswordVisibility('teacher')}
                                                 edge="end"
                                                 size="small"
                                                 aria-label="toggle password visibility"
                                             >
-                                                {showPasswords.teacher ? 
-                                                    <VisibilityOff fontSize="small" /> : 
+                                                {showPasswords.teacher ?
+                                                    <VisibilityOff fontSize="small" /> :
                                                     <Visibility fontSize="small" />
                                                 }
                                             </IconButton>
@@ -326,9 +327,9 @@ const LoginForm = () => {
                             />
                         </Box>
 
-                        <Button 
+                        <Button
                             type="submit"
-                            fullWidth 
+                            fullWidth
                             variant="contained"
                             disabled={loading || !formik.isValid}
                             sx={{

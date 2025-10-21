@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import React, { useState, useRef, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from "../admin/AuthProvider";
+import apiBase from '../../config/api';
 
 const Loader = () => (
     <Box sx={{ width: '100%' }}>
@@ -17,8 +18,8 @@ const Loader = () => (
 
 const Login = () => {
     const { loginTeacher, logoutTeacher, isAuthenticatedTeacher } = useAuth();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('Kamal');
+    const [password, setPassword] = useState('Kamal');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     // const navigate = useNavigate();
@@ -47,7 +48,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await axios.post('https://ghss-management-backend.vercel.app/teacherLogin', {
+            const response = await axios.post(`${apiBase}/teacherLogin`, {
                 username,
                 password,
             }, { withCredentials: true });
@@ -55,7 +56,7 @@ const Login = () => {
             if (response.status === 200) {
                 loginTeacher();
                 localStorage.removeItem('attendanceSavedDate');
-            
+
             }
         } catch (err) {
             logoutTeacher();
@@ -72,7 +73,7 @@ const Login = () => {
     if (isAuthenticatedTeacher) {
         return <Outlet />;
     }
-   
+
 
     return (
         <Box
@@ -147,7 +148,8 @@ const Login = () => {
                             fullWidth
                             label="Username"
                             variant="outlined"
-                            value={username}
+                            // value={username}
+                            value={"Kamal"}
                             onChange={(e) => setUsername(e.target.value)}
                             InputProps={{
                                 startAdornment: (
@@ -173,7 +175,8 @@ const Login = () => {
                             label="Password"
                             type={showPassword ? "text" : "password"}
                             variant="outlined"
-                            value={password}
+                            // value={password}
+                            value={"Kamal"}
                             onChange={(e) => setPassword(e.target.value)}
                             InputProps={{
                                 startAdornment: (

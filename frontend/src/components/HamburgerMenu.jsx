@@ -34,6 +34,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from './admin/AuthProvider';
 import ProfilePicManager from './teacher/ProfilePic.jsx';
 import MenuIcon from "@mui/icons-material/Menu";
+import apiBase from '../config/api';
 
 const THEME_COLORS = {
     primary: '#1a237e', // Deep indigo
@@ -183,7 +184,7 @@ const MenuIconButton = ({ onClick }) => (
     sx={{
       width: 45,
       height: 45,
-      background: 'rgba(255, 255, 255, 0.1)',
+      // background: 'rgba(255, 255, 255, 0.1)',
       backdropFilter: 'blur(5px)',
       borderRadius: '12px',
       '&:hover': {
@@ -263,7 +264,7 @@ export default function TopDrawerWithToggle() {
         const fetchProfilePic = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("https://ghss-management-backend.vercel.app/profile-pic", { withCredentials: true });
+                const response = await axios.get(`${apiBase}/profile-pic`, { withCredentials: true });
 
                 if (response.data.imageUrl) {
                     setImageUrl(`${response.data.imageUrl}?t=${Date.now()}`);
@@ -298,7 +299,7 @@ export default function TopDrawerWithToggle() {
 
     const handleLogout = async () => {
         try {
-            await fetch("https://ghss-management-backend.vercel.app/logout", {
+            await fetch(`${apiBase}/logout`, {
                 method: "POST",
                 credentials: "include", // Ensures cookies are sent
             });
@@ -306,7 +307,7 @@ export default function TopDrawerWithToggle() {
             setImageUrl(null);
             setUsername('');
             navigate("/"); // Redirect to home
-            
+
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -358,36 +359,55 @@ export default function TopDrawerWithToggle() {
             role="presentation"
         >
                 {(isAuthenticatedAdmin || isAuthenticatedTeacher) && (
-              
-                <Button
-                    startIcon={<LogoutIcon />}
-                    sx={{
-                        color: THEME_COLORS.text,
-                        backgroundColor: THEME_COLORS.danger,
-                        // use light red bg color
 
-                        // backgroundColor: "#b71c1c",
-                        // bg
-                        // backgroundColor: "#1A8CFF",
-                        textAlign: "left",
-                        fontSize: "0.875rem",
-                        fontFamily: "'Poppins', sans-serif",
-                        textTransform: "none",
-                        margin: "16px",
-                        padding: "8px 12px",
-                        borderRadius: "8px",
-                        transition: "all 0.2s ease",
-                        "&:hover": {
-                            backgroundColor: "#b71c1c",
-                            transform: "translateY(-1px)",
-                        },
-                    }}
-                    onClick={handleLogout}
-                >
+
+                              <Button
+
+                                  startIcon={<LogoutIcon />}
+
+                                  sx={{
+
+                                      color: THEME_COLORS.text,
+
+                                      background: "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.06) 100%)",
+                                      border: "1px solid rgba(255,255,255,0.2)",
+                                      textAlign: "left",
+
+                                      fontSize: "0.9rem",
+                                      fontFamily: "'Poppins', sans-serif",
+
+                                      textTransform: "none",
+
+                                      margin: "16px",
+
+                                      padding: "10px 14px",
+                                      borderRadius: "10px",
+                                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                                      transition: "all 0.3s ease",
+
+                                      "& .MuiButton-startIcon .MuiSvgIcon-root": {
+                                          color: "#ff6b6b"
+                                      },
+                                      "&:hover": {
+                                          background: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.10) 100%)",
+                                          border: "1px solid rgba(255,255,255,0.3)",
+                                          transform: "translateY(-1px)",
+
+                                          boxShadow: "0 6px 16px rgba(0, 0, 0, 0.2)"
+                                      },
+                                      "&:active": {
+                                          transform: "translateY(0)",
+                                          boxShadow: "0 3px 10px rgba(0, 0, 0, 0.15)"
+                                      },
+                                  }}
+                                  onClick={handleLogout}
+
+                              >
+
                     Logout
-            
+
                 </Button>
-                  
+
 
             )}
 
@@ -493,16 +513,16 @@ export default function TopDrawerWithToggle() {
                             </Box>
 
                             <Box sx={modalStyles.title}>
-                                <Typography variant="h5" sx={{ 
+                                <Typography variant="h5" sx={{
                                     fontWeight: 700,
                                     fontFamily: "'Poppins', sans-serif",
                                     color: '#2c3e50'
                                 }}>
                                     Select Role
                                 </Typography>
-                                <IconButton 
+                                <IconButton
                                     onClick={() => setShowRoleModal(false)}
-                                    sx={{ 
+                                    sx={{
                                         color: '#555',
                                         transition: 'all 0.3s ease',
                                         '&:hover': {
@@ -533,7 +553,7 @@ export default function TopDrawerWithToggle() {
                                 <Button
                                     onClick={() => handleRoleSelection("teacherAdmin")}
                                     startIcon={<TeacherAdminIcon />}
-                                    // use nowrap   
+                                    // use nowrap
                                     sx={{
                                         ...modalStyles.button('#2196F3'),
                                         whiteSpace: 'nowrap'
@@ -689,9 +709,9 @@ export default function TopDrawerWithToggle() {
     return (
         <div>
             <MenuIconButton onClick={toggleDrawer(true)} />
-            <Drawer 
-                anchor="left" 
-                open={open} 
+            <Drawer
+                anchor="left"
+                open={open}
                 onClose={toggleDrawer(false)}
             >
                 {list()}

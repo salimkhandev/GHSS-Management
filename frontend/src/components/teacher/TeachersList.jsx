@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import apiBase from '../../config/api';
 
 const TeachersList = () => {
     const theme = useTheme();
@@ -23,7 +24,7 @@ const TeachersList = () => {
     useEffect(() => {
         const fetchTeachers = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/TeachersList');
+                const response = await axios.get(`${apiBase}/TeachersList`);
                 setTeachers(response.data);
             } catch (err) {
                 setError('Failed to fetch teachers data');

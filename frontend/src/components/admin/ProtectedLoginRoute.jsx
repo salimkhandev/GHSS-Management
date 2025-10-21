@@ -24,6 +24,7 @@ import { Outlet } from "react-router-dom";
 import * as Yup from 'yup';
 import { useAuth } from "./AuthProvider";
 import React, { useRef, useEffect } from 'react';
+import apiBase from '../../config/api';
 
 const validationSchema = Yup.object({
     username: Yup.string()
@@ -48,7 +49,7 @@ const ProtectedLoginRoute = () => {
             }
         }
         isFirstMount.current = false;
-        
+
     }, [isAuthenticatedAdmin]);
 
     const Loader = () => (
@@ -64,15 +65,15 @@ const ProtectedLoginRoute = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             await axios.post(
-                "https://ghss-management-backend.vercel.app/admin-login",
-                { 
-                    username: values.username, 
-                    password: values.password 
+                `${apiBase}/admin-login`,
+                {
+                    username: values.username,
+                    password: values.password
                 },
                 { withCredentials: true }
             );
             login();
-            enqueueSnackbar('Login successful!', { 
+            enqueueSnackbar('Login successful!', {
                 variant: 'success',
                 autoHideDuration: 2000,
                 anchorOrigin: {
@@ -82,7 +83,7 @@ const ProtectedLoginRoute = () => {
             });
         } catch (err) {
             logout();
-            enqueueSnackbar('Invalid credentials. Please try again.', { 
+            enqueueSnackbar('Invalid credentials. Please try again.', {
                 variant: 'error',
                 autoHideDuration: 3000,
                 anchorOrigin: {
@@ -103,7 +104,7 @@ const ProtectedLoginRoute = () => {
         return <Outlet />;
     }
 
-  
+
 
 
     return (
@@ -181,7 +182,7 @@ const ProtectedLoginRoute = () => {
                                 </Typography>
 
                                 <Formik
-                                    initialValues={{ username: '', password: '' }}
+                                    initialValues={{ username: 'admin', password: 'admin' }}
                                     validationSchema={validationSchema}
                                     onSubmit={handleSubmit}
                                 >

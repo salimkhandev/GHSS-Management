@@ -3,6 +3,7 @@ import { Box, Button, Card, CardContent, CircularProgress, FormControl, Grid, In
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ExportToExcel from './ExportToExcel';
+import apiBase from '../config/api';
 
 const StudentList = () => {
     
@@ -38,7 +39,7 @@ const StudentList = () => {
         setLoading(true);
     
         try {
-            const response = await axios.post('https://ghss-management-backend.vercel.app/get-sections', { class_id: clsid });
+            const response = await axios.post(`${apiBase}/get-sections`, { class_id: clsid });
             if (response) {
                 
                 setSections(response.data);
@@ -53,7 +54,7 @@ const StudentList = () => {
         setLoading(true)
 
         try {
-            const response = await axios.post('https://ghss-management-backend.vercel.app/get-std', { section_id: secid });
+            const response = await axios.post(`${apiBase}/get-std`, { section_id: secid });
             setStudents(response.data);
             setLoading(false)
 
@@ -65,7 +66,7 @@ const StudentList = () => {
         const fetchData = async () => {
             try {
 
-                const classesResponse = await axios.get('https://ghss-management-backend.vercel.app/classes');
+                const classesResponse = await axios.get(`${apiBase}/classes`);
                 setClasses(classesResponse.data);
 
                 // setTimeout(() => {
@@ -92,7 +93,7 @@ const StudentList = () => {
            
             setLoading(true)
             try {
-                const responseCls = await axios.get('https://ghss-management-backend.vercel.app/filteredSectionStd',
+                const responseCls = await axios.get(`${apiBase}/filteredSectionStd`,
 
                     {
                         params: {
@@ -123,7 +124,7 @@ const StudentList = () => {
         const fetchStudents = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get('https://ghss-management-backend.vercel.app/students',{params: {page:page}});
+                const response = await axios.get(`${apiBase}/students`,{params: {page:page}});
                 setStudents(response.data.rows);
                 setTotalpages(response.data.totalPages) // Update state with the fetched students data
                 
@@ -154,7 +155,7 @@ const StudentList = () => {
         const fetchClasses = async () => {
             setLoading(true);
             try {
-                const responseCls = await axios.get('https://ghss-management-backend.vercel.app/filteredClassStd',
+                const responseCls = await axios.get(`${apiBase}/filteredClassStd`,
 
                     {
                         params: {

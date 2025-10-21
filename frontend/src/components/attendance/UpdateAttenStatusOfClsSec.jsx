@@ -23,6 +23,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import apiBase from '../../config/api';
 
 const UpdateAttenStatusOfClsSec = () => {
     const theme = useTheme();
@@ -34,7 +35,7 @@ const UpdateAttenStatusOfClsSec = () => {
     useEffect(() => {
         const fetchAttendanceData = async () => {
             try {
-                const response = await fetch('https://ghss-management-backend.vercel.app/attendanceGroupedByDate', {
+                const response = await fetch(`${apiBase}/attendanceGroupedByDate`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -57,7 +58,7 @@ const UpdateAttenStatusOfClsSec = () => {
 
     const handleStatusChange = async (id, status) => {
         try {
-            await axios.put('https://ghss-management-backend.vercel.app/updateAttendance', {
+            await axios.put(`${apiBase}/updateAttendance`, {
                 id,
                 status
             });

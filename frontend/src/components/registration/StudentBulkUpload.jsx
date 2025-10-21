@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
+import apiBase from '../../config/api';
 
 function StudentBulkUpload() {
     const theme = useTheme();
@@ -41,7 +42,7 @@ function StudentBulkUpload() {
 
         setLoading(true);
         try {
-            await axios.post('https://ghss-management-backend.vercel.app/students/bulk', formData, {
+            await axios.post(`${apiBase}/students/bulk`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             setSnackbar({ 

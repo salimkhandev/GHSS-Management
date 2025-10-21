@@ -30,6 +30,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import TodayAttenPie from './pieChart/DailyAttenAfterSuccess';
+import apiBase from '../../config/api';
 
 const AttendanceList = () => {
     const theme = useTheme();
@@ -53,7 +54,7 @@ const AttendanceList = () => {
         const fetchLastDate = async () => {
             try {
                 // Send a GET request to the backend to fetch the last attendance date
-                const response = await axios.get('https://ghss-management-backend.vercel.app/lastAttendanceDate', { withCredentials: true });
+                const response = await axios.get(`${apiBase}/lastAttendanceDate`, { withCredentials: true });
 
                 // Update the state with the fetched date
                 if (response.data.last_attendance_date) {
@@ -88,7 +89,7 @@ const AttendanceList = () => {
         setLoading(true)
         const fetchStudents = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/studentsAttendance', { withCredentials: true });
+                const response = await axios.get(`${apiBase}/studentsAttendance`, { withCredentials: true });
                 // const response = await axios.get('http://localhost:3000/studentsAttendance', {withCredentials: true });
                 setLoading(false)
                 setStudents(response.data);
@@ -140,7 +141,7 @@ const AttendanceList = () => {
         const attendanceData = [...selectedStudents, ...absentees];
 
         try {
-            await axios.post('https://ghss-management-backend.vercel.app/saveAttendance', { attendanceData, attendanceDate });
+            await axios.post(`${apiBase}/saveAttendance`, { attendanceData, attendanceDate });
             setLoading(false)
             localStorage.setItem('attendanceSavedDate', dayjs().format('YYYY-MM-DD'));
             setPieModal(true);

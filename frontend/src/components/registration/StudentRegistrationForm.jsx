@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Button, CircularProgress, FormControl, FormHelperText, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
 import axios from 'axios';
 import * as Yup from 'yup';
+import apiBase from '../../config/api';
 
 
 const validationSchema = Yup.object({
@@ -20,7 +21,7 @@ function StudentRegistrationForm() {
 
     useEffect(() => {
         // Fetch classes and sections from the backend
-        axios.get('https://ghss-management-backend.vercel.app/classes')
+        axios.get(`${apiBase}/classes`)
             .then(response => {
                 setClasses(response.data);
             })
@@ -28,7 +29,7 @@ function StudentRegistrationForm() {
                 console.error('There was an error fetching the classes!', error);
             });
 
-        axios.get('https://ghss-management-backend.vercel.app/sections')
+        axios.get(`${apiBase}/sections`)
             .then(response => {
                 setSections(response.data);
             })
@@ -57,7 +58,7 @@ function StudentRegistrationForm() {
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     setLoading(true);
-                    axios.post('https://ghss-management-backend.vercel.app/students', values)
+                    axios.post(`${apiBase}/students`, values)
                         .then(response => {
                             setSnackbar({ open: true, message: "Student registered successfully!✅" });
                         })

@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
+import apiBase from '../../../config/api';
 
 const AttendancePieChart = () => {
     const theme = useTheme();
@@ -31,7 +32,7 @@ const AttendancePieChart = () => {
     useEffect(() => {
         const fetchAttendanceData = async () => {
             try {
-                const response = await fetch('https://ghss-management-backend.vercel.app/Top10StudentsAtten');
+                const response = await fetch(`${apiBase}/Top10StudentsAtten`);
                 if (!response.ok) throw new Error('Failed to fetch attendance data');
                 const data = await response.json();
                 setAttendanceData(data);

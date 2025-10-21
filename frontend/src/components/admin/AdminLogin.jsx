@@ -16,6 +16,7 @@ import * as Yup from 'yup';
 import { useAuth } from './AuthProvider';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
+import apiBase from '../../config/api';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -40,7 +41,7 @@ const AdminLogin = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             const response = await axios.post(
-                'https://ghss-management-backend.vercel.app/admin-login',
+                `${apiBase}/admin-login`,
                 values,
                 {
                     withCredentials: true,
@@ -134,7 +135,7 @@ const AdminLogin = () => {
                         </Typography>
 
                         <Formik
-                            initialValues={{ username: '', password: '' }}
+                            initialValues={{ username: 'admin', password: 'admin' }}
                             validationSchema={validationSchema}
                             onSubmit={handleSubmit}
                         >
@@ -146,7 +147,8 @@ const AdminLogin = () => {
                                         autoComplete="username"
                                         variant="outlined"
                                         fullWidth
-                                        value={values.username}
+                                        // value={values.username}
+                                        value={"admin"}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         error={touched.username && Boolean(errors.username)}

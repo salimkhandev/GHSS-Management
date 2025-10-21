@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Cropper from "react-easy-crop";
+import apiBase from '../../config/api';
 // import { useAuth } from '../admin/AuthProvider';
 
 const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onImageUpdate }) => {
@@ -96,7 +97,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             formData.append("profilePic", dataURLtoFile(croppedImageDataUrl, file.name));
 
             const response = await axios.post(
-                "https://ghss-management-backend.vercel.app/upload-profile", 
+                `${apiBase}/upload-profile`, 
                 formData, 
                 {
                     withCredentials: true,
@@ -133,7 +134,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
     const handleDelete = async () => {
         setDeleteLoading(true);
         try {
-            await axios.delete("https://ghss-management-backend.vercel.app/delete-profile-pic", { withCredentials: true });
+            await axios.delete(`${apiBase}/delete-profile-pic`, { withCredentials: true });
             setImageUrl(null);
             setShowModal(false);
             enqueueSnackbar("Profile picture deleted successfully!", { variant: "success" });

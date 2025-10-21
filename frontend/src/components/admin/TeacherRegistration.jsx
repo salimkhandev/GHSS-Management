@@ -8,6 +8,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import apiBase from '../../config/api';
 
 const RegisterTeacher = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -37,16 +38,16 @@ const RegisterTeacher = () => {
 
     const formik = useFormik({
         initialValues: {
-            username: '',
-            password: '',
-            classId: '',
-            sectionId: '',
+            username: 'Shaan Khan',
+            password: 'ShaanKhan123',
+            classId: '6',
+            sectionId: '16',
         },
         validationSchema,
         onSubmit: async (values) => {
             setLoading(true);
             try {
-                const response = await axios.post('https://ghss-management-backend.vercel.app/register-teacher', {
+                const response = await axios.post(`${apiBase}/register-teacher`, {
                     username: values.username,
                     password: values.password,
                     class_id: values.classId,
@@ -79,7 +80,7 @@ const RegisterTeacher = () => {
     useEffect(() => {
         const fetchClasses = async () => {
             try {
-                const response = await axios.get('https://ghss-management-backend.vercel.app/classes');
+                const response = await axios.get(`${apiBase}/classes`);
                 setClasses(response.data);
             } catch (err) {
                 setError('Failed to fetch classes');
@@ -92,7 +93,7 @@ const RegisterTeacher = () => {
         const fetchSectionsOfClassID = async () => {
             if (formik.values.classId) {
                 try {
-                    const response = await axios.post('https://ghss-management-backend.vercel.app/get-sections', 
+                    const response = await axios.post(`${apiBase}/get-sections`, 
                         { class_id: formik.values.classId }
                     );
                     setSectionsOfClsId(response.data);

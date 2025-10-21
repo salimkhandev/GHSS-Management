@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React from "react";
+import apiBase from "../../config/api";
 const AdminRegister = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -30,7 +31,7 @@ const AdminRegister = () => {
 
         try {
             const response = await axios.post(
-                "https://ghss-management-backend.vercel.app/admin-register",
+                `${apiBase}/admin-register`,
                 { username, password },
                 { withCredentials: true }
             );

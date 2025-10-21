@@ -25,6 +25,7 @@ import {
     FilterList as FilterIcon
 } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
+import apiBase from '../../config/api';
 
 const TeachersList = () => {
     const theme = useTheme();
@@ -46,7 +47,7 @@ const TeachersList = () => {
     const fetchTeachers = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://ghss-management-backend.vercel.app/teachers', {
+            const response = await axios.get(`${apiBase}/teachers`, {
                 withCredentials: true
             });
             setTeachers(response.data);
