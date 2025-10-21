@@ -22,13 +22,13 @@ const AttendancePieChart = () => {
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
         return (
-            <text 
-                x={x} 
-                y={y} 
-                fill="white" 
-                textAnchor="middle" 
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor="middle"
                 dominantBaseline="central"
-                style={{ 
+                style={{
                     fontSize: '14px',
                     fontWeight: 'bold',
                     textShadow: '0 1px 2px rgba(0,0,0,0.5)'
@@ -81,44 +81,43 @@ const AttendancePieChart = () => {
 
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
-            <Box sx={{ 
-                mb: 4, 
+            <Box sx={{
+                mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
                 background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                 borderRadius: 2,
-                p: 3,
+                p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
             }}>
                 <Typography
                     variant="h4"
-                    sx={{ 
-                        fontSize: { md: '1.8rem', xs: '1.12rem' },
-                        whiteSpace: 'nowrap',
+                    sx={{
+                        fontSize: { xs: '1.1rem', sm: '1.4rem', md: '1.8rem' },
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: 1,
+                        gap: { xs: 0.75, sm: 1 },
                         fontWeight: 700,
-                        mb: 2
+                        mb: { xs: 1, sm: 1.5, md: 2 }
                     }}
                 >
-                    <Assessment fontSize="large" />
+                    <Assessment sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }} />
                     Attendance Overview
                 </Typography>
 
                 {dateRange.startDate && dateRange.endDate && (
                     <Typography
                         variant="subtitle1"
-                        sx={{ 
+                        sx={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: 1,
-                            opacity: 0.9
+                            gap: { xs: 0.5, sm: 1 },
+                            opacity: 0.9,
+                            fontSize: { xs: '0.875rem', sm: '1rem' }
                         }}
                     >
-                       
                         {`${dateRange.startDate} to ${dateRange.endDate}`}
                     </Typography>
                 )}
@@ -138,23 +137,23 @@ const AttendancePieChart = () => {
                     ))}
                 </Grid>
             ) : error ? (
-                <Card sx={{ 
-                    p: 4, 
+                <Card sx={{
+                    p: { xs: 2, sm: 3, md: 4 },
                     textAlign: 'center',
                     bgcolor: theme.palette.error.light,
                     color: theme.palette.error.dark
                 }}>
-                    <ErrorIcon sx={{ fontSize: 48, mb: 2 }} />
-                    <Typography variant="h6">{error}</Typography>
+                    <ErrorIcon sx={{ fontSize: { xs: 36, sm: 48 }, mb: { xs: 1, sm: 2 } }} />
+                    <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>{error}</Typography>
                 </Card>
             ) : data.length === 0 ? (
-                <Card sx={{ 
-                    p: 4, 
+                <Card sx={{
+                    p: { xs: 2, sm: 3, md: 4 },
                     textAlign: 'center',
                     bgcolor: theme.palette.grey[100]
                 }}>
-                    <Timeline sx={{ fontSize: 48, mb: 2, color: theme.palette.grey[500] }} />
-                    <Typography variant="h6" color="textSecondary">
+                    <Timeline sx={{ fontSize: { xs: 36, sm: 48 }, mb: { xs: 1, sm: 2 }, color: theme.palette.grey[500] }} />
+                    <Typography variant="h6" color="textSecondary" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         No attendance data available yet.
                     </Typography>
                 </Card>
@@ -166,8 +165,8 @@ const AttendancePieChart = () => {
 
                         return (
                             <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-                                <Card sx={{ 
-                                    boxShadow: 3, 
+                                <Card sx={{
+                                    boxShadow: 3,
                                     borderRadius: 2,
                                     transition: 'transform 0.2s',
                                     '&:hover': {
@@ -178,30 +177,31 @@ const AttendancePieChart = () => {
                                     <CardContent>
                                         <Typography
                                             variant="h6"
-                                            sx={{ 
+                                            sx={{
                                                 fontWeight: 600,
-                                                mb: 2,
+                                                mb: { xs: 1.5, sm: 2 },
                                                 color: theme.palette.primary.main,
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                gap: 1
+                                                gap: { xs: 0.75, sm: 1 },
+                                                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' }
                                             }}
                                         >
-                                            <Assessment />
+                                            <Assessment sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem' } }} />
                                             {isAttendanceNotTaken
                                                 ? `${entry.class_name} - ${entry.section_name} (No Data)`
                                                 : `${entry.class_name} - ${entry.section_name}`}
                                         </Typography>
 
                                         {isAttendanceNotTaken ? (
-                                            <Box sx={{ 
-                                                p: 3, 
+                                            <Box sx={{
+                                                p: { xs: 2, sm: 3 },
                                                 textAlign: 'center',
                                                 bgcolor: theme.palette.grey[50],
                                                 borderRadius: 1
                                             }}>
-                                                <Timeline sx={{ fontSize: 40, color: theme.palette.grey[400] }} />
-                                                <Typography variant="body2" color="textSecondary">
+                                                <Timeline sx={{ fontSize: { xs: 32, sm: 40 }, color: theme.palette.grey[400] }} />
+                                                <Typography variant="body2" color="textSecondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
                                                     Attendance not taken yet.
                                                 </Typography>
                                             </Box>
@@ -222,15 +222,15 @@ const AttendancePieChart = () => {
                                                         nameKey="name"
                                                     >
                                                         {[0, 1].map((index) => (
-                                                            <Cell 
-                                                                key={`cell-${index}`} 
+                                                            <Cell
+                                                                key={`cell-${index}`}
                                                                 fill={COLORS[index]}
                                                                 stroke={theme.palette.background.paper}
                                                                 strokeWidth={2}
                                                             />
                                                         ))}
                                                     </Pie>
-                                                    <Tooltip 
+                                                    <Tooltip
                                                         formatter={(value) => `${value.toFixed(1)}%`}
                                                         contentStyle={{
                                                             backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -239,9 +239,9 @@ const AttendancePieChart = () => {
                                                             boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
                                                         }}
                                                     />
-                                                    <Legend 
-                                                        verticalAlign="bottom" 
-                                                        height={36} 
+                                                    <Legend
+                                                        verticalAlign="bottom"
+                                                        height={36}
                                                         formatter={(value) => (
                                                             <span style={{ color: theme.palette.text.primary, fontWeight: 500, marginRight: '40px' }}>
                                                                 {value}

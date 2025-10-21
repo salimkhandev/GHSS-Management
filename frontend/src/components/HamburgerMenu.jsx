@@ -626,25 +626,30 @@ export default function TopDrawerWithToggle() {
                     onClick={toggleDrawer(false)}
                     sx={{
                         color: "white",
-                        backgroundColor: "rgba(0, 0, 0, 0.3)",
-                        borderRadius: "50%",
-                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                        background: "linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08))",
+                        backdropFilter: "blur(10px)",
+                        border: "1.5px solid rgba(255, 255, 255, 0.2)",
+                        borderRadius: "12px",
+                        width: 44,
+                        height: 44,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                        transition: "all 0.3s ease",
                         "&:hover": {
-                            backgroundColor: "#3e3e3e",
-                            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.3)",
+                            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))",
+                            border: "1.5px solid rgba(255, 255, 255, 0.35)",
+                            transform: "rotate(90deg) scale(1.05)",
+                            boxShadow: "0 6px 16px rgba(0, 0, 0, 0.3)",
                         },
+                        "&:active": {
+                            transform: "rotate(90deg) scale(0.95)",
+                        }
                     }}
                 >
                     <CloseIcon
                         sx={{
-                            fontSize: 30,
-                            color: "#f1f1f1",
-                            transition: "all 0.3s ease",
-                            "&:hover": {
-                                transform: "scale(1.2)",
-                                color: "#ff6347", // Classic red on hover
-                            },
-                            padding: "5px",
+                            fontSize: 24,
+                            color: "white",
+                            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.2))",
                         }}
                     />
                 </IconButton>

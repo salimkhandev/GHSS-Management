@@ -16,13 +16,13 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
         return (
-            <text 
-                x={x} 
-                y={y} 
-                fill="white" 
-                textAnchor="middle" 
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor="middle"
                 dominantBaseline="central"
-                style={{ 
+                style={{
                     fontSize: '14px',
                     fontWeight: 'bold',
                     textShadow: '0 1px 2px rgba(0,0,0,0.5)'
@@ -55,61 +55,40 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
 
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
-            <Box sx={{ 
-                mb: 4, 
+            <Box sx={{
+                mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
                 background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                 borderRadius: 2,
-                p: 3,
+                p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',
                 boxShadow: theme.shadows[4]
             }}>
-               
-
-                <Box sx={{ 
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 2,
-                    opacity: 0.9,
-                    padding: '16px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
-                    backdropFilter: 'blur(4px)',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-                }}>
-                    <Typography 
-                        sx={{ 
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1,
-                            color: 'white',
-                            fontWeight: 500,
-                            fontSize: '1rem',
-                            '& .MuiSvgIcon-root': {
-                                color: 'white'
-                            }
-                        }}
-                    >
-                        <DateIcon fontSize="small" />
-                        <span style={{ fontWeight: 600 }}>{formattedStartDate}</span>
-                        <span style={{ margin: '0 4px' }}>to</span>
-                        <span style={{ fontWeight: 600 }}>{formattedEndDate}</span>
-                    </Typography>
-                    <Typography 
-                        sx={{ 
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 2,
-                            color: 'text.secondary',
-                            fontSize: '0.95rem'
-                        }}
-                    >
-                        <span style={{ fontWeight: 500, color: 'white' }}>Class: {className}</span>
-                        <span style={{ color: '#666' }}>|</span>
-                        <span style={{ fontWeight: 500, color: 'white' }}>Section: {sectionName}</span>
-                    </Typography>
-                </Box>
+                {/* Class and Section names are already displayed in the parent component */}
+                <Typography
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: { xs: 0.75, sm: 1 },
+                        color: 'white',
+                        fontWeight: 600,
+                        fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.25rem' },
+                        padding: { xs: '12px', sm: '14px', md: '16px' },
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: '8px',
+                        backdropFilter: 'blur(4px)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        '& .MuiSvgIcon-root': {
+                            color: 'white'
+                        }
+                    }}
+                >
+                    <DateIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem' } }} />
+                    <span>{formattedStartDate}</span>
+                    <span style={{ margin: '0 4px', fontWeight: 400 }}>to</span>
+                    <span>{formattedEndDate}</span>
+                </Typography>
             </Box>
 
             <Grid container spacing={3} justifyContent="center">
@@ -119,8 +98,8 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
 
                     return (
                         <Grid item xs={12} md={6} lg={4} key={index}>
-                            <Card sx={{ 
-                                boxShadow: theme.shadows[3], 
+                            <Card sx={{
+                                boxShadow: theme.shadows[3],
                                 borderRadius: 2,
                                 transition: 'transform 0.2s',
                                 '&:hover': {
@@ -128,14 +107,15 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                     boxShadow: theme.shadows[6]
                                 }
                             }}>
-                                <CardContent sx={{ p: 0 }}>
+                                <CardContent sx={{ p: { xs: 1.5, sm: 2 } }}>
                                     <Typography
                                         variant="h6"
-                                        sx={{ 
-                                            mt: 2,
+                                        sx={{
+                                            mt: { xs: 1, sm: 2 },
                                             color: theme.palette.primary.main,
                                             fontWeight: 600,
-                                            textAlign: 'center'
+                                            textAlign: 'center',
+                                            fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' }
                                         }}
                                     >
                                         Overall Attendance
@@ -156,15 +136,15 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                                 dataKey="value"
                                             >
                                                 {[0, 1].map((index) => (
-                                                    <Cell 
-                                                        key={`cell-${index}`} 
+                                                    <Cell
+                                                        key={`cell-${index}`}
                                                         fill={COLORS[index]}
                                                         stroke={theme.palette.background.paper}
                                                         strokeWidth={2}
                                                     />
                                                 ))}
                                             </Pie>
-                                            <Tooltip 
+                                            <Tooltip
                                                 formatter={(value) => `${value.toFixed(1)}%`}
                                                 contentStyle={{
                                                     backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -174,12 +154,12 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                                     padding: '8px 12px'
                                                 }}
                                             />
-                                            <Legend 
-                                                verticalAlign="bottom" 
+                                            <Legend
+                                                verticalAlign="bottom"
                                                 height={36}
                                                 align="center"
                                                 formatter={(value) => (
-                                                    <span style={{ 
+                                                    <span style={{
                                                         color: theme.palette.text.primary,
                                                         fontWeight: 500,
                                                         display: 'inline-block',
@@ -200,27 +180,29 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                                         </PieChart>
                                     </Box>
 
-                                    <Box sx={{ 
-                                        mt: 2,
+                                    <Box sx={{
+                                        mt: { xs: 1.5, sm: 2 },
                                         display: 'flex',
                                         justifyContent: 'space-around',
                                         flexDirection: 'column',
                                         alignItems: 'center',
-                                        p: 2,
+                                        p: { xs: 1.5, sm: 2 },
                                         borderRadius: 1
                                     }}>
-                                        <Typography 
-                                            sx={{ 
+                                        <Typography
+                                            sx={{
                                                 color: theme.palette.success.main,
                                                 fontWeight: 500,
+                                                fontSize: { xs: '0.9rem', sm: '1rem' }
                                             }}
                                         >
                                             {overallPercentage}% Present
                                         </Typography>
-                                        <Typography 
-                                            sx={{ 
+                                        <Typography
+                                            sx={{
                                                 color: theme.palette.error.main,
-                                                fontWeight: 500
+                                                fontWeight: 500,
+                                                fontSize: { xs: '0.9rem', sm: '1rem' }
                                             }}
                                         >
                                             {absentPercentage}% Absent

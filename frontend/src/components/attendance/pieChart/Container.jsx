@@ -18,13 +18,13 @@ const OverallAtten = lazy(() => import("./OverallAtten"));
 
 const LoadingFallback = () => (
     <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-        <CircularProgress 
-            sx={{ 
+        <CircularProgress
+            sx={{
                 color: 'primary.main',
                 '& .MuiCircularProgress-circle': {
                     strokeLinecap: 'round'
                 }
-            }} 
+            }}
         />
     </Box>
 );
@@ -143,30 +143,28 @@ export default function ClassSectionDisplay() {
     };
 
     return (
-        <Box sx={{ p: 4 }}>
-            <Paper 
+        <Box sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+            <Paper
                 elevation={3}
-                sx={{ 
-                    p: 3,
-                    mb: 4,
+                sx={{
+                    p: { xs: 1.5, sm: 2, md: 3 },
+                    mb: { xs: 2, sm: 3, md: 4 },
                     background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                     borderRadius: 2,
                     color: 'white'
                 }}
             >
-                <Typography 
-                    variant="h4" 
-                    sx={{ 
+                <Typography
+                    variant="h4"
+                    sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 1,
+                        gap: { xs: 0.75, sm: 1 },
                         fontWeight: 700,
-
-                        fontSize: {md:'1.8rem', xs:'1rem'},
-                        whiteSpace: 'nowrap',
+                        fontSize: { xs: '1.1rem', sm: '1.4rem', md: '1.8rem' },
                     }}
                 >
-                    <AssessmentIcon fontSize="large" />
+                    <AssessmentIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }} />
                     Classes Performance
                 </Typography>
             </Paper>
@@ -175,37 +173,37 @@ export default function ClassSectionDisplay() {
                 <Grid container spacing={3}>
                     {[1, 2, 3, 4].map((item) => (
                         <Grid item xs={12} sm={6} md={4} key={item}>
-                            <Skeleton 
-                                variant="rectangular" 
-                                height={120} 
-                                sx={{ 
+                            <Skeleton
+                                variant="rectangular"
+                                height={120}
+                                sx={{
                                     borderRadius: 2,
                                     bgcolor: 'rgba(0,0,0,0.04)'
-                                }} 
+                                }}
                             />
                         </Grid>
                     ))}
                 </Grid>
             ) : error ? (
-                <Paper 
-                    sx={{ 
-                        p: 4, 
+                <Paper
+                    sx={{
+                        p: 4,
                         textAlign: 'center',
                         bgcolor: theme.palette.error.light,
                         color: theme.palette.error.dark,
                         borderRadius: 2
                     }}
                 >
-                    <ErrorIcon sx={{ fontSize: 48, mb: 2 }} />
-                    <Typography variant="h6">{error}</Typography>
+                    <ErrorIcon sx={{ fontSize: { xs: 36, sm: 48 }, mb: { xs: 1, sm: 2 } }} />
+                    <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>{error}</Typography>
                 </Paper>
             ) : !selectedClassId ? (
                 <Grid container spacing={3}>
                     {classes.map((classItem) => (
                         <Grid item xs={12} sm={6} md={4} key={classItem.id}>
-                            <Card 
+                            <Card
                                 onClick={() => handleClassClick(classItem.id, classItem.name)}
-                                sx={{ 
+                                sx={{
                                     cursor: 'pointer',
                                     transition: 'transform 0.2s, box-shadow 0.2s',
                                     '&:hover': {
@@ -214,14 +212,14 @@ export default function ClassSectionDisplay() {
                                     }
                                 }}
                             >
-                                <CardContent sx={{ 
+                                <CardContent sx={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: 2,
                                     p: 3
                                 }}>
-                                    <ClassIcon color="primary" sx={{ fontSize: 32 }} />
-                                    <Typography variant="h6">{classItem.name}</Typography>
+                                    <ClassIcon color="primary" sx={{ fontSize: { xs: 28, sm: 32 } }} />
+                                    <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' } }}>{classItem.name}</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
@@ -229,11 +227,11 @@ export default function ClassSectionDisplay() {
                 </Grid>
             ) : !selectedSectionId ? (
                 <Box>
-                    <Typography 
-                        variant="h5" 
-                        sx={{ 
-                            fontSize: {md:'1.8rem', xs:'1.12rem'},
-                            mb: 3,
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            fontSize: { xs: '1.1rem', sm: '1.4rem', md: '1.75rem' },
+                            mb: { xs: 2, sm: 2.5, md: 3 },
                             display: 'flex',
                             alignItems: 'center',
                             color: theme.palette.primary.main,
@@ -245,8 +243,8 @@ export default function ClassSectionDisplay() {
                     <Grid container spacing={3}>
                         {sections.length === 0 && !loading ? (
                             <Grid item xs={12}>
-                                <Paper 
-                                    sx={{ 
+                                <Paper
+                                    sx={{
                                         p: 4,
                                         textAlign: 'center',
                                         bgcolor: theme.palette.grey[50]
@@ -260,9 +258,9 @@ export default function ClassSectionDisplay() {
                         ) : (
                             sections.map((section) => (
                                 <Grid item xs={12} sm={6} md={4} key={section.id}>
-                                    <Card 
+                                    <Card
                                         onClick={() => handleSectionClick(section.id)}
-                                        sx={{ 
+                                        sx={{
                                             cursor: 'pointer',
                                             transition: 'all 0.2s',
                                             '&:hover': {
@@ -271,14 +269,14 @@ export default function ClassSectionDisplay() {
                                             }
                                         }}
                                     >
-                                        <CardContent sx={{ 
+                                        <CardContent sx={{
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: 2,
                                             p: 3
                                         }}>
-                                            <SchoolIcon color="primary" sx={{ fontSize: 32 }} />
-                                            <Typography variant="h6">{section.name}</Typography>
+                                            <SchoolIcon color="primary" sx={{ fontSize: { xs: 28, sm: 32 } }} />
+                                            <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' } }}>{section.name}</Typography>
                                         </CardContent>
                                     </Card>
                                 </Grid>
@@ -288,31 +286,33 @@ export default function ClassSectionDisplay() {
                 </Box>
             ) : (
                 <Box>
-                    <Typography 
-                        variant="h5" 
-                        sx={{ 
-                            mb: 4,
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            mb: { xs: 2, sm: 3, md: 4 },
                             textAlign: 'center',
                             color: theme.palette.primary.main,
                             fontWeight: 600,
+                            fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: 1
+                            gap: { xs: 0.5, sm: 1 }
                         }}
                     >
-                        <SchoolIcon />
+                        <SchoolIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.75rem' } }} />
                         {selectedClassName} Section {sectionName}
                     </Typography>
-                    <Grid container spacing={2} justifyContent="center" sx={{ mb: 4 }}>
+                    <Grid container spacing={{ xs: 1, sm: 1.5, md: 2 }} justifyContent="center" sx={{ mb: { xs: 2, sm: 3, md: 4 } }}>
                         <Grid item>
                             <Button
                                 variant={attendanceOption === "daily" ? "contained" : "outlined"}
                                 onClick={() => handleAttendanceOption("daily")}
-                                startIcon={<CalendarIcon />}
+                                startIcon={<CalendarIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />}
                                 sx={{
-                                    px: 3,
-                                    py: 1.5,
+                                    px: { xs: 2, sm: 2.5, md: 3 },
+                                    py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "daily" && {
                                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
@@ -326,10 +326,11 @@ export default function ClassSectionDisplay() {
                             <Button
                                 variant={attendanceOption === "monthly" ? "contained" : "outlined"}
                                 onClick={() => handleAttendanceOption("monthly")}
-                                startIcon={<DateRangeIcon />}
+                                startIcon={<DateRangeIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />}
                                 sx={{
-                                    px: 3,
-                                    py: 1.5,
+                                    px: { xs: 2, sm: 2.5, md: 3 },
+                                    py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "monthly" && {
                                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
@@ -343,10 +344,11 @@ export default function ClassSectionDisplay() {
                             <Button
                                 variant={attendanceOption === "overall" ? "contained" : "outlined"}
                                 onClick={() => handleAttendanceOption("overall")}
-                                startIcon={<TimelineIcon />}
+                                startIcon={<TimelineIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />}
                                 sx={{
-                                    px: 3,
-                                    py: 1.5,
+                                    px: { xs: 2, sm: 2.5, md: 3 },
+                                    py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "overall" && {
                                         background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',

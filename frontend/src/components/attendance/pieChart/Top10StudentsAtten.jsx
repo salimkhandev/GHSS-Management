@@ -53,13 +53,13 @@ const AttendancePieChart = () => {
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
         return (
-            <text 
-                x={x} 
-                y={y} 
-                fill="white" 
-                textAnchor="middle" 
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor="middle"
                 dominantBaseline="central"
-                style={{ 
+                style={{
                     fontSize: '14px',
                     fontWeight: 'bold',
                     textShadow: '0 1px 2px rgba(0,0,0,0.5)'
@@ -91,8 +91,8 @@ const AttendancePieChart = () => {
                 <Skeleton
                     variant="rectangular"
                     sx={{
-                        mb: 4,
-                        height: 80,
+                        mb: { xs: 2, sm: 3, md: 4 },
+                        height: { xs: 60, sm: 70, md: 80 },
                         borderRadius: 2,
                         bgcolor: 'rgba(25, 118, 210, 0.1)',
                     }}
@@ -198,9 +198,9 @@ const AttendancePieChart = () => {
 
     if (error) {
         return (
-            <Paper 
-                sx={{ 
-                    p: 4, 
+            <Paper
+                sx={{
+                    p: 4,
                     textAlign: 'center',
                     bgcolor: theme.palette.error.light,
                     color: theme.palette.error.dark,
@@ -220,8 +220,8 @@ const AttendancePieChart = () => {
 
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
-            <Box sx={{ 
-                mb: 4, 
+            <Box sx={{
+                mb: 4,
                 textAlign: 'center',
                 background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                 borderRadius: 2,
@@ -231,10 +231,10 @@ const AttendancePieChart = () => {
             }}>
                 <Typography
                     variant="h4"
-                    sx={{ 
+                    sx={{
                         fontSize: {md:'1.8rem', xs:'1.12rem'},
                         whiteSpace: 'nowrap',
-                        display: 'flex',    
+                        display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: 2,
@@ -248,7 +248,7 @@ const AttendancePieChart = () => {
             </Box>
 
             {attendanceData.length === 0 ? (
-                <Box sx={{ 
+                <Box sx={{
                     textAlign: 'center',
                     p: 4,
                     bgcolor: theme.palette.grey[100],
@@ -267,8 +267,8 @@ const AttendancePieChart = () => {
 
                         return (
                             <Grid item xs={12} md={6} lg={4} key={index}>
-                                <Card sx={{ 
-                                    boxShadow: 3, 
+                                <Card sx={{
+                                    boxShadow: 3,
                                     borderRadius: 2,
                                     transition: 'transform 0.2s',
                                     '&:hover': {
@@ -309,10 +309,10 @@ const AttendancePieChart = () => {
                                             )}
                                         </Box>
 
-                                        <Typography 
-                                            variant="h6" 
+                                        <Typography
+                                            variant="h6"
                                             align="center"
-                                            sx={{ 
+                                            sx={{
                                                 fontWeight: 600,
                                                 color: theme.palette.primary.main,
                                                 mb: 2
@@ -323,7 +323,7 @@ const AttendancePieChart = () => {
 
                                         <Grid container spacing={1} sx={{ mb: 2 }}>
                                             <Grid item xs={6}>
-                                                <Box sx={{ 
+                                                <Box sx={{
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     gap: 1,
@@ -336,7 +336,7 @@ const AttendancePieChart = () => {
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={6}>
-                                                <Box sx={{ 
+                                                <Box sx={{
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     gap: 1,
@@ -365,15 +365,15 @@ const AttendancePieChart = () => {
                                                     dataKey="value"
                                                 >
                                                     {[0, 1].map((index) => (
-                                                        <Cell 
-                                                            key={`cell-${index}`} 
+                                                        <Cell
+                                                            key={`cell-${index}`}
                                                             fill={COLORS[index]}
                                                             stroke={theme.palette.background.paper}
                                                             strokeWidth={2}
                                                         />
                                                     ))}
                                                 </Pie>
-                                                <Tooltip 
+                                                <Tooltip
                                                     formatter={(value) => `${value}%`}
                                                     contentStyle={{
                                                         backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -382,8 +382,8 @@ const AttendancePieChart = () => {
                                                         boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
                                                     }}
                                                 />
-                                                <Legend 
-                                                    verticalAlign="bottom" 
+                                                <Legend
+                                                    verticalAlign="bottom"
                                                     height={36}
                                                     formatter={(value) => (
                                                         <span style={{ color: theme.palette.text.primary, fontWeight: 500, marginRight: '40px' }}>
@@ -394,16 +394,16 @@ const AttendancePieChart = () => {
                                             </PieChart>
                                         </Box>
 
-                                        <Box sx={{ 
+                                        <Box sx={{
                                             mt: 2,
                                             p: 2,
                                             bgcolor: theme.palette.grey[50],
                                             borderRadius: 1
                                         }}>
-                                            <Typography 
-                                                variant="h6" 
-                                                align="center" 
-                                                sx={{ 
+                                            <Typography
+                                                variant="h6"
+                                                align="center"
+                                                sx={{
                                                     color: theme.palette.success.main,
                                                     fontWeight: 600,
                                                     mb: 1
@@ -411,9 +411,9 @@ const AttendancePieChart = () => {
                                             >
                                                 {entry.attendance_percentage}% Attendance
                                             </Typography>
-                                            <Typography 
-                                                variant="body2" 
-                                                align="center" 
+                                            <Typography
+                                                variant="body2"
+                                                align="center"
                                                 sx={{ color: theme.palette.text.secondary }}
                                             >
                                                 Present: {entry.present_count} | Absent: {entry.absent_count}
