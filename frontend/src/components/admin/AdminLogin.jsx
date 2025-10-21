@@ -51,7 +51,10 @@ const AdminLogin = () => {
                 }
             );
             login();
-            enqueueSnackbar('Login successful!', { variant: 'success' });
+            enqueueSnackbar('Login successful!', {
+                variant: 'success',
+                style: { backgroundColor: '#2196f3', color: '#ffffff' }
+            });
             setTimeout(() => {
                 navigate('/');
             }, 1500);
@@ -282,7 +285,12 @@ const AdminLoginWithSnackbar = () => (
     <SnackbarProvider
         maxSnack={3}
         autoHideDuration={3000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Adjusted position for snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{
+            '&.SnackbarItem-variantSuccess': {
+                backgroundColor: '#2196f3 !important',
+            }
+        }}
     >
         <AdminLogin />
     </SnackbarProvider>

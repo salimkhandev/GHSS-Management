@@ -282,7 +282,9 @@ const StudentList = () => {
                                 variant="outlined"
                                 sx={{ fontWeight: 600 }}
                             />
-                            <ExportToExcel data={filteredStudents.length > 0 ? filteredStudents : students} />
+                            {selectedClass && selectedSection && (
+                                <ExportToExcel data={filteredStudents.length > 0 ? filteredStudents : students} />
+                            )}
                         </Stack>
                     </Stack>
 

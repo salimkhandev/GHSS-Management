@@ -268,13 +268,20 @@ const Navbar = () => {
                                         color: 'white',
                                         textTransform: 'none',
                                         fontFamily: "'Poppins', sans-serif",
-                                        fontWeight: 500,
-                                        padding: '0.5rem 1rem',
+                                        fontWeight: 600,
+                                        fontSize: '1.05rem',
+                                        letterSpacing: '0.5px',
+                                        padding: '0.7rem 1.5rem',
                                         borderRadius: '8px',
                                         transition: 'all 0.3s ease',
+                                        '& .MuiButton-startIcon': {
+                                            marginRight: '0.5rem',
+                                            fontSize: '1.3rem'
+                                        },
                                         '&:hover': {
                                             backgroundColor: 'rgba(255,255,255,0.1)',
-                                            transform: 'translateY(-2px)'
+                                            transform: 'translateY(-2px)',
+                                            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
                                         }
                                     }}
                                 >

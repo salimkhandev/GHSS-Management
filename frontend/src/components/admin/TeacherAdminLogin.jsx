@@ -104,7 +104,8 @@ const LoginForm = () => {
                 if (adminRes.ok && teacherRes.ok) {
                     enqueueSnackbar("✅ Login Successful! Welcome to the system", {
                         variant: "success",
-                        autoHideDuration: 3000
+                        autoHideDuration: 3000,
+                        style: { backgroundColor: '#2196f3', color: '#ffffff' }
                     });
                     navigate('/');
                 } else {
@@ -359,7 +360,15 @@ const LoginForm = () => {
 };
 
 const App = () => (
-    <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+    <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{
+            '&.SnackbarItem-variantSuccess': {
+                backgroundColor: '#2196f3 !important',
+            }
+        }}
+    >
         <LoginForm />
     </SnackbarProvider>
 );
