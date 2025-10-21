@@ -1,13 +1,46 @@
-import { ArrowBack, ArrowForward, Class as ClassIcon, Download as DownloadIcon, Groups as GroupsIcon, Person as PersonIcon, School as SchoolIcon, Search as SearchIcon } from '@mui/icons-material';
-import { Box, Button, Card, CardContent, CircularProgress, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Skeleton } from '@mui/material';
+import {
+    ArrowBack,
+    ArrowForward,
+    Class as ClassIcon,
+    Download as DownloadIcon,
+    Groups as GroupsIcon,
+    Person as PersonIcon,
+    School as SchoolIcon,
+    Search as SearchIcon
+} from '@mui/icons-material';
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CircularProgress,
+    FormControl,
+    Grid,
+    InputAdornment,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography,
+    Skeleton,
+    useMediaQuery,
+    useTheme,
+    Container,
+    Stack,
+    Chip,
+    IconButton,
+    Avatar
+} from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ExportToExcel from './ExportToExcel';
 import apiBase from '../config/api';
 
 const StudentList = () => {
-    
-    
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+
     const [students, setStudents] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [classes, setClasses] = useState([]);
@@ -20,6 +53,8 @@ const StudentList = () => {
     const [selectedClassid, setSelectedClassid] = useState();
     const [totalDeptStudents, setTotalDeptStudents] = useState([]);
     const [showNoStudentsMessage, setShowNoStudentsMessage] = useState(false);
+    const [page, setPage] = useState(1);
+    const [totalpages, setTotalpages] = useState();
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -28,88 +63,61 @@ const StudentList = () => {
         if (filteredStudents.length != 0) {
             setShowNoStudentsMessage(false)
         }
-        return () => clearTimeout(timeout); // Clear timeout on component unmount
-    }, [filteredStudents, loading,selectedSection,selectedClass,selectedClassid,selectedSectionid,students]);
-
-    const [page, setPage] = useState(1);
-    const [totalpages, setTotalpages] = useState();
-
+        return () => clearTimeout(timeout);
+    }, [filteredStudents, loading, selectedSection, selectedClass, selectedClassid, selectedSectionid, students]);
 
     const handleGetSections = async (clsid) => {
         setLoading(true);
-    
         try {
             const response = await axios.post(`${apiBase}/get-sections`, { class_id: clsid });
             if (response) {
-                
                 setSections(response.data);
                 setLoading(false)
-
             }
         } catch (error) {
             console.error('Error fetching sections', error);
         }
     };
+
     const handleGetStudentsSec = async (secid) => {
         setLoading(true)
-
         try {
             const response = await axios.post(`${apiBase}/get-std`, { section_id: secid });
             setStudents(response.data);
             setLoading(false)
-
         } catch (error) {
             console.error('Error fetching sections', error);
         }
     };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 const classesResponse = await axios.get(`${apiBase}/classes`);
                 setClasses(classesResponse.data);
-
-                // setTimeout(() => {
-                // }, 1000);
                 setLoading(false);
-                    
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             }
         };
-
         fetchData();
     }, []);
-    //testing 
-
-
 
     useEffect(() => {
         const fetchClasses = async () => {
             setStudents([]);
-        
             setTotalDeptStudents()
-           
             setLoading(true)
             try {
-                const responseCls = await axios.get(`${apiBase}/filteredSectionStd`,
-
-                    {
-                        params: {
-                            class_id: selectedClassid,
-                            section_id: selectedSectionid
-                        }
-                    })
-                // setTimeout(() => {
-                    setLoading(false);
-    
-                // }, 3000);
+                const responseCls = await axios.get(`${apiBase}/filteredSectionStd`, {
+                    params: {
+                        class_id: selectedClassid,
+                        section_id: selectedSectionid
+                    }
+                })
+                setLoading(false);
                 setStudents(responseCls.data.students);
-                console.log('❤️❤️❤️❤️',responseCls.data.total);
-                // setTotalDeptStudents(responseCls.data.total);
-                    
-
             } catch (error) {
                 console.error("Error fetching the classes data:", error);
             }
@@ -118,60 +126,43 @@ const StudentList = () => {
             fetchClasses();
         }
     }, [selectedClassid, selectedSectionid]);
-//testing 
 
     useEffect(() => {
         const fetchStudents = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`${apiBase}/students`,{params: {page:page}});
+                const response = await axios.get(`${apiBase}/students`, { params: { page: page } });
                 setStudents(response.data.rows);
-                setTotalpages(response.data.totalPages) // Update state with the fetched students data
-                
-               
-                    
-                    setLoading(false);
-        
-                // Set loading to false once data is fetched
+                setTotalpages(response.data.totalPages)
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching student data:', error);
-                setLoading(false); // Set loading to false even if there is an error
+                setLoading(false);
             }
         };
-        if (selectedClass==='') {
-            fetchStudents(); // Call the fetch function
-            
+        if (selectedClass === '') {
+            fetchStudents();
         }
-
-    }, [selectedClass,page]);
-
+    }, [selectedClass, page]);
 
     useEffect(() => {
         if (selectedClass === '') {
             setStudents([]);
             setTotalpages(0)
-
         }
         const fetchClasses = async () => {
             setLoading(true);
             try {
-                const responseCls = await axios.get(`${apiBase}/filteredClassStd`,
-
-                    {
-                        params: {
-                            class_id: selectedClassid,
-                            page:page
-                        }
-                    })
-                
-                        setLoading(false);
-                        
-                
+                const responseCls = await axios.get(`${apiBase}/filteredClassStd`, {
+                    params: {
+                        class_id: selectedClassid,
+                        page: page
+                    }
+                })
+                setLoading(false);
                 setStudents(responseCls.data.students);
                 setTotalDeptStudents(responseCls.data.totalCount);
-                setTotalpages(responseCls.data.totalPages) 
-                
-
+                setTotalpages(responseCls.data.totalPages)
             } catch (error) {
                 console.error("Error fetching the classes data:", error);
             }
@@ -179,10 +170,8 @@ const StudentList = () => {
         if (selectedClassid && selectedClass != '' && (!selectedSectionid || selectedSection === '')) {
             fetchClasses();
         }
-    }, [selectedClassid, selectedSectionid, selectedClass, page , selectedSection]);
+    }, [selectedClassid, selectedSectionid, selectedClass, page, selectedSection]);
 
-
-// testing
     useEffect(() => {
         let result = students;
         setTimeout(() => {
@@ -191,352 +180,358 @@ const StudentList = () => {
                     student.student_name.toLowerCase().includes(searchQuery.toLowerCase())
                 );
             }
-            
             setFilteredStudents(result);
         }, 300);
-    
-
-    }, [selectedClass, searchQuery, students,selectedSection]);
+    }, [selectedClass, searchQuery, students, selectedSection]);
 
     const handleClassChange = (e) => {
         const value = e.target.value;
         setSelectedClass(value === 'All Classes' ? '' : value);
-        // Reset section state
         setSelectedSection('');
         setSelectedSectionid('');
-        setSections([]); // Clear the sections dropdown
+        setSections([]);
 
-        if(value!=='All Classes'){
-
-            const getSelectedObj=classes.find(cls=>cls.name === value)
+        if (value !== 'All Classes') {
+            const getSelectedObj = classes.find(cls => cls.name === value)
             if (getSelectedObj) {
                 handleGetSections(getSelectedObj.id)
                 setSelectedClassid(getSelectedObj.id)
             }
         }
     };
+
     const handleSectionsChange = async (e) => {
-      const value=e.target.value;
-        setSelectedSection(value === 'All Sections' ? setSelectedSectionid(''): value);
+        const value = e.target.value;
+        setSelectedSection(value === 'All Sections' ? setSelectedSectionid('') : value);
         if (value !== 'All Sections') {
             const getSelectedObj = sections.find(sec => sec.name === value);
             if (getSelectedObj) {
-                console.log('My heart ❤️❌', getSelectedObj.id);
                 setSelectedSectionid(getSelectedObj.id)
-
             }
-            // handleGetStudentsSec(value);
         }
-          handleGetStudentsSec(value)
+        handleGetStudentsSec(value)
     }
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
-    
 
+    const LoadingSkeleton = () => (
+        <Grid container spacing={{ xs: 2, md: 3 }}>
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+                <Grid item xs={12} sm={6} md={4} key={item}>
+                    <Card sx={{ borderRadius: 3 }}>
+                        <CardContent>
+                            <Skeleton variant="circular" width={60} height={60} sx={{ mb: 2 }} />
+                            <Skeleton variant="text" height={30} width="80%" />
+                            <Skeleton variant="text" height={20} width="60%" />
+                            <Skeleton variant="text" height={20} width="70%" />
+                        </CardContent>
+                    </Card>
+                </Grid>
+            ))}
+        </Grid>
+    );
 
     return (
-        <div className="p-4 min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-            <div className="max-w-7xl mx-auto">
-                <div className=" bg-gradient-to-br from-blue-50 to-purple-5 sticky top-16  mb-8">
-                    <Box className="flex justify-between items-center mb-6">
-                        <Typography 
-                            variant="h4" 
+        <Box
+            sx={{
+                minHeight: '100vh',
+                bgcolor: 'background.default',
+                py: { xs: 2, md: 4 },
+                px: { xs: 1, sm: 2, md: 3 },
+            }}
+        >
+            <Container maxWidth="xl">
+                {/* Header Section */}
+                <Box
+                    sx={{
+                        position: 'sticky',
+                        top: { xs: 56, md: 64 },
+                        zIndex: 10,
+                        bgcolor: 'background.default',
+                        py: 2,
+                        mb: { xs: 2, md: 3 },
+                    }}
+                >
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        justifyContent="space-between"
+                        alignItems={{ xs: 'flex-start', sm: 'center' }}
+                        spacing={2}
+                        sx={{ mb: 3 }}
+                    >
+                        <Typography
+                            variant={isMobile ? 'h5' : 'h4'}
                             sx={{
                                 fontWeight: 700,
-                                background: 'linear-gradient(45deg, #1976d2, #9c27b0)',
-                                backgroundClip: 'text',
+                                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                                 WebkitBackgroundClip: 'text',
-                                color: 'transparent',
-                                
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 2
+                                WebkitTextFillColor: 'transparent',
+                                backgroundClip: 'text',
                             }}
                         >
-                            <GroupsIcon fontSize="large" sx={{ color: '#1976d2' }} />
-                            Student List
+                            Student Directory
                         </Typography>
 
-                        <TextField
-                            variant="outlined"
-                            placeholder="Search students..."
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            size="small"
-                            sx={{
-                                width: { xs: '100%', sm: '300px' },
-                                '& .MuiOutlinedInput-root': {
-                                    borderRadius: 2,
-                                    backgroundColor: 'white',
-                                    '&:hover': {
-                                        '& .MuiOutlinedInput-notchedOutline': {
-                                            borderColor: '#1976d2',
-                                        }
-                                    }
-                                }
-                            }}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <SearchIcon color="primary" />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Box>
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            <Chip
+                                icon={<GroupsIcon />}
+                                label={`${filteredStudents.length || students.length} Students`}
+                                color="primary"
+                                variant="outlined"
+                                sx={{ fontWeight: 600 }}
+                            />
+                            <ExportToExcel data={filteredStudents.length > 0 ? filteredStudents : students} />
+                        </Stack>
+                    </Stack>
 
-                    {selectedClass && !selectedSection && (
-                        <Typography 
-                            variant="h6" 
-                            sx={{ 
-                                color: '#1976d2',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 1,
-                                mb: 2
-                            }}
-                        >
-                            <SchoolIcon />
-                            Students in {selectedClass}: {totalDeptStudents}
-                        </Typography>
-                    )}
-
-                    <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                        <FormControl 
-                            variant="outlined" 
-                            sx={{ 
-                                minWidth: 200,
-                                backgroundColor: 'white',
-                                borderRadius: 1
-                            }}
-                        >
-                            <InputLabel>Select Class</InputLabel>
-                            <Select
-                                value={selectedClass || 'All Classes'}
-                                onChange={handleClassChange}
-                                label="Select Class"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <ClassIcon color="primary" />
-                                    </InputAdornment>
-                                }
-                            >
-                                <MenuItem value="All Classes">All Classes</MenuItem>
-                                {classes.map(cls => (
-                                    <MenuItem key={cls.id} value={cls.name}>
-                                        {cls.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
-                        {sections.length > 0 && (
-                            <FormControl 
-                                variant="outlined" 
-                                sx={{ 
-                                    minWidth: 200,
-                                    backgroundColor: 'white',
-                                    borderRadius: 1
-                                }}
-                            >
-                                <InputLabel>Select Section</InputLabel>
-                                <Select
-                                    value={selectedSection || 'All Sections'}
-                                    onChange={handleSectionsChange}
-                                    label="Select Section"
-                                >
-                                    <MenuItem value="All Sections">All Sections</MenuItem>
-                                    {sections.map(cls => (
-                                        <MenuItem key={cls.id} value={cls.name}>
-                                            {cls.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        )}
-                    </div>
-                </div>
-
-                {showNoStudentsMessage && (
-                    <Box 
-                        sx={{ 
-                            height: 300,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'column',
-                            gap: 2,
-                            color: 'text.secondary'
-                        }}
-                    >
-                        <PersonIcon sx={{ fontSize: 48, opacity: 0.5 }} />
-                        <Typography>No students found for the selected criteria.</Typography>
-                    </Box>
-                )}
-
-                {loading ? (
-                    <Grid container spacing={3}>
-                        {[1, 2, 3, 4, 5, 6].map((item) => (
-                            <Grid item xs={12} sm={6} md={4} key={item}>
-                                <Card sx={{ 
-                                    height: '100%',
-                                    transition: 'transform 0.2s, box-shadow 0.2s',
-                                    '&:hover': {
-                                        transform: 'translateY(-4px)',
-                                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
-                                    }
-                                }}>
-                                    <CardContent>
-                                        {/* Student ID with Icon Skeleton */}
-                                        <Box sx={{ 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            gap: 1,
-                                            mb: 2 
-                                        }}>
-                                            <Skeleton variant="circular" width={24} height={24} />
-                                            <Skeleton 
-                                                variant="text" 
-                                                width={120} 
-                                                sx={{ 
-                                                    height: 32,
-                                                    background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
-                                                    opacity: 0.1
-                                                }} 
-                                            />
-                                        </Box>
-
-                                        {/* Student Name Skeleton */}
-                                        <Box sx={{ mb: 1 }}>
-                                            <Skeleton variant="text" width="90%" height={24} />
-                                        </Box>
-
-                                        {/* Class Name Skeleton */}
-                                        <Box sx={{ mb: 1 }}>
-                                            <Skeleton variant="text" width="60%" height={24} />
-                                        </Box>
-
-                                        {/* Section Skeleton */}
-                                        <Box>
-                                            <Skeleton variant="text" width="40%" height={24} />
-                                        </Box>
-                                    </CardContent>
-                                </Card>
+                    {/* Filters Section */}
+                    <Card sx={{ mb: 0, p: { xs: 2, md: 3 }, borderRadius: 3, boxShadow: 3 }}>
+                        <Grid container spacing={{ xs: 2, md: 3 }}>
+                            {/* Search Field */}
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    label="Search Students"
+                                    variant="outlined"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                    placeholder="Search by name..."
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            borderRadius: 3,
+                                            '& fieldset': {
+                                                borderWidth: '2px',
+                                            },
+                                        },
+                                    }}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon color="primary" />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                             </Grid>
-                        ))}
-                    </Grid>
-                ) : (
-                    <>
-                        <Grid container spacing={3}>
-                            {filteredStudents.map(student => (
-                                <Grid item xs={12} sm={6} md={4} key={student.id}>
-                                    <Card 
-                                        sx={{ 
-                                            height: '100%',
-                                            transition: 'transform 0.2s, box-shadow 0.2s',
-                                            '&:hover': {
-                                                transform: 'translateY(-4px)',
-                                                boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
-                                            }
+
+                            {/* Class Filter */}
+                            <Grid item xs={12} sm={6} md={4}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Class</InputLabel>
+                                    <Select
+                                        value={selectedClass || 'All Classes'}
+                                        onChange={handleClassChange}
+                                        label="Class"
+                                        sx={{
+                                            borderRadius: 3,
+                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                borderWidth: '2px',
+                                            },
                                         }}
                                     >
-                                        <CardContent>
-                                            <Typography 
-                                                variant="h6" 
-                                                sx={{ 
-                                                    fontWeight: 600,
-                                                    color: '#1976d2',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: 1,
-                                                    mb: 2
-                                                }}
-                                            >
-                                                <PersonIcon />
-                                                ID: {student.id}
-                                            </Typography>
-                                            <Typography variant="body1" sx={{ mb: 1 }}>
-                                                Name: {student.student_name}
-                                            </Typography>
-                                            <Typography variant="body1" sx={{ mb: 1 }}>
-                                                {student.class_name}
-                                            </Typography>
-                                            <Typography variant="body1">
-                                                Section: {student.section_name}
-                                            </Typography>
+                                        <MenuItem value="All Classes">
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <SchoolIcon fontSize="small" />
+                                                All Classes
+                                            </Box>
+                                        </MenuItem>
+                                        {classes.map((cls) => (
+                                            <MenuItem key={cls.id} value={cls.name}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <ClassIcon fontSize="small" />
+                                                    {cls.name}
+                                                </Box>
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+
+                            {/* Section Filter */}
+                            <Grid item xs={12} sm={6} md={4}>
+                                <FormControl fullWidth disabled={!selectedClass}>
+                                    <InputLabel>Section</InputLabel>
+                                    <Select
+                                        value={selectedSection || 'All Sections'}
+                                        onChange={handleSectionsChange}
+                                        label="Section"
+                                        sx={{
+                                            borderRadius: 3,
+                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                borderWidth: '2px',
+                                            },
+                                        }}
+                                    >
+                                        <MenuItem value="All Sections">All Sections</MenuItem>
+                                        {sections.map((sec) => (
+                                            <MenuItem key={sec.id} value={sec.name}>
+                                                {sec.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Card>
+                </Box>
+
+                {/* Students Grid */}
+                {loading ? (
+                    <LoadingSkeleton />
+                ) : showNoStudentsMessage ? (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            minHeight: '50vh',
+                            textAlign: 'center',
+                            px: 2,
+                        }}
+                    >
+                        <SchoolIcon sx={{ fontSize: { xs: 80, md: 120 }, color: 'primary.light', mb: 2 }} />
+                        <Typography variant={isMobile ? 'h6' : 'h5'} color="text.secondary" sx={{ mb: 1 }}>
+                            No Students Found
+                        </Typography>
+                        <Typography variant="body2" color="text.disabled">
+                            Try adjusting your filters or search query
+                        </Typography>
+                    </Box>
+                ) : (
+                    <>
+                        <Grid container spacing={{ xs: 2, md: 3 }}>
+                            {(filteredStudents.length > 0 ? filteredStudents : students).map((student, index) => (
+                                <Grid item xs={12} sm={6} md={4} lg={3} key={student.id || index}>
+                                    <Card
+                                        sx={{
+                                            height: '100%',
+                                            borderRadius: 3,
+                                            boxShadow: 3,
+                                            transition: 'all 0.3s ease',
+                                            '&:hover': {
+                                                boxShadow: 6,
+                                                transform: 'translateY(-8px)',
+                                            },
+                                        }}
+                                    >
+                                        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                                <Avatar
+                                                    sx={{
+                                                        width: { xs: 60, md: 70 },
+                                                        height: { xs: 60, md: 70 },
+                                                        bgcolor: 'primary.main',
+                                                        fontSize: { xs: '1.5rem', md: '2rem' },
+                                                        fontWeight: 700,
+                                                        mb: 1.5,
+                                                    }}
+                                                >
+                                                    {student.student_name?.charAt(0).toUpperCase()}
+                                                </Avatar>
+                                                <Typography
+                                                    variant={isMobile ? 'body1' : 'h6'}
+                                                    sx={{
+                                                        fontWeight: 600,
+                                                        textAlign: 'center',
+                                                        color: 'text.primary',
+                                                        mb: 0.5,
+                                                    }}
+                                                >
+                                                    {student.student_name}
+                                                </Typography>
+                                                <Chip
+                                                    label={student.roll_no}
+                                                    size="small"
+                                                    color="primary"
+                                                    variant="outlined"
+                                                />
+                                            </Box>
+
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <ClassIcon fontSize="small" color="action" />
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        Class: <strong>{student.class_name || 'N/A'}</strong>
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <GroupsIcon fontSize="small" color="action" />
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        Section: <strong>{student.section_name || 'N/A'}</strong>
+                                                    </Typography>
+                                                </Box>
+                                                {student.father_name && (
+                                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                        <PersonIcon fontSize="small" color="action" />
+                                                        <Typography
+                                                            variant="body2"
+                                                            color="text.secondary"
+                                                            sx={{
+                                                                overflow: 'hidden',
+                                                                textOverflow: 'ellipsis',
+                                                                whiteSpace: 'nowrap',
+                                                            }}
+                                                        >
+                                                            Father: <strong>{student.father_name}</strong>
+                                                        </Typography>
+                                                    </Box>
+                                                )}
+                                            </Box>
                                         </CardContent>
                                     </Card>
                                 </Grid>
                             ))}
                         </Grid>
 
-                        {!selectedSection && filteredStudents.length > 0 && !loading && (
+                        {/* Pagination */}
+                        {totalpages > 1 && (
                             <Box
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center',
                                     justifyContent: 'center',
+                                    alignItems: 'center',
+                                    mt: 4,
                                     gap: 2,
-                                    mt: 4
                                 }}
                             >
-                                <Button
-                                    variant="contained"
+                                <IconButton
                                     onClick={() => setPage(page - 1)}
-                                    disabled={page <= 1 || loading}
-                                    startIcon={<ArrowBack />}
+                                    disabled={page === 1}
                                     sx={{
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
-                                        '&:hover': {
-                                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)'
-                                        }
+                                        bgcolor: 'primary.main',
+                                        color: 'white',
+                                        '&:hover': { bgcolor: 'primary.dark' },
+                                        '&:disabled': { bgcolor: 'action.disabledBackground' },
                                     }}
                                 >
-                                    Previous
-                                </Button>
-                                <Typography variant="body1" sx={{ mx: 2 }}>
+                                    <ArrowBack />
+                                </IconButton>
+
+                                <Typography variant="body1" sx={{ fontWeight: 600 }}>
                                     Page {page} of {totalpages}
                                 </Typography>
-                                <Button
-                                    variant="contained"
+
+                                <IconButton
                                     onClick={() => setPage(page + 1)}
-                                    disabled={page >= totalpages || loading}
-                                    endIcon={<ArrowForward />}
+                                    disabled={page === totalpages}
                                     sx={{
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
-                                        '&:hover': {
-                                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)'
-                                        }
+                                        bgcolor: 'primary.main',
+                                        color: 'white',
+                                        '&:hover': { bgcolor: 'primary.dark' },
+                                        '&:disabled': { bgcolor: 'action.disabledBackground' },
                                     }}
                                 >
-                                    Next
-                                </Button>
+                                    <ArrowForward />
+                                </IconButton>
                             </Box>
                         )}
                     </>
                 )}
-
-                {selectedClass && selectedClassid && selectedSection && selectedSectionid && !loading && filteredStudents.length > 0 && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                        <Button
-                            variant="contained"
-                            color="success"
-                            startIcon={<DownloadIcon />}
-                            sx={{
-                                background: 'linear-gradient(45deg, #2e7d32 30%, #4caf50 90%)',
-                                '&:hover': {
-                                    background: 'linear-gradient(45deg, #1b5e20 30%, #2e7d32 90%)'
-                                }
-                            }}
-                        >
-                            <ExportToExcel students={filteredStudents} />
-                        </Button>
-                    </Box>
-                )}
-            </div>
-        </div>
+            </Container>
+        </Box>
     );
 };
 
