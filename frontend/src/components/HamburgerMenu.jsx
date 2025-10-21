@@ -33,7 +33,7 @@ import {
 import { Link } from "react-router-dom";
 import { useAuth } from './admin/AuthProvider';
 import ProfilePicManager from './teacher/ProfilePic.jsx';
-import MenuIcon from "@mui/icons-material/Menu";
+
 import apiBase from '../config/api';
 
 const THEME_COLORS = {
@@ -178,27 +178,63 @@ const AnimatedMenuIcon = ({ isOpen, onClick }) => (
   </motion.div>
 );
 
-const MenuIconButton = ({ onClick }) => (
-  <IconButton
-    onClick={onClick}
-    sx={{
-      width: 45,
-      height: 45,
-      // background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(5px)',
-      borderRadius: '12px',
-      '&:hover': {
-        background: 'rgba(255, 255, 255, 0.2)',
-      },
-      '& .MuiSvgIcon-root': {
-        fontSize: 28,
-        color: 'white',
-      },
-    }}
-  >
-    <MenuIcon />
-  </IconButton>
-);
+const MenuIconButton = ({ onClick }) => {
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasAnimated(true);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <motion.div
+      animate={!hasAnimated ? {
+        scale: [1, 1.09, 1.15, 1.2, 1],
+      } : {}}
+      transition={{
+        duration: 2.5,
+        ease: "easeInOut"
+      }}
+    >
+      <IconButton
+        onClick={onClick}
+        sx={{
+          width: 48,
+          height: 48,
+          background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 140, 0, 0.08))',
+          backdropFilter: 'blur(8px)',
+          borderRadius: '12px',
+          border: '1.5px solid rgba(255, 215, 0, 0.15)',
+          boxShadow: '0 2px 8px rgba(255, 215, 0, 0.15)',
+          position: 'relative',
+          overflow: 'visible',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.2))',
+            transform: 'scale(1.08)',
+            boxShadow: '0 4px 12px rgba(255, 215, 0, 0.25)',
+            border: '1.5px solid rgba(255, 215, 0, 0.3)',
+          },
+          '& .MuiSvgIcon-root': {
+            fontSize: 28,
+            color: 'rgba(255, 215, 0, 0.85)',
+            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))',
+            transition: 'all 0.3s ease',
+          },
+          '&:hover .MuiSvgIcon-root': {
+            color: 'rgba(255, 215, 0, 0.95)',
+            filter: 'drop-shadow(0 2px 4px rgba(255,215,0,0.3))',
+            transform: 'rotate(10deg)'
+          },
+        }}
+      >
+        <AdminIcon />
+      </IconButton>
+    </motion.div>
+  );
+};
 
 export default function TopDrawerWithToggle() {
     const navigate = useNavigate();
@@ -221,7 +257,7 @@ export default function TopDrawerWithToggle() {
 
 
     const [open, setOpen] = useState(false);
-    const [expandedSections, setExpandedSections] = React.useState({});
+    const [expandedSections, setExpandedSections] = React.useState({0:true,1:true,2:true});
     const { isAuthenticatedAdmin, isAuthenticatedTeacher, logEvent, setLogEventHandler } = useAuth();
     // const [keepProfilePicUpdated, setKeepProfilePicUpdated] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -271,8 +307,10 @@ export default function TopDrawerWithToggle() {
                 }
                 setUsername(response.data.teacherName);
             } catch (error) {
-                //   enqueueSnackbar("Failed to fetch profile picture.", { variant: "error" });
-                console.error("Failed to fetch profile picture:", error);
+                // Silently handle 401 errors when user is not authenticated
+                if (error.response?.status !== 401) {
+                    console.error("Failed to fetch profile picture:", error);
+                }
             } finally {
                 setLoading(false);
             }
