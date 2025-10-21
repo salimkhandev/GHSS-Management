@@ -63,7 +63,7 @@ function App() {
                   </Suspense>
                 }
               />
-             
+
               <Route path="/TeacherLogin" element={<TeacherLogin />} />
               <Route path="/admin" element={<AdminLogin/>} />
               <Route path="/teacherAdminLogin" element={<TeacherAdminLogin />} />
@@ -127,7 +127,7 @@ function App() {
               </Route>
 
             </Routes>
-           
+
           </main>
         </Router>
       // </AuthProvider>
