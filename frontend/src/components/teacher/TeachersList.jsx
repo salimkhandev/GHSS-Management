@@ -122,13 +122,13 @@ const TeachersList = () => {
             background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
         }}>
             <Box sx={{
-                mb: { xs: 4, sm: 6 },
+                mb: { xs: 3, sm: 4, md: 6 },
                 textAlign: 'center',
-                width: '50%',
+                width: { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
                 mx: 'auto',
                 background: 'linear-gradient(45deg, #1976d2, #2196f3)',
                 borderRadius: 2,
-                p: { xs: 2, sm: 3, md: ['8px'] },
+                p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
             }}>
@@ -139,43 +139,43 @@ const TeachersList = () => {
                         alignItems: 'center',
                         width: '100%',
                         justifyContent: 'center',
-                        gap: 2,
+                        gap: { xs: 1, sm: 1.5, md: 2 },
                         fontWeight: 700,
-                        fontSize: { xs: '1rem', sm: '1rem', md: '1.6rem' },
+                        fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.6rem', lg: '1.8rem' },
                         fontFamily: "'Poppins', sans-serif",
                         textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                     }}
                 >
-                    <TeacherIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.9rem', md: '2rem' } }} />
+                    <TeacherIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.6rem', md: '2rem' } }} />
                     Teachers List
                 </Typography>
             </Box>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
                 {Object.keys(teachers).map((className, index) => (
                     <Grid item xs={12} key={index}>
                         <Typography
                             variant="h4"
                             sx={{
-                                mb: 3,
+                                mb: { xs: 2, sm: 2.5, md: 3 },
                                 fontWeight: 600,
-                                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+                                fontSize: { xs: '1.15rem', sm: '1.4rem', md: '1.75rem', lg: '2rem' },
                                 fontFamily: "'Poppins', sans-serif",
                                 color: theme.palette.primary.main,
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 1,
-                                pl: 1,
+                                gap: { xs: 0.75, sm: 1 },
+                                pl: { xs: 0.75, sm: 1 },
                                 borderLeft: `4px solid ${theme.palette.primary.main}`
                             }}
                         >
                             {/* code for profile pic */}
 
-                            <SchoolIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }} />
+                            <SchoolIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.75rem', lg: '2rem' } }} />
                             {className}
                         </Typography>
 
-                        <Grid container spacing={3}>
+                        <Grid container spacing={{ xs: 2, sm: 2.5, md: 3 }}>
                             {teachers[className].map((teacher, idx) => (
                                 <Grid item xs={12} sm={6} md={4} key={idx}>
                                     <Card sx={{
@@ -197,13 +197,13 @@ const TeachersList = () => {
                                         <CardContent sx={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            gap: 2,
-                                            p: { xs: 2, sm: 3 }
+                                            gap: { xs: 1.5, sm: 2 },
+                                            p: { xs: 1.5, sm: 2, md: 3 }
                                         }}>
                                             <Box sx={{
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                gap: 1
+                                                gap: { xs: 0.75, sm: 1 }
                                             }}>
                                                 {/* code for profile pic */}
 
@@ -213,8 +213,8 @@ const TeachersList = () => {
                                                         src={teacher.profile_pic_url}
                                                         alt="Teacher"
                                                         sx={{
-                                                            width: { xs: 45, sm: 48 },
-                                                            height: { xs: 45, sm: 48 },
+                                                            width: { xs: 36, sm: 42, md: 48 },
+                                                            height: { xs: 36, sm: 42, md: 48 },
                                                             borderRadius: '50%',
                                                             objectFit: 'cover',
                                                             border: '2px solid #fff',
@@ -223,7 +223,7 @@ const TeachersList = () => {
                                                             display: 'flex',
                                                             alignItems: 'center',
                                                             justifyContent: 'center',
-                                                            margin: '4px 8px',
+                                                            flexShrink: 0,
                                                             verticalAlign: 'middle',
                                                             '&:hover': {
                                                                 transform: 'scale(1.05)',
@@ -236,13 +236,13 @@ const TeachersList = () => {
                                                     <TeacherIcon
                                                         sx={{
                                                             color: theme.palette.primary.main,
-                                                            fontSize: { xs: '1.8rem', sm: '2rem' },
+                                                            fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
                                                             backgroundColor: '#f5f5f5',
-                                                            padding: '5px',
+                                                            padding: { xs: '4px', sm: '5px' },
                                                             borderRadius: '50%',
                                                             border: '2px solid #fff',
                                                             boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
-                                                            margin: '4px 8px',
+                                                            flexShrink: 0,
                                                             verticalAlign: 'middle',
                                                             '&:hover': {
                                                                 transform: 'scale(1.05)',
@@ -257,9 +257,16 @@ const TeachersList = () => {
                                                     variant="h6"
                                                     sx={{
                                                         fontWeight: 600,
-                                                        fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
+                                                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.25rem' },
                                                         fontFamily: "'Poppins', sans-serif",
-                                                        transition: 'color 0.3s ease'
+                                                        transition: 'color 0.3s ease',
+                                                        lineHeight: 1.3,
+                                                        wordBreak: 'break-word',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        display: '-webkit-box',
+                                                        WebkitLineClamp: 2,
+                                                        WebkitBoxOrient: 'vertical'
                                                     }}
                                                 >
                                                     {teacher.teacher_name}
@@ -269,12 +276,13 @@ const TeachersList = () => {
                                             <Box sx={{
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                gap: 1,
+                                                gap: { xs: 0.5, sm: 1 },
                                                 color: theme.palette.text.secondary
                                             }}>
 
                                                 <Typography sx={{
-                                                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                                                    fontSize: { xs: '0.8rem', sm: '0.875rem', md: '1rem' },
+                                                    whiteSpace: 'nowrap'
                                                 }}>
                                                     Section: {teacher.section_name}
                                                 </Typography>

@@ -49,34 +49,33 @@ function StudentRegistrationForm() {
     };
 
     return (
-    
-        <div className="flex items-center justify-center min-h-screen bg-gray-100  p-4">
-            <div className="w-full shadow-[5px_5px_20px_5px_rgba(0,0,0,0.5)]   border-x-green-400  border-2 border-blue-500 max-w-md bg-white 0 p-6 rounded-lg">
-                    <h2 className="text-center text-2xl mb-6 font-serif text-gray-800">Student Registration Form</h2>
-                <Formik 
-                initialValues={{ name: '', class_id: '', section_id: '' }}
-                validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    setLoading(true);
-                    axios.post(`${apiBase}/students`, values)
-                        .then(response => {
-                            setSnackbar({ open: true, message: "Student registered successfully!✅" });
-                        })
-                        .catch(error => {
-                            console.error('There was an error saving the student data!❌', error);
-                        })
-                        .finally(() => setLoading(false));
-                }}
-            >
-                {({ setFieldValue, errors, touched }) => (
-                        <Form >
-                        <div className="mb-4">
+        <div className="w-full max-w-md mx-auto">
+            <div className="w-full shadow-lg border-2 border-blue-500 bg-white p-6 rounded-lg">
+                <h2 className="text-center text-2xl mb-4 font-serif text-gray-800">Student Registration Form</h2>
+                <Formik
+                    initialValues={{ name: '', class_id: '', section_id: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => {
+                        setLoading(true);
+                        axios.post(`${apiBase}/students`, values)
+                            .then(response => {
+                                setSnackbar({ open: true, message: "Student registered successfully!✅" });
+                            })
+                            .catch(error => {
+                                console.error('There was an error saving the student data!❌', error);
+                            })
+                            .finally(() => setLoading(false));
+                    }}
+                >
+                    {({ setFieldValue, errors, touched }) => (
+                        <Form>
+                            <div className="mb-3">
                             <label htmlFor="name" className="block text-gray-700">Name:</label>
                             <Field type="text" id="name" name="name" className="mt-1 block w-full border border-gray-300 rounded-lg p-2" />
                             <ErrorMessage name="name" component="div" className="text-red-600 mt-1 text-sm" />
                         </div>
 
-                        <div className="mb-4">
+                            <div className="mb-3">
                             <FormControl fullWidth variant="outlined">
                                 <InputLabel htmlFor="class_id">Select Class</InputLabel>
                                 <Field
@@ -102,7 +101,7 @@ function StudentRegistrationForm() {
                             </FormControl>
                         </div>
 
-                        <div className="mb-4">
+                            <div className="mb-3">
                             <FormControl fullWidth variant="outlined">
                                 <InputLabel htmlFor="section_id">Select Section</InputLabel>
                                 <Field
@@ -122,7 +121,7 @@ function StudentRegistrationForm() {
                             </FormControl>
                         </div>
 
-                        <div className="flex items-center justify-center mt-4">
+                            <div className="flex items-center justify-center mt-3">
                             <Button
                                 type="submit"
                                 variant="contained"
@@ -133,17 +132,17 @@ function StudentRegistrationForm() {
                                 {loading ? <CircularProgress size={24} /> : 'Submit'}
                             </Button>
                         </div>
-                    </Form>
-                )}
-            </Formik>
-            <Snackbar
-                open={snackbar.open}
-                autoHideDuration={3000}
-                onClose={handleCloseSnackbar}
-                message={snackbar.message}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            />
-        </div>
+                        </Form>
+                    )}
+                </Formik>
+                <Snackbar
+                    open={snackbar.open}
+                    autoHideDuration={3000}
+                    onClose={handleCloseSnackbar}
+                    message={snackbar.message}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                />
+            </div>
         </div>
     );
 }

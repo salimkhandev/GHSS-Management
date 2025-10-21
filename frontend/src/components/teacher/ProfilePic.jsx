@@ -57,7 +57,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
             const img = new Image();
-            
+
             return new Promise((resolve) => {
                 img.onload = () => {
                     canvas.width = croppedAreaPixels.width;
@@ -97,8 +97,8 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             formData.append("profilePic", dataURLtoFile(croppedImageDataUrl, file.name));
 
             const response = await axios.post(
-                `${apiBase}/upload-profile`, 
-                formData, 
+                `${apiBase}/upload-profile`,
+                formData,
                 {
                     withCredentials: true,
                     headers: { "Content-Type": "multipart/form-data" },
@@ -109,7 +109,10 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             onImageUpdate(`${response.data.imageUrl}?t=${Date.now()}`);
             setShowModal(false);
             setImage(null);
-            enqueueSnackbar("Profile picture updated successfully!", { variant: "success" });
+            enqueueSnackbar("Profile picture updated successfully!", {
+                variant: "success",
+                style: { backgroundColor: '#2196f3', color: '#ffffff' }
+            });
         } catch (error) {
             console.error('Upload error:', error);
             enqueueSnackbar("Failed to upload profile picture", { variant: "error" });
@@ -137,7 +140,10 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             await axios.delete(`${apiBase}/delete-profile-pic`, { withCredentials: true });
             setImageUrl(null);
             setShowModal(false);
-            enqueueSnackbar("Profile picture deleted successfully!", { variant: "success" });
+            enqueueSnackbar("Profile picture deleted successfully!", {
+                variant: "success",
+                style: { backgroundColor: '#2196f3', color: '#ffffff' }
+            });
         } catch (error) {
             console.error('Delete error:', error);
             enqueueSnackbar("Failed to delete profile picture", { variant: "error" });
@@ -168,7 +174,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
 
     return (
         <>
-         
+
 
 
             {/* Modal */}
@@ -241,7 +247,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                 />
                             </Box>
                         ) : (
-                            <Box 
+                            <Box
                                 {...getRootProps()}
                                 sx={{
                                     height: 200,
@@ -352,7 +358,10 @@ ProfilePicManager.propTypes = {
 };
 
 const ProfilePicManagerWithSnackbar = (props) => (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    >
         <ProfilePicManager {...props} />
     </SnackbarProvider>
 );

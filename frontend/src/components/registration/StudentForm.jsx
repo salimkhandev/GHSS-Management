@@ -1,109 +1,119 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import React, { useState } from 'react';
 import StudentBulkUpload from './StudentBulkUpload';
 import StudentRegistrationForm from './StudentRegistrationForm';
 
 function StudentForm() {
-    const [formType, setFormType] = useState(null);
+    const [formType, setFormType] = useState('manual');
 
     const handleFormSelection = (form) => {
         setFormType(form);
     };
 
     return (
-        <Box className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-            <Grid container spacing={3} sx={{ maxWidth: 600, width: '100%' }}>
-                <Grid item xs={12} textAlign="center">
-                    {formType==null &&(<Typography variant="h5" sx={{ fontWeight: 'bold', color: '#3f51b5' }}>
-                        How do you want to add Students?
-                    </Typography>)}
-                </Grid>
-                <Grid item xs={12} textAlign="center">
+        <Box
+            sx={{
+                minHeight: '100vh',
+                background: 'linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%)',
+                py: { xs: 2, md: 3 },
+                px: { xs: 1, sm: 2 }
+            }}
+        >
+            <Container maxWidth="lg">
+                {/* Top Button Navigation */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: 2,
+                        mb: 2,
+                        flexWrap: 'wrap'
+                    }}
+                >
                     <Button
-                        // variant="contained"
+                        variant={formType === 'manual' ? 'contained' : 'outlined'}
+                        onClick={() => handleFormSelection('manual')}
                         sx={{
-                            px: 4,
-
-                            mb: {
-                                xs: '21px',  // Extra-small screens (default breakpoint is 0px - 600px)
-                                sm: '21px',  // Small screens (600px - 960px)
-                                md: '0px',  // Medium screens (960px - 1280px)
-                                lg: '0px',   // Large screens (1280px - 1920px)
-                                xl: '0px',   // Extra-large screens (1920px and above)
+                            px: { xs: 3, sm: 4 },
+                            py: 1.2,
+                            fontFamily: "'Poppins', sans-serif",
+                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                            fontWeight: 600,
+                            textTransform: 'capitalize',
+                            borderRadius: '12px',
+                            minWidth: { xs: '160px', sm: '200px' },
+                            border: '2px solid',
+                            borderColor: formType === 'manual' ? '#3F51B5' : '#d0d0d0',
+                            backgroundColor: formType === 'manual' ? '#3F51B5' : 'white',
+                            color: formType === 'manual' ? 'white' : '#3F51B5',
+                            boxShadow: formType === 'manual'
+                                ? '0px 4px 12px rgba(63, 81, 181, 0.3)'
+                                : '0px 2px 8px rgba(0, 0, 0, 0.1)',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                                backgroundColor: formType === 'manual' ? '#303f9f' : '#f5f5f5',
+                                borderColor: '#3F51B5',
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0px 6px 16px rgba(63, 81, 181, 0.4)',
                             },
-                        
-                            py: 1.26, 
-                            fontFamily: "'Poppins', sans-serif" ,
-                            // fontWeight:'bold',// Padding Left & Right (16px)
-                         // Padding Top & Bottom (12px)
-                            m: "0 20px", // Margin Left & Right
-                            textTransform: "capitalize", // Capitalize first letter
-                            borderRadius: "10px", // Rounded corners
-                            color: '#3F51B5',
-                            fontSize: '1rem',// Text color
-                            backgroundColor: formType === 'manual' ?"#f0f0f0":"white", 
-                            border: formType === 'manual' ?'2px solid #3F51B5':'2px solid #f0f0f0', // Border color
-                            boxShadow: formType === 'manual' ?'0px 0px 4px 2px #D6D6E': "0px 4px 8px rgba(45, 35, 66, 0.4)", // Shadow effect
-                            transition: "all 0.15s ease-in-out", // Smooth transition
-                            "&:hover": {
-                                backgroundColor: "#f0f0f0", // Light gray on hover
-                                boxShadow: "0px 6px 12px rgba(45, 35, 66, 0.3)",
-                                transform: "translateY(-2px)", // Lift effect
-                            },
-                           
-                            "&:active": {
-                                boxShadow: "inset 0px 3px 7px #D6D6E7",
-                                transform: "translateY(2px)", // Pressed effect
-                            },
+                            '&:active': {
+                                transform: 'translateY(0)',
+                            }
                         }}
-                        onClick={() => handleFormSelection("manual")}
                     >
                         Manual Registration
                     </Button>
+
                     <Button
-                        // variant="contained"
-                        // color="secondary"
+                        variant={formType === 'bulk' ? 'contained' : 'outlined'}
+                        onClick={() => handleFormSelection('bulk')}
                         sx={{
-                            px: 4, // Padding Left & Right (16px)
-                            py: 1.26, // Padding Top & Bottom (12px)
-                            borderRadius: "8px", 
-                            color:'#3F51B5',
-                            fontSize: '1rem',
-                            textTransform: "capitalize", // First letter capitalized
-                            backgroundColor: formType === 'bulk' ? "#f0f0f0" : "white",
-                            border: formType === 'bulk' ? '2px solid #3F51B5' : '2px solid #f0f0f0', // Border color
-                            boxShadow: formType === 'bulk' ? '0px 0px 4px 2px #D6D6E' : "0px 4px 8px rgba(45, 35, 66, 0.4)", // Shadow effect
-                            transition: "all 0.15s ease-in-out", // Smooth transition
-                            "&:hover": {
-                                backgroundColor: "rgba(255, 255, 255, 0.2)", // Slightly lighter on hover
-                                boxShadow: "0px 6px 12px rgba(45, 35, 66, 0.3)",
-                                transform: "translateY(-2px)", // Lift effect
+                            px: { xs: 3, sm: 4 },
+                            py: 1.2,
+                            fontFamily: "'Poppins', sans-serif",
+                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                            fontWeight: 600,
+                            textTransform: 'capitalize',
+                            borderRadius: '12px',
+                            minWidth: { xs: '160px', sm: '200px' },
+                            border: '2px solid',
+                            borderColor: formType === 'bulk' ? '#3F51B5' : '#d0d0d0',
+                            backgroundColor: formType === 'bulk' ? '#3F51B5' : 'white',
+                            color: formType === 'bulk' ? 'white' : '#3F51B5',
+                            boxShadow: formType === 'bulk'
+                                ? '0px 4px 12px rgba(63, 81, 181, 0.3)'
+                                : '0px 2px 8px rgba(0, 0, 0, 0.1)',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                                backgroundColor: formType === 'bulk' ? '#303f9f' : '#f5f5f5',
+                                borderColor: '#3F51B5',
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0px 6px 16px rgba(63, 81, 181, 0.4)',
                             },
-                            
-                            "&:active": {
-                                boxShadow: "inset 0px 3px 7px #D6D6E7",
-                                transform: "translateY(2px)", // Pressed effect
-                            },
+                            '&:active': {
+                                transform: 'translateY(0)',
+                            }
                         }}
-                        onClick={() => handleFormSelection("bulk")}
                     >
                         Bulk Upload
                     </Button>
+                </Box>
 
-                </Grid>
-                <Grid item xs={12} sx={{
-                    mt: {
-                        // xs: '-111px',  // Extra-small screens (default breakpoint is 0px - 600px)
-                        // sm: '-138px',  // Small screens (600px - 960px)
-                        // md: '-180px',  // Medium screens (960px - 1280px)
-                        // lg: '-180px',   // Large screens (1280px - 1920px)
-                        // xl: '-180px',   // Extra-large screens (1920px and above)
-                    }
-}}>
-                        {formType === 'manual' && <StudentRegistrationForm />}
-                        {formType === 'bulk' && <StudentBulkUpload />}
-                </Grid>
-            </Grid>
+                {/* Form Content - Reduced spacing */}
+                <Box
+                    sx={{
+                        mt: 0,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        minHeight: 'calc(100vh - 120px)'
+                    }}
+                >
+                    {formType === 'manual' && <StudentRegistrationForm />}
+                    {formType === 'bulk' && <StudentBulkUpload />}
+                </Box>
+            </Container>
         </Box>
     );
 }
