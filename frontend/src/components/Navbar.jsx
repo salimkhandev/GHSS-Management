@@ -1,20 +1,26 @@
 import {
-    AdminPanelSettings as AdminIcon,
+    Menu as MenuIcon,
     MenuBook as AttendanceIcon,
     Home as HomeIcon,
     People as StudentsIcon,
-    School as TeachersIcon
+    School as TeachersIcon,
+    Close as CloseIcon
 } from '@mui/icons-material';
 import {
     AppBar,
+    Box,
     Button,
+    Drawer,
     IconButton,
-    Menu,
-    MenuItem,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
     Toolbar,
     Typography,
     useMediaQuery,
-    useTheme
+    Divider
 } from '@mui/material';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -22,16 +28,16 @@ import HamburgerMenu from "./HamburgerMenu";
 import logo from "/images/ghssLogo.png";
 
 const Navbar = () => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-    const [anchorEl, setAnchorEl] = useState(null);
+    const isMobile = useMediaQuery('(max-width:1136px)');
+    const isVerySmall = useMediaQuery('(max-width:438px)');
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
-    const handleMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleDrawerOpen = () => {
+        setDrawerOpen(true);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
     };
 
     const navItems = [
@@ -42,42 +48,41 @@ const Navbar = () => {
     ];
 
     return (
-        <div className='flex  justify-start mb-16'>
+        <div className='flex justify-start mb-16'>
             <AppBar
                 sx={{
                     background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                     transition: 'all 0.3s ease-in-out',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
                     position: '!sticky',
-                    top: 0,  // Sticks to the top of the viewport
+                    top: 0,
                     zIndex: 50,
                     '&:hover': {
                         background: 'linear-gradient(135deg, #1e3c72 10%, #2a5298 90%)',
                     }
                 }}
-            
             >
-           
-
-
-                <Toolbar sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                <Toolbar sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: { xs: '0.5rem 1rem', md: '0.5rem 2rem' }
                 }}>
-                    {<HamburgerMenu />}
-                    
-                    <div
-                      style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '1rem'
-                    }}>
-                        <img
+                    <HamburgerMenu />
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem'
+                        }}
+                    >
+                        <Box
+                            component="img"
                             src={logo}
                             alt="School Logo"
-                            style={{
+                            sx={{
+                                display: { xs: isVerySmall ? 'none' : 'block', sm: 'block' },
                                 height: '48px',
                                 width: '48px',
                                 objectFit: 'contain',
@@ -88,9 +93,9 @@ const Navbar = () => {
                                 }
                             }}
                         />
-                        <Typography 
+                        <Typography
                             variant={isMobile ? "h6" : "h5"}
-                            sx={{ 
+                            sx={{
                                 fontFamily: "'Playfair Display', serif",
                                 fontWeight: 700,
                                 letterSpacing: '0.5px',
@@ -103,60 +108,156 @@ const Navbar = () => {
                         >
                             GHSS Luqman Banda
                         </Typography>
-                    </div>
+                    </Box>
 
                     {isMobile ? (
                         <>
                             <IconButton
-                                onClick={handleMenuOpen}
-                                sx={{ 
+                                onClick={handleDrawerOpen}
+                                sx={{
                                     color: 'white',
                                     '&:hover': {
                                         backgroundColor: 'rgba(255,255,255,0.1)'
                                     }
                                 }}
                             >
-                                <AdminIcon />
+                                <MenuIcon />
                             </IconButton>
-                            <Menu
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={handleMenuClose}
-                                PaperProps={{
-                                    sx: {
-                                        backgroundColor: '#fff',
-                                        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                                        borderRadius: '8px',
-                                        mt: 1
+
+                            <Drawer
+                                anchor="right"
+                                open={drawerOpen}
+                                onClose={handleDrawerClose}
+                                sx={{
+                                    '& .MuiDrawer-paper': {
+                                        width: { xs: '280px', sm: '320px' },
+                                        background: 'linear-gradient(180deg, #1e3c72 0%, #2a5298 50%, #3d5fa8 100%)',
+                                        color: 'white',
+                                        boxShadow: '-4px 0 20px rgba(0,0,0,0.3)',
                                     }
                                 }}
                             >
-                                {navItems.map((item) => (
-                                    <MenuItem 
-                                        key={item.path}
-                                        onClick={handleMenuClose}
-                                        component={Link}
-                                        to={item.path}
+                                {/* Drawer Header */}
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '1.5rem 1rem',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        borderBottom: '2px solid rgba(255,255,255,0.1)'
+                                    }}
+                                >
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                        <Box
+                                            component="img"
+                                            src={logo}
+                                            alt="School Logo"
+                                            sx={{
+                                                height: '40px',
+                                                width: '40px',
+                                                objectFit: 'contain',
+                                                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                                            }}
+                                        />
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                fontFamily: "'Playfair Display', serif",
+                                                fontWeight: 700,
+                                                fontSize: '1rem',
+                                            }}
+                                        >
+                                            Navigation
+                                        </Typography>
+                                    </Box>
+                                    <IconButton
+                                        onClick={handleDrawerClose}
                                         sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '0.5rem',
-                                            padding: '0.75rem 1.5rem',
-                                            fontFamily: "'Poppins', sans-serif",
-                                            color: '#333',
+                                            color: 'white',
                                             '&:hover': {
-                                                backgroundColor: 'rgba(0,0,0,0.04)'
+                                                backgroundColor: 'rgba(255,255,255,0.1)',
+                                                transform: 'rotate(90deg)',
+                                                transition: 'all 0.3s ease'
                                             }
                                         }}
                                     >
-                                        {item.icon}
-                                        {item.label}
-                                    </MenuItem>
-                                ))}
-                            </Menu>
+                                        <CloseIcon />
+                                    </IconButton>
+                                </Box>
+
+                                <Divider sx={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
+
+                                {/* Navigation Items */}
+                                <List sx={{ padding: '1rem 0', flex: 1 }}>
+                                    {navItems.map((item, index) => (
+                                        <ListItem key={item.path} disablePadding>
+                                            <ListItemButton
+                                                component={Link}
+                                                to={item.path}
+                                                onClick={handleDrawerClose}
+                                                sx={{
+                                                    padding: '1rem 1.5rem',
+                                                    margin: '0.25rem 0.75rem',
+                                                    borderRadius: '12px',
+                                                    transition: 'all 0.3s ease',
+                                                    '&:hover': {
+                                                        backgroundColor: 'rgba(255,255,255,0.15)',
+                                                        transform: 'translateX(-8px)',
+                                                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                                                    }
+                                                }}
+                                            >
+                                                <ListItemIcon
+                                                    sx={{
+                                                        color: 'white',
+                                                        minWidth: '45px',
+                                                        '& .MuiSvgIcon-root': {
+                                                            fontSize: '1.5rem',
+                                                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+                                                        }
+                                                    }}
+                                                >
+                                                    {item.icon}
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary={item.label}
+                                                    primaryTypographyProps={{
+                                                        fontFamily: "'Poppins', sans-serif",
+                                                        fontWeight: 500,
+                                                        fontSize: '0.95rem',
+                                                        letterSpacing: '0.3px'
+                                                    }}
+                                                />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    ))}
+                                </List>
+
+                                {/* Footer */}
+                                <Box
+                                    sx={{
+                                        padding: '1.5rem',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        borderTop: '2px solid rgba(255,255,255,0.1)',
+                                        textAlign: 'center'
+                                    }}
+                                >
+                                    <Typography
+                                        variant="caption"
+                                        sx={{
+                                            fontFamily: "'Poppins', sans-serif",
+                                            opacity: 0.7,
+                                            fontSize: '0.75rem'
+                                        }}
+                                    >
+                                        GHSS Luqman Banda
+                                    </Typography>
+                                </Box>
+                            </Drawer>
                         </>
                     ) : (
-                        <div style={{ display: 'flex', gap: '1rem' }}>
+                        <Box sx={{ display: 'flex', gap: '1rem' }}>
                             {navItems.map((item) => (
                                 <Button
                                     key={item.path}
@@ -180,7 +281,7 @@ const Navbar = () => {
                                     {item.label}
                                 </Button>
                             ))}
-                        </div>
+                        </Box>
                     )}
                 </Toolbar>
             </AppBar>
