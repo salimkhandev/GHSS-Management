@@ -462,19 +462,21 @@ const StudentList = () => {
                                                 >
                                                     {student.student_name}
                                                 </Typography>
+                                                <Typography variant="body2" color="text.secondary">ID:
                                                 <Chip
                                                     label={student.id}
                                                     size="small"
                                                     color="primary"
                                                     variant="outlined"
                                                 />
+                                                    </Typography>
                                             </Box>
 
                                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                                     <ClassIcon fontSize="small" color="action" />
                                                     <Typography variant="body2" color="text.secondary">
-                                                        Class: <strong>{student.class_name || 'N/A'}</strong>
+                                                        <strong>{student.class_name || 'N/A'}</strong>
                                                     </Typography>
                                                 </Box>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

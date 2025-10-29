@@ -2,11 +2,11 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Don't forget to import AOS CSS
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import logo from "/images/ghssLogo.png"; // Ensure the path to your logo is correct
 
 const images = [
     { src: "/images/carousel1.jpg", alt: "School Building" },
@@ -82,7 +82,7 @@ const GallerySlider = () => {
     };
 
     return (
-        <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+        <div className="bg-gray-100 min-h-screen">
             {/* Welcome Message */}
             {!showSlider && (
                 <div
@@ -98,30 +98,19 @@ const GallerySlider = () => {
 
             {/* Main Content */}
             {showSlider && (
-                <Box sx={{ width: "100vw", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", backgroundColor: "#f4f4f4" }}>
-                    {/* Logo at the Top */}
-                    <div >
-                        <img
-                            src={logo}
-                            alt="School Logo"
-                            className="h-32 w-32 object-contain mx-auto" // Larger logo size
-                        />
-                    </div>
-
-                    {/* Gallery */}
-                    <Slider {...settings} style={{ width: "90vw", maxWidth: "1000px" }}>
+                <Box sx={{ width: "100vw", height: "100vh", position: "relative", backgroundColor: "#000" }}>
+                    {/* Gallery - full viewport */}
+                    <Slider {...settings} style={{ width: "100vw", height: "100vh" }}>
                         {images.map((image, index) => (
-                            <Box key={index} sx={{ display: "flex", justifyContent: "center", alignItems: "center", mt: ['4px'] }}>
+                            <Box key={index} sx={{ width: "100vw", height: "100vh" }}>
                                 <img
                                     src={image.src}
                                     alt={image.alt}
                                     style={{
-                                        width: "100%",
-                                        height: "80vh",
+                                        width: "100vw",
+                                        height: "100vh",
                                         objectFit: "cover",
-                                        border: "10px solid gray",
-                                        borderRadius: "20px",
-                                        boxShadow: "0px 8px 20px rgba(1, 1, 1, 0.1)",
+                                        display: "block",
                                     }}
                                 />
                             </Box>
@@ -134,3 +123,11 @@ const GallerySlider = () => {
 };
 
 export default GallerySlider;
+
+NextArrow.propTypes = {
+    onClick: PropTypes.func,
+};
+
+PrevArrow.propTypes = {
+    onClick: PropTypes.func,
+};

@@ -1,6 +1,7 @@
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Container, Typography, useMediaQuery } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -63,6 +64,9 @@ const PrevArrow = ({ onClick }) => (
 
 const GallerySlider = () => {
   const [showSlider, setShowSlider] = useState(false);
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const appBarHeight = isMobile ? 56 : 64; // typical MUI AppBar heights
+  const viewportMinusAppBar = `calc(100vh - ${appBarHeight}px)`;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -86,16 +90,7 @@ const GallerySlider = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: '#f5f5f5',
-        py: { xs: 2, md: 4 },
-      }}
-    >
+    <Box sx={{ height: viewportMinusAppBar, overflow: 'hidden' }}>
       <AnimatePresence mode="wait">
         {!showSlider && (
           <motion.div
@@ -104,7 +99,7 @@ const GallerySlider = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8 }}
-            style={{ width: '100%', textAlign: 'center' }}
+            style={{ width: '100%', textAlign: 'center', height: viewportMinusAppBar, display: 'flex', alignItems: 'center' }}
           >
             <Container maxWidth="md">
               <motion.div
@@ -152,50 +147,27 @@ const GallerySlider = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100vw', height: viewportMinusAppBar }}
           >
-            <Container
-              maxWidth="xl"
-              sx={{
-                px: { xs: 2, sm: 3, md: 4 },
-                height: '100%',
-              }}
-            >
-              <Box
-                sx={{
-                  width: '100%',
-                  maxWidth: '1200px',
-                  mx: 'auto',
-                  height: '100%',
-                }}
-              >
-                <Slider {...settings}>
-                  {images.map((image, index) => (
-                    <Box key={index}>
-                      <Box
-                        sx={{
-                          height: { xs: '50vh', sm: '60vh', md: '70vh' },
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={image.src}
-                          alt={image.alt}
-                          sx={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  ))}
-                </Slider>
-              </Box>
-            </Container>
+            <Box sx={{ width: '100vw', height: viewportMinusAppBar }}>
+              <Slider {...settings}>
+                {images.map((image, index) => (
+                  <Box key={index} sx={{ width: '100vw', height: viewportMinusAppBar }}>
+                    <Box
+                      component="img"
+                      src={image.src}
+                      alt={image.alt}
+                      sx={{
+                        width: '100vw',
+                        height: viewportMinusAppBar,
+                        objectFit: 'cover',
+                        display: 'block',
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Slider>
+            </Box>
           </motion.div>
         )}
       </AnimatePresence>
@@ -204,3 +176,11 @@ const GallerySlider = () => {
 };
 
 export default GallerySlider;
+
+NextArrow.propTypes = {
+  onClick: PropTypes.func,
+};
+
+PrevArrow.propTypes = {
+  onClick: PropTypes.func,
+};

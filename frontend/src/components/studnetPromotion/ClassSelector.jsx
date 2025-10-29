@@ -396,7 +396,7 @@ const ClassSelector = () => {
                                             Name: {student.student_name}
                                         </Typography>
                                         <Typography sx={{ mb: 1 }}>
-                                            Class: {student.class_name}
+                                            {student.class_name}
                                         </Typography>
                                         <Typography sx={{ mb: 2 }}>
                                             Section: {student.section_name}
