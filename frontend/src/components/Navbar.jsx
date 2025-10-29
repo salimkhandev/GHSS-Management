@@ -23,7 +23,7 @@ import {
     Divider
 } from '@mui/material';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import HamburgerMenu from "./HamburgerMenu";
 import logo from "/images/ghssLogo.png";
 
@@ -31,6 +31,7 @@ const Navbar = () => {
     const isMobile = useMediaQuery('(max-width:1136px)');
     const isVerySmall = useMediaQuery('(max-width:438px)');
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const location = useLocation();
 
     const handleDrawerOpen = () => {
         setDrawerOpen(true);
@@ -200,7 +201,7 @@ const Navbar = () => {
                                                     padding: '1rem 1.5rem',
                                                     margin: '0.25rem 0.75rem',
                                                     borderRadius: '12px',
-                                                    backgroundColor: 'rgba(255,255,255,0.08)',
+                                                    backgroundColor: location.pathname === item.path ? 'rgba(255,255,255,0.24)' : 'rgba(255,255,255,0.08)',
                                                     backdropFilter: 'blur(10px)',
                                                     border: '1px solid rgba(255,255,255,0.12)',
                                                     transition: 'all 0.3s ease',
@@ -278,6 +279,8 @@ const Navbar = () => {
                                         padding: '0.7rem 1.5rem',
                                         borderRadius: '8px',
                                         transition: 'all 0.3s ease',
+                                        backgroundColor: location.pathname === item.path ? 'rgba(255,255,255,0.15)' : 'transparent',
+                                        boxShadow: location.pathname === item.path ? '0 4px 10px rgba(0,0,0,0.25)' : 'none',
                                         '& .MuiButton-startIcon': {
                                             marginRight: '0.5rem',
                                             fontSize: '1.3rem'
