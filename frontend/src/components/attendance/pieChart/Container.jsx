@@ -147,11 +147,14 @@ export default function ClassSectionDisplay() {
             <Paper
                 elevation={3}
                 sx={{
-                    p: { xs: 1.5, sm: 2, md: 3 },
+                    p: { xs: 1, sm: 1.25, md: 2 },
                     mb: { xs: 2, sm: 3, md: 4 },
-                    background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                    background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
                     borderRadius: 2,
-                    color: 'white'
+                    color: 'white',
+                    display: 'flex',
+                    width: 'fit-content',
+                    maxWidth: '100%'
                 }}
             >
                 <Typography
@@ -161,21 +164,34 @@ export default function ClassSectionDisplay() {
                         alignItems: 'center',
                         gap: { xs: 0.75, sm: 1 },
                         fontWeight: 700,
-                        fontSize: { xs: '1.1rem', sm: '1.4rem', md: '1.8rem' },
+                        fontSize: { xs: '1rem', sm: '1.25rem', md: '1.2rem' },
                     }}
                 >
-                    <AssessmentIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }} />
-                    Classes Performance
+                    <AssessmentIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.6rem', md: '1.6rem' } }} />
+                    <span>Classes Performance</span>
                 </Typography>
             </Paper>
 
             {loading ? (
+                <>
+                {/* Compact centered header skeleton */}
+                <Skeleton
+                    variant="rectangular"
+                    sx={{
+                        mb: { xs: 2, sm: 3, md: 4 },
+                        height: { xs: 44, sm: 52, md: 56 },
+                        width: { xs: 220, sm: 300, md: 360 },
+                        mx: 'auto',
+                        borderRadius: 2,
+                        bgcolor: 'rgba(25, 118, 210, 0.1)'
+                    }}
+                />
                 <Grid container spacing={3}>
                     {[1, 2, 3, 4].map((item) => (
                         <Grid item xs={12} sm={6} md={4} key={item}>
                             <Skeleton
                                 variant="rectangular"
-                                height={120}
+                                height={96}
                                 sx={{
                                     borderRadius: 2,
                                     bgcolor: 'rgba(0,0,0,0.04)'
@@ -184,6 +200,7 @@ export default function ClassSectionDisplay() {
                         </Grid>
                     ))}
                 </Grid>
+                </>
             ) : error ? (
                 <Paper
                     sx={{
@@ -199,13 +216,15 @@ export default function ClassSectionDisplay() {
                 </Paper>
             ) : !selectedClassId ? (
                 <Grid container spacing={3}>
-                    {classes.map((classItem) => (
+                        {classes.map((classItem) => (
                         <Grid item xs={12} sm={6} md={4} key={classItem.id}>
                             <Card
                                 onClick={() => handleClassClick(classItem.id, classItem.name)}
                                 sx={{
                                     cursor: 'pointer',
                                     transition: 'transform 0.2s, box-shadow 0.2s',
+                                        bgcolor: theme.palette.grey[50],
+                                        border: `1px solid ${theme.palette.divider}`,
                                     '&:hover': {
                                         transform: 'translateY(-4px)',
                                         boxShadow: 6
@@ -263,6 +282,8 @@ export default function ClassSectionDisplay() {
                                         sx={{
                                             cursor: 'pointer',
                                             transition: 'all 0.2s',
+                                            bgcolor: theme.palette.grey[50],
+                                            border: `1px solid ${theme.palette.divider}`,
                                             '&:hover': {
                                                 transform: 'translateY(-4px)',
                                                 boxShadow: 6
@@ -312,6 +333,7 @@ export default function ClassSectionDisplay() {
                                 sx={{
                                     px: { xs: 2, sm: 2.5, md: 3 },
                                     py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    textTransform: 'none',
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "daily" && {
@@ -330,6 +352,8 @@ export default function ClassSectionDisplay() {
                                 sx={{
                                     px: { xs: 2, sm: 2.5, md: 3 },
                                     py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    textTransform: 'none',
+
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "monthly" && {
@@ -348,6 +372,7 @@ export default function ClassSectionDisplay() {
                                 sx={{
                                     px: { xs: 2, sm: 2.5, md: 3 },
                                     py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    textTransform: 'none',
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "overall" && {

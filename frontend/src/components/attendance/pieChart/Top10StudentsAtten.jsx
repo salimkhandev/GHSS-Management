@@ -87,12 +87,14 @@ const AttendancePieChart = () => {
     if (loading) {
         return (
             <Box sx={{ p: { xs: 2, sm: 3 } }}>
-                {/* Header Skeleton */}
+                {/* Compact centered header skeleton */}
                 <Skeleton
                     variant="rectangular"
                     sx={{
                         mb: { xs: 2, sm: 3, md: 4 },
-                        height: { xs: 60, sm: 70, md: 80 },
+                        height: { xs: 44, sm: 52, md: 56 },
+                        width: { xs: 220, sm: 300, md: 360 },
+                        mx: 'auto',
                         borderRadius: 2,
                         bgcolor: 'rgba(25, 118, 210, 0.1)',
                     }}
@@ -223,16 +225,19 @@ const AttendancePieChart = () => {
             <Box sx={{
                 mb: 4,
                 textAlign: 'center',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
                 borderRadius: 2,
-                p: 3,
+                p: { xs: 1, sm: 1.25, md: 2 },
                 color: 'white',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                width: 'fit-content',
+                maxWidth: '100%',
+                mx: 'auto',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
             }}>
                 <Typography
                     variant="h4"
                     sx={{
-                        fontSize: {md:'1.8rem', xs:'1.12rem'},
+                        fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
                         whiteSpace: 'nowrap',
                         display: 'flex',
                         alignItems: 'center',
@@ -242,7 +247,7 @@ const AttendancePieChart = () => {
                         mb: 1
                     }}
                 >
-                    <LeaderboardIcon fontSize="large" />
+                    <LeaderboardIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.6rem' } }} />
                     Top 10 Ranked Students
                 </Typography>
             </Box>

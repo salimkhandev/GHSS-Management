@@ -69,7 +69,7 @@ const AttendancePieChart = () => {
                         endDate: format(new Date(end_date), 'dd MMMM yyyy'),
                     });
                 }
-            } catch (err) {
+            } catch {
                 setError('Error fetching attendance data');
             } finally {
                 setLoading(false);
@@ -84,16 +84,19 @@ const AttendancePieChart = () => {
             <Box sx={{
                 mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
                 borderRadius: 2,
-                p: { xs: 1.5, sm: 2, md: 3 },
+                p: { xs: 1, sm: 1.25, md: 2 },
                 color: 'white',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                width: 'fit-content',
+                maxWidth: '100%',
+                mx: 'auto',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
             }}>
                 <Typography
                     variant="h4"
                     sx={{
-                        fontSize: { xs: '1.1rem', sm: '1.4rem', md: '1.8rem' },
+                        fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -102,7 +105,7 @@ const AttendancePieChart = () => {
                         mb: { xs: 1, sm: 1.5, md: 2 }
                     }}
                 >
-                    <Assessment sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }} />
+                    <Assessment sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.6rem' } }} />
                     Attendance Overview
                 </Typography>
 
@@ -129,8 +132,8 @@ const AttendancePieChart = () => {
                         <Grid item xs={12} sm={6} md={6} lg={6} key={item}>
                             <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
                                 <CardContent>
-                                    <Skeleton variant="text" width="60%" height={40} />
-                                    <Skeleton variant="circular" width={200} height={200} sx={{ mx: 'auto', my: 2 }} />
+                                    <Skeleton variant="text" width="50%" height={28} />
+                                    <Skeleton variant="circular" width={180} height={180} sx={{ mx: 'auto', my: 2 }} />
                                 </CardContent>
                             </Card>
                         </Grid>

@@ -66,12 +66,14 @@ const PerformanceDashboard = () => {
             <Paper
                 elevation={3}
                 sx={{
-                    p: { xs: 1.5, sm: 2 },
+                    p: { xs: 1, sm: 1.25 },
                     mb: { xs: 2, sm: 3 },
-                    background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                    background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
                     borderRadius: 2,
                     color: 'white',
                     display: 'flex',
+                    width: 'fit-content',
+                    maxWidth: '100%',
                     alignItems: 'center',
                     gap: { xs: 1, sm: 2 }
                 }}
@@ -81,7 +83,7 @@ const PerformanceDashboard = () => {
                     <Typography
                         variant="h4"
                         sx={{
-                            fontSize: { xs: '1.1rem', sm: '1.5rem', md: '1.8rem' },
+                            fontSize: { xs: '1rem', sm: '1.2rem', md: '1.2rem' },
                             fontWeight: 700,
                             letterSpacing: 0.5,
                             textShadow: '0 2px 4px rgba(0,0,0,0.2)'
