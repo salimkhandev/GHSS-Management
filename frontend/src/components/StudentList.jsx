@@ -3,7 +3,6 @@ import {
     ArrowForward,
     Class as ClassIcon,
     Close as CloseIcon,
-    Download as DownloadIcon,
     FilterList as FilterListIcon,
     Groups as GroupsIcon,
     Person as PersonIcon,
@@ -11,33 +10,31 @@ import {
     Search as SearchIcon
 } from '@mui/icons-material';
 import {
+    Avatar,
     Box,
-    Button,
     Card,
     CardContent,
-    CircularProgress,
+    Chip,
     Collapse,
+    Container,
     FormControl,
     Grid,
+    IconButton,
     InputAdornment,
     InputLabel,
     MenuItem,
     Select,
+    Skeleton,
+    Stack,
     TextField,
     Typography,
-    Skeleton,
     useMediaQuery,
-    useTheme,
-    Container,
-    Stack,
-    Chip,
-    IconButton,
-    Avatar
+    useTheme
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import ExportToExcel from './ExportToExcel';
 import apiBase from '../config/api';
+import ExportToExcel from './ExportToExcel';
 
 const StudentList = () => {
     const theme = useTheme();
@@ -466,7 +463,7 @@ const StudentList = () => {
                                                     {student.student_name}
                                                 </Typography>
                                                 <Chip
-                                                    label={student.roll_no}
+                                                    label={student.id}
                                                     size="small"
                                                     color="primary"
                                                     variant="outlined"

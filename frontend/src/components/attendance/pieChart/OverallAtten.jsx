@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
-const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName }) => {
+const OverallAttenPieChart = ({ data, startDate, endDate }) => {
     const theme = useTheme();
     const COLORS = [theme.palette.success.main, theme.palette.error.main];
     const RADIAN = Math.PI / 180;
@@ -58,11 +58,14 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
             <Box sx={{
                 mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
                 borderRadius: 2,
-                p: { xs: 1.5, sm: 2, md: 3 },
+                p: { xs: 1, sm: 1.25, md: 2 },
                 color: 'white',
-                boxShadow: theme.shadows[4]
+                width: 'fit-content',
+                maxWidth: '100%',
+                mx: 'auto',
+                boxShadow: theme.shadows[3]
             }}>
                 {/* Class and Section names are already displayed in the parent component */}
                 <Typography
@@ -73,12 +76,7 @@ const OverallAttenPieChart = ({ data, startDate, endDate, className, sectionName
                         gap: { xs: 0.75, sm: 1 },
                         color: 'white',
                         fontWeight: 600,
-                        fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.25rem' },
-                        padding: { xs: '12px', sm: '14px', md: '16px' },
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        borderRadius: '8px',
-                        backdropFilter: 'blur(4px)',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        fontSize: { xs: '0.95rem', sm: '1.05rem', md: '1.15rem' },
                         '& .MuiSvgIcon-root': {
                             color: 'white'
                         }
@@ -228,8 +226,6 @@ OverallAttenPieChart.propTypes = {
     ).isRequired,
     startDate: PropTypes.string.isRequired,
     endDate: PropTypes.string.isRequired,
-    className: PropTypes.string.isRequired,
-    sectionName: PropTypes.string.isRequired
 };
 
 export default OverallAttenPieChart;

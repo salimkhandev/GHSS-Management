@@ -1,5 +1,4 @@
 import {
-    Assessment as AssessmentIcon,
     BarChart as BarChartIcon,
     Leaderboard as LeaderboardIcon,
     PieChart as PieChartIcon,
@@ -63,47 +62,21 @@ const PerformanceDashboard = () => {
 
     return (
         <Container maxWidth="lg" sx={{ py: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2 } }}>
-            <Paper
-                elevation={3}
-                sx={{
-                    p: { xs: 1, sm: 1.25 },
-                    mb: { xs: 2, sm: 3 },
-                    background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
-                    borderRadius: 2,
-                    color: 'white',
-                    display: 'flex',
-                    width: 'fit-content',
-                    maxWidth: '100%',
-                    alignItems: 'center',
-                    gap: { xs: 1, sm: 2 }
-                }}
-            >
-                <AssessmentIcon sx={{ fontSize: { xs: 32, sm: 36, md: 40 } }} />
-                <Box>
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            fontSize: { xs: '1rem', sm: '1.2rem', md: '1.2rem' },
-                            fontWeight: 700,
-                            letterSpacing: 0.5,
-                            textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                        }}
-                    >
-                        Performance Dashboard
-                    </Typography>
-                </Box>
-            </Paper>
+            {/* Removed title banner for a cleaner look */}
 
             <Paper
                 elevation={2}
                 sx={{
                     position: 'sticky',
-                    top: { xs: 56, sm: 64 },
+                    top: { xs: 56, sm: 64, md: 68 },
                     zIndex: 1000,
                     backgroundColor: 'white',
                     mb: { xs: 2, sm: 3, md: 4 },
                     borderRadius: 2,
-                    p: { xs: 1, sm: 1.5, md: 2 }
+                    p: { xs: 0.75, sm: 1.25, md: 1.5 },
+                    maxWidth: { xs: '100%', sm: 900, md: 1000 },
+                    mx: 'auto',
+                    border: `1px solid ${theme.palette.divider}`
                 }}
             >
                 <Grid
@@ -119,12 +92,12 @@ const PerformanceDashboard = () => {
                                 startIcon={item.icon}
                                 fullWidth
                                 sx={{
-                                    px: { xs: 2, sm: 2.5, md: 3 },
-                                    py: { xs: 1, sm: 1.25, md: 1.5 },
+                                    px: { xs: 1.5, sm: 2, md: 2.5 },
+                                    py: { xs: 0.85, sm: 1.1, md: 1.25 },
                                     borderRadius: 2,
                                     textTransform: 'none',
                                     fontWeight: 600,
-                                    fontSize: { xs: '0.85rem', sm: '0.9rem', md: '1rem' },
+                                    fontSize: { xs: '0.82rem', sm: '0.9rem', md: '0.95rem' },
                                     whiteSpace: 'nowrap',
                                     minWidth: 'fit-content',
                                     ...(activeComponent === item.id ? {

@@ -1,5 +1,4 @@
 import {
-    Assessment as AssessmentIcon,
     CalendarMonth as CalendarIcon,
     Class as ClassIcon,
     DateRange as DateRangeIcon,
@@ -144,33 +143,7 @@ export default function ClassSectionDisplay() {
 
     return (
         <Box sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
-            <Paper
-                elevation={3}
-                sx={{
-                    p: { xs: 1, sm: 1.25, md: 2 },
-                    mb: { xs: 2, sm: 3, md: 4 },
-                    background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
-                    borderRadius: 2,
-                    color: 'white',
-                    display: 'flex',
-                    width: 'fit-content',
-                    maxWidth: '100%'
-                }}
-            >
-                <Typography
-                    variant="h4"
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: { xs: 0.75, sm: 1 },
-                        fontWeight: 700,
-                        fontSize: { xs: '1rem', sm: '1.25rem', md: '1.2rem' },
-                    }}
-                >
-                    <AssessmentIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.6rem', md: '1.6rem' } }} />
-                    <span>Classes Performance</span>
-                </Typography>
-            </Paper>
+            {/* Show a subtle helper only before a class is selected */}
 
             {loading ? (
                 <>
@@ -215,6 +188,20 @@ export default function ClassSectionDisplay() {
                     <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>{error}</Typography>
                 </Paper>
             ) : !selectedClassId ? (
+                <>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontSize: { xs: '1.1rem', sm: '1.4rem', md: '1.75rem' },
+                        mb: { xs: 2, sm: 2.5, md: 3 },
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: theme.palette.primary.main,
+                        fontWeight: 600
+                    }}
+                >
+                    Select a class
+                </Typography>
                 <Grid container spacing={3}>
                         {classes.map((classItem) => (
                         <Grid item xs={12} sm={6} md={4} key={classItem.id}>
@@ -244,6 +231,7 @@ export default function ClassSectionDisplay() {
                         </Grid>
                     ))}
                 </Grid>
+                </>
             ) : !selectedSectionId ? (
                 <Box>
                     <Typography
@@ -257,8 +245,9 @@ export default function ClassSectionDisplay() {
                             fontWeight: 600
                         }}
                     >
-                        Sections for {selectedClassName}
+                        Select section for {selectedClassName}
                     </Typography>
+                  
                     <Grid container spacing={3}>
                         {sections.length === 0 && !loading ? (
                             <Grid item xs={12}>
@@ -333,11 +322,11 @@ export default function ClassSectionDisplay() {
                                 sx={{
                                     px: { xs: 2, sm: 2.5, md: 3 },
                                     py: { xs: 1, sm: 1.25, md: 1.5 },
-                                    textTransform: 'none',
+                                    textTransform: 'capitalize',
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "daily" && {
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        background: 'linear-gradient(45deg, #1e88e5 30%, #42a5f5 90%)',
                                     })
                                 }}
                             >
@@ -352,12 +341,11 @@ export default function ClassSectionDisplay() {
                                 sx={{
                                     px: { xs: 2, sm: 2.5, md: 3 },
                                     py: { xs: 1, sm: 1.25, md: 1.5 },
-                                    textTransform: 'none',
-
+                                    textTransform: 'capitalize',
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "monthly" && {
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        background: 'linear-gradient(45deg, #1e88e5 30%, #42a5f5 90%)',
                                     })
                                 }}
                             >
@@ -372,11 +360,11 @@ export default function ClassSectionDisplay() {
                                 sx={{
                                     px: { xs: 2, sm: 2.5, md: 3 },
                                     py: { xs: 1, sm: 1.25, md: 1.5 },
-                                    textTransform: 'none',
+                                    textTransform: 'capitalize',
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "overall" && {
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        background: 'linear-gradient(45deg, #1e88e5 30%, #42a5f5 90%)',
                                     })
                                 }}
                             >
