@@ -9,9 +9,9 @@ import "slick-carousel/slick/slick.css";
 import logo from "/images/ghssLogo.png";
 
 const images = [
-  { src: "/images/image.png", alt: "School Building" },
-  { src: "/images/image.png", alt: "School Building" },
-  { src: "/images/image.png", alt: "School Building" },
+  { src: "/images/image.jpg", alt: "School Building" },
+  { src: "/images/image.jpg", alt: "School Building" },
+  { src: "/images/image.jpg", alt: "School Building" },
 ];
 
 const NextArrow = ({ onClick }) => (
