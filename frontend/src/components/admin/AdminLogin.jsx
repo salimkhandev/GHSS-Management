@@ -9,14 +9,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
-import { useSnackbar } from 'notistack';
-import { useState } from 'react';
+import { SnackbarProvider, useSnackbar } from 'notistack';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useAuth } from './AuthProvider';
-import { SnackbarProvider } from 'notistack';
-import React from 'react';
 import apiBase from '../../config/api';
+import { useAuth } from './AuthProvider';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -138,7 +136,7 @@ const AdminLogin = () => {
                         </Typography>
 
                         <Formik
-                            initialValues={{ username: 'admin', password: 'admin' }}
+                            initialValues={{ username: '', password: '' }}
                             validationSchema={validationSchema}
                             onSubmit={handleSubmit}
                         >
@@ -150,8 +148,7 @@ const AdminLogin = () => {
                                         autoComplete="username"
                                         variant="outlined"
                                         fullWidth
-                                        // value={values.username}
-                                        value={"admin"}
+                                        value={values.username}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         error={touched.username && Boolean(errors.username)}

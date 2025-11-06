@@ -66,10 +66,10 @@ const LoginForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            adminUsername: 'admin',
-            adminPassword: 'admin',
-            teacherUsername: 'Kamal',
-            teacherPassword: 'Kamal',
+            adminUsername: '',
+            adminPassword: '',
+            teacherUsername: '',
+            teacherPassword: '',
         },
         validationSchema,
         onSubmit: async (values) => {

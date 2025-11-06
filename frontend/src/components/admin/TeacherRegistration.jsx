@@ -38,10 +38,10 @@ const RegisterTeacher = () => {
 
     const formik = useFormik({
         initialValues: {
-            username: 'Shaan Khan',
-            password: 'ShaanKhan123',
-            classId: '6',
-            sectionId: '16',
+            username: '',
+            password: '',
+            classId: '',
+            sectionId: '',
         },
         validationSchema,
         onSubmit: async (values) => {
