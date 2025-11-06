@@ -17,14 +17,13 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Form, Formik } from 'formik';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useSnackbar } from 'notistack';
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet } from "react-router-dom";
 import * as Yup from 'yup';
-import { useAuth } from "./AuthProvider";
-import React, { useRef, useEffect } from 'react';
 import apiBase from '../../config/api';
+import { useAuth } from "./AuthProvider";
 
 const validationSchema = Yup.object({
     username: Yup.string()
@@ -182,7 +181,7 @@ const ProtectedLoginRoute = () => {
                                 </Typography>
 
                                 <Formik
-                                    initialValues={{ username: 'admin', password: 'admin' }}
+                                    initialValues={{ username: '', password: '' }}
                                     validationSchema={validationSchema}
                                     onSubmit={handleSubmit}
                                 >

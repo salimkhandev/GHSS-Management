@@ -5,10 +5,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import React, { useState, useRef, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from "../admin/AuthProvider";
+import React, { useEffect, useRef, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import apiBase from '../../config/api';
+import { useAuth } from "../admin/AuthProvider";
 
 const Loader = () => (
     <Box sx={{ width: '100%' }}>
@@ -18,8 +18,8 @@ const Loader = () => (
 
 const Login = () => {
     const { loginTeacher, logoutTeacher, isAuthenticatedTeacher } = useAuth();
-    const [username, setUsername] = useState('Kamal');
-    const [password, setPassword] = useState('Kamal');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     // const navigate = useNavigate();
@@ -148,8 +148,7 @@ const Login = () => {
                             fullWidth
                             label="Username"
                             variant="outlined"
-                            // value={username}
-                            value={"Kamal"}
+                            value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             InputProps={{
                                 startAdornment: (
@@ -175,8 +174,7 @@ const Login = () => {
                             label="Password"
                             type={showPassword ? "text" : "password"}
                             variant="outlined"
-                            // value={password}
-                            value={"Kamal"}
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             InputProps={{
                                 startAdornment: (
