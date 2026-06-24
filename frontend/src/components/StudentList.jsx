@@ -462,7 +462,7 @@ const StudentList = () => {
                                                 >
                                                     {student.student_name}
                                                 </Typography>
-                                                <Typography variant="body2" color="text.secondary">ID:
+                                                <Typography variant="body2" color="text.secondary" component="span">ID:
                                                 <Chip
                                                     label={student.id}
                                                     size="small"
