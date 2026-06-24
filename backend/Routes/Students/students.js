@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../../Configs/dbConfig');
+const getPool = require('../../Configs/dbConfig');
+const pool = getPool();
 const redisClient = require('../../Configs/redisConfig');
 
 
@@ -35,7 +36,8 @@ router.get('/students', async (req, res) => {
     const cachedData = await redisClient.get(cacheKey);
     if (cachedData) {
         console.log('Serving top students from cache');
-        return res.json(JSON.parse(cachedData));
+        const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+        return res.json(parsedData);
     }
 
     const countQuery = 'SELECT COUNT(*) AS totalpages FROM students';

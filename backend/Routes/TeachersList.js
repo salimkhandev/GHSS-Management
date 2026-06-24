@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../Configs/dbConfig');
+const getPool = require('../Configs/dbConfig');
+const pool = getPool();
 const redisClient = require('../Configs/redisConfig');
 
 // Route to get teachers' information grouped by class and section with Redis caching
@@ -15,7 +16,9 @@ router.get('/', async (req, res) => {
         if (cachedData) {
             // If cached data exists, send it as response
             console.log('Data retrieved from cache');
-            return res.json(JSON.parse(cachedData));
+            // @upstash/redis returns parsed data, ioredis returns string
+            const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+            return res.json(parsedData);
         }
 
         // If no cache found, query the database and group the teachers by class and section

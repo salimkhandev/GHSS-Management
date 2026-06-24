@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../../Configs/dbConfig');
+const getPool = require('../../Configs/dbConfig');
+const pool = getPool();
 const client = require('../../Configs/redisConfig');
 // Route to fetch top students with attendance data, ranking, and caching
 router.get('/', async (req, res) => {
@@ -10,7 +11,8 @@ router.get('/', async (req, res) => {
         const cachedData = await client.get(cacheKey);
         if (cachedData) {
             console.log('Serving top students from cache');
-            return res.json(JSON.parse(cachedData));
+            const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+            return res.json(parsedData);
         }
 
         // Optimized SQL query:

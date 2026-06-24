@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../../Configs/dbConfig'); // Import your database configuration
+const getPool = require('../../Configs/dbConfig');
+const pool = getPool(); // Import your database configuration
 const client = require('../../Configs/redisConfig');
 const clientRedis = require('../../Configs/redisConfig');
 
@@ -11,7 +12,8 @@ router.get('/classes', async (req, res) => {
         const cachedData = await clientRedis.get(keyClasses);
         if (cachedData) {
             console.log('Serving classes from cache');
-            return res.json(JSON.parse(cachedData));
+            const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+            return res.json(parsedData);
         }
 
         const result = await pool.query('SELECT * FROM Classes');
@@ -31,7 +33,8 @@ router.get('/sections', async (req, res) => {
         const cachedData = await clientRedis.get(sectionsKey);
         if (cachedData) {
             console.log('Serving sections from cache');
-            return res.json(JSON.parse(cachedData));
+            const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+            return res.json(parsedData);
         }
         const result = await pool.query(' select * from sections');
         res.json(result.rows);

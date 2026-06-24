@@ -1,13 +1,26 @@
-// dbConfig.js
-require('dotenv').config();// Load environment variables from a .env file
+const { Pool } = require("pg");
+require('dotenv').config();
 
-const { Pool } = require('pg');
-console.log(process.env.DATABASE_URL); // Debugging: Print the DATABASE_URL
+let pool;
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, // Use an environment variable for the connection string
-});
-pool.connect().then(() => console.log('Connected to the database ✅'))
-    .catch(err => console.error('Connection error', err.stack));
+function getPool() {
+  if (!pool) {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      max: 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+    });
 
-module.exports = pool;
+    pool.on("error", (err) => {
+      console.error("Unexpected PG error:", err);
+    });
+  }
+
+  return pool;
+}
+
+module.exports = getPool;

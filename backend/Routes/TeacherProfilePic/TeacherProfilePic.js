@@ -4,7 +4,8 @@ const multer = require('multer');
 const sharp = require('sharp'); // For image compression
 const supabase = require('../../Configs/supabaseClient');
 const jwt = require('jsonwebtoken');
-const pool = require('../../Configs/dbConfig'); // PostgreSQL connection
+const getPool = require('../../Configs/dbConfig');
+const pool = getPool(); // PostgreSQL connection
 
 const SECRET_KEY = 'your_jwt_secret';
 

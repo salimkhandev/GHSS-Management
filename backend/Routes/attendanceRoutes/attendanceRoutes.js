@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../../Configs/dbConfig');
+const getPool = require('../../Configs/dbConfig');
+const pool = getPool();
 const { extractClassAndSection } = require('../Middlewares/middlewares');
 // const jwt = require('jsonwebtoken');
 

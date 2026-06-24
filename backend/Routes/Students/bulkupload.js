@@ -2,7 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const csvParser = require('csv-parser');
 const stream = require('stream');
-const pool = require('../../Configs/dbConfig'); // Your database connection
+const getPool = require('../../Configs/dbConfig');
+const pool = getPool(); // Your database connection
 
 const router = express.Router();
 

@@ -1,5 +1,6 @@
 const express = require("express");
-const pool = require("./Configs/dbConfig");
+const getPool = require("./Configs/dbConfig");
+const pool = getPool();
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
