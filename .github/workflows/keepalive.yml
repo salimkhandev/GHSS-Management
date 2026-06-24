@@ -16,3 +16,9 @@ jobs:
           -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
           -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
           "${{ secrets.SUPABASE_URL }}/rest/v1/students?select=id&limit=1"
+
+      - name: Ping Upstash
+        run: |
+          curl --fail \
+          -H "Authorization: Bearer ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" \
+          "${{ secrets.UPSTASH_REDIS_REST_URL }}/set/heartbeat/$(date +%s)"
