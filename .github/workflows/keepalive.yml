@@ -12,7 +12,7 @@ jobs:
           curl --fail \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "https://aaolafhyxxhfdurmvcdg.supabase.co/rest/v1/?limit=1"
+            "https://aaolafhyxxhfdurmvcdg.supabase.co/rest/v1/teachers?limit=1"
       - name: Ping Upstash
         run: |
           curl --fail \
