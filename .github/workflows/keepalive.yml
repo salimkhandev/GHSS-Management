@@ -7,14 +7,27 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Ping Supabase Project
         run: |
           curl --fail \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
             "https://aaolafhyxxhfdurmvcdg.supabase.co/rest/v1/teachers?limit=1"
+
       - name: Ping Upstash
         run: |
           curl --fail \
             -H "Authorization: Bearer ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" \
             "${{ secrets.UPSTASH_REDIS_REST_URL }}/set/heartbeat/$(date +%s)"
+
+      - name: Keep Repo Alive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "Last keep-alive: $(date)" > .github/keep-alive.txt
+          git add .github/keep-alive.txt
+          git commit -m "chore: keep alive $(date +%Y-%m-%d) [skip ci]"
+          git push
