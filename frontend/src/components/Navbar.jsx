@@ -84,8 +84,8 @@ const Navbar = () => {
                             alt="School Logo"
                             sx={{
                                 display: { xs: isVerySmall ? 'none' : 'block', sm: 'block' },
-                                height: '48px',
-                                width: '48px',
+                                height: '36px',
+                                width: '36px',
                                 objectFit: 'contain',
                                 transition: 'transform 0.3s ease',
                                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
@@ -95,7 +95,7 @@ const Navbar = () => {
                             }}
                         />
                         <Typography
-                            variant={isMobile ? "h6" : "h5"}
+                            variant={isMobile ? "body1" : "h6"}
                             sx={{
                                 fontFamily: "'Playfair Display', serif",
                                 fontWeight: 700,
@@ -104,7 +104,8 @@ const Navbar = () => {
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
-                                marginLeft: '0.5rem'
+                                marginLeft: '0.5rem',
+                                fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' }
                             }}
                         >
                             GHSS Luqman Banda
@@ -119,6 +120,9 @@ const Navbar = () => {
                                     color: 'white',
                                     '&:hover': {
                                         backgroundColor: 'rgba(255,255,255,0.1)'
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        fontSize: '1.5rem'
                                     }
                                 }}
                             >
@@ -155,8 +159,8 @@ const Navbar = () => {
                                             src={logo}
                                             alt="School Logo"
                                             sx={{
-                                                height: '40px',
-                                                width: '40px',
+                                                height: '32px',
+                                                width: '32px',
                                                 objectFit: 'contain',
                                                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
                                             }}

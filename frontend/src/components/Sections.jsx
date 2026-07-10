@@ -3,7 +3,7 @@ function SectionList({ sections, setStudents }) {
         fetch(`/api/students/${sectionId}`)
             .then(response => response.json())
             .then(data => setStudents(data));
-    };
+    };  
 
     return (
         <div>

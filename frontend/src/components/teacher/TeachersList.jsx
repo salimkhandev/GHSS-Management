@@ -207,51 +207,30 @@ const TeachersList = () => {
                                             }}>
                                                 {/* code for profile pic */}
 
-                                                {teacher.profile_pic_url ? (
-                                                    <Box
-                                                        component="img"
-                                                        src={teacher.profile_pic_url}
-                                                        alt="Teacher"
-                                                        sx={{
-                                                            width: { xs: 36, sm: 42, md: 48 },
-                                                            height: { xs: 36, sm: 42, md: 48 },
-                                                            borderRadius: '50%',
-                                                            objectFit: 'cover',
-                                                            border: '2px solid #fff',
-                                                            boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
-                                                            backgroundColor: '#f5f5f5',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            flexShrink: 0,
-                                                            verticalAlign: 'middle',
-                                                            '&:hover': {
-                                                                transform: 'scale(1.05)',
-                                                                transition: 'transform 0.2s ease-in-out',
-                                                                boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                                                            }
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    <TeacherIcon
-                                                        sx={{
-                                                            color: theme.palette.primary.main,
-                                                            fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
-                                                            backgroundColor: '#f5f5f5',
-                                                            padding: { xs: '4px', sm: '5px' },
-                                                            borderRadius: '50%',
-                                                            border: '2px solid #fff',
-                                                            boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
-                                                            flexShrink: 0,
-                                                            verticalAlign: 'middle',
-                                                            '&:hover': {
-                                                                transform: 'scale(1.05)',
-                                                                transition: 'transform 0.2s ease-in-out',
-                                                                boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                                                            }
-                                                        }}
-                                                    />
-                                                )}
+                                                <Box
+                                                    component="img"
+                                                    src="/images/defaultPicPerson.svg"
+                                                    alt="Teacher"
+                                                    sx={{
+                                                        width: { xs: 36, sm: 42, md: 48 },
+                                                        height: { xs: 36, sm: 42, md: 48 },
+                                                        borderRadius: '50%',
+                                                        objectFit: 'cover',
+                                                        border: '2px solid #fff',
+                                                        boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
+                                                        backgroundColor: '#f5f5f5',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        flexShrink: 0,
+                                                        verticalAlign: 'middle',
+                                                        '&:hover': {
+                                                            transform: 'scale(1.05)',
+                                                            transition: 'transform 0.2s ease-in-out',
+                                                            boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                                                        }
+                                                    }}
+                                                />
                                                 <Typography
                                                     className="teacher-name"
                                                     variant="h6"

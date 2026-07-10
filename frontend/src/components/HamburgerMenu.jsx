@@ -13,6 +13,7 @@ import {
   School as SchoolIcon,
   SupervisorAccount as TeacherAdminIcon,
   Warning as WarningIcon,
+  Menu as MenuIcon,
 } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -278,38 +279,38 @@ const MenuIconButton = ({ onClick }) => {
       <IconButton
         onClick={onClick}
         sx={{
-          width: 48,
-          height: 48,
+          width: 40,
+          height: 40,
           background:
-            "linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 140, 0, 0.08))",
+            "linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08))",
           backdropFilter: "blur(8px)",
           borderRadius: "12px",
-          border: "1.5px solid rgba(255, 215, 0, 0.15)",
-          boxShadow: "0 2px 8px rgba(255, 215, 0, 0.15)",
+          border: "1.5px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
           position: "relative",
           overflow: "visible",
           transition: "all 0.3s ease",
           "&:hover": {
             background:
-              "linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.2))",
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))",
             transform: "scale(1.08)",
-            boxShadow: "0 4px 12px rgba(255, 215, 0, 0.25)",
-            border: "1.5px solid rgba(255, 215, 0, 0.3)",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+            border: "1.5px solid rgba(255, 255, 255, 0.3)",
           },
           "& .MuiSvgIcon-root": {
-            fontSize: 28,
-            color: "rgba(255, 215, 0, 0.85)",
+            fontSize: 20,
+            color: "rgba(255, 255, 255, 0.9)",
             filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.2))",
             transition: "all 0.3s ease",
           },
           "&:hover .MuiSvgIcon-root": {
-            color: "rgba(255, 215, 0, 0.95)",
-            filter: "drop-shadow(0 2px 4px rgba(255,215,0,0.3))",
+            color: "rgba(255, 255, 255, 1)",
+            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
             transform: "rotate(10deg)",
           },
         }}
       >
-        <AdminIcon />
+        <MenuIcon />
       </IconButton>
     </motion.div>
   );
