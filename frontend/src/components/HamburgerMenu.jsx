@@ -633,21 +633,19 @@ export default function TopDrawerWithToggle() {
                 sx={{
                   color: "white",
                   fontWeight: "bold",
-                  margin: "10px auto",
-                  padding: "10px 30px",
-                  borderRadius: "20px",
+                  margin: "10px",
+                  padding: "8px 24px",
+                  borderRadius: "12px",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   textTransform: "capitalize",
-                  border: "2px solid white",
-                  background: "linear-gradient(to bottom, #4d4dff, #1A8CFF)",
-                  // backgroundColor: "#1A8CFF",
-                  // for transatin
-                  // use light blue bg color
-                  // backgroundColor: "#1A8CFF",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  backdropFilter: "blur(5px)",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
                   "&:hover": {
-                    background: "linear-gradient(to bottom, #4d4dff, #4d4dff)",
+                    background: "rgba(255, 255, 255, 0.2)",
                   },
                   transition: "all 0.3s ease",
                 }}

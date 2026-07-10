@@ -126,7 +126,7 @@ const TeachersList = () => {
                 textAlign: 'center',
                 width: { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
                 mx: 'auto',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                 borderRadius: 2,
                 p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',

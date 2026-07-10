@@ -441,10 +441,10 @@ const StudentList = () => {
                                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                                                 <Avatar
                                                     sx={{
-                                                        width: { xs: 60, md: 70 },
-                                                        height: { xs: 60, md: 70 },
+                                                        width: { xs: 45, md: 55 },
+                                                        height: { xs: 45, md: 55 },
                                                         bgcolor: 'primary.main',
-                                                        fontSize: { xs: '1.5rem', md: '2rem' },
+                                                        fontSize: { xs: '1.2rem', md: '1.5rem' },
                                                         fontWeight: 700,
                                                         mb: 1.5,
                                                     }}

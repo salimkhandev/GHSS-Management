@@ -55,7 +55,7 @@ const Navbar = () => {
                     background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                     transition: 'all 0.3s ease-in-out',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                    position: '!sticky',
+                    position: 'sticky',
                     top: 0,
                     zIndex: 50,
                     '&:hover': {

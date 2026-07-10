@@ -71,7 +71,7 @@ const Login = () => {
                 minHeight: '90vh',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
+                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
                 padding: '20px',
                 // backgroundImage: 'url("/images/pattern.png")',
                 backgroundColor: '#f0f0f0',
@@ -114,7 +114,7 @@ const Login = () => {
                         >
                             <SchoolIcon
                                 sx={{
-                                    fontSize: { xs: 80, sm: 100 },
+                                    fontSize: { xs: 60, sm: 72 },
                                     color: '#1F3E76',
                                     filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
                                 }}
@@ -126,7 +126,7 @@ const Login = () => {
                             sx={{
                                 fontFamily: '"Poppins", sans-serif',
                                 fontWeight: 700,
-                                fontSize: { xs: '2rem', sm: '2.5rem' },
+                                fontSize: { xs: '1.75rem', sm: '2.1rem' },
                                 color: '#1F3E76',
                                 textAlign: 'center',
                                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
