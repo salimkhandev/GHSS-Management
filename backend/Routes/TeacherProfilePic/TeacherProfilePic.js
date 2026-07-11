@@ -34,6 +34,10 @@ router.post('/upload-profile', upload.single('profilePic'), async (req, res) => 
     // const userId = "131";
     console.log("userId",userId);
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
+    
+    if (!req.file) {
+        return res.status(400).json({ error: "No image file uploaded" });
+    }
 
     try {
         const fileBuffer = req.file.buffer;
@@ -61,6 +65,7 @@ router.post('/upload-profile', upload.single('profilePic'), async (req, res) => 
 
         res.json({ message: "Upload successful", imageUrl: profilePicUrl });
     } catch (err) {
+        console.error("Upload error caught:", err);
         res.status(500).json({ error: "Server error", details: err.message });
     }
 });
