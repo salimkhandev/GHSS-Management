@@ -13,7 +13,8 @@ import {
     LinearProgress,
     Paper,
     TextField,
-    Typography
+    Typography,
+    Alert
 } from "@mui/material";
 import axios from "axios";
 import { Form, Formik } from 'formik';
@@ -99,25 +100,22 @@ const ProtectedLoginRoute = () => {
         return <div><Loader/></div>;
     }
 
-        if (isAuthenticatedAdmin) {
+    if (isAuthenticatedAdmin) {
         return <Outlet />;
     }
 
-
-
-
     return (
         <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-            >
+            {!isAuthenticatedAdmin && (
                 <Box
+                    component={motion.div}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
                     sx={{
                         display: 'flex',
-                        minHeight: '90vh',
+                        minHeight: '80vh',
                         alignItems: 'center',
                         justifyContent: 'center',
                         background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)',
@@ -129,7 +127,6 @@ const ProtectedLoginRoute = () => {
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
-                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
                         transition={{ duration: 0.5, ease: 'easeOut' }}
                     >
                         <Paper
@@ -180,8 +177,12 @@ const ProtectedLoginRoute = () => {
                                     Admin Login
                                 </Typography>
 
+                                <Alert severity="info" sx={{ width: '100%', borderRadius: 2 }}>
+                                    Demo credentials pre-filled for convenience.
+                                </Alert>
+
                                 <Formik
-                                    initialValues={{ username: '', password: '' }}
+                                    initialValues={{ username: 'admin', password: 'admin' }}
                                     validationSchema={validationSchema}
                                     onSubmit={handleSubmit}
                                 >
@@ -320,7 +321,7 @@ const ProtectedLoginRoute = () => {
                         </Paper>
                     </motion.div>
                 </Box>
-            </motion.div>
+            )}
         </AnimatePresence>
     );
 };

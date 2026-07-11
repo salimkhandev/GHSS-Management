@@ -3,7 +3,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography, Alert } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
@@ -135,8 +135,12 @@ const AdminLogin = () => {
                             Admin Login
                         </Typography>
 
+                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2 }}>
+                            Demo credentials pre-filled for convenience.
+                        </Alert>
+
                         <Formik
-                            initialValues={{ username: '', password: '' }}
+                            initialValues={{ username: 'admin', password: 'admin' }}
                             validationSchema={validationSchema}
                             onSubmit={handleSubmit}
                         >

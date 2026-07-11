@@ -14,7 +14,8 @@ import {
     InputAdornment,
     Paper,
     TextField,
-    Typography
+    Typography,
+    Alert
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFormik } from "formik";
@@ -66,10 +67,10 @@ const LoginForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            adminUsername: '',
-            adminPassword: '',
-            teacherUsername: '',
-            teacherPassword: '',
+            adminUsername: 'admin',
+            adminPassword: 'admin',
+            teacherUsername: 'Kamal',
+            teacherPassword: 'Kamal',
         },
         validationSchema,
         onSubmit: async (values) => {
@@ -170,7 +171,7 @@ const LoginForm = () => {
                         component="h1"
                         variant="h5"
                         sx={{
-                            mb: 4,
+                            mb: 3,
                             textAlign: "center",
                             fontWeight: 600,
                             color: 'primary.main'
@@ -178,6 +179,10 @@ const LoginForm = () => {
                     >
                         Admin & Teacher Login
                     </Typography>
+
+                    <Alert severity="info" sx={{ mb: 2, borderRadius: 2 }}>
+                        Demo credentials pre-filled for convenience.
+                    </Alert>
 
                     <Box
                         component="form"

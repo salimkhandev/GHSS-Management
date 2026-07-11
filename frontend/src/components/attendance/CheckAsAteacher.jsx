@@ -1,5 +1,5 @@
 import { Lock as LockIcon, Person, School as SchoolIcon, Visibility, VisibilityOff } from '@mui/icons-material';
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography, Alert } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -18,8 +18,8 @@ const Loader = () => (
 
 const Login = () => {
     const { loginTeacher, logoutTeacher, isAuthenticatedTeacher } = useAuth();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('Kamal');
+    const [password, setPassword] = useState('Kamal');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     // const navigate = useNavigate();
@@ -143,6 +143,10 @@ const Login = () => {
                         >
                             Teacher Login
                         </Typography>
+
+                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2, mb: 1 }}>
+                            Demo credentials pre-filled for convenience.
+                        </Alert>
 
                         <TextField
                             fullWidth

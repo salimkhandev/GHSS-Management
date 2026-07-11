@@ -2,7 +2,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Box, Button, CircularProgress, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Paper, TextField, Typography, Alert } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
@@ -32,8 +32,8 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            username: '',
-            password: '',
+            username: 'Kamal',
+            password: 'Kamal',
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
@@ -136,6 +136,10 @@ const Login = () => {
                         >
                             Teacher Login
                         </Typography>
+
+                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2 }}>
+                            Demo credentials pre-filled for convenience.
+                        </Alert>
 
                         <Box sx={{ width: '100%', mb: 2 }}>
                             <TextField
