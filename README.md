@@ -132,8 +132,12 @@ npm run start   # runs index.js on PORT
 ```
 
 ### Vercel
-- The repository includes `vercel.json` in both `frontend/` and `backend/` to guide deployment.
-- Set all environment variables in your Vercel project settings.
+- The frontend and backend are treated as **two completely independent Vercel projects**.
+- **Do not** deploy from the repository root.
+- To deploy the frontend, run Vercel commands from the `frontend/` directory (e.g., `cd frontend && vercel`).
+- To deploy the backend, run Vercel commands from the `backend/` directory (e.g., `cd backend && vercel`).
+- The repository includes `vercel.json` in both `frontend/` and `backend/` to guide deployment for each respective project.
+- Set all environment variables in each project's respective Vercel project settings.
 
 ---
 

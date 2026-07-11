@@ -587,38 +587,89 @@ export default function TopDrawerWithToggle() {
       )}
 
       {isAuthenticatedAdmin || isAuthenticatedTeacher ? (
-        <div className="text-center">
-          <div
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            py: 2.5,
+            px: 2,
+            gap: 1,
+          }}
+        >
+          <Box
             onClick={() => setShowModal(true)}
-            className="mb-2 cursor-pointer"
+            sx={{
+              width: 72,
+              height: 72,
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: '2.5px solid rgba(255,255,255,0.4)',
+              cursor: 'pointer',
+              flexShrink: 0,
+              transition: 'border-color 0.2s, box-shadow 0.2s',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.3)',
+              '&:hover': {
+                borderColor: 'rgba(255,255,255,0.85)',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.45)',
+              },
+            }}
           >
-            <div className="w-20 h-20 rounded-full mx-auto border-blue-500 border-4 flex justify-center items-center overflow-hidden bg-gray-200">
-              {loading ? (
-                <CircularProgress
-                  sx={{ color: "green", width: "80%", height: "80%" }}
-                />
-              ) : imageUrl ? (
-                // for logo a btn
-                // add a wraper
+            {loading ? (
+              <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(255,255,255,0.1)' }}>
+                <CircularProgress size={30} sx={{ color: '#fff' }} />
+              </Box>
+            ) : imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="Profile"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              <Box
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(135deg,#3949ab,#1a237e)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.4rem', fontFamily: "'Poppins',sans-serif" }}>
+                  {username ? username.charAt(0).toUpperCase() : '?'}
+                </Typography>
+              </Box>
+            )}
+          </Box>
 
-                <img
-                  key={imageUrl}
-                  src={imageUrl}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                // for default profile picture
-                <img
-                  src="/images/defaultPicPerson.svg"
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </div>
-            <h3 className="text-lg font-bold text-white mt-2">{username}</h3>
-          </div>
-        </div>
+          {username && (
+            <Typography
+              sx={{
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                fontFamily: "'Poppins', sans-serif",
+                letterSpacing: '0.3px',
+                textAlign: 'center',
+                mt: 0.5
+              }}
+            >
+              {username}
+            </Typography>
+          )}
+
+          {/* Upload modal */}
+          {showModal && (
+            <ProfilePicManager
+              showModal={showModal}
+              setShowModal={setShowModal}
+              imageUrl={imageUrl}
+              setImageUrl={setImageUrl}
+              onImageUpdate={setImageUrl}
+            />
+          )}
+        </Box>
       ) : (
         <div>
           {/* <Drawer anchor="left" open={RoleOpen} onClose={toggleRoleDrawer(false)}> */}
@@ -757,21 +808,6 @@ export default function TopDrawerWithToggle() {
           </Dialog>
         </div>
       )}
-      {/* Profile Picture */}
-      <Box className="flex flex-col items-center justify-center">
-        {/* <Avatar
-                    // src="/images/profilePic.jpg" // Change this to dynamic user image
-                    alt="User Profile"
-                    sx={{ width: 50, height: 50, border: "2px solid white", mr: 2 }}
-                /> */}
-        <ProfilePicManager
-          showModal={showModal}
-          setShowModal={setShowModal}
-          imageUrl={imageUrl}
-          setImageUrl={setImageUrl}
-          onImageUpdate={setImageUrl}
-        />
-      </Box>
 
       <Divider sx={{ backgroundColor: "white" }} />
 
