@@ -33,8 +33,8 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            username: 'Kamal',
-            password: 'Kamal',
+            username: 'Furqan_Warraich',
+            password: 'Furqan',
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
@@ -136,7 +136,7 @@ const Login = () => {
                         </Typography>
 
                         <Alert severity="info" sx={{ width: '100%', borderRadius: 2, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
-                            Demo credentials pre-filled for convenience.
+                            Demo credentials: Furqan_Warraich/Furqan
                         </Alert>
 
                         <Box sx={{ width: '100%', mb: 2 }}>

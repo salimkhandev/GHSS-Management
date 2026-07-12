@@ -137,7 +137,7 @@ const AdminLogin = () => {
                         </Typography>
 
                         <Alert severity="info" sx={{ width: '100%', borderRadius: 2, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
-                            Demo credentials pre-filled for convenience.
+                            Demo credentials: admin/admin
                         </Alert>
 
                         <Formik

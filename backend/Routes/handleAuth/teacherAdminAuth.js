@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { isAdmin, isAdminToken} =require('../Middlewares/middlewares')
+const { isAdmin, isAdminToken } = require('../Middlewares/middlewares')
 
 router.post('/teacherLogin', async (req, res) => {
     const { username, password } = req.body;
@@ -48,7 +48,7 @@ router.post('/teacherLogin', async (req, res) => {
 
 router.post('/register-teacher', isAdminToken, isAdmin, async (req, res) => {
     const { username, password, class_id, section_id, role } = req.body;
-if (!username || !password || !class_id || !section_id || !role) {
+    if (!username || !password || !class_id || !section_id || !role) {
         return res.status(400).json({ error: "All fields are required." });
     }
     try {
@@ -136,4 +136,4 @@ router.post('/admin-login', async (req, res) => {
 });
 
 
-module.exports=router;
+module.exports = router;

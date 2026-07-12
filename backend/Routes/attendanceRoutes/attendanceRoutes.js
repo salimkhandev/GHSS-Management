@@ -12,9 +12,13 @@ const { extractClassAndSection } = require('../Middlewares/middlewares');
 router.get('/attendanceGroupedByDate', extractClassAndSection, async (req, res) => {
     try {
         const { class_id, section_id } = req.teacherInfo;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10;
+        const offset = (page - 1) * limit;
+        const searchDate = req.query.date;
 
-        const results = await pool.query(
-            `SELECT 
+        let query = `
+            SELECT 
                 TO_CHAR(a.attendance_date, 'YYYY-MM-DD') AS attendance_date,
                 json_agg(
                     json_build_object(
@@ -26,10 +30,19 @@ router.get('/attendanceGroupedByDate', extractClassAndSection, async (req, res) 
             FROM attendance a
             INNER JOIN students s ON a.student_id = s.id
             WHERE a.class_id = $1 AND a.section_id = $2
-            GROUP BY a.attendance_date
-            ORDER BY a.attendance_date DESC`,
-            [class_id, section_id]
-        );
+        `;
+
+        let queryParams = [class_id, section_id];
+
+        if (searchDate) {
+            query += ` AND a.attendance_date = $3 GROUP BY a.attendance_date ORDER BY a.attendance_date DESC`;
+            queryParams.push(searchDate);
+        } else {
+            query += ` GROUP BY a.attendance_date ORDER BY a.attendance_date DESC LIMIT $3 OFFSET $4`;
+            queryParams.push(limit, offset);
+        }
+
+        const results = await pool.query(query, queryParams);
 
         res.json(results.rows);
     } catch (error) {

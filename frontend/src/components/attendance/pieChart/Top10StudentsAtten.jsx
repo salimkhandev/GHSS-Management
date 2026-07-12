@@ -17,7 +17,7 @@ import {
     useTheme
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
+import { Cell, Legend, Pie, PieChart, Tooltip, ResponsiveContainer } from 'recharts';
 import apiBase from '../../../config/api';
 
 const AttendancePieChart = () => {
@@ -304,7 +304,6 @@ const AttendancePieChart = () => {
                                                 borderRadius: 2,
                                                 boxShadow: 2
                                             }}>
-                                                <TrophyIcon />
                                                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                                                     Rank #{entry.rank}
                                                 </Typography>
@@ -359,48 +358,51 @@ const AttendancePieChart = () => {
                                             </Grid>
                                         </Grid>
 
-                                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                            <PieChart width={getChartWidth()} height={250}>
-                                                <Pie
-                                                    data={[
-                                                        { name: 'Present', value: overallPercentage },
-                                                        { name: 'Absent', value: absentPercentage }
-                                                    ]}
-                                                    cx="50%"
-                                                    cy="50%"
-                                                    labelLine={false}
-                                                    label={renderCustomizedLabel}
-                                                    outerRadius={getOuterRadius()}
-                                                    dataKey="value"
-                                                >
-                                                    {[0, 1].map((index) => (
-                                                        <Cell
-                                                            key={`cell-${index}`}
-                                                            fill={COLORS[index]}
-                                                            stroke={theme.palette.background.paper}
-                                                            strokeWidth={2}
-                                                        />
-                                                    ))}
-                                                </Pie>
-                                                <Tooltip
-                                                    formatter={(value) => `${value}%`}
-                                                    contentStyle={{
-                                                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                                                        border: 'none',
-                                                        borderRadius: 8,
-                                                        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                                                    }}
-                                                />
-                                                <Legend
-                                                    verticalAlign="bottom"
-                                                    height={36}
-                                                    formatter={(value) => (
-                                                        <span style={{ color: theme.palette.text.primary, fontWeight: 500, marginRight: '40px' }}>
-                                                            {value}
-                                                        </span>
-                                                    )}
-                                                />
-                                            </PieChart>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', height: 250, width: '100%' }}>
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <PieChart>
+                                                    <Pie
+                                                        data={[
+                                                            { name: 'Present', value: overallPercentage },
+                                                            { name: 'Absent', value: absentPercentage }
+                                                        ]}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        labelLine={false}
+                                                        label={renderCustomizedLabel}
+                                                        outerRadius={getOuterRadius()}
+                                                        dataKey="value"
+                                                    >
+                                                        {[0, 1].map((index) => (
+                                                            <Cell
+                                                                key={`cell-${index}`}
+                                                                fill={COLORS[index]}
+                                                                stroke={theme.palette.background.paper}
+                                                                strokeWidth={2}
+                                                            />
+                                                        ))}
+                                                    </Pie>
+                                                    <Tooltip
+                                                        formatter={(value) => `${value}%`}
+                                                        contentStyle={{
+                                                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                                            border: 'none',
+                                                            borderRadius: 8,
+                                                            boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                                                        }}
+                                                    />
+                                                    <Legend
+                                                        verticalAlign="bottom"
+                                                        height={36}
+                                                        formatter={(value) => (
+                                                            <span style={{ color: theme.palette.text.primary, fontWeight: 500 }}>
+                                                                {value}
+                                                            </span>
+                                                        )}
+                                                        wrapperStyle={{ whiteSpace: 'nowrap' }}
+                                                    />
+                                                </PieChart>
+                                            </ResponsiveContainer>
                                         </Box>
 
                                         <Box sx={{

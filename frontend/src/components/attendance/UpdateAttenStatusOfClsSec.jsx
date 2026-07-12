@@ -6,6 +6,7 @@ import {
 } from '@mui/icons-material';
 import {
     Box,
+    Button,
     Card,
     CardContent,
     Collapse,
@@ -18,6 +19,7 @@ import {
     Paper,
     Select,
     Skeleton,
+    TextField,
     Typography,
     useTheme
 } from '@mui/material';
@@ -31,26 +33,71 @@ const UpdateAttenStatusOfClsSec = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [expandedDate, setExpandedDate] = useState(null);
+    const [searchDate, setSearchDate] = useState('');
+
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
+
+    const fetchAttendanceData = async (pageNum = 1, queryDate = searchDate) => {
+        try {
+            if (pageNum === 1) setLoading(true);
+            else setLoadingMore(true);
+
+            let url = `${apiBase}/attendanceGroupedByDate?page=${pageNum}`;
+            if (queryDate) {
+                url += `&date=${queryDate}`;
+            }
+
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            
+            if (pageNum === 1) {
+                setAttendanceData(data);
+            } else {
+                setAttendanceData(prev => [...prev, ...data]);
+            }
+
+            // Disable 'Load More' if searching by date or fewer than 10 records returned
+            if (queryDate || data.length < 10) {
+                setHasMore(false);
+            } else {
+                setHasMore(true);
+            }
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+            setLoadingMore(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchAttendanceData = async () => {
-            try {
-                const response = await fetch(`${apiBase}/attendanceGroupedByDate`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                setAttendanceData(data);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAttendanceData();
+        fetchAttendanceData(1);
     }, []);
+
+    const handleLoadMore = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        fetchAttendanceData(nextPage);
+    };
+
+    const handleDateSearch = (e) => {
+        const val = e.target.value;
+        setSearchDate(val);
+        setPage(1);
+        fetchAttendanceData(1, val);
+    };
+
+    const handleClearSearch = () => {
+        setSearchDate('');
+        setPage(1);
+        fetchAttendanceData(1, '');
+    };
 
     const handleDateClick = (date) => {
         setExpandedDate(expandedDate === date ? null : date);
@@ -146,6 +193,37 @@ const UpdateAttenStatusOfClsSec = () => {
                 </Typography>
             </Box>
 
+            <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', width: { xs: '100%', sm: 'auto' } }}>
+                    <TextField
+                        type="date"
+                        label="Find by Date"
+                        variant="outlined"
+                        size="medium"
+                        value={searchDate}
+                        onChange={handleDateSearch}
+                        InputLabelProps={{ shrink: true }}
+                        placeholder="YYYY-MM-DD"
+                        sx={{ 
+                            minWidth: { xs: '100%', sm: 300 },
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: 3,
+                            }
+                        }}
+                    />
+                    {searchDate && (
+                        <Button 
+                            variant="text" 
+                            color="error" 
+                            onClick={handleClearSearch}
+                            sx={{ fontWeight: 'bold' }}
+                        >
+                            Clear
+                        </Button>
+                    )}
+                </Box>
+            </Box>
+
             {attendanceData.length === 0 ? (
                 <Typography
                     variant="h6"
@@ -219,7 +297,7 @@ const UpdateAttenStatusOfClsSec = () => {
                                 </Grid>
                             </Grid>
 
-                            <Collapse in={expandedDate === attendanceGroup.attendance_date} timeout="auto">
+                            <Collapse in={expandedDate === attendanceGroup.attendance_date} timeout="auto" unmountOnExit>
                                 <Box sx={{ mt: { xs: 1.5, sm: 2 } }}>
                                     {attendanceGroup.records.map((record) => (
                                         <Paper
@@ -324,6 +402,29 @@ const UpdateAttenStatusOfClsSec = () => {
                         </CardContent>
                     </Card>
                 ))
+            )}
+            
+            {hasMore && attendanceData.length > 0 && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, mb: 2 }}>
+                    <Button 
+                        variant="outlined" 
+                        onClick={handleLoadMore}
+                        disabled={loadingMore}
+                        sx={{ 
+                            borderRadius: 2,
+                            px: 4,
+                            py: 1,
+                            borderColor: 'var(--color-primary)',
+                            color: 'var(--color-primary)',
+                            '&:hover': {
+                                borderColor: 'var(--color-primary)',
+                                backgroundColor: 'rgba(26, 35, 126, 0.04)'
+                            }
+                        }}
+                    >
+                        {loadingMore ? 'Loading...' : 'Load More'}
+                    </Button>
+                </Box>
             )}
         </Container>
     );

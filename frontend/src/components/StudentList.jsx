@@ -112,6 +112,8 @@ const StudentList = () => {
         const fetchClasses = async () => {
             setStudents([]);
             setTotalDeptStudents()
+            setTotalpages(0);
+            setPage(1);
             setLoading(true)
             try {
                 const responseCls = await axios.get(`${apiBase}/filteredSectionStd`, {

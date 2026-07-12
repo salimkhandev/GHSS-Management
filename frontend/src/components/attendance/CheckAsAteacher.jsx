@@ -18,8 +18,8 @@ const Loader = () => (
 
 const Login = () => {
     const { loginTeacher, logoutTeacher, isAuthenticatedTeacher } = useAuth();
-    const [username, setUsername] = useState('Kamal');
-    const [password, setPassword] = useState('Kamal');
+    const [username, setUsername] = useState('Furqan_Warraich');
+    const [password, setPassword] = useState('Furqan');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     // const navigate = useNavigate();
@@ -145,7 +145,7 @@ const Login = () => {
                         </Typography>
 
                         <Alert severity="info" sx={{ width: '100%', borderRadius: 2, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
-                            Demo credentials pre-filled for convenience.
+                            Demo credentials: Furqan_Warraich/Furqan
                         </Alert>
 
                         <TextField
