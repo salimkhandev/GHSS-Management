@@ -130,42 +130,19 @@ const DeveloperPortfolio = () => {
                             <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: 'var(--color-primary)' }}>
                                 Technical Expertise
                             </Typography>
-                            <Grid container spacing={3}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, px: 1 }}>
                                 {skills.map((skillGroup, idx) => (
-                                    <Grid item xs={12} sm={6} key={idx}>
-                                        <Card sx={{ 
-                                            p: 2.5, 
-                                            height: '100%',
-                                            borderRadius: 3,
-                                            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                                            border: '1px solid rgba(0,0,0,0.08)',
-                                            transition: 'transform 0.2s',
-                                            '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }
-                                        }}>
-                                            <Typography variant="h6" sx={{ 
-                                                display: 'flex', 
-                                                alignItems: 'center', 
-                                                gap: 1.5, 
-                                                mb: 2,
-                                                fontWeight: 600,
-                                                color: 'var(--color-primary)'
-                                            }}>
-                                                {skillGroup.icon}
-                                                {skillGroup.category}
-                                            </Typography>
-                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                                                {skillGroup.items.map((item, i) => (
-                                                    <Chip key={i} label={item} size="small" sx={{ 
-                                                        bgcolor: 'rgba(26, 35, 126, 0.08)', 
-                                                        color: 'var(--color-primary)',
-                                                        fontWeight: 500
-                                                    }} />
-                                                ))}
-                                            </Box>
-                                        </Card>
-                                    </Grid>
+                                    <Box key={idx} sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: { xs: 0.5, sm: 2 } }}>
+                                        <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'var(--color-primary)', minWidth: '120px', display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            {skillGroup.icon}
+                                            {skillGroup.category}:
+                                        </Typography>
+                                        <Typography variant="body1" sx={{ color: 'var(--color-text-primary)', fontSize: '1.05rem' }}>
+                                            {skillGroup.items.join(', ')}
+                                        </Typography>
+                                    </Box>
                                 ))}
-                            </Grid>
+                            </Box>
                         </Box>
 
                         <Divider sx={{ mb: 4 }} />
