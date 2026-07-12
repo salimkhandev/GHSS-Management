@@ -1,0 +1,6 @@
+Route: /TeachersList
+Desktop screenshot: screenshots/desktop/teachers-list-desktop.png
+Mobile screenshot:  screenshots/mobile/teachers-list-mobile.png
+Component file: src/components/teacher/TeachersList.jsx
+CSS file: src/index.css (shared)
+Auth required: admin

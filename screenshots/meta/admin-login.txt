@@ -1,0 +1,6 @@
+Route: /admin
+Desktop screenshot: screenshots/desktop/admin-login-desktop.png
+Mobile screenshot:  screenshots/mobile/admin-login-mobile.png
+Component file: src/components/admin/AdminLogin.jsx
+CSS file: src/index.css (shared)
+Auth required: none
