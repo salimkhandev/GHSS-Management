@@ -94,17 +94,18 @@ const Login = () => {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
             >
                 <Paper
-                    elevation={12}
+                    elevation={16}
                     component="form"
                     onSubmit={handleSubmit}
                     sx={{
-                        padding: { xs: 4, sm: 5 },
-                        borderRadius: 3,
-                        width: { xs: '340px', sm: '380px', md: '480px' },
-                        backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                        backdropFilter: 'blur(10px)',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        padding: { xs: 3.5, sm: 5 },
+                        borderRadius: 4,
+                        maxWidth: 420,
+                        width: '100%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.99)',
+                        backdropFilter: 'blur(20px)',
+                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.5)',
                     }}
                 >
                     <Box
@@ -112,7 +113,7 @@ const Login = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: 2.5
+                            gap: { xs: 2.5, sm: 3 },
                         }}
                     >
                         <motion.div
@@ -121,9 +122,9 @@ const Login = () => {
                         >
                             <SchoolIcon
                                 sx={{
-                                    fontSize: 80,
+                                    fontSize: { xs: 56, sm: 64 },
                                     color: 'var(--color-primary)',
-                                    mb: 2
+                                    filter: 'drop-shadow(0 4px 8px rgba(26, 35, 126, 0.15))',
                                 }}
                             />
                         </motion.div>
@@ -133,18 +134,17 @@ const Login = () => {
                             sx={{
                                 fontFamily: '"Poppins", sans-serif',
                                 fontWeight: 700,
-                                fontSize: { xs: '2rem', sm: '2.5rem' },
                                 color: 'var(--color-primary)',
                                 textAlign: 'center',
-                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                letterSpacing: '-0.5px',
-                                mb: 2,
+                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
+                                letterSpacing: '-0.3px',
+                                fontSize: { xs: '1.5rem', sm: '2rem' },
                             }}
                         >
                             Teacher Login
                         </Typography>
 
-                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2, mb: 1 }}>
+                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
                             Demo credentials pre-filled for convenience.
                         </Alert>
 
@@ -162,14 +162,23 @@ const Login = () => {
                                 ),
                             }}
                             sx={{
+                                mb: { xs: 2, sm: 3 },
                                 '& .MuiOutlinedInput-root': {
+                                    height: { xs: 48, sm: 56 },
                                     '&:hover fieldset': {
                                         borderColor: 'var(--color-accent)',
                                     },
                                     '&.Mui-focused fieldset': {
                                         borderColor: 'var(--color-accent)',
+                                        borderWidth: 2,
                                     }
-                                }
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                                    '&.Mui-focused': {
+                                        color: 'var(--color-accent)',
+                                    },
+                                },
                             }}
                         />
 
@@ -195,14 +204,23 @@ const Login = () => {
                                 ),
                             }}
                             sx={{
+                                mb: { xs: 2, sm: 3 },
                                 '& .MuiOutlinedInput-root': {
+                                    height: { xs: 48, sm: 56 },
                                     '&:hover fieldset': {
                                         borderColor: 'var(--color-accent)',
                                     },
                                     '&.Mui-focused fieldset': {
                                         borderColor: 'var(--color-accent)',
+                                        borderWidth: 2,
                                     }
-                                }
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                                    '&.Mui-focused': {
+                                        color: 'var(--color-accent)',
+                                    },
+                                },
                             }}
                         />
 
@@ -212,21 +230,19 @@ const Login = () => {
                             fullWidth
                             disabled={loading}
                             sx={{
-                                mt: 2,
-                                py: 1.5,
+                                mt: { xs: 1, sm: 2 },
+                                py: 1.8,
+                                background: 'var(--gradient-primary)',
                                 color: 'white',
                                 fontWeight: 600,
-                                fontSize: '1.2rem',
+                                fontSize: { xs: '1rem', sm: '1.1rem' },
                                 textTransform: 'none',
-                                borderRadius: '10px',
-                                // '#1F3E76' use this in back with linear-gradient
-                                background: 'var(--color-primary)',
-                                boxShadow: '0 4px 12px rgba(25, 118, 210, 0.4)',
-                                transition: 'all 0.3s ease',
+                                borderRadius: '12px',
+                                boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 '&:hover': {
-                                    // '#1565c0' use this in back with linear-gradient
-                                    background: 'var(--color-primary)',
-                                    boxShadow: '0 6px 15px rgba(25, 118, 210, 0.5)',
+                                    background: 'var(--gradient-primary)',
+                                    boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
                                     transform: 'translateY(-2px)',
                                 },
                                 '&:active': {

@@ -2,8 +2,11 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { SnackbarProvider, useSnackbar } from 'notistack'
 import Alert from '@mui/material/Alert'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import { AuthProvider } from './components/admin/AuthProvider'
 import App from './App'
+import theme from './theme'
 import './index.css'
 
 // Custom success snackbar with blue gradient to match app theme
@@ -34,14 +37,17 @@ const SuccessSnackbar = React.forwardRef(function SuccessSnackbar({ id, message 
 });
 
 createRoot(document.getElementById('root')).render(
-  <SnackbarProvider
-    maxSnack={3}
-    autoHideDuration={2500}
-    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-    Components={{ success: SuccessSnackbar }}
-  >
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  </SnackbarProvider>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <SnackbarProvider
+      maxSnack={3}
+      autoHideDuration={2500}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      Components={{ success: SuccessSnackbar }}
+    >
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </SnackbarProvider>
+  </ThemeProvider>
 )

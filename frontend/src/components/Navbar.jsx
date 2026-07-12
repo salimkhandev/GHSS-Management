@@ -51,16 +51,11 @@ const Navbar = () => {
     return (
         <div className='flex justify-start mb-16'>
             <AppBar
+                position="sticky"
                 sx={{
-                    background: 'var(--gradient-primary)',
                     transition: 'all 0.3s ease-in-out',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                    position: 'sticky',
                     top: 0,
                     zIndex: 50,
-                    '&:hover': {
-                        background: 'var(--gradient-primary)',
-                    }
                 }}
             >
                 <Toolbar sx={{
@@ -136,7 +131,7 @@ const Navbar = () => {
                                 sx={{
                                     '& .MuiDrawer-paper': {
                                         width: { xs: '280px', sm: '320px' },
-                                        background: 'var(--gradient-primary-v)',
+                                        background: 'linear-gradient(180deg, #1B2F6E 0%, #2a5298 50%, #3d5fa8 100%)',
                                         color: 'white',
                                         boxShadow: '-4px 0 20px rgba(0,0,0,0.3)',
                                     }

@@ -68,7 +68,7 @@ function StudentRegistrationForm() {
                         left: 0,
                         right: 0,
                         height: '4px',
-                        background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`
+                        background: 'var(--gradient-primary)'
                     }
                 }}
             >
@@ -79,7 +79,7 @@ function StudentRegistrationForm() {
                     sx={{
                         mb: 3,
                         fontWeight: 600,
-                        color: theme.palette.text.primary,
+                        color: 'var(--color-primary)',
                         fontFamily: "'Poppins', sans-serif"
                     }}
                 >
@@ -190,9 +190,10 @@ function StudentRegistrationForm() {
                                         fontWeight: 600,
                                         borderRadius: '8px',
                                         textTransform: 'none',
-                                        boxShadow: '0px 4px 12px rgba(63, 81, 181, 0.2)',
+                                        background: 'var(--gradient-primary)',
                                         '&:hover': {
-                                            boxShadow: '0px 6px 16px rgba(63, 81, 181, 0.3)',
+                                            background: 'var(--gradient-primary)',
+                                            boxShadow: '0px 6px 16px var(--color-primary-light)',
                                         }
                                     }}
                                 >

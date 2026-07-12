@@ -82,7 +82,7 @@ const UpdateAttenStatusOfClsSec = () => {
                 <Skeleton
                     variant="text"
                     width="300px"
-                    height={60}
+                    height={40}
                     sx={{ mb: 4 }}
                 />
                 {[1, 2, 3].map((item) => (
@@ -118,13 +118,14 @@ const UpdateAttenStatusOfClsSec = () => {
     return (
         <Container sx={{ py: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2 } }}>
             <Box sx={{
-                mb: { xs: 2, sm: 3, md: 4 },
+                mb: { xs: 2.5, sm: 3, md: 4 },
                 textAlign: 'center',
-                background: 'var(--gradient-accent)',
-                borderRadius: 2,
-                p: { xs: 1.5, sm: 2, md: 3 },
+                background: 'var(--gradient-primary)',
+                borderRadius: 4,
+                py: { xs: 2, sm: 2.5 },
+                px: { xs: 2.5, sm: 3 },
                 color: 'white',
-                boxShadow: theme.shadows[4]
+                boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)'
             }}>
                 <Typography
                     variant="h4"
@@ -134,13 +135,13 @@ const UpdateAttenStatusOfClsSec = () => {
                         justifyContent: 'center',
                         gap: { xs: 1, sm: 1.5, md: 2 },
                         fontWeight: 700,
-                        fontSize: { xs: '1.1rem', sm: '1.5rem', md: '2rem' },
-                        fontFamily: "'Poppins', sans-serif",
+                        fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                        fontFamily: '"Poppins", sans-serif',
                         whiteSpace: 'nowrap',
                         flexWrap: 'nowrap'
                     }}
                 >
-                    <UpdateIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.75rem', md: '2.5rem' } }} />
+                    <UpdateIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' } }} />
                     Attendance Records
                 </Typography>
             </Box>
@@ -158,12 +159,13 @@ const UpdateAttenStatusOfClsSec = () => {
                     <Card
                         key={attendanceGroup.attendance_date}
                         sx={{
-                            mb: { xs: 1.5, sm: 2 },
-                            borderRadius: 2,
-                            boxShadow: theme.shadows[3]
+                            mb: { xs: 2, sm: 2.5 },
+                            borderRadius: 4,
+                            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+                            border: '1px solid rgba(255, 255, 255, 0.5)',
                         }}
                     >
-                        <CardContent sx={{ p: { xs: 1.5, sm: 2, md: 3 } }}>
+                        <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 <Grid item xs>
                                     <Typography
@@ -172,10 +174,10 @@ const UpdateAttenStatusOfClsSec = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: { xs: 0.5, sm: 1 },
-                                            color: theme.palette.primary.main,
-                                            fontFamily: "'Poppins', sans-serif",
-                                            fontWeight: 600,
-                                            fontSize: { xs: '0.9rem', sm: '1rem', md: '1.25rem' }
+                                            color: 'var(--color-primary)',
+                                            fontFamily: '"Poppins", sans-serif',
+                                            fontWeight: 700,
+                                            fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' }
                                         }}
                                     >
                                         <DateIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
@@ -205,8 +207,11 @@ const UpdateAttenStatusOfClsSec = () => {
                                         onClick={() => handleDateClick(attendanceGroup.attendance_date)}
                                         sx={{
                                             transform: expandedDate === attendanceGroup.attendance_date ? 'rotate(180deg)' : 'rotate(0deg)',
-                                            transition: 'transform 0.3s',
-                                            color: theme.palette.primary.main
+                                            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            color: 'var(--color-primary)',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(26, 35, 126, 0.1)'
+                                            }
                                         }}
                                     >
                                         <ExpandMoreIcon />
@@ -220,13 +225,16 @@ const UpdateAttenStatusOfClsSec = () => {
                                         <Paper
                                             key={record.id}
                                             sx={{
-                                                p: { xs: 1.5, sm: 2 },
+                                                p: { xs: 2, sm: 2.5 },
                                                 mb: { xs: 1.5, sm: 2 },
-                                                borderRadius: 2,
-                                                transition: 'transform 0.2s',
+                                                borderRadius: 3,
+                                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                                                border: '1px solid rgba(0, 0, 0, 0.06)',
                                                 '&:hover': {
                                                     transform: 'translateY(-2px)',
-                                                    boxShadow: theme.shadows[2]
+                                                    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.12)',
+                                                    borderColor: 'var(--color-primary)'
                                                 }
                                             }}
                                         >
@@ -243,9 +251,9 @@ const UpdateAttenStatusOfClsSec = () => {
                                                         />
                                                         <Typography
                                                             sx={{
-                                                                fontWeight: 500,
-                                                                fontFamily: "'Poppins', sans-serif",
-                                                                fontSize: { xs: '0.875rem', sm: '1rem' }
+                                                                fontWeight: 600,
+                                                                fontFamily: '"Poppins", sans-serif',
+                                                                fontSize: { xs: '0.95rem', sm: '1.05rem' }
                                                             }}
                                                         >
                                                             {record.student_name}
@@ -262,40 +270,46 @@ const UpdateAttenStatusOfClsSec = () => {
                                                 </Grid>
                                                 <Grid item xs={12} sm={4}>
                                                     <FormControl fullWidth size="small">
-                                                        <InputLabel sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>Status</InputLabel>
+                                                        <InputLabel sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, fontWeight: 500 }}>Status</InputLabel>
                                                         <Select
                                                             value={record.status}
                                                             onChange={(e) => handleStatusChange(record.id, e.target.value)}
                                                             label="Status"
                                                             sx={{
-                                                                fontSize: { xs: '0.875rem', sm: '1rem' },
+                                                                fontSize: { xs: '0.9rem', sm: '1rem' },
                                                                 '.MuiSelect-select': {
                                                                     color: record.status === 'Absent' ?
-                                                                        theme.palette.error.main :
-                                                                        theme.palette.success.main,
-                                                                    fontWeight: 500
+                                                                        'var(--color-danger)' :
+                                                                        'var(--color-success)',
+                                                                    fontWeight: 600
                                                                 },
                                                                 '.MuiOutlinedInput-notchedOutline': {
                                                                     borderColor: record.status === 'Absent' ?
-                                                                        theme.palette.error.main :
-                                                                        theme.palette.success.main,
+                                                                        'var(--color-danger)' :
+                                                                        'var(--color-success)',
                                                                 },
                                                                 '&:hover .MuiOutlinedInput-notchedOutline': {
                                                                     borderColor: record.status === 'Absent' ?
-                                                                        theme.palette.error.dark :
-                                                                        theme.palette.success.dark,
+                                                                        'var(--color-danger-dark)' :
+                                                                        'var(--color-success-dark)',
+                                                                },
+                                                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                                    borderColor: record.status === 'Absent' ?
+                                                                        'var(--color-danger)' :
+                                                                        'var(--color-success)',
+                                                                    borderWidth: 2,
                                                                 },
                                                             }}
                                                         >
                                                             <MenuItem
                                                                 value="Present"
-                                                                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                                                                sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, fontWeight: 500 }}
                                                             >
                                                                 Present
                                                             </MenuItem>
                                                             <MenuItem
                                                                 value="Absent"
-                                                                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                                                                sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, fontWeight: 500 }}
                                                             >
                                                                 Absent
                                                             </MenuItem>

@@ -207,35 +207,42 @@ const ClassSelector = () => {
             background: 'var(--color-background)'
         }}>
             <Paper 
-                elevation={3}
+                elevation={16}
                 sx={{ 
                     maxWidth: '1200px', 
                     mx: 'auto',
-                    p: 3,
-                    borderRadius: 2
+                    p: { xs: 2.5, sm: 3, md: 4 },
+                    borderRadius: 4,
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
                 }}
             >
                 {/* Header Section */}
                 <Box sx={{ 
-                    mb: 4,
+                    mb: 3,
                     textAlign: 'center',
-                    background: 'var(--gradient-accent)',
-                    p: 3,
-                    borderRadius: 2,
-                    color: 'white'
+                    background: 'var(--gradient-primary)',
+                    py: { xs: 2, sm: 2.5 },
+                    px: { xs: 2.5, sm: 3 },
+                    borderRadius: 4,
+                    color: 'white',
+                    width: { xs: '100%', sm: '70%', md: '60%' },
+                    mx: 'auto',
+                    boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)'
                 }}>
                     <Typography 
-                        variant="h4" 
+                        variant="h5" 
                         sx={{ 
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: 2,
+                            gap: 1,
                             fontWeight: 700,
-                            mb: 1
+                            fontSize: { xs: '1.25rem', sm: '1.4rem', md: '1.55rem' },
+                            fontFamily: '"Poppins", sans-serif'
                         }}
                     >
-                        <PromoteIcon fontSize="large" />
+                        <PromoteIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem' } }} />
                         Promote Students
                     </Typography>
                     {selectedClass && (
@@ -267,12 +274,23 @@ const ClassSelector = () => {
                         sx={{ 
                             width: { xs: '100%', sm: '300px' },
                             '& .MuiOutlinedInput-root': {
-                                borderRadius: 2,
+                                borderRadius: 3,
+                                height: { xs: 48, sm: 56 },
                                 bgcolor: 'white',
                                 '&:hover fieldset': {
-                                    borderColor: theme.palette.primary.main,
+                                    borderColor: 'var(--color-primary)',
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: 'var(--color-primary)',
+                                    borderWidth: 2,
                                 }
-                            }
+                            },
+                            '& .MuiInputLabel-root': {
+                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                '&.Mui-focused': {
+                                    color: 'var(--color-primary)',
+                                },
+                            },
                         }}
                     />
                 </Box>
@@ -281,16 +299,24 @@ const ClassSelector = () => {
                 <Grid container spacing={3} sx={{ mb: 4 }}>
                     <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
-                            <InputLabel>Select Class</InputLabel>
+                            <InputLabel sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, fontWeight: 500 }}>Select Class</InputLabel>
                             <Select
                                 value={selectedClass}
                                 onChange={handleClassChange}
                                 label="Select Class"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <ClassIcon color="primary" />
-                                    </InputAdornment>
-                                }
+                                sx={{
+                                    borderRadius: 3,
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderWidth: '2px',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'var(--color-primary)',
+                                        borderWidth: 2,
+                                    },
+                                }}
                             >
                                 {classes.map(cls => (
                                     <MenuItem key={cls.id} value={cls.name}>
@@ -303,16 +329,24 @@ const ClassSelector = () => {
 
                     <Grid item xs={12} md={6}>
                         <FormControl fullWidth disabled={!selectedClass}>
-                            <InputLabel>Select Section</InputLabel>
+                            <InputLabel sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, fontWeight: 500 }}>Select Section</InputLabel>
                             <Select
                                 value={selectedSection}
                                 onChange={handleSectionChange}
                                 label="Select Section"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <SchoolIcon color="primary" />
-                                    </InputAdornment>
-                                }
+                                sx={{
+                                    borderRadius: 3,
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderWidth: '2px',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'var(--color-primary)',
+                                        borderWidth: 2,
+                                    },
+                                }}
                             >
                                 {sections.map(sec => (
                                     <MenuItem key={sec.id} value={sec.name}>
@@ -371,31 +405,33 @@ const ClassSelector = () => {
                         {filteredStudents.map(student => (
                             <Grid item xs={12} sm={6} md={4} key={student.id}>
                                 <Card sx={{ 
-                                    boxShadow: 3,
-                                    borderRadius: 2,
-                                    transition: 'transform 0.2s',
+                                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                                    borderRadius: 4,
+                                    border: '1px solid rgba(255, 255, 255, 0.5)',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                     '&:hover': {
                                         transform: 'translateY(-4px)',
-                                        boxShadow: 6
+                                        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
+                                        borderColor: 'var(--color-primary)',
                                     }
                                 }}>
-                                    <CardContent>
+                                    <CardContent sx={{ p: { xs: 2, sm: 2.5 } }}>
                                         <Box sx={{ 
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: 1,
                                             mb: 2,
-                                            color: theme.palette.primary.main
+                                            color: 'var(--color-primary)'
                                         }}>
                                             <PersonIcon />
-                                            <Typography variant="h6">
+                                            <Typography variant="h6" sx={{ fontWeight: 600, fontFamily: '"Poppins", sans-serif', fontSize: { xs: '1rem', sm: '1.1rem' } }}>
                                                 ID: {student.id}
                                             </Typography>
                                         </Box>
-                                        <Typography sx={{ mb: 1 }}>
+                                        <Typography sx={{ mb: 1, fontWeight: 500, fontFamily: '"Poppins", sans-serif', fontSize: { xs: '0.9rem', sm: '0.95rem' } }}>
                                             Name: {student.student_name}
                                         </Typography>
-                                        <Typography sx={{ mb: 1 }}>
+                                        <Typography sx={{ mb: 1, fontWeight: 500, fontFamily: '"Poppins", sans-serif', fontSize: { xs: '0.9rem', sm: '0.95rem' } }}>
                                             {student.class_name}
                                         </Typography>
                                         <Typography sx={{ mb: 2 }}>
@@ -429,8 +465,10 @@ const ClassSelector = () => {
                                 justifyContent: 'center',
                                 gap: 1,
                                 mb: 3,
-                                color: theme.palette.primary.main,
-                                fontWeight: 600
+                                color: 'var(--color-primary)',
+                                fontWeight: 700,
+                                fontFamily: '"Poppins", sans-serif',
+                                fontSize: { xs: '1.25rem', sm: '1.4rem' }
                             }}
                         >
                             <ArrowIcon />

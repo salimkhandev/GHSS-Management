@@ -12,6 +12,7 @@ import {
     LinearProgress,
     Paper,
     Typography,
+    useScrollTrigger,
     useTheme
 } from '@mui/material';
 import React, { Suspense, useState } from 'react';
@@ -25,10 +26,10 @@ const Loader = () => (
     <Box sx={{ width: '100%', mt: 2 }}>
         <LinearProgress
             sx={{
-                height: 6,
-                borderRadius: 3,
+                height: 8,
+                borderRadius: 4,
                 '& .MuiLinearProgress-bar': {
-                    backgroundImage: 'var(--gradient-accent)',
+                    backgroundImage: 'var(--gradient-primary)',
                 }
             }}
         />
@@ -38,6 +39,7 @@ const Loader = () => (
 const PerformanceDashboard = () => {
     const theme = useTheme();
     const [activeComponent, setActiveComponent] = useState(null);
+    const scrolled = useScrollTrigger({ disableHysteresis: true, threshold: 60 });
 
     const menuItems = [
         {
@@ -65,18 +67,21 @@ const PerformanceDashboard = () => {
             {/* Removed title banner for a cleaner look */}
 
             <Paper
-                elevation={2}
+                elevation={16}
                 sx={{
                     position: 'sticky',
-                    top: { xs: 56, sm: 64, md: 68 },
+                    top: 0,
                     zIndex: 1000,
-                    backgroundColor: 'white',
-                    mb: { xs: 2, sm: 3, md: 4 },
-                    borderRadius: 2,
-                    p: { xs: 0.75, sm: 1.25, md: 1.5 },
+                    backgroundColor: 'rgba(255, 255, 255, 0.99)',
+                    backdropFilter: 'blur(20px)',
+                    mb: { xs: 3, sm: 4, md: 5 },
+                    borderRadius: 4,
+                    p: scrolled ? { xs: 1, sm: 1, md: 1 } : { xs: 1.5, sm: 2, md: 2.5 },
                     maxWidth: { xs: '100%', sm: 900, md: 1000 },
                     mx: 'auto',
-                    border: `1px solid ${theme.palette.divider}`
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                    transition: 'padding 0.2s ease',
                 }}
             >
                 <Grid
@@ -92,22 +97,32 @@ const PerformanceDashboard = () => {
                                 startIcon={item.icon}
                                 fullWidth
                                 sx={{
-                                    px: { xs: 1.5, sm: 2, md: 2.5 },
-                                    py: { xs: 0.85, sm: 1.1, md: 1.25 },
-                                    borderRadius: 2,
+                                    px: { xs: 2, sm: 2.5, md: 3 },
+                                    py: scrolled ? { xs: 0.8, sm: 1, md: 1 } : { xs: 1.2, sm: 1.4, md: 1.6 },
+                                    borderRadius: '12px',
                                     textTransform: 'none',
                                     fontWeight: 600,
-                                    fontSize: { xs: '0.82rem', sm: '0.9rem', md: '0.95rem' },
+                                    fontFamily: '"Poppins", sans-serif',
+                                    fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
                                     whiteSpace: 'nowrap',
                                     minWidth: 'fit-content',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                     ...(activeComponent === item.id ? {
-                                        background: 'var(--gradient-accent)',
-                                        boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)',
-                                    } : {
-                                        borderColor: theme.palette.primary.main,
+                                        background: 'var(--gradient-primary)',
+                                        color: 'white',
+                                        boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
                                         '&:hover': {
-                                            background: 'rgba(25, 118, 210, 0.04)',
-                                            borderColor: theme.palette.primary.main,
+                                            background: 'var(--gradient-primary)',
+                                            boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
+                                            transform: 'translateY(-2px)',
+                                        },
+                                    } : {
+                                        borderColor: 'var(--color-primary)',
+                                        color: 'var(--color-primary)',
+                                        '&:hover': {
+                                            background: 'rgba(26, 35, 126, 0.05)',
+                                            borderColor: 'var(--color-primary)',
+                                            transform: 'translateY(-2px)',
                                         }
                                     }),
                                 }}
@@ -120,12 +135,14 @@ const PerformanceDashboard = () => {
             </Paper>
 
             <Paper
-                elevation={2}
+                elevation={16}
                 sx={{
-                    p: { xs: 2, sm: 2.5, md: 3 },
-                    borderRadius: 2,
-                    minHeight: { xs: 300, sm: 350, md: 400 },
-                    backgroundColor: theme.palette.background.default
+                    p: { xs: 2.5, sm: 3, md: 3.5 },
+                    borderRadius: 4,
+                    minHeight: { xs: 350, sm: 400, md: 450 },
+                    backgroundColor: 'linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised))',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
                 }}
             >
                 {!activeComponent ? (
@@ -135,15 +152,15 @@ const PerformanceDashboard = () => {
                             flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            height: { xs: 300, sm: 350, md: 400 },
-                            gap: { xs: 1.5, sm: 2 }
+                            height: { xs: 350, sm: 400, md: 450 },
+                            gap: { xs: 2, sm: 2.5 }
                         }}
                     >
                         <SchoolIcon
                             sx={{
-                                fontSize: { xs: 48, sm: 54, md: 60 },
-                                color: theme.palette.grey[400],
-                                mb: { xs: 1, sm: 2 }
+                                fontSize: { xs: 64, sm: 72, md: 80 },
+                                color: 'var(--color-primary)',
+                                filter: 'drop-shadow(0 4px 8px rgba(26, 35, 126, 0.15))',
                             }}
                         />
                         <Typography
@@ -151,8 +168,11 @@ const PerformanceDashboard = () => {
                             color="textSecondary"
                             align="center"
                             sx={{
-                                fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
-                                px: { xs: 2, sm: 0 }
+                                fontFamily: '"Poppins", sans-serif',
+                                fontWeight: 600,
+                                fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.35rem' },
+                                px: { xs: 2, sm: 0 },
+                                color: 'var(--color-text-secondary)'
                             }}
                         >
                             Select an option above to view performance data

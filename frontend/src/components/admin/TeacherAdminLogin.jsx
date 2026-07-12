@@ -17,7 +17,6 @@ import {
     Typography,
     Alert
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFormik } from "formik";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
@@ -25,20 +24,6 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import apiBase from '../../config/api';
 
-const defaultTheme = createTheme({
-    palette: {
-        primary: {
-            main: '#2196f3',
-            dark: '#1976d2',
-        },
-        secondary: {
-            main: '#f50057',
-        },
-        background: {
-            default: '#f8f9fa'
-        }
-    }
-});
 
 // Updated Validation schema
 const validationSchema = Yup.object({
@@ -143,44 +128,56 @@ const LoginForm = () => {
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Grid
-                container
-                component="main"
+        <Box
+            sx={{
+                display: 'flex',
+                minHeight: '90vh',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'var(--gradient-primary)',
+                padding: '20px',
+                backgroundImage: 'url("/images/pattern.png")',
+                backgroundBlendMode: 'overlay',
+            }}
+        >
+            <Paper
+                elevation={16}
                 sx={{
-                    minHeight: "90vh",
-                    background: 'var(--color-background)',
-                    justifyContent: "center",
-                    alignItems: "center",
-                    p: { xs: 2, sm: 4 }
+                    padding: { xs: 3.5, sm: 5 },
+                    borderRadius: 4,
+                    maxWidth: 500,
+                    width: '100%',
+                    backgroundColor: 'rgba(255, 255, 255, 0.99)',
+                    backdropFilter: 'blur(20px)',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
                 }}
             >
-                <CssBaseline />
-                <Paper
-                    elevation={3}
+                <Box
                     sx={{
-                        p: { xs: 3, sm: 4 },
-                        width: "100%",
-                        maxWidth: 450,
-                        borderRadius: 2,
-                        background: 'rgba(255, 255, 255, 0.98)',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: { xs: 2.5, sm: 3 },
                     }}
                 >
                     <Typography
                         component="h1"
-                        variant="h5"
+                        variant="h4"
                         sx={{
-                            mb: 3,
-                            textAlign: "center",
-                            fontWeight: 600,
-                            color: 'primary.main'
+                            fontFamily: '"Poppins", sans-serif',
+                            fontWeight: 700,
+                            color: 'var(--color-primary)',
+                            textAlign: 'center',
+                            textShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
+                            letterSpacing: '-0.3px',
+                            fontSize: { xs: '1.5rem', sm: '2rem' }
                         }}
                     >
                         Admin & Teacher Login
                     </Typography>
 
-                    <Alert severity="info" sx={{ mb: 2, borderRadius: 2 }}>
+                    <Alert severity="info" sx={{ width: '100%', borderRadius: 2, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
                         Demo credentials pre-filled for convenience.
                     </Alert>
 
@@ -190,18 +187,19 @@ const LoginForm = () => {
                         sx={{
                             display: "flex",
                             flexDirection: "column",
-                            gap: 3
+                            gap: { xs: 2, sm: 2.5 },
+                            width: '100%'
                         }}
                     >
                         <Box
                             sx={{
-                                p: 2.5,
+                                p: { xs: 2, sm: 2.5 },
                                 borderRadius: 2,
                                 border: '1px solid',
                                 borderColor: 'rgba(0, 0, 0, 0.12)',
                                 '&:hover': {
-                                    borderColor: 'primary.main',
-                                    boxShadow: '0 0 0 1px rgba(33, 150, 243, 0.2)'
+                                    borderColor: 'var(--color-primary)',
+                                    boxShadow: '0 0 0 1px var(--color-primary-light)'
                                 }
                             }}
                         >
@@ -212,9 +210,9 @@ const LoginForm = () => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: 1,
-                                    color: 'primary.dark',
-                                    fontSize: '1.1rem',
-                                    fontWeight: 500
+                                    color: 'var(--color-primary)',
+                                    fontSize: { xs: '1rem', sm: '1.1rem' },
+                                    fontWeight: 600
                                 }}
                             >
                                 <AdminPanelSettings sx={{ mr: 1 }} /> Admin Login
@@ -230,7 +228,25 @@ const LoginForm = () => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.adminUsername && Boolean(formik.errors.adminUsername)}
                                 helperText={formik.touched.adminUsername && formik.errors.adminUsername}
-                                sx={{ mb: 2 }}
+                                sx={{
+                                    mb: { xs: 1.5, sm: 2 },
+                                    '& .MuiOutlinedInput-root': {
+                                        height: { xs: 44, sm: 48 },
+                                        '&:hover fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                            borderWidth: 2,
+                                        },
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                                        '&.Mui-focused': {
+                                            color: 'var(--color-primary)',
+                                        },
+                                    },
+                                }}
                             />
                             <TextField
                                 fullWidth
@@ -243,6 +259,25 @@ const LoginForm = () => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.adminPassword && Boolean(formik.errors.adminPassword)}
                                 helperText={formik.touched.adminPassword && formik.errors.adminPassword}
+                                sx={{
+                                    mb: 0,
+                                    '& .MuiOutlinedInput-root': {
+                                        height: { xs: 44, sm: 48 },
+                                        '&:hover fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                            borderWidth: 2,
+                                        },
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                                        '&.Mui-focused': {
+                                            color: 'var(--color-primary)',
+                                        },
+                                    },
+                                }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -265,13 +300,13 @@ const LoginForm = () => {
 
                         <Box
                             sx={{
-                                p: 2.5,
+                                p: { xs: 2, sm: 2.5 },
                                 borderRadius: 2,
                                 border: '1px solid',
                                 borderColor: 'rgba(0, 0, 0, 0.12)',
                                 '&:hover': {
-                                    borderColor: 'primary.main',
-                                    boxShadow: '0 0 0 1px rgba(33, 150, 243, 0.2)'
+                                    borderColor: 'var(--color-primary)',
+                                    boxShadow: '0 0 0 1px var(--color-primary-light)'
                                 }
                             }}
                         >
@@ -282,9 +317,9 @@ const LoginForm = () => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: 1,
-                                    color: 'primary.dark',
-                                    fontSize: '1.1rem',
-                                    fontWeight: 500
+                                    color: 'var(--color-primary)',
+                                    fontSize: { xs: '1rem', sm: '1.1rem' },
+                                    fontWeight: 600
                                 }}
                             >
                                 <School sx={{ mr: 1 }} /> Teacher Login
@@ -300,7 +335,25 @@ const LoginForm = () => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.teacherUsername && Boolean(formik.errors.teacherUsername)}
                                 helperText={formik.touched.teacherUsername && formik.errors.teacherUsername}
-                                sx={{ mb: 2 }}
+                                sx={{
+                                    mb: { xs: 1.5, sm: 2 },
+                                    '& .MuiOutlinedInput-root': {
+                                        height: { xs: 44, sm: 48 },
+                                        '&:hover fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                            borderWidth: 2,
+                                        },
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                                        '&.Mui-focused': {
+                                            color: 'var(--color-primary)',
+                                        },
+                                    },
+                                }}
                             />
                             <TextField
                                 fullWidth
@@ -313,6 +366,25 @@ const LoginForm = () => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.teacherPassword && Boolean(formik.errors.teacherPassword)}
                                 helperText={formik.touched.teacherPassword && formik.errors.teacherPassword}
+                                sx={{
+                                    mb: 0,
+                                    '& .MuiOutlinedInput-root': {
+                                        height: { xs: 44, sm: 48 },
+                                        '&:hover fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                            borderWidth: 2,
+                                        },
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                                        '&.Mui-focused': {
+                                            color: 'var(--color-primary)',
+                                        },
+                                    },
+                                }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -339,16 +411,27 @@ const LoginForm = () => {
                             variant="contained"
                             disabled={loading || !formik.isValid}
                             sx={{
-                                mt: 1,
-                                py: 1.2,
+                                mt: { xs: 1, sm: 2 },
+                                py: 1.8,
+                                fontSize: { xs: '1rem', sm: '1.1rem' },
+                                fontWeight: 600,
                                 textTransform: 'none',
-                                fontSize: '1rem',
-                                fontWeight: 500,
-                                borderRadius: 1.5,
-                                boxShadow: '0 4px 12px rgba(33, 150, 243, 0.2)',
+                                borderRadius: '12px',
+                                background: 'var(--gradient-primary)',
+                                color: 'white',
+                                boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 '&:hover': {
-                                    boxShadow: '0 6px 16px rgba(33, 150, 243, 0.3)'
-                                }
+                                    background: 'var(--gradient-primary)',
+                                    boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
+                                    transform: 'translateY(-2px)',
+                                },
+                                '&:active': {
+                                    transform: 'translateY(0)',
+                                },
+                                '&.Mui-disabled': {
+                                    background: 'rgba(0, 0, 0, 0.12)',
+                                },
                             }}
                         >
                             {loading ? (
@@ -358,9 +441,9 @@ const LoginForm = () => {
                             )}
                         </Button>
                     </Box>
-                </Paper>
-            </Grid>
-        </ThemeProvider>
+                </Box>
+            </Paper>
+        </Box>
     );
 };
 

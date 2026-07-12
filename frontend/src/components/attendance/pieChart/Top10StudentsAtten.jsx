@@ -223,31 +223,32 @@ const AttendancePieChart = () => {
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
             <Box sx={{
-                mb: 4,
+                mb: { xs: 3, sm: 4 },
                 textAlign: 'center',
-                background: 'var(--gradient-accent)',
-                borderRadius: 2,
-                p: { xs: 1, sm: 1.25, md: 2 },
-                color: 'white',
-                width: 'fit-content',
-                maxWidth: '100%',
+                width: { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
                 mx: 'auto',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
+                background: 'var(--gradient-primary)',
+                borderRadius: 4,
+                py: { xs: 2, sm: 2.5 },
+                px: { xs: 2.5, sm: 3 },
+                color: 'white',
+                boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)'
             }}>
                 <Typography
                     variant="h4"
                     sx={{
-                        fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
-                        whiteSpace: 'nowrap',
+                        fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: 2,
+                        gap: { xs: 1, sm: 1.5, md: 2 },
                         fontWeight: 700,
-                        mb: 1
+                        fontFamily: '"Poppins", sans-serif',
+                        textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                        mb: 0
                     }}
                 >
-                    <LeaderboardIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.6rem' } }} />
+                    <LeaderboardIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' } }} />
                     Top 10 Ranked Students
                 </Typography>
             </Box>
@@ -271,17 +272,20 @@ const AttendancePieChart = () => {
                         const absentPercentage = 100 - overallPercentage;
 
                         return (
-                            <Grid item xs={12} md={6} lg={4} key={index}>
+                            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                                 <Card sx={{
-                                    boxShadow: 3,
-                                    borderRadius: 2,
-                                    transition: 'transform 0.2s',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                                    borderRadius: 3,
+                                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    border: '1px solid rgba(255, 255, 255, 0.5)',
+                                    background: 'linear-gradient(135deg, var(--color-surface), var(--color-surface-raised))',
                                     '&:hover': {
                                         transform: 'translateY(-4px)',
-                                        boxShadow: 6
+                                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                        borderColor: 'var(--color-primary)',
                                     }
                                 }}>
-                                    <CardContent>
+                                    <CardContent sx={{ p: { xs: 1.5, sm: 2 } }}>
                                         <Box sx={{
                                             display: 'flex',
                                             justifyContent: 'center',

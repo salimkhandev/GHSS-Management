@@ -151,9 +151,9 @@ export default function ClassSectionDisplay() {
                 <Skeleton
                     variant="rectangular"
                     sx={{
-                        mb: { xs: 2, sm: 3, md: 4 },
-                        height: { xs: 44, sm: 52, md: 56 },
-                        width: { xs: 220, sm: 300, md: 360 },
+                        mb: { xs: 2, sm: 3 },
+                        height: { xs: 36, sm: 44, md: 48 },
+                        width: { xs: 220, sm: 260, md: 300 },
                         mx: 'auto',
                         borderRadius: 2,
                         bgcolor: 'rgba(25, 118, 210, 0.1)'

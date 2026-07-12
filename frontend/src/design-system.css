@@ -100,3 +100,102 @@
   --sidebar-width:  260px;
   --navbar-height:  56px;
 }
+
+/* ================================================================
+   Global utility classes — use these in className alongside MUI sx
+   ================================================================ */
+
+/* Page-level header bar (blue strip at top of each page content area) */
+.ds-page-header {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  padding: var(--space-md) var(--space-xl);
+  font-family: var(--font-primary);
+  box-shadow: var(--shadow-md);
+}
+
+/* Standard card */
+.ds-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Table header row */
+.ds-table-header {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-dark);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-sm);
+  letter-spacing: 0.5px;
+}
+
+/* Primary action button */
+.ds-btn-primary {
+  background: var(--gradient-accent);
+  color: var(--color-text-on-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-md);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  box-shadow: var(--shadow-sm);
+}
+.ds-btn-primary:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* Danger button */
+.ds-btn-danger {
+  background: var(--gradient-danger);
+  color: var(--color-text-on-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-weight: var(--weight-semi);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+.ds-btn-danger:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Status badge — present */
+.ds-badge-success {
+  background: #d1fae5;
+  color: var(--color-success-dark);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+}
+
+/* Status badge — absent */
+.ds-badge-danger {
+  background: #fee2e2;
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+}
+
+/* Status badge — warning */
+.ds-badge-warning {
+  background: #fef3c7;
+  color: var(--color-warning-dark);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+}

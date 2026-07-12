@@ -272,43 +272,51 @@ const AttendanceList = () => {
 
         <Container maxWidth="sm" sx={{ py: { xs: 2, sm: 3, md: 4 }, px: { xs: 1, sm: 2 } }}>
             <Paper
-                elevation={3}
+                elevation={16}
                 sx={{
-                    borderRadius: 2,
+                    borderRadius: 4,
                     overflow: 'hidden',
-                    background: 'linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised))'
+                    background: 'linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised))',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
                 }}
             >
                 <Box
                     sx={{
-                        p: { xs: 2, sm: 2.5, md: 3 },
-                        background: 'var(--gradient-accent)',
+                        py: { xs: 2, sm: 2.5 },
+                        px: { xs: 2.5, sm: 3 },
+                        background: 'var(--gradient-primary)',
                         color: 'white',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                        boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                        borderTopLeftRadius: '16px',
+                        borderTopRightRadius: '16px'
                     }}
                 >
                     <Typography
-                        variant="h5"
+                        variant="h4"
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: { xs: 0.75, sm: 1 },
-                            fontWeight: 600,
-                            fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                            gap: { xs: 1, sm: 1.5, md: 2 },
+                            fontWeight: 700,
+                            fontFamily: '"Poppins", sans-serif',
+                            fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                            textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                         }}
                     >
-                        <AttendanceIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem' } }} />
+                        <AttendanceIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' } }} />
                         Attendance Sheet
                     </Typography>
                     <Typography
                         variant="subtitle1"
                         sx={{
-                            mt: 1,
-                            opacity: 0.9,
+                            mt: 1.5,
+                            opacity: 0.95,
                             display: 'flex',
                             alignItems: 'center',
                             gap: { xs: 0.5, sm: 1 },
-                            fontSize: { xs: '0.875rem', sm: '1rem' }
+                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                            fontWeight: 500
                         }}
                     >
                         <CalendarIcon sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }} />
@@ -316,7 +324,7 @@ const AttendanceList = () => {
                     </Typography>
                 </Box>
 
-                <Box sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
+                <Box sx={{ p: { xs: 2.5, sm: 3, md: 3.5 } }}>
                     <Button
                         variant="contained"
                         onClick={handleSaveAttendance}
@@ -324,18 +332,27 @@ const AttendanceList = () => {
                         startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
                         fullWidth
                         sx={{
-                            mb: { xs: 2, sm: 2.5, md: 3 },
-                            py: { xs: 1.25, sm: 1.5 },
-                            background: 'var(--gradient-accent)',
+                            mb: { xs: 2.5, sm: 3, md: 3.5 },
+                            py: 1.8,
+                            background: 'var(--gradient-primary)',
                             color: 'white',
                             fontWeight: 600,
-                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                            fontSize: { xs: '1rem', sm: '1.1rem' },
+                            textTransform: 'none',
+                            borderRadius: '12px',
+                            boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             '&:hover': {
-                                background: 'var(--gradient-accent)',
-                                boxShadow: '0 4px 8px rgba(25, 118, 210, 0.3)'
+                                background: 'var(--gradient-primary)',
+                                boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
+                                transform: 'translateY(-2px)',
+                            },
+                            '&:active': {
+                                transform: 'translateY(0)',
                             },
                             '&:disabled': {
-                                opacity: 0.7
+                                opacity: 0.7,
+                                background: 'rgba(0, 0, 0, 0.12)',
                             }
                         }}
                     >
@@ -357,16 +374,24 @@ const AttendanceList = () => {
                             ),
                         }}
                         sx={{
-                            mb: { xs: 2, sm: 2.5, md: 3 },
+                            mb: { xs: 2.5, sm: 3, md: 3.5 },
                             '& .MuiOutlinedInput-root': {
-                                fontSize: { xs: '0.875rem', sm: '1rem' },
+                                height: { xs: 48, sm: 56 },
+                                fontSize: { xs: '0.9rem', sm: '1rem' },
                                 '&:hover fieldset': {
-                                    borderColor: theme.palette.primary.main,
+                                    borderColor: 'var(--color-primary)',
                                 },
                                 '&.Mui-focused fieldset': {
-                                    borderColor: theme.palette.primary.main,
+                                    borderColor: 'var(--color-primary)',
+                                    borderWidth: 2,
                                 }
-                            }
+                            },
+                            '& .MuiInputLabel-root': {
+                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                '&.Mui-focused': {
+                                    color: 'var(--color-primary)',
+                                },
+                            },
                         }}
                     />
 
@@ -381,11 +406,15 @@ const AttendanceList = () => {
                                     {index > 0 && <Divider />}
                                     <ListItem
                                         sx={{
-                                            py: { xs: 1, sm: 1.5 },
-                                            px: { xs: 1, sm: 2 },
+                                            py: { xs: 1.5, sm: 2 },
+                                            px: { xs: 1.5, sm: 2 },
                                             transition: 'all 0.2s',
+                                            borderRadius: 2,
+                                            mx: 1,
+                                            my: 0.5,
                                             '&:hover': {
-                                                bgcolor: 'action.hover'
+                                                bgcolor: 'rgba(26, 35, 126, 0.05)',
+                                                transform: 'translateX(4px)'
                                             }
                                         }}
                                     >
@@ -394,8 +423,9 @@ const AttendanceList = () => {
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75, sm: 1 } }}>
                                                     <PersonIcon color="action" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
                                                     <Typography sx={{
-                                                        fontWeight: 500,
-                                                        fontSize: { xs: '0.875rem', sm: '1rem' }
+                                                        fontWeight: 600,
+                                                        fontFamily: '"Poppins", sans-serif',
+                                                        fontSize: { xs: '0.95rem', sm: '1.05rem' }
                                                     }}>
                                                         {`${index + 1}. ${student.name}`}
 
@@ -413,7 +443,7 @@ const AttendanceList = () => {
                                                 color="success"
                                                 checkedIcon={<CheckIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />}
                                                 sx={{
-                                                    transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
+                                                    transform: { xs: 'scale(0.95)', sm: 'scale(1)' },
                                                     '& .MuiSwitch-switchBase.Mui-checked': {
                                                         color: 'var(--color-success)'
                                                     },

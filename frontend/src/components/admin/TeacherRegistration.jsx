@@ -1,5 +1,5 @@
 import { School as ClassIcon, Lock as LockIcon, Person, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from 'axios';
@@ -115,51 +115,54 @@ const RegisterTeacher = () => {
 
     return (
         <Box
-            component="form"
-            onSubmit={formik.handleSubmit}
             sx={{
                 display: 'flex',
-                flexDirection: 'column',
+                minHeight: '90vh',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: '80vh',
-                gap: 3,
-                width: '90%',
-                maxWidth: '500px',
-                margin: '40px auto',
-                padding: { xs: 3, sm: 4 },
-                backgroundColor: 'white',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-                borderRadius: 3,
-                position: 'relative',
-                '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: '4px',
-                    background: 'var(--gradient-accent)',
-                    borderRadius: '3px 3px 0 0',
-                }
+                background: 'var(--gradient-primary)',
+                padding: '20px',
+                backgroundImage: 'url("/images/pattern.png")',
+                backgroundBlendMode: 'overlay',
             }}
         >
-            <Typography 
-                variant="h4" 
-                sx={{ 
-                    mb: 3, 
-                    background: 'var(--gradient-accent)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                    fontWeight: 700,
-                    textAlign: 'center',
-                    fontSize: { xs: '1.75rem', sm: '2.125rem' }
+            <Paper
+                elevation={16}
+                sx={{
+                    padding: { xs: 3.5, sm: 5 },
+                    borderRadius: 4,
+                    maxWidth: 480,
+                    width: '100%',
+                    backgroundColor: 'rgba(255, 255, 255, 0.99)',
+                    backdropFilter: 'blur(20px)',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
                 }}
             >
-                Register Teacher
-            </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: { xs: 2.5, sm: 3 },
+                    }}
+                >
+                    <Typography 
+                        variant="h4" 
+                        sx={{ 
+                            fontFamily: '"Poppins", sans-serif',
+                            fontWeight: 700,
+                            color: 'var(--color-primary)',
+                            textAlign: 'center',
+                            textShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
+                            letterSpacing: '-0.3px',
+                            fontSize: { xs: '1.5rem', sm: '2rem' }
+                        }}
+                    >
+                        Register Teacher
+                    </Typography>
 
+                    <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: '100%' }}>
             <TextField
                 fullWidth
                 id="username"
@@ -179,14 +182,23 @@ const RegisterTeacher = () => {
                     ),
                 }}
                 sx={{
+                    mb: { xs: 2, sm: 3 },
                     '& .MuiOutlinedInput-root': {
+                        height: { xs: 48, sm: 56 },
                         '&:hover fieldset': {
                             borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
                             borderColor: 'var(--color-accent)',
+                            borderWidth: 2,
                         }
-                    }
+                    },
+                    '& .MuiInputLabel-root': {
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        '&.Mui-focused': {
+                            color: 'var(--color-accent)',
+                        },
+                    },
                 }}
             />
 
@@ -216,14 +228,23 @@ const RegisterTeacher = () => {
                     ),
                 }}
                 sx={{
+                    mb: { xs: 2, sm: 3 },
                     '& .MuiOutlinedInput-root': {
+                        height: { xs: 48, sm: 56 },
                         '&:hover fieldset': {
                             borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
                             borderColor: 'var(--color-accent)',
+                            borderWidth: 2,
                         }
-                    }
+                    },
+                    '& .MuiInputLabel-root': {
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        '&.Mui-focused': {
+                            color: 'var(--color-accent)',
+                        },
+                    },
                 }}
             />
 
@@ -231,14 +252,23 @@ const RegisterTeacher = () => {
                 fullWidth 
                 error={formik.touched.classId && Boolean(formik.errors.classId)}
                 sx={{
+                    mb: { xs: 2, sm: 3 },
                     '& .MuiOutlinedInput-root': {
+                        height: { xs: 48, sm: 56 },
                         '&:hover fieldset': {
                             borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
                             borderColor: 'var(--color-accent)',
+                            borderWidth: 2,
                         }
-                    }
+                    },
+                    '& .MuiInputLabel-root': {
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        '&.Mui-focused': {
+                            color: 'var(--color-accent)',
+                        },
+                    },
                 }}
             >
                 <InputLabel id="class-label">Select Class</InputLabel>
@@ -276,14 +306,23 @@ const RegisterTeacher = () => {
                 fullWidth 
                 error={formik.touched.sectionId && Boolean(formik.errors.sectionId)}
                 sx={{
+                    mb: { xs: 2, sm: 3 },
                     '& .MuiOutlinedInput-root': {
+                        height: { xs: 48, sm: 56 },
                         '&:hover fieldset': {
                             borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
                             borderColor: 'var(--color-accent)',
+                            borderWidth: 2,
                         }
-                    }
+                    },
+                    '& .MuiInputLabel-root': {
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        '&.Mui-focused': {
+                            color: 'var(--color-accent)',
+                        },
+                    },
                 }}
             >
                 <InputLabel id="section-label">Select Section</InputLabel>
@@ -316,19 +355,35 @@ const RegisterTeacher = () => {
                 disabled={loading}
                 fullWidth
                 sx={{
-                    mt: 2,
-                    py: 1.5,
-                    background: 'var(--gradient-accent)',
-                    boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)',
+                    mt: { xs: 1, sm: 2 },
+                    mb: 2,
+                    py: 1.8,
+                    background: 'var(--gradient-primary)',
+                    color: 'white',
+                    fontWeight: 600,
+                    fontSize: { xs: '1rem', sm: '1.1rem' },
+                    textTransform: 'none',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     '&:hover': {
-                        background: 'var(--gradient-accent)',
+                        background: 'var(--gradient-primary)',
+                        boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
+                        transform: 'translateY(-2px)',
                     },
-                    transition: 'all 0.3s ease-in-out',
+                    '&:active': {
+                        transform: 'translateY(0)',
+                    },
+                    '&.Mui-disabled': {
+                        background: 'rgba(0, 0, 0, 0.12)',
+                    },
                 }}
             >
                 {loading ? 'Registering...' : 'Register'}
             </Button>
-
+                    </Box>
+                </Box>
+            </Paper>
         </Box>
     );
 };

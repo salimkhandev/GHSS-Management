@@ -29,6 +29,7 @@ import {
     TextField,
     Typography,
     useMediaQuery,
+    useScrollTrigger,
     useTheme
 } from '@mui/material';
 import axios from 'axios';
@@ -40,6 +41,8 @@ const StudentList = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+    // Collapse title row when user has scrolled down
+    const scrolled = useScrollTrigger({ disableHysteresis: true, threshold: 60 });
 
     const [students, setStudents] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
@@ -221,7 +224,7 @@ const StudentList = () => {
         <Grid container spacing={{ xs: 2, md: 3 }}>
             {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Grid item xs={12} sm={6} md={4} key={item}>
-                    <Card sx={{ borderRadius: 3 }}>
+                    <Card sx={{ borderRadius: 4 }}>
                         <CardContent>
                             <Skeleton variant="circular" width={60} height={60} sx={{ mb: 2 }} />
                             <Skeleton variant="text" height={30} width="80%" />
@@ -244,70 +247,75 @@ const StudentList = () => {
             }}
         >
             <Container maxWidth="xl">
-                {/* Header Section */}
+                {/* Sticky Header: full at top, compact when scrolled */}
                 <Box
                     sx={{
                         position: 'sticky',
-                        top: { xs: 56, md: 64 },
+                        top: 0,
                         zIndex: 10,
                         bgcolor: 'background.default',
-                        py: 2,
-                        mb: { xs: 2, md: 3 },
+                        // Less padding when scrolled
+                        py: scrolled ? 0.5 : 1,
+                        mb: { xs: 1, md: 2 },
+                        transition: 'padding 0.2s ease',
                     }}
                 >
-                    <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        justifyContent="space-between"
-                        alignItems={{ xs: 'flex-start', sm: 'center' }}
-                        spacing={2}
-                        sx={{ mb: 3 }}
-                    >
-                        <Typography
-                            variant={isMobile ? 'h5' : 'h4'}
-                            sx={{
-                                fontWeight: 700,
-                                background: 'var(--gradient-primary)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text',
-                            }}
+                    {/* Title row — hidden when scrolled */}
+                    <Collapse in={!scrolled} timeout={200}>
+                        <Stack
+                            direction={{ xs: 'column', sm: 'row' }}
+                            justifyContent="space-between"
+                            alignItems={{ xs: 'flex-start', sm: 'center' }}
+                            spacing={2}
+                            sx={{ mb: 1.5 }}
                         >
-                            Student Directory
-                        </Typography>
+                            <Typography
+                                variant={isMobile ? 'h5' : 'h4'}
+                                sx={{
+                                    fontWeight: 700,
+                                    fontFamily: '"Poppins", sans-serif',
+                                    background: 'var(--gradient-primary)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+                                }}
+                            >
+                                Student Directory
+                            </Typography>
 
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            {isMobile && (
-                                <IconButton
-                                    onClick={() => setShowFilters(!showFilters)}
-                                    sx={{
-                                        bgcolor: showFilters ? 'primary.main' : 'background.paper',
-                                        color: showFilters ? 'white' : 'primary.main',
-                                        boxShadow: 2,
-                                        '&:hover': {
-                                            bgcolor: showFilters ? 'primary.dark' : 'action.hover',
-                                        }
-                                    }}
-                                >
-                                    {showFilters ? <CloseIcon /> : <FilterListIcon />}
-                                </IconButton>
-                            )}
-                            <Chip
-                                icon={<GroupsIcon />}
-                                label={`${filteredStudents.length || students.length} Students`}
-                                color="primary"
-                                variant="outlined"
-                                sx={{ fontWeight: 600 }}
-                            />
-                            {selectedClass && selectedSection && (
-                                <ExportToExcel data={filteredStudents.length > 0 ? filteredStudents : students} />
-                            )}
+                            <Stack direction="row" spacing={1} alignItems="center">
+                                {isMobile && (
+                                    <IconButton
+                                        onClick={() => setShowFilters(!showFilters)}
+                                        sx={{
+                                            bgcolor: showFilters ? 'primary.main' : 'background.paper',
+                                            color: showFilters ? 'white' : 'primary.main',
+                                            boxShadow: 2,
+                                            '&:hover': { bgcolor: showFilters ? 'primary.dark' : 'action.hover' }
+                                        }}
+                                    >
+                                        {showFilters ? <CloseIcon /> : <FilterListIcon />}
+                                    </IconButton>
+                                )}
+                                <Chip
+                                    icon={<GroupsIcon />}
+                                    label={`${filteredStudents.length || students.length} Students`}
+                                    color="primary"
+                                    variant="outlined"
+                                    sx={{ fontWeight: 600 }}
+                                />
+                                {selectedClass && selectedSection && (
+                                    <ExportToExcel data={filteredStudents.length > 0 ? filteredStudents : students} />
+                                )}
+                            </Stack>
                         </Stack>
-                    </Stack>
+                    </Collapse>
 
-                    {/* Filters Section */}
+                    {/* Filter bar — always visible, compact size when scrolled */}
                     <Collapse in={!isMobile || showFilters} timeout="auto">
-                        <Card sx={{ mb: 0, p: { xs: 2, md: 3 }, borderRadius: 3, boxShadow: 3 }}>
-                            <Grid container spacing={{ xs: 2, md: 3 }}>
+                        <Card sx={{ mb: 0, p: scrolled ? { xs: 0.75, md: 1 } : { xs: 1.5, md: 2 }, borderRadius: 3, boxShadow: 3, transition: 'padding 0.2s ease' }}>
+                            <Grid container spacing={{ xs: 1.5, md: 2 }} alignItems="center">
                             {/* Search Field */}
                             <Grid item xs={12} md={4}>
                                 <TextField
@@ -317,11 +325,26 @@ const StudentList = () => {
                                     value={searchQuery}
                                     onChange={handleSearchChange}
                                     placeholder="Search by name..."
+                                    size="small" // Make input thinner
                                     sx={{
                                         '& .MuiOutlinedInput-root': {
                                             borderRadius: 3,
+                                            height: { xs: 48, sm: 56 },
                                             '& fieldset': {
                                                 borderWidth: '2px',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: 'var(--color-primary)',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: 'var(--color-primary)',
+                                                borderWidth: 2,
+                                            }
+                                        },
+                                        '& .MuiInputLabel-root': {
+                                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                                            '&.Mui-focused': {
+                                                color: 'var(--color-primary)',
                                             },
                                         },
                                     }}
@@ -337,7 +360,7 @@ const StudentList = () => {
 
                             {/* Class Filter */}
                             <Grid item xs={12} sm={6} md={4}>
-                                <FormControl fullWidth>
+                                <FormControl fullWidth size="small">
                                     <InputLabel>Class</InputLabel>
                                     <Select
                                         value={selectedClass || 'All Classes'}
@@ -370,7 +393,7 @@ const StudentList = () => {
 
                             {/* Section Filter */}
                             <Grid item xs={12} sm={6} md={4}>
-                                <FormControl fullWidth disabled={!selectedClass}>
+                                <FormControl fullWidth disabled={!selectedClass} size="small">
                                     <InputLabel>Section</InputLabel>
                                     <Select
                                         value={selectedSection || 'All Sections'}
@@ -424,70 +447,78 @@ const StudentList = () => {
                     <>
                         <Grid container spacing={{ xs: 2, md: 3 }}>
                             {(filteredStudents.length > 0 ? filteredStudents : students).map((student, index) => (
-                                <Grid item xs={12} sm={6} md={4} lg={3} key={student.id || index}>
+                                <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={student.id || index}>
                                     <Card
                                         sx={{
                                             height: '100%',
                                             borderRadius: 3,
-                                            boxShadow: 3,
-                                            transition: 'all 0.3s ease',
+                                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                                            border: '1px solid rgba(255, 255, 255, 0.5)',
+                                            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                                             '&:hover': {
-                                                boxShadow: 6,
-                                                transform: 'translateY(-8px)',
+                                                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+                                                transform: 'translateY(-4px)',
+                                                borderColor: 'var(--color-primary)',
                                             },
                                         }}
                                     >
-                                        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                                        <CardContent sx={{ p: { xs: 1.5, md: 2 } }}>
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 1.5 }}>
                                                 <Avatar
                                                     sx={{
-                                                        width: { xs: 45, md: 55 },
-                                                        height: { xs: 45, md: 55 },
-                                                        bgcolor: 'primary.main',
-                                                        fontSize: { xs: '1.2rem', md: '1.5rem' },
+                                                        width: { xs: 45, md: 50 },
+                                                        height: { xs: 45, md: 50 },
+                                                        bgcolor: 'var(--color-primary)',
+                                                        fontSize: { xs: '1.1rem', md: '1.25rem' },
                                                         fontWeight: 700,
-                                                        mb: 1.5,
+                                                        mb: 1,
+                                                        boxShadow: '0 4px 12px rgba(26, 35, 126, 0.2)',
                                                     }}
                                                 >
                                                     {student.student_name?.charAt(0).toUpperCase()}
                                                 </Avatar>
                                                 <Typography
-                                                    variant={isMobile ? 'body1' : 'h6'}
+                                                    variant={isMobile ? 'body1' : 'subtitle1'}
                                                     sx={{
                                                         fontWeight: 600,
+                                                        fontFamily: '"Poppins", sans-serif',
                                                         textAlign: 'center',
                                                         color: 'text.primary',
                                                         mb: 0.5,
+                                                        fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' },
+                                                        lineHeight: 1.2
                                                     }}
                                                 >
                                                     {student.student_name}
                                                 </Typography>
-                                                <Typography variant="body2" color="text.secondary" component="span">ID:
-                                                <Chip
-                                                    label={student.id}
-                                                    size="small"
-                                                    color="primary"
-                                                    variant="outlined"
-                                                />
-                                                    </Typography>
+                                                <Typography variant="caption" color="text.secondary" component="div" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                                    ID: 
+                                                    <Chip
+                                                        label={student.id}
+                                                        size="small"
+                                                        color="primary"
+                                                        variant="outlined"
+                                                        sx={{ height: 20, fontSize: '0.7rem' }}
+                                                    />
+                                                </Typography>
                                             </Box>
 
                                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                    <ClassIcon fontSize="small" color="action" />
-                                                    <Typography variant="body2" color="text.secondary">
+                                                    <ClassIcon sx={{ fontSize: '1rem' }} color="action" />
+                                                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
                                                         <strong>{student.class_name || 'N/A'}</strong>
                                                     </Typography>
                                                 </Box>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                    <GroupsIcon fontSize="small" color="action" />
-                                                    <Typography variant="body2" color="text.secondary">
+                                                    <GroupsIcon sx={{ fontSize: '1rem' }} color="action" />
+                                                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
                                                         Section: <strong>{student.section_name || 'N/A'}</strong>
                                                     </Typography>
                                                 </Box>
                                                 {student.father_name && (
                                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                        <PersonIcon fontSize="small" color="action" />
+                                                        <PersonIcon sx={{ fontSize: '1rem' }} color="action" />
                                                         <Typography
                                                             variant="body2"
                                                             color="text.secondary"
@@ -495,6 +526,7 @@ const StudentList = () => {
                                                                 overflow: 'hidden',
                                                                 textOverflow: 'ellipsis',
                                                                 whiteSpace: 'nowrap',
+                                                                fontSize: '0.8rem'
                                                             }}
                                                         >
                                                             Father: <strong>{student.father_name}</strong>
@@ -523,16 +555,25 @@ const StudentList = () => {
                                     onClick={() => setPage(page - 1)}
                                     disabled={page === 1}
                                     sx={{
-                                        bgcolor: 'primary.main',
+                                        bgcolor: 'var(--color-primary)',
                                         color: 'white',
-                                        '&:hover': { bgcolor: 'primary.dark' },
-                                        '&:disabled': { bgcolor: 'action.disabledBackground' },
+                                        boxShadow: '0 4px 12px rgba(26, 35, 126, 0.3)',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        '&:hover': { 
+                                            bgcolor: 'var(--color-primary-dark)',
+                                            transform: 'translateY(-2px)',
+                                            boxShadow: '0 6px 16px rgba(26, 35, 126, 0.4)',
+                                        },
+                                        '&:disabled': { 
+                                            bgcolor: 'action.disabledBackground',
+                                            boxShadow: 'none',
+                                        },
                                     }}
                                 >
                                     <ArrowBack />
                                 </IconButton>
 
-                                <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                                <Typography variant="body1" sx={{ fontWeight: 600, fontFamily: '"Poppins", sans-serif', fontSize: { xs: '0.9rem', sm: '1rem' } }}>
                                     Page {page} of {totalpages}
                                 </Typography>
 
@@ -540,10 +581,19 @@ const StudentList = () => {
                                     onClick={() => setPage(page + 1)}
                                     disabled={page === totalpages}
                                     sx={{
-                                        bgcolor: 'primary.main',
+                                        bgcolor: 'var(--color-primary)',
                                         color: 'white',
-                                        '&:hover': { bgcolor: 'primary.dark' },
-                                        '&:disabled': { bgcolor: 'action.disabledBackground' },
+                                        boxShadow: '0 4px 12px rgba(26, 35, 126, 0.3)',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        '&:hover': { 
+                                            bgcolor: 'var(--color-primary-dark)',
+                                            transform: 'translateY(-2px)',
+                                            boxShadow: '0 6px 16px rgba(26, 35, 126, 0.4)',
+                                        },
+                                        '&:disabled': { 
+                                            bgcolor: 'action.disabledBackground',
+                                            boxShadow: 'none',
+                                        },
                                     }}
                                 >
                                     <ArrowForward />

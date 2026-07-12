@@ -9,9 +9,9 @@ import "slick-carousel/slick/slick.css";
 import logo from "/images/ghssLogo.png";
 
 const images = [
-  { src: "/images/image.jpg", alt: "School Building" },
-  { src: "/images/image.jpg", alt: "School Building" },
-  { src: "/images/image.jpg", alt: "School Building" },
+  { text: "Welcome to GHSS Luqman Banda - Excellence in Education" },
+  { text: "Empowering Students for a Bright Future" },
+  { text: "Quality Education with Modern Facilities" },
 ];
 
 const NextArrow = ({ onClick }) => (
@@ -26,13 +26,15 @@ const NextArrow = ({ onClick }) => (
       fontSize: { xs: '1.5rem', md: '2rem' },
       cursor: 'pointer',
       zIndex: 2,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(26, 35, 126, 0.6)',
       borderRadius: '50%',
       padding: { xs: '8px', md: '12px' },
-      transition: 'all 0.3s ease',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
       '&:hover': {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(26, 35, 126, 0.8)',
         transform: 'translateY(-50%) scale(1.1)',
+        boxShadow: '0 6px 16px rgba(0, 0, 0, 0.4)',
       },
     }}
   />
@@ -50,13 +52,15 @@ const PrevArrow = ({ onClick }) => (
       fontSize: { xs: '1.5rem', md: '2rem' },
       cursor: 'pointer',
       zIndex: 2,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(26, 35, 126, 0.6)',
       borderRadius: '50%',
       padding: { xs: '8px', md: '12px' },
-      transition: 'all 0.3s ease',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
       '&:hover': {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(26, 35, 126, 0.8)',
         transform: 'translateY(-50%) scale(1.1)',
+        boxShadow: '0 6px 16px rgba(0, 0, 0, 0.4)',
       },
     }}
   />
@@ -82,7 +86,7 @@ const GallerySlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2500,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     fade: true,
@@ -117,6 +121,7 @@ const GallerySlider = () => {
                     objectFit: 'contain',
                     mx: 'auto',
                     mb: { xs: 3, md: 6 },
+                    filter: 'drop-shadow(0 8px 16px rgba(26, 35, 126, 0.2))',
                   }}
                 />
               </motion.div>
@@ -128,10 +133,13 @@ const GallerySlider = () => {
                 <Typography
                   variant="h1"
                   sx={{
-                    fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' },
+                    fontSize: { xs: '1.75rem', sm: '2.25rem', md: '3rem' },
                     fontWeight: 700,
-                    color: '#333',
+                    fontFamily: '"Poppins", sans-serif',
+                    color: 'var(--color-primary)',
                     px: 2,
+                    textShadow: '0 2px 8px rgba(26, 35, 126, 0.15)',
+                    letterSpacing: '-0.5px',
                   }}
                 >
                   Welcome to GHSS Luqman Banda
@@ -152,18 +160,21 @@ const GallerySlider = () => {
             <Box sx={{ width: '100vw', height: viewportMinusAppBar }}>
               <Slider {...settings}>
                 {images.map((image, index) => (
-                  <Box key={index} sx={{ width: '100vw', height: viewportMinusAppBar }}>
-                    <Box
-                      component="img"
-                      src={image.src}
-                      alt={image.alt}
+                  <Box key={index} sx={{ width: '100vw', height: viewportMinusAppBar, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gradient-primary)' }}>
+                    <Typography
+                      variant="h2"
                       sx={{
-                        width: '100vw',
-                        height: viewportMinusAppBar,
-                        objectFit: 'cover',
-                        display: 'block',
+                        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+                        fontWeight: 700,
+                        fontFamily: '"Poppins", sans-serif',
+                        color: 'white',
+                        textAlign: 'center',
+                        px: { xs: 2, sm: 4, md: 6 },
+                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
                       }}
-                    />
+                    >
+                      {image.text}
+                    </Typography>
                   </Box>
                 ))}
               </Slider>

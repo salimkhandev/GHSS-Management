@@ -1,5 +1,6 @@
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
+import LockIcon from '@mui/icons-material/Lock';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Box, Button, CircularProgress, Paper, TextField, Typography, Alert } from '@mui/material';
@@ -84,20 +85,18 @@ const Login = () => {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
             >
                 <Paper
-                    elevation={12}
+                    elevation={16}
                     component="form"
                     onSubmit={formik.handleSubmit}
                     sx={{
-                        padding: { xs: 4, sm: 6 },
-
-                        borderRadius: 3,
-                        height: { xs: '80vh' },
-                        width: { xs: '340px', sm: '380px', md: '480px' },
-                        backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                        // backgroundColor: 'red',
-                        backdropFilter: 'blur(10px)',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        padding: { xs: 3.5, sm: 5 },
+                        borderRadius: 4,
+                        maxWidth: 420,
+                        width: '100%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.99)',
+                        backdropFilter: 'blur(20px)',
+                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.5)',
                     }}
                 >
                     <Box
@@ -105,7 +104,7 @@ const Login = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: 4,
+                            gap: { xs: 2.5, sm: 3 },
                         }}
                     >
                         <motion.div
@@ -114,9 +113,9 @@ const Login = () => {
                         >
                             <SchoolIcon
                                 sx={{
-                                    fontSize: { xs: 60, sm: 72 },
+                                    fontSize: { xs: 56, sm: 64 },
                                     color: 'var(--color-primary)',
-                                    filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
+                                    filter: 'drop-shadow(0 4px 8px rgba(26, 35, 126, 0.15))',
                                 }}
                             />
                         </motion.div>
@@ -126,18 +125,17 @@ const Login = () => {
                             sx={{
                                 fontFamily: '"Poppins", sans-serif',
                                 fontWeight: 700,
-                                fontSize: { xs: '1.75rem', sm: '2.1rem' },
                                 color: 'var(--color-primary)',
                                 textAlign: 'center',
-                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                letterSpacing: '-0.5px',
-                                mb: 2,
+                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
+                                letterSpacing: '-0.3px',
+                                fontSize: { xs: '1.5rem', sm: '2rem' },
                             }}
                         >
                             Teacher Login
                         </Typography>
 
-                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2 }}>
+                        <Alert severity="info" sx={{ width: '100%', borderRadius: 2, fontSize: { xs: '0.85rem', sm: '0.9rem' } }}>
                             Demo credentials pre-filled for convenience.
                         </Alert>
 
@@ -155,26 +153,27 @@ const Login = () => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <PersonIcon sx={{ color: '#666' }} />
+                                            <PersonIcon sx={{ color: 'var(--color-primary)' }} />
                                         </InputAdornment>
                                     ),
                                 }}
                                 sx={{
                                     width: '100%',
-                                    mb: 3,
+                                    mb: { xs: 2, sm: 3 },
                                     '& .MuiOutlinedInput-root': {
-                                        height: '56px',
+                                        height: { xs: 48, sm: 56 },
                                         '&:hover fieldset': {
-                                            borderColor: 'var(--color-accent)',
+                                            borderColor: 'var(--color-primary)',
                                         },
                                         '&.Mui-focused fieldset': {
-                                            borderColor: 'var(--color-accent)',
+                                            borderColor: 'var(--color-primary)',
+                                            borderWidth: 2,
                                         },
                                     },
                                     '& .MuiInputLabel-root': {
-                                        fontSize: '1.1rem',
+                                        fontSize: { xs: '0.9rem', sm: '1rem' },
                                         '&.Mui-focused': {
-                                            color: 'var(--color-accent)',
+                                            color: 'var(--color-primary)',
                                         },
                                     },
                                 }}
@@ -192,11 +191,21 @@ const Login = () => {
                                 error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password}
                                 InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <LockIcon sx={{ color: 'var(--color-primary)' }} />
+                                        </InputAdornment>
+                                    ),
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
                                                 onClick={handleTogglePassword}
                                                 edge="end"
+                                                sx={{
+                                                    '&:hover': {
+                                                        backgroundColor: 'rgba(26, 35, 126, 0.1)',
+                                                    },
+                                                }}
                                             >
                                                 {showPassword ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
@@ -205,19 +214,21 @@ const Login = () => {
                                 }}
                                 sx={{
                                     width: '100%',
+                                    mb: { xs: 2, sm: 3 },
                                     '& .MuiOutlinedInput-root': {
-                                        height: '56px',
+                                        height: { xs: 48, sm: 56 },
                                         '&:hover fieldset': {
-                                            borderColor: 'var(--color-accent)',
+                                            borderColor: 'var(--color-primary)',
                                         },
                                         '&.Mui-focused fieldset': {
-                                            borderColor: 'var(--color-accent)',
+                                            borderColor: 'var(--color-primary)',
+                                            borderWidth: 2,
                                         },
                                     },
                                     '& .MuiInputLabel-root': {
-                                        fontSize: '1.1rem',
+                                        fontSize: { xs: '0.9rem', sm: '1rem' },
                                         '&.Mui-focused': {
-                                            color: 'var(--color-accent)',
+                                            color: 'var(--color-primary)',
                                         },
                                     },
                                 }}
@@ -251,20 +262,19 @@ const Login = () => {
                             fullWidth
                             disabled={loading || !formik.isValid}
                             sx={{
-                                mt: 3,
-                                py: 2,
-                                background: 'var(--color-primary)',
+                                mt: { xs: 1, sm: 2 },
+                                py: 1.8,
+                                background: 'var(--gradient-primary)',
                                 color: 'white',
                                 fontWeight: 600,
-                                fontSize: '1.2rem',
+                                fontSize: { xs: '1rem', sm: '1.1rem' },
                                 textTransform: 'none',
-                                borderRadius: '10px',
-                                boxShadow: '0 4px 12px rgba(25, 118, 210, 0.4)',
-                                transition: 'all 0.3s ease',
+                                borderRadius: '12px',
+                                boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 '&:hover': {
-                                    background: 'var(--color-primary)',
-                                    // background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
-                                    boxShadow: '0 6px 15px rgba(25, 118, 210, 0.5)',
+                                    background: 'var(--gradient-primary)',
+                                    boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
                                     transform: 'translateY(-2px)',
                                 },
                                 '&:active': {

@@ -26,7 +26,7 @@ function StudentForm() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        gap: 2,
+                        gap: { xs: 1.5, sm: 2 },
                         mb: 2,
                         flexWrap: 'wrap'
                     }}
@@ -36,26 +36,28 @@ function StudentForm() {
                         onClick={() => handleFormSelection('manual')}
                         sx={{
                             px: { xs: 3, sm: 4 },
-                            py: 1.2,
-                            fontFamily: "'Poppins', sans-serif",
-                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                            py: 1.5,
+                            fontFamily: '"Poppins", sans-serif',
+                            fontSize: { xs: '0.95rem', sm: '1.05rem' },
                             fontWeight: 600,
                             textTransform: 'capitalize',
                             borderRadius: '12px',
-                            minWidth: { xs: '160px', sm: '200px' },
+                            minWidth: { xs: '140px', sm: '200px' },
                             border: '2px solid',
                             borderColor: formType === 'manual' ? 'var(--color-primary)' : 'var(--color-border)',
-                            backgroundColor: formType === 'manual' ? 'var(--color-primary)' : 'var(--color-surface)',
-                            color: formType === 'manual' ? 'var(--color-text-on-dark)' : 'var(--color-primary)',
+                            backgroundColor: formType === 'manual' ? 'var(--gradient-primary)' : 'var(--color-surface)',
+                            color: formType === 'manual' ? 'white' : 'var(--color-primary)',
                             boxShadow: formType === 'manual'
-                                ? '0px 4px 12px rgba(27, 47, 110, 0.3)'
-                                : '0px 2px 8px rgba(0, 0, 0, 0.1)',
-                            transition: 'all 0.3s ease',
+                                ? '0 4px 16px rgba(26, 35, 126, 0.3)'
+                                : '0 2px 8px rgba(0, 0, 0, 0.1)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             '&:hover': {
-                                backgroundColor: formType === 'manual' ? 'var(--color-primary-light)' : 'var(--color-surface-raised)',
+                                backgroundColor: formType === 'manual' ? 'var(--gradient-primary)' : 'var(--color-surface-raised)',
                                 borderColor: 'var(--color-primary)',
                                 transform: 'translateY(-2px)',
-                                boxShadow: '0px 6px 16px rgba(27, 47, 110, 0.4)',
+                                boxShadow: formType === 'manual'
+                                    ? '0 8px 24px rgba(26, 35, 126, 0.4)'
+                                    : '0 4px 12px rgba(0, 0, 0, 0.15)',
                             },
                             '&:active': {
                                 transform: 'translateY(0)',
@@ -70,26 +72,28 @@ function StudentForm() {
                         onClick={() => handleFormSelection('bulk')}
                         sx={{
                             px: { xs: 3, sm: 4 },
-                            py: 1.2,
-                            fontFamily: "'Poppins', sans-serif",
-                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                            py: 1.5,
+                            fontFamily: '"Poppins", sans-serif',
+                            fontSize: { xs: '0.95rem', sm: '1.05rem' },
                             fontWeight: 600,
                             textTransform: 'capitalize',
                             borderRadius: '12px',
-                            minWidth: { xs: '160px', sm: '200px' },
+                            minWidth: { xs: '140px', sm: '200px' },
                             border: '2px solid',
                             borderColor: formType === 'bulk' ? 'var(--color-primary)' : 'var(--color-border)',
-                            backgroundColor: formType === 'bulk' ? 'var(--color-primary)' : 'var(--color-surface)',
-                            color: formType === 'bulk' ? 'var(--color-text-on-dark)' : 'var(--color-primary)',
+                            backgroundColor: formType === 'bulk' ? 'var(--gradient-primary)' : 'var(--color-surface)',
+                            color: formType === 'bulk' ? 'white' : 'var(--color-primary)',
                             boxShadow: formType === 'bulk'
-                                ? '0px 4px 12px rgba(27, 47, 110, 0.3)'
-                                : '0px 2px 8px rgba(0, 0, 0, 0.1)',
-                            transition: 'all 0.3s ease',
+                                ? '0 4px 16px rgba(26, 35, 126, 0.3)'
+                                : '0 2px 8px rgba(0, 0, 0, 0.1)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             '&:hover': {
-                                backgroundColor: formType === 'bulk' ? 'var(--color-primary-light)' : 'var(--color-surface-raised)',
+                                backgroundColor: formType === 'bulk' ? 'var(--gradient-primary)' : 'var(--color-surface-raised)',
                                 borderColor: 'var(--color-primary)',
                                 transform: 'translateY(-2px)',
-                                boxShadow: '0px 6px 16px rgba(27, 47, 110, 0.4)',
+                                boxShadow: formType === 'bulk'
+                                    ? '0 8px 24px rgba(26, 35, 126, 0.4)'
+                                    : '0 4px 12px rgba(0, 0, 0, 0.15)',
                             },
                             '&:active': {
                                 transform: 'translateY(0)',

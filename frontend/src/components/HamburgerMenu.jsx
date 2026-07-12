@@ -615,7 +615,7 @@ export default function TopDrawerWithToggle() {
           >
             {loading ? (
               <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(255,255,255,0.1)' }}>
-                <CircularProgress size={30} sx={{ color: '#fff' }} />
+                <CircularProgress size={30} sx={{ color: 'var(--color-text-on-dark)' }} />
               </Box>
             ) : imageUrl ? (
               <img
@@ -634,7 +634,7 @@ export default function TopDrawerWithToggle() {
                   justifyContent: 'center',
                 }}
               >
-                <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.4rem', fontFamily: "'Poppins',sans-serif" }}>
+                <Typography sx={{ color: 'var(--color-text-on-dark)', fontWeight: 700, fontSize: '1.4rem', fontFamily: "'Poppins',sans-serif" }}>
                   {username ? username.charAt(0).toUpperCase() : '?'}
                 </Typography>
               </Box>
@@ -644,7 +644,7 @@ export default function TopDrawerWithToggle() {
           {username && (
             <Typography
               sx={{
-                color: '#fff',
+                color: 'var(--color-text-on-dark)',
                 fontWeight: 600,
                 fontSize: '0.9rem',
                 fontFamily: "'Poppins', sans-serif",
@@ -716,40 +716,6 @@ export default function TopDrawerWithToggle() {
               },
             }}
           >
-            <Box sx={modalStyles.credentialsBox}>
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}
-              >
-                <KeyIcon sx={{ color: "var(--color-warning)", fontSize: 24 }} />
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontWeight: 600, color: "var(--color-text-secondary)" }}
-                >
-                  Demo Credentials
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <AdminIcon sx={{ color: "var(--color-danger)", fontSize: 20 }} />
-                  <Typography variant="body2" sx={{ color: "var(--color-text-secondary)" }}>
-                    Admin:{" "}
-                    <span style={{ color: "var(--color-danger)", fontWeight: 500 }}>
-                      Username: admin | Password: admin
-                    </span>
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <SchoolIcon sx={{ color: "var(--color-success)", fontSize: 20 }} />
-                  <Typography variant="body2" sx={{ color: "var(--color-text-secondary)" }}>
-                    Teacher:{" "}
-                    <span style={{ color: "var(--color-success)", fontWeight: 500 }}>
-                      Username: Kamal | Password: Kamal
-                    </span>
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
             <Box sx={modalStyles.title}>
               <Typography
                 variant="h5"

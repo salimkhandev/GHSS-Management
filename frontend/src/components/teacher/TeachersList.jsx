@@ -45,7 +45,7 @@ const TeachersList = () => {
                 <Skeleton
                     variant="rectangular"
                     sx={{
-                        height: { xs: 60, sm: 80 },
+                        height: { xs: 40, sm: 50 },
                         width: '50%',
                         mx: 'auto',
                         mb: 4,
@@ -62,7 +62,7 @@ const TeachersList = () => {
                     variant="text"
                     width={200}
                     sx={{
-                        height: 40,
+                        height: 30,
                         mb: 3,
                         borderRadius: 1
                     }}
@@ -122,18 +122,19 @@ const TeachersList = () => {
             background: 'var(--color-background)'
         }}>
             <Box sx={{
-                mb: { xs: 3, sm: 4, md: 6 },
+                mb: { xs: 3, sm: 4 },
                 textAlign: 'center',
-                width: { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
+                width: { xs: '95%', sm: '70%', md: '50%', lg: '40%' },
                 mx: 'auto',
                 background: 'var(--gradient-primary)',
-                borderRadius: 2,
-                p: { xs: 1.5, sm: 2, md: 3 },
+                borderRadius: 4,
+                py: { xs: 2, sm: 2.5 },
+                px: { xs: 2.5, sm: 3 },
                 color: 'white',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)'
             }}>
                 <Typography
-                    variant="h3"
+                    variant="h4"
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
@@ -141,12 +142,12 @@ const TeachersList = () => {
                         justifyContent: 'center',
                         gap: { xs: 1, sm: 1.5, md: 2 },
                         fontWeight: 700,
-                        fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.6rem', lg: '1.8rem' },
-                        fontFamily: "'Poppins', sans-serif",
+                        fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                        fontFamily: '"Poppins", sans-serif',
                         textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                     }}
                 >
-                    <TeacherIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.6rem', md: '2rem' } }} />
+                    <TeacherIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' } }} />
                     Teachers List
                 </Typography>
             </Box>
@@ -157,39 +158,41 @@ const TeachersList = () => {
                         <Typography
                             variant="h4"
                             sx={{
-                                mb: { xs: 2, sm: 2.5, md: 3 },
-                                fontWeight: 600,
-                                fontSize: { xs: '1.15rem', sm: '1.4rem', md: '1.75rem', lg: '2rem' },
-                                fontFamily: "'Poppins', sans-serif",
-                                color: theme.palette.primary.main,
+                                mb: { xs: 2, sm: 2.5 },
+                                fontWeight: 700,
+                                fontSize: { xs: '1.15rem', sm: '1.3rem', md: '1.45rem' },
+                                fontFamily: '"Poppins", sans-serif',
+                                color: 'var(--color-primary)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: { xs: 0.75, sm: 1 },
                                 pl: { xs: 0.75, sm: 1 },
-                                borderLeft: `4px solid ${theme.palette.primary.main}`
+                                borderLeft: '4px solid var(--color-primary)'
                             }}
                         >
                             {/* code for profile pic */}
 
-                            <SchoolIcon sx={{ fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.75rem', lg: '2rem' } }} />
+                            <SchoolIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.3rem', md: '1.5rem' } }} />
                             {className}
                         </Typography>
 
                         <Grid container spacing={{ xs: 2, sm: 2.5, md: 3 }}>
                             {teachers[className].map((teacher, idx) => (
-                                <Grid item xs={12} sm={6} md={4} key={idx}>
+                                <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={idx}>
                                     <Card sx={{
                                         height: '100%',
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        borderRadius: 2,
-                                        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                                        transition: 'all 0.3s ease',
+                                        borderRadius: 3,
+                                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                                        border: '1px solid rgba(255, 255, 255, 0.5)',
+                                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                                         '&:hover': {
                                             transform: 'translateY(-4px)',
                                             boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                            borderColor: 'var(--color-primary)',
                                             '& .teacher-name': {
-                                                color: theme.palette.primary.main
+                                                color: 'var(--color-primary)'
                                             }
                                         },
                                         background: 'linear-gradient(135deg, var(--color-surface), var(--color-surface-raised))'
@@ -197,8 +200,8 @@ const TeachersList = () => {
                                         <CardContent sx={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            gap: { xs: 1.5, sm: 2 },
-                                            p: { xs: 1.5, sm: 2, md: 3 }
+                                            gap: { xs: 1, sm: 1.5 },
+                                            p: { xs: 1.5, sm: 2 }
                                         }}>
                                             <Box sx={{
                                                 display: 'flex',
@@ -233,13 +236,13 @@ const TeachersList = () => {
                                                 />
                                                 <Typography
                                                     className="teacher-name"
-                                                    variant="h6"
+                                                    variant="subtitle1"
                                                     sx={{
                                                         fontWeight: 600,
-                                                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.25rem' },
-                                                        fontFamily: "'Poppins', sans-serif",
+                                                        fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1.05rem' },
+                                                        fontFamily: '"Poppins", sans-serif',
                                                         transition: 'color 0.3s ease',
-                                                        lineHeight: 1.3,
+                                                        lineHeight: 1.2,
                                                         wordBreak: 'break-word',
                                                         overflow: 'hidden',
                                                         textOverflow: 'ellipsis',
@@ -260,8 +263,9 @@ const TeachersList = () => {
                                             }}>
 
                                                 <Typography sx={{
-                                                    fontSize: { xs: '0.8rem', sm: '0.875rem', md: '1rem' },
-                                                    whiteSpace: 'nowrap'
+                                                    fontSize: { xs: '0.8rem', sm: '0.85rem' },
+                                                    whiteSpace: 'nowrap',
+                                                    fontWeight: 500
                                                 }}>
                                                     Section: {teacher.section_name}
                                                 </Typography>

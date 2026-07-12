@@ -86,16 +86,16 @@ const AdminRegister = () => {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
             >
                 <Paper
-                    elevation={12}
+                    elevation={16}
                     sx={{
-                        padding: { xs: 3, sm: 4 },
-                        borderRadius: 3,
-                        maxWidth: 450,
+                        padding: { xs: 3.5, sm: 5 },
+                        borderRadius: 4,
+                        maxWidth: 420,
                         width: '100%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                        backdropFilter: 'blur(10px)',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.99)',
+                        backdropFilter: 'blur(20px)',
+                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                        border: '1px solid rgba(255, 255, 255, 0.5)',
                     }}
                 >
                     <Box
@@ -103,7 +103,7 @@ const AdminRegister = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: 3,
+                            gap: { xs: 2.5, sm: 3 },
                         }}
                     >
                         <motion.div
@@ -112,9 +112,9 @@ const AdminRegister = () => {
                         >
                             <AdminPanelSettingsIcon
                                 sx={{
-                                    fontSize: 80,
+                                    fontSize: { xs: 56, sm: 64 },
                                     color: 'var(--color-primary)',
-                                    filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
+                                    filter: 'drop-shadow(0 4px 8px rgba(26, 35, 126, 0.15))',
                                 }}
                             />
                         </motion.div>
@@ -126,8 +126,9 @@ const AdminRegister = () => {
                                 fontWeight: 700,
                                 color: 'var(--color-primary)',
                                 textAlign: 'center',
-                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                letterSpacing: '-0.5px',
+                                textShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
+                                letterSpacing: '-0.3px',
+                                fontSize: { xs: '1.5rem', sm: '2rem' },
                             }}
                         >
                             Admin Registration
@@ -152,17 +153,22 @@ const AdminRegister = () => {
                                         error={touched.username && Boolean(errors.username)}
                                         helperText={touched.username && errors.username}
                                         sx={{
-                                            mb: 3,
+                                            mb: { xs: 2, sm: 3 },
                                             '& .MuiOutlinedInput-root': {
+                                                height: { xs: 48, sm: 56 },
                                                 '&:hover fieldset': {
                                                     borderColor: 'var(--color-primary)',
                                                 },
                                                 '&.Mui-focused fieldset': {
                                                     borderColor: 'var(--color-primary)',
+                                                    borderWidth: 2,
                                                 },
                                             },
-                                            '& .MuiInputLabel-root.Mui-focused': {
-                                                color: 'var(--color-primary)',
+                                            '& .MuiInputLabel-root': {
+                                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                                '&.Mui-focused': {
+                                                    color: 'var(--color-primary)',
+                                                },
                                             },
                                         }}
                                         InputProps={{
@@ -187,17 +193,22 @@ const AdminRegister = () => {
                                         error={touched.password && Boolean(errors.password)}
                                         helperText={touched.password && errors.password}
                                         sx={{
-                                            mb: 3,
+                                            mb: { xs: 2, sm: 3 },
                                             '& .MuiOutlinedInput-root': {
+                                                height: { xs: 48, sm: 56 },
                                                 '&:hover fieldset': {
                                                     borderColor: 'var(--color-primary)',
                                                 },
                                                 '&.Mui-focused fieldset': {
                                                     borderColor: 'var(--color-primary)',
+                                                    borderWidth: 2,
                                                 },
                                             },
-                                            '& .MuiInputLabel-root.Mui-focused': {
-                                                color: 'var(--color-primary)',
+                                            '& .MuiInputLabel-root': {
+                                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                                '&.Mui-focused': {
+                                                    color: 'var(--color-primary)',
+                                                },
                                             },
                                         }}
                                         InputProps={{
@@ -230,20 +241,20 @@ const AdminRegister = () => {
                                         fullWidth
                                         disabled={isSubmitting}
                                         sx={{
-                                            mt: 2,
+                                            mt: { xs: 1, sm: 2 },
                                             mb: 2,
-                                            py: 1.5,
+                                            py: 1.8,
                                             background: 'var(--gradient-primary)',
                                             color: 'white',
                                             fontWeight: 600,
-                                            fontSize: '1.1rem',
+                                            fontSize: { xs: '1rem', sm: '1.1rem' },
                                             textTransform: 'none',
-                                            borderRadius: '10px',
-                                            boxShadow: '0 4px 12px rgba(26, 35, 126, 0.4)',
-                                            transition: 'all 0.3s ease',
+                                            borderRadius: '12px',
+                                            boxShadow: '0 4px 16px rgba(26, 35, 126, 0.3)',
+                                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                             '&:hover': {
                                                 background: 'var(--gradient-primary)',
-                                                boxShadow: '0 6px 15px rgba(26, 35, 126, 0.5)',
+                                                boxShadow: '0 8px 24px rgba(26, 35, 126, 0.4)',
                                                 transform: 'translateY(-2px)',
                                             },
                                             '&:active': {
