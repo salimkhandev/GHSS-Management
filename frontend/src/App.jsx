@@ -21,6 +21,7 @@ const TakenAtten = lazy(() => import("./components/attendance/TakeAtten"));
 const ClassSelector = lazy(() => import("./components/studnetPromotion/ClassSelector"));
 const UpdateAttenStatusOfClsSec = lazy(() => import("./components/attendance/UpdateAttenStatusOfClsSec"));
 const TeachersList = lazy(() => import("./components/teacher/TeachersList"));
+const DeveloperPortfolio = lazy(() => import("./components/DeveloperPortfolio"));
 
 
 // MUI Linear Progress Loader
@@ -60,6 +61,14 @@ function App() {
                 element={
                   <Suspense fallback={<Loader />}>
                     <TeachersList/>
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/developer"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <DeveloperPortfolio />
                   </Suspense>
                 }
               />

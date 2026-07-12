@@ -4,7 +4,8 @@ import {
     Home as HomeIcon,
     People as StudentsIcon,
     School as TeachersIcon,
-    Close as CloseIcon
+    Close as CloseIcon,
+    Code as DeveloperIcon
 } from '@mui/icons-material';
 import {
     AppBar,
@@ -43,9 +44,10 @@ const Navbar = () => {
 
     const navItems = [
         { label: 'Home', path: '/', icon: <HomeIcon /> },
-        { label: 'Attendance Detail', path: '/PerformanceDashboard', icon: <AttendanceIcon /> },
-        { label: 'Registered Students', path: '/studentlist', icon: <StudentsIcon /> },
-        { label: 'Teachers List', path: '/TeachersList', icon: <TeachersIcon /> }
+        { label: 'Attendance', path: '/PerformanceDashboard', icon: <AttendanceIcon /> },
+        { label: 'Students', path: '/studentlist', icon: <StudentsIcon /> },
+        { label: 'Teachers', path: '/TeachersList', icon: <TeachersIcon /> },
+        { label: 'Dev', path: '/developer', icon: <DeveloperIcon /> }
     ];
 
     return (
