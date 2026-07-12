@@ -50,7 +50,7 @@ const TeachersList = () => {
                         mx: 'auto',
                         mb: 4,
                         borderRadius: 2,
-                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                        background: 'var(--gradient-accent)',
                         opacity: 0.1,
                         // p: { xs: 2, sm: 3, md: ['8px'] },
 
@@ -119,14 +119,14 @@ const TeachersList = () => {
         <Box sx={{
             flexGrow: 1,
             p: { xs: 2, sm: 4 },
-            background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
+            background: 'var(--color-background)'
         }}>
             <Box sx={{
                 mb: { xs: 3, sm: 4, md: 6 },
                 textAlign: 'center',
                 width: { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
                 mx: 'auto',
-                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                background: 'var(--gradient-primary)',
                 borderRadius: 2,
                 p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',
@@ -192,7 +192,7 @@ const TeachersList = () => {
                                                 color: theme.palette.primary.main
                                             }
                                         },
-                                        background: 'linear-gradient(135deg, white, #fafafa)'
+                                        background: 'linear-gradient(135deg, var(--color-surface), var(--color-surface-raised))'
                                     }}>
                                         <CardContent sx={{
                                             display: 'flex',
@@ -216,9 +216,9 @@ const TeachersList = () => {
                                                         height: { xs: 36, sm: 42, md: 48 },
                                                         borderRadius: '50%',
                                                         objectFit: 'cover',
-                                                        border: '2px solid #fff',
+                                                        border: '2px solid var(--color-surface)',
                                                         boxShadow: '0 2px 4px rgba(0,0,0,0.12)',
-                                                        backgroundColor: '#f5f5f5',
+                                                        backgroundColor: 'var(--color-surface-raised)',
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'center',

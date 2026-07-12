@@ -14,7 +14,7 @@ function StudentForm() {
         <Box
             sx={{
                 minHeight: '100vh',
-                background: 'linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%)',
+                background: 'var(--color-background)',
                 py: { xs: 2, md: 3 },
                 px: { xs: 1, sm: 2 }
             }}
@@ -44,18 +44,18 @@ function StudentForm() {
                             borderRadius: '12px',
                             minWidth: { xs: '160px', sm: '200px' },
                             border: '2px solid',
-                            borderColor: formType === 'manual' ? '#3F51B5' : '#d0d0d0',
-                            backgroundColor: formType === 'manual' ? '#3F51B5' : 'white',
-                            color: formType === 'manual' ? 'white' : '#3F51B5',
+                            borderColor: formType === 'manual' ? 'var(--color-primary)' : 'var(--color-border)',
+                            backgroundColor: formType === 'manual' ? 'var(--color-primary)' : 'var(--color-surface)',
+                            color: formType === 'manual' ? 'var(--color-text-on-dark)' : 'var(--color-primary)',
                             boxShadow: formType === 'manual'
-                                ? '0px 4px 12px rgba(63, 81, 181, 0.3)'
+                                ? '0px 4px 12px rgba(27, 47, 110, 0.3)'
                                 : '0px 2px 8px rgba(0, 0, 0, 0.1)',
                             transition: 'all 0.3s ease',
                             '&:hover': {
-                                backgroundColor: formType === 'manual' ? '#303f9f' : '#f5f5f5',
-                                borderColor: '#3F51B5',
+                                backgroundColor: formType === 'manual' ? 'var(--color-primary-light)' : 'var(--color-surface-raised)',
+                                borderColor: 'var(--color-primary)',
                                 transform: 'translateY(-2px)',
-                                boxShadow: '0px 6px 16px rgba(63, 81, 181, 0.4)',
+                                boxShadow: '0px 6px 16px rgba(27, 47, 110, 0.4)',
                             },
                             '&:active': {
                                 transform: 'translateY(0)',
@@ -78,18 +78,18 @@ function StudentForm() {
                             borderRadius: '12px',
                             minWidth: { xs: '160px', sm: '200px' },
                             border: '2px solid',
-                            borderColor: formType === 'bulk' ? '#3F51B5' : '#d0d0d0',
-                            backgroundColor: formType === 'bulk' ? '#3F51B5' : 'white',
-                            color: formType === 'bulk' ? 'white' : '#3F51B5',
+                            borderColor: formType === 'bulk' ? 'var(--color-primary)' : 'var(--color-border)',
+                            backgroundColor: formType === 'bulk' ? 'var(--color-primary)' : 'var(--color-surface)',
+                            color: formType === 'bulk' ? 'var(--color-text-on-dark)' : 'var(--color-primary)',
                             boxShadow: formType === 'bulk'
-                                ? '0px 4px 12px rgba(63, 81, 181, 0.3)'
+                                ? '0px 4px 12px rgba(27, 47, 110, 0.3)'
                                 : '0px 2px 8px rgba(0, 0, 0, 0.1)',
                             transition: 'all 0.3s ease',
                             '&:hover': {
-                                backgroundColor: formType === 'bulk' ? '#303f9f' : '#f5f5f5',
-                                borderColor: '#3F51B5',
+                                backgroundColor: formType === 'bulk' ? 'var(--color-primary-light)' : 'var(--color-surface-raised)',
+                                borderColor: 'var(--color-primary)',
                                 transform: 'translateY(-2px)',
-                                boxShadow: '0px 6px 16px rgba(63, 81, 181, 0.4)',
+                                boxShadow: '0px 6px 16px rgba(27, 47, 110, 0.4)',
                             },
                             '&:active': {
                                 transform: 'translateY(0)',

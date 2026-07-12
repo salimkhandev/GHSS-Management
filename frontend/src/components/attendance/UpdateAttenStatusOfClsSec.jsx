@@ -120,7 +120,7 @@ const UpdateAttenStatusOfClsSec = () => {
             <Box sx={{
                 mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
-                background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                background: 'var(--gradient-accent)',
                 borderRadius: 2,
                 p: { xs: 1.5, sm: 2, md: 3 },
                 color: 'white',

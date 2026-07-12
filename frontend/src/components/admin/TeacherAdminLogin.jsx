@@ -28,7 +28,7 @@ import apiBase from '../../config/api';
 const defaultTheme = createTheme({
     palette: {
         primary: {
-            main: '#2196f3',  // Professional blue
+            main: '#2196f3',
             dark: '#1976d2',
         },
         secondary: {
@@ -106,7 +106,7 @@ const LoginForm = () => {
                     enqueueSnackbar("✅ Login Successful! Welcome to the system", {
                         variant: "success",
                         autoHideDuration: 3000,
-                        style: { backgroundColor: '#2196f3', color: '#ffffff' }
+                        style: { backgroundColor: 'var(--color-accent)', color: 'var(--color-text-on-dark)' }
                     });
                     navigate('/');
                 } else {
@@ -149,7 +149,7 @@ const LoginForm = () => {
                 component="main"
                 sx={{
                     minHeight: "90vh",
-                    background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                    background: 'var(--color-background)',
                     justifyContent: "center",
                     alignItems: "center",
                     p: { xs: 2, sm: 4 }
@@ -370,7 +370,7 @@ const App = () => (
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         sx={{
             '&.SnackbarItem-variantSuccess': {
-                backgroundColor: '#2196f3 !important',
+                backgroundColor: 'var(--color-accent) !important',
             }
         }}
     >

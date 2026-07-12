@@ -58,7 +58,7 @@ const OverallAttenPieChart = ({ data, startDate, endDate }) => {
             <Box sx={{
                 mb: { xs: 2, sm: 3, md: 4 },
                 textAlign: 'center',
-                background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
+                background: 'var(--gradient-accent)',
                 borderRadius: 2,
                 p: { xs: 1, sm: 1.25, md: 2 },
                 color: 'white',

@@ -52,14 +52,14 @@ const Navbar = () => {
         <div className='flex justify-start mb-16'>
             <AppBar
                 sx={{
-                    background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                    background: 'var(--gradient-primary)',
                     transition: 'all 0.3s ease-in-out',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
                     position: 'sticky',
                     top: 0,
                     zIndex: 50,
                     '&:hover': {
-                        background: 'linear-gradient(135deg, #1e3c72 10%, #2a5298 90%)',
+                        background: 'var(--gradient-primary)',
                     }
                 }}
             >
@@ -100,7 +100,7 @@ const Navbar = () => {
                                 fontFamily: "'Playfair Display', serif",
                                 fontWeight: 700,
                                 letterSpacing: '0.5px',
-                                background: 'linear-gradient(45deg, #ffffff 30%, #e0e0e0 90%)',
+                                background: 'linear-gradient(45deg, var(--color-text-on-dark) 30%, var(--color-text-secondary) 90%)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
@@ -136,7 +136,7 @@ const Navbar = () => {
                                 sx={{
                                     '& .MuiDrawer-paper': {
                                         width: { xs: '280px', sm: '320px' },
-                                        background: 'linear-gradient(180deg, #1e3c72 0%, #2a5298 50%, #3d5fa8 100%)',
+                                        background: 'var(--gradient-primary-v)',
                                         color: 'white',
                                         boxShadow: '-4px 0 20px rgba(0,0,0,0.3)',
                                     }

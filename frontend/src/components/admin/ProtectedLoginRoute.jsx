@@ -118,7 +118,7 @@ const ProtectedLoginRoute = () => {
                         minHeight: '80vh',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)',
+                        background: 'var(--gradient-primary)',
                         padding: '20px',
                         backgroundImage: 'url("/images/pattern.png")',
                         backgroundBlendMode: 'overlay',
@@ -157,7 +157,7 @@ const ProtectedLoginRoute = () => {
                                     <AdminPanelSettingsIcon
                                         sx={{
                                             fontSize: 80,
-                                            color: '#1a237e',
+                                            color: 'var(--color-primary)',
                                             filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
                                         }}
                                     />
@@ -168,7 +168,7 @@ const ProtectedLoginRoute = () => {
                                     sx={{
                                         fontFamily: '"Poppins", sans-serif',
                                         fontWeight: 700,
-                                        color: '#1a237e',
+                                        color: 'var(--color-primary)',
                                         textAlign: 'center',
                                         textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                                         letterSpacing: '-0.5px',
@@ -203,20 +203,20 @@ const ProtectedLoginRoute = () => {
                                                     mb: 3,
                                                     '& .MuiOutlinedInput-root': {
                                                         '&:hover fieldset': {
-                                                            borderColor: '#1a237e',
+                                                            borderColor: 'var(--color-primary)',
                                                         },
                                                         '&.Mui-focused fieldset': {
-                                                            borderColor: '#1a237e',
+                                                            borderColor: 'var(--color-primary)',
                                                         },
                                                     },
                                                     '& .MuiInputLabel-root.Mui-focused': {
-                                                        color: '#1a237e',
+                                                        color: 'var(--color-primary)',
                                                     },
                                                 }}
                                                 InputProps={{
                                                     startAdornment: (
                                                         <InputAdornment position="start">
-                                                            <PersonIcon sx={{ color: '#1a237e' }} />
+                                                            <PersonIcon sx={{ color: 'var(--color-primary)' }} />
                                                         </InputAdornment>
                                                     ),
                                                 }}
@@ -238,20 +238,20 @@ const ProtectedLoginRoute = () => {
                                                     mb: 3,
                                                     '& .MuiOutlinedInput-root': {
                                                         '&:hover fieldset': {
-                                                            borderColor: '#1a237e',
+                                                            borderColor: 'var(--color-primary)',
                                                         },
                                                         '&.Mui-focused fieldset': {
-                                                            borderColor: '#1a237e',
+                                                            borderColor: 'var(--color-primary)',
                                                         },
                                                     },
                                                     '& .MuiInputLabel-root.Mui-focused': {
-                                                        color: '#1a237e',
+                                                        color: 'var(--color-primary)',
                                                     },
                                                 }}
                                                 InputProps={{
                                                     startAdornment: (
                                                         <InputAdornment position="start">
-                                                            <LockIcon sx={{ color: '#1a237e' }} />
+                                                            <LockIcon sx={{ color: 'var(--color-primary)' }} />
                                                         </InputAdornment>
                                                     ),
                                                     endAdornment: (
@@ -281,7 +281,7 @@ const ProtectedLoginRoute = () => {
                                             mt: 2,
                                             mb: 2,
                                             py: 1.5,
-                                            background: 'linear-gradient(45deg, #1a237e 30%, #0d47a1 90%)',
+                                            background: 'var(--gradient-primary)',
                                             color: 'white',
                                             fontWeight: 600,
                                             fontSize: '1.1rem',
@@ -290,7 +290,7 @@ const ProtectedLoginRoute = () => {
                                             boxShadow: '0 4px 12px rgba(26, 35, 126, 0.4)',
                                             transition: 'all 0.3s ease',
                                             '&:hover': {
-                                                background: 'linear-gradient(45deg, #0d47a1 30%, #1a237e 90%)',
+                                                background: 'var(--gradient-primary)',
                                                 boxShadow: '0 6px 15px rgba(26, 35, 126, 0.5)',
                                                 transform: 'translateY(-2px)',
                                             },

@@ -71,10 +71,10 @@ const Login = () => {
                 minHeight: '90vh',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                background: 'var(--gradient-primary)',
                 padding: '20px',
                 // backgroundImage: 'url("/images/pattern.png")',
-                backgroundColor: '#f0f0f0',
+                backgroundColor: 'var(--color-surface)',
                 backgroundBlendMode: 'overlay',
             }}
         >
@@ -115,7 +115,7 @@ const Login = () => {
                             <SchoolIcon
                                 sx={{
                                     fontSize: { xs: 60, sm: 72 },
-                                    color: '#1F3E76',
+                                    color: 'var(--color-primary)',
                                     filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
                                 }}
                             />
@@ -127,7 +127,7 @@ const Login = () => {
                                 fontFamily: '"Poppins", sans-serif',
                                 fontWeight: 700,
                                 fontSize: { xs: '1.75rem', sm: '2.1rem' },
-                                color: '#1F3E76',
+                                color: 'var(--color-primary)',
                                 textAlign: 'center',
                                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                                 letterSpacing: '-0.5px',
@@ -165,16 +165,16 @@ const Login = () => {
                                     '& .MuiOutlinedInput-root': {
                                         height: '56px',
                                         '&:hover fieldset': {
-                                            borderColor: '#1976d2',
+                                            borderColor: 'var(--color-accent)',
                                         },
                                         '&.Mui-focused fieldset': {
-                                            borderColor: '#1976d2',
+                                            borderColor: 'var(--color-accent)',
                                         },
                                     },
                                     '& .MuiInputLabel-root': {
                                         fontSize: '1.1rem',
                                         '&.Mui-focused': {
-                                            color: '#1976d2',
+                                            color: 'var(--color-accent)',
                                         },
                                     },
                                 }}
@@ -208,16 +208,16 @@ const Login = () => {
                                     '& .MuiOutlinedInput-root': {
                                         height: '56px',
                                         '&:hover fieldset': {
-                                            borderColor: '#1976d2',
+                                            borderColor: 'var(--color-accent)',
                                         },
                                         '&.Mui-focused fieldset': {
-                                            borderColor: '#1976d2',
+                                            borderColor: 'var(--color-accent)',
                                         },
                                     },
                                     '& .MuiInputLabel-root': {
                                         fontSize: '1.1rem',
                                         '&.Mui-focused': {
-                                            color: '#1976d2',
+                                            color: 'var(--color-accent)',
                                         },
                                     },
                                 }}
@@ -253,7 +253,7 @@ const Login = () => {
                             sx={{
                                 mt: 3,
                                 py: 2,
-                                background: '#1F3E76',
+                                background: 'var(--color-primary)',
                                 color: 'white',
                                 fontWeight: 600,
                                 fontSize: '1.2rem',
@@ -262,7 +262,7 @@ const Login = () => {
                                 boxShadow: '0 4px 12px rgba(25, 118, 210, 0.4)',
                                 transition: 'all 0.3s ease',
                                 '&:hover': {
-                                    background: '#1F3E76',
+                                    background: 'var(--color-primary)',
                                     // background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
                                     boxShadow: '0 6px 15px rgba(25, 118, 210, 0.5)',
                                     transform: 'translateY(-2px)',

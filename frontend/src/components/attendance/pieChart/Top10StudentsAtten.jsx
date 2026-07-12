@@ -225,7 +225,7 @@ const AttendancePieChart = () => {
             <Box sx={{
                 mb: 4,
                 textAlign: 'center',
-                background: 'linear-gradient(45deg, #1e88e5, #42a5f5)',
+                background: 'var(--gradient-accent)',
                 borderRadius: 2,
                 p: { xs: 1, sm: 1.25, md: 2 },
                 color: 'white',
@@ -307,7 +307,7 @@ const AttendancePieChart = () => {
                                             </Box>
                                             {overallPercentage === 100 && (
                                                 <StarIcon sx={{
-                                                    color: '#FFD700',
+                                                    color: 'var(--color-warning)',
                                                     fontSize: 32,
                                                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
                                                 }} />

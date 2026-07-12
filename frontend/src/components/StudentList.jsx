@@ -266,7 +266,7 @@ const StudentList = () => {
                             variant={isMobile ? 'h5' : 'h4'}
                             sx={{
                                 fontWeight: 700,
-                                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                                background: 'var(--gradient-primary)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 backgroundClip: 'text',

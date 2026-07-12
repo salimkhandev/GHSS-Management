@@ -150,7 +150,7 @@ const AttendanceList = () => {
             enqueueSnackbar('Attendance saved successfully!', {
                 // color should be blue
                 style: {
-                    backgroundColor: '#2196f3',
+                    backgroundColor: 'var(--color-accent)',
                     color: 'white'
                 },
                 variant: 'success',
@@ -205,7 +205,7 @@ const AttendanceList = () => {
                         p: { xs: 2.5, sm: 3, md: 4 },
                         mt: { xs: 8, sm: 10, md: 14 },
                         textAlign: 'center',
-                        background: 'linear-gradient(to bottom, #fff, #f8f9fa)',
+                        background: 'linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised))',
                         borderRadius: 2,
                         border: '1px solid',
                         borderColor: 'warning.light'
@@ -236,7 +236,7 @@ const AttendanceList = () => {
                         borderRadius: 1,
                         display: 'flex',
                         flexDirection: 'column',
-                        background: 'linear-gradient(to bottom, #fff, #f8f9fa)',
+                        background: 'linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised))',
                         gap: { xs: 0.75, sm: 1 }
                     }}>
                         <Typography
@@ -276,13 +276,13 @@ const AttendanceList = () => {
                 sx={{
                     borderRadius: 2,
                     overflow: 'hidden',
-                    background: 'linear-gradient(to bottom, #fff, #f8f9fa)'
+                    background: 'linear-gradient(to bottom, var(--color-surface), var(--color-surface-raised))'
                 }}
             >
                 <Box
                     sx={{
                         p: { xs: 2, sm: 2.5, md: 3 },
-                        background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                        background: 'var(--gradient-accent)',
                         color: 'white',
                         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                     }}
@@ -326,12 +326,12 @@ const AttendanceList = () => {
                         sx={{
                             mb: { xs: 2, sm: 2.5, md: 3 },
                             py: { xs: 1.25, sm: 1.5 },
-                            background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                            background: 'var(--gradient-accent)',
                             color: 'white',
                             fontWeight: 600,
                             fontSize: { xs: '0.9rem', sm: '1rem' },
                             '&:hover': {
-                                background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                                background: 'var(--gradient-accent)',
                                 boxShadow: '0 4px 8px rgba(25, 118, 210, 0.3)'
                             },
                             '&:disabled': {
@@ -415,10 +415,10 @@ const AttendanceList = () => {
                                                 sx={{
                                                     transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
                                                     '& .MuiSwitch-switchBase.Mui-checked': {
-                                                        color: '#4caf50'
+                                                        color: 'var(--color-success)'
                                                     },
                                                     '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                                                        backgroundColor: '#4caf50'
+                                                        backgroundColor: 'var(--color-success)'
                                                     }
                                                 }}
                                             />

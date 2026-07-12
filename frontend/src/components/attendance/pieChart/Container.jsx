@@ -326,7 +326,7 @@ export default function ClassSectionDisplay() {
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "daily" && {
-                                        background: 'linear-gradient(45deg, #1e88e5 30%, #42a5f5 90%)',
+                                        background: 'var(--gradient-accent)',
                                     })
                                 }}
                             >
@@ -345,7 +345,7 @@ export default function ClassSectionDisplay() {
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "monthly" && {
-                                        background: 'linear-gradient(45deg, #1e88e5 30%, #42a5f5 90%)',
+                                        background: 'var(--gradient-accent)',
                                     })
                                 }}
                             >
@@ -364,7 +364,7 @@ export default function ClassSectionDisplay() {
                                     fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' },
                                     borderRadius: 2,
                                     ...(attendanceOption === "overall" && {
-                                        background: 'linear-gradient(45deg, #1e88e5 30%, #42a5f5 90%)',
+                                        background: 'var(--gradient-accent)',
                                     })
                                 }}
                             >

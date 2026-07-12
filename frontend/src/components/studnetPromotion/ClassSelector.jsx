@@ -204,7 +204,7 @@ const ClassSelector = () => {
         <Box sx={{ 
             p: 4, 
             minHeight: '90vh',
-            background: 'linear-gradient(to bottom right, #f3f4f6, #e5e7eb)'
+            background: 'var(--color-background)'
         }}>
             <Paper 
                 elevation={3}
@@ -219,7 +219,7 @@ const ClassSelector = () => {
                 <Box sx={{ 
                     mb: 4,
                     textAlign: 'center',
-                    background: 'linear-gradient(45deg, #1976d2, #2196f3)',
+                    background: 'var(--gradient-accent)',
                     p: 3,
                     borderRadius: 2,
                     color: 'white'

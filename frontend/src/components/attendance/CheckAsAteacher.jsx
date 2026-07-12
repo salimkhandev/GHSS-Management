@@ -82,7 +82,7 @@ const Login = () => {
                 minHeight: '80vh',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
+                background: 'var(--gradient-accent)',
                 padding: '20px',
                 backgroundImage: 'url("/images/pattern.png")',
                 backgroundBlendMode: 'overlay',
@@ -122,7 +122,7 @@ const Login = () => {
                             <SchoolIcon
                                 sx={{
                                     fontSize: 80,
-                                    color: '#1F3E76',
+                                    color: 'var(--color-primary)',
                                     mb: 2
                                 }}
                             />
@@ -134,7 +134,7 @@ const Login = () => {
                                 fontFamily: '"Poppins", sans-serif',
                                 fontWeight: 700,
                                 fontSize: { xs: '2rem', sm: '2.5rem' },
-                                color: '#1F3E76',
+                                color: 'var(--color-primary)',
                                 textAlign: 'center',
                                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                                 letterSpacing: '-0.5px',
@@ -164,10 +164,10 @@ const Login = () => {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&:hover fieldset': {
-                                        borderColor: '#1976d2',
+                                        borderColor: 'var(--color-accent)',
                                     },
                                     '&.Mui-focused fieldset': {
-                                        borderColor: '#1976d2',
+                                        borderColor: 'var(--color-accent)',
                                     }
                                 }
                             }}
@@ -197,10 +197,10 @@ const Login = () => {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&:hover fieldset': {
-                                        borderColor: '#1976d2',
+                                        borderColor: 'var(--color-accent)',
                                     },
                                     '&.Mui-focused fieldset': {
-                                        borderColor: '#1976d2',
+                                        borderColor: 'var(--color-accent)',
                                     }
                                 }
                             }}
@@ -220,12 +220,12 @@ const Login = () => {
                                 textTransform: 'none',
                                 borderRadius: '10px',
                                 // '#1F3E76' use this in back with linear-gradient
-                                background: 'linear-gradient(45deg, #1F3E76 30%, #1F3E76 90%)',
+                                background: 'var(--color-primary)',
                                 boxShadow: '0 4px 12px rgba(25, 118, 210, 0.4)',
                                 transition: 'all 0.3s ease',
                                 '&:hover': {
                                     // '#1565c0' use this in back with linear-gradient
-                                    background: 'linear-gradient(45deg, #1F3E76 30%, #1F3E76 90%)',
+                                    background: 'var(--color-primary)',
                                     boxShadow: '0 6px 15px rgba(25, 118, 210, 0.5)',
                                     transform: 'translateY(-2px)',
                                 },

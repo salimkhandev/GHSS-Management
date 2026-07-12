@@ -136,7 +136,7 @@ const DailyAttenPieChart = () => {
                                     <Tooltip
                                         formatter={(value) => `${value.toFixed(1)}%`}
                                         contentStyle={{
-                                            backgroundColor: '#ffffff',
+                                            backgroundColor: 'var(--color-surface)',
                                             border: '1px solid rgba(0,0,0,0.1)',
                                             borderRadius: 8,
                                             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',

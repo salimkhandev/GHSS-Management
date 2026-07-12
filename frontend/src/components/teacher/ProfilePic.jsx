@@ -110,7 +110,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             setImage(null);
             enqueueSnackbar("Profile picture updated successfully!", {
                 variant: "success",
-                style: { backgroundColor: '#2196f3', color: '#ffffff' }
+                style: { backgroundColor: 'var(--color-accent)', color: 'var(--color-text-on-dark)' }
             });
         } catch (error) {
             console.error('Upload error:', error);
@@ -141,7 +141,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
             setShowModal(false);
             enqueueSnackbar("Profile picture deleted successfully!", {
                 variant: "success",
-                style: { backgroundColor: '#2196f3', color: '#ffffff' }
+                style: { backgroundColor: 'var(--color-accent)', color: 'var(--color-text-on-dark)' }
             });
         } catch (error) {
             console.error('Delete error:', error);
@@ -199,7 +199,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                             maxWidth: 500,
                             position: 'relative',
                             boxShadow: '0 24px 48px rgba(0, 0, 0, 0.2)',
-                            border: '2px solid #1976d2'
+                            border: '2px solid var(--color-accent)'
                         }}
                     >
                         <IconButton
@@ -218,7 +218,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                             <CloseIcon />
                         </IconButton>
 
-                        <Typography variant="h6" sx={{ mb: 2, color: '#1976d2', fontWeight: 600 }}>
+                        <Typography variant="h6" sx={{ mb: 2, color: 'var(--color-accent)', fontWeight: 600 }}>
                             Update Profile Picture
                         </Typography>
 
@@ -228,7 +228,7 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     position: 'relative',
                                     height: 300,
                                     width: '100%',
-                                    backgroundColor: '#f5f5f5',
+                                    backgroundColor: 'var(--color-surface-raised)',
                                     borderRadius: 1,
                                     overflow: 'hidden'
                                 }}
@@ -254,18 +254,18 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    backgroundColor: '#f5f5f5',
+                                    backgroundColor: 'var(--color-surface-raised)',
                                     borderRadius: 1,
-                                    border: '2px dashed #1976d2',
+                                    border: '2px dashed var(--color-accent)',
                                     mb: 2,
                                     cursor: 'pointer',
                                     '&:hover': {
-                                        backgroundColor: '#e3f2fd',
-                                        borderColor: '#1565c0'
+                                        backgroundColor: 'var(--color-accent-light)',
+                                        borderColor: 'var(--color-accent-dark)'
                                     }
                                 }}
                             >
-                                <AddPhotoIcon sx={{ fontSize: 48, color: '#1976d2', mb: 1 }} />
+                                <AddPhotoIcon sx={{ fontSize: 48, color: 'var(--color-accent)', mb: 1 }} />
                                 <Typography color="textSecondary" align="center">
                                     Drag and drop an image here, or click to select
                                 </Typography>
@@ -285,9 +285,9 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     startIcon={deleteLoading ? <CircularProgress size={20} /> : <DeleteIcon />}
                                     sx={{
                                         textTransform: 'capitalize',
-                                        background: 'linear-gradient(45deg, #f44336 30%, #e57373 90%)',
+                                        background: 'var(--gradient-danger)',
                                         '&:hover': {
-                                            background: 'linear-gradient(45deg, #d32f2f 30%, #f44336 90%)'
+                                            background: 'var(--gradient-danger)'
                                         }
                                     }}
                                 >
@@ -312,9 +312,9 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     variant="contained"
                                     startIcon={loading ? <CircularProgress color="success" size={20} /> : <UploadIcon />}
                                     sx={{
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        background: 'var(--gradient-accent)',
                                         '&:hover': {
-                                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)'
+                                            background: 'var(--gradient-accent)'
                                         }
                                     }}
                                 >
@@ -327,9 +327,9 @@ const ProfilePicManager = ({ showModal, setShowModal, imageUrl, setImageUrl, onI
                                     startIcon={ <ChangeCircleIcon />}
                                     sx={{
                                         textTransform: 'capitalize',
-                                        background: 'linear-gradient(45deg, #4caf50 30%, #81c784 90%)',
+                                        background: 'var(--gradient-success)',
                                         '&:hover': {
-                                            background: 'linear-gradient(45deg, #388e3c 30%, #4caf50 90%)'
+                                            background: 'var(--gradient-success)'
                                         }
                                     }}
                                     {...getRootProps()}

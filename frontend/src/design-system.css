@@ -1,0 +1,201 @@
+/* ================================================================
+   design-system.css — GHSS School Management App
+   Single source of truth for all colors, typography, spacing.
+   Import this once (via index.css) and use var(--token) everywhere.
+   ================================================================ */
+
+/* === Color Palette === */
+:root {
+  /* Primary blues — derived from the existing navbar/sidebar gradient */
+  --color-primary:        #1B2F6E; /* darkest navy — sidebar bg, page headers      */
+  --color-primary-light:  #2a5298; /* medium blue  — gradient end, drawer paper     */
+  --color-primary-muted:  #6B7DB8; /* muted blue   — secondary text on dark bg      */
+
+  /* Accent / interactive */
+  --color-accent:         #1976d2; /* button blue, active states, MUI default       */
+  --color-accent-dark:    #1565c0; /* hover state for accent buttons                */
+  --color-accent-light:   #42a5f5; /* lighter accent for chips / badges             */
+
+  /* Surfaces & structure */
+  --color-background:     #F0F2F8; /* page background                               */
+  --color-surface:        #FFFFFF; /* cards, panels, dialogs                        */
+  --color-surface-raised: #EEF1FB; /* slightly tinted surface — alternating rows    */
+  --color-border:         #D1D9EF; /* card borders, dividers                        */
+  --color-border-muted:   rgba(255, 255, 255, 0.12); /* borders on dark surfaces    */
+
+  /* Text */
+  --color-text-primary:   #111827; /* headings, main body text                      */
+  --color-text-secondary: #6B7280; /* labels, captions                              */
+  --color-text-on-dark:   #FFFFFF; /* text sitting on primary/dark backgrounds      */
+
+  /* Semantic states */
+  --color-danger:         #EF4444; /* logout, delete, error                         */
+  --color-danger-dark:    #DC2626; /* hover for danger actions                      */
+  --color-success:        #10B981; /* present, ok, upload complete                  */
+  --color-success-dark:   #059669; /* hover for success actions                     */
+  --color-warning:        #F59E0B; /* late / partial attendance                     */
+  --color-warning-dark:   #D97706; /* hover for warning badges                      */
+
+  /* Overlays */
+  --color-overlay:        rgba(27, 47, 110, 0.08);  /* light hover tint on cards    */
+  --color-overlay-dark:   rgba(0, 0, 0, 0.45);      /* modal backdrops              */
+
+  /* Gradients (used on navbar, sidebar, buttons) */
+  --gradient-primary: linear-gradient(135deg, #1B2F6E 0%, #2a5298 100%);
+  --gradient-primary-v: linear-gradient(180deg, #1B2F6E 0%, #2a5298 50%, #3d5fa8 100%);
+  --gradient-accent:  linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  --gradient-success: linear-gradient(45deg, #10B981 30%, #34d399 90%);
+  --gradient-danger:  linear-gradient(135deg, #EF4444, #DC2626);
+}
+
+/* === Typography === */
+:root {
+  --font-primary:   'Inter', 'Poppins', sans-serif;
+  --font-display:   'Playfair Display', serif;   /* school name in navbar */
+
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-md:   15px;
+  --text-base: 16px;
+  --text-lg:   18px;
+  --text-xl:   22px;
+  --text-2xl:  28px;
+  --text-3xl:  36px;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semi:   600;
+  --weight-bold:   700;
+}
+
+/* === Spacing === */
+:root {
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+}
+
+/* === Border Radius === */
+:root {
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+}
+
+/* === Shadows === */
+:root {
+  --shadow-sm:  0 1px 3px rgba(27, 47, 110, 0.08);
+  --shadow-md:  0 4px 12px rgba(27, 47, 110, 0.12);
+  --shadow-lg:  0 8px 24px rgba(27, 47, 110, 0.16);
+  --shadow-xl:  0 16px 40px rgba(27, 47, 110, 0.20);
+}
+
+/* === Layout === */
+:root {
+  --sidebar-width:  260px;
+  --navbar-height:  56px;
+}
+
+/* ================================================================
+   Global utility classes — use these in className alongside MUI sx
+   ================================================================ */
+
+/* Page-level header bar (blue strip at top of each page content area) */
+.ds-page-header {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  padding: var(--space-md) var(--space-xl);
+  font-family: var(--font-primary);
+  box-shadow: var(--shadow-md);
+}
+
+/* Standard card */
+.ds-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Table header row */
+.ds-table-header {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-dark);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-sm);
+  letter-spacing: 0.5px;
+}
+
+/* Primary action button */
+.ds-btn-primary {
+  background: var(--gradient-accent);
+  color: var(--color-text-on-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-md);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  box-shadow: var(--shadow-sm);
+}
+.ds-btn-primary:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* Danger button */
+.ds-btn-danger {
+  background: var(--gradient-danger);
+  color: var(--color-text-on-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-weight: var(--weight-semi);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+.ds-btn-danger:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Status badge — present */
+.ds-badge-success {
+  background: #d1fae5;
+  color: var(--color-success-dark);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+}
+
+/* Status badge — absent */
+.ds-badge-danger {
+  background: #fee2e2;
+  color: var(--color-danger-dark);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+}
+
+/* Status badge — warning */
+.ds-badge-warning {
+  background: #fef3c7;
+  color: var(--color-warning-dark);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+}

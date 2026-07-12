@@ -90,7 +90,7 @@ const GallerySlider = () => {
                     data-aos="fade-in"
                     data-aos-duration="2000"
                 >
-                    <Typography variant="h1" align="center" sx={{ fontSize: "3rem", color: "#3f51b5", fontWeight: "bold" }}>
+                    <Typography variant="h1" align="center" sx={{ fontSize: "3rem", color: "var(--color-primary)", fontWeight: "bold" }}>
                         Welcome to Our School!
                     </Typography>
                 </div>

@@ -28,7 +28,7 @@ const Loader = () => (
                 height: 6,
                 borderRadius: 3,
                 '& .MuiLinearProgress-bar': {
-                    backgroundImage: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                    backgroundImage: 'var(--gradient-accent)',
                 }
             }}
         />
@@ -101,7 +101,7 @@ const PerformanceDashboard = () => {
                                     whiteSpace: 'nowrap',
                                     minWidth: 'fit-content',
                                     ...(activeComponent === item.id ? {
-                                        background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                                        background: 'var(--gradient-accent)',
                                         boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)',
                                     } : {
                                         borderColor: theme.palette.primary.main,

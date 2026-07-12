@@ -139,7 +139,7 @@ const RegisterTeacher = () => {
                     left: 0,
                     right: 0,
                     height: '4px',
-                    background: 'linear-gradient(90deg, #1976d2 0%, #9c27b0 100%)',
+                    background: 'var(--gradient-accent)',
                     borderRadius: '3px 3px 0 0',
                 }
             }}
@@ -148,7 +148,7 @@ const RegisterTeacher = () => {
                 variant="h4" 
                 sx={{ 
                     mb: 3, 
-                    background: 'linear-gradient(45deg, #1976d2, #9c27b0)',
+                    background: 'var(--gradient-accent)',
                     backgroundClip: 'text',
                     WebkitBackgroundClip: 'text',
                     color: 'transparent',
@@ -181,10 +181,10 @@ const RegisterTeacher = () => {
                 sx={{
                     '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         }
                     }
                 }}
@@ -218,10 +218,10 @@ const RegisterTeacher = () => {
                 sx={{
                     '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         }
                     }
                 }}
@@ -233,10 +233,10 @@ const RegisterTeacher = () => {
                 sx={{
                     '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         }
                     }
                 }}
@@ -255,7 +255,7 @@ const RegisterTeacher = () => {
                     label="Select Class"
                     startAdornment={
                         <InputAdornment position="start">
-                            <ClassIcon sx={{ color: '#1976d2' }} />
+                            <ClassIcon sx={{ color: 'var(--color-accent)' }} />
                         </InputAdornment>
                     }
                 >
@@ -278,10 +278,10 @@ const RegisterTeacher = () => {
                 sx={{
                     '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         },
                         '&.Mui-focused fieldset': {
-                            borderColor: '#1976d2',
+                            borderColor: 'var(--color-accent)',
                         }
                     }
                 }}
@@ -318,10 +318,10 @@ const RegisterTeacher = () => {
                 sx={{
                     mt: 2,
                     py: 1.5,
-                    background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                    background: 'var(--gradient-accent)',
                     boxShadow: '0 3px 5px 2px rgba(33, 150, 243, .3)',
                     '&:hover': {
-                        background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                        background: 'var(--gradient-accent)',
                     },
                     transition: 'all 0.3s ease-in-out',
                 }}

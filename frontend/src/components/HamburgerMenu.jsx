@@ -40,12 +40,12 @@ import ProfilePicManager from "./teacher/ProfilePic.jsx";
 import apiBase from "../config/api";
 
 const THEME_COLORS = {
-  primary: "#1a237e", // Deep indigo
-  secondary: "#303f9f",
-  accent: "#3949ab",
-  hover: "#283593",
-  text: "#ffffff",
-  danger: "#d32f2f",
+  primary: "var(--color-primary)",
+  secondary: "var(--color-primary-light)",
+  accent: "var(--color-accent)",
+  hover: "var(--color-accent-dark)",
+  text: "var(--color-text-on-dark)",
+  danger: "var(--color-danger)",
 };
 
 // Add these modal styles
@@ -55,7 +55,7 @@ const modalStyles = {
       borderRadius: 3,
       border: "none",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-      background: "linear-gradient(135deg, #ffffff, #f8f9fa)",
+      background: "linear-gradient(135deg, var(--color-surface), var(--color-surface-raised))",
       padding: { xs: 2, sm: 3 },
       width: { xs: "95%", sm: "80%", md: "70%" },
       maxWidth: "800px",
@@ -73,7 +73,7 @@ const modalStyles = {
     borderRadius: 2,
     padding: { xs: 1.5, sm: 2 },
     margin: { xs: 1, sm: 2 },
-    border: "1px solid #ffe4b5",
+    border: "1px solid var(--color-warning)",
     boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
     animation: "slideDown 0.3s ease-out",
   },
@@ -82,7 +82,7 @@ const modalStyles = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: { xs: 1, sm: 2 },
-    borderBottom: "2px solid #f0f0f0",
+    borderBottom: "2px solid var(--color-border)",
     marginBottom: 2,
   },
   buttonsContainer: {
@@ -145,7 +145,7 @@ const modalStyles = {
     title: {
       fontSize: "1.5rem",
       fontWeight: 700,
-      color: "#1a237e",
+      color: "var(--color-primary)",
       marginBottom: "12px",
       fontFamily: "'Poppins', sans-serif",
       display: "flex",
@@ -154,7 +154,7 @@ const modalStyles = {
     },
     description: {
       fontSize: "1rem",
-      color: "#555",
+      color: "var(--color-text-secondary)",
       marginBottom: "24px",
       lineHeight: 1.6,
       fontFamily: "'Poppins', sans-serif",
@@ -167,9 +167,9 @@ const modalStyles = {
     cancelButton: {
       padding: "10px 24px",
       borderRadius: "8px",
-      border: "2px solid #e0e0e0",
+      border: "2px solid var(--color-border)",
       backgroundColor: "white",
-      color: "#555",
+      color: "var(--color-text-secondary)",
       fontWeight: 600,
       fontSize: "0.95rem",
       cursor: "pointer",
@@ -180,7 +180,7 @@ const modalStyles = {
       padding: "10px 24px",
       borderRadius: "8px",
       border: "none",
-      background: "linear-gradient(135deg, #d32f2f, #f44336)",
+      background: "var(--gradient-danger)",
       color: "white",
       fontWeight: 600,
       fontSize: "0.95rem",
@@ -467,7 +467,7 @@ export default function TopDrawerWithToggle() {
       sx={{
         width: 280,
         height: "100%",
-        backgroundColor: "#1F3E76",
+        backgroundColor: "var(--color-primary)",
         color: THEME_COLORS.text,
         display: "flex",
         flexDirection: "column",
@@ -503,7 +503,7 @@ export default function TopDrawerWithToggle() {
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
               transition: "all 0.3s ease",
               "& .MuiButton-startIcon .MuiSvgIcon-root": {
-                color: "#ff6b6b",
+                color: "var(--color-danger)",
               },
               "&:hover": {
                 background:
@@ -531,7 +531,7 @@ export default function TopDrawerWithToggle() {
               <AlertDialog.Content style={modalStyles.alertDialog.content}>
                 <AlertDialog.Title style={modalStyles.alertDialog.title}>
                   <>
-                    <WarningIcon sx={{ fontSize: 32, color: "#f44336" }} />
+                    <WarningIcon sx={{ fontSize: 32, color: "var(--color-danger)" }} />
                     Confirm Logout
                   </>
                 </AlertDialog.Title>
@@ -546,12 +546,12 @@ export default function TopDrawerWithToggle() {
                     <button
                       style={modalStyles.alertDialog.cancelButton}
                       onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = "#f5f5f5";
-                        e.target.style.borderColor = "#ccc";
+                        e.target.style.backgroundColor = "var(--color-surface-raised)";
+                        e.target.style.borderColor = "var(--color-border)";
                       }}
                       onMouseLeave={(e) => {
                         e.target.style.backgroundColor = "white";
-                        e.target.style.borderColor = "#e0e0e0";
+                        e.target.style.borderColor = "var(--color-border)";
                       }}
                     >
                       Cancel
@@ -562,15 +562,13 @@ export default function TopDrawerWithToggle() {
                       style={modalStyles.alertDialog.confirmButton}
                       onClick={handleLogout}
                       onMouseEnter={(e) => {
-                        e.target.style.background =
-                          "linear-gradient(135deg, #c62828, #e53935)";
+                        e.target.style.background = "var(--gradient-danger)";
                         e.target.style.transform = "translateY(-2px)";
                         e.target.style.boxShadow =
                           "0 6px 16px rgba(211, 47, 47, 0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.background =
-                          "linear-gradient(135deg, #d32f2f, #f44336)";
+                        e.target.style.background = "var(--gradient-danger)";
                         e.target.style.transform = "translateY(0)";
                         e.target.style.boxShadow =
                           "0 4px 12px rgba(211, 47, 47, 0.3)";
@@ -630,7 +628,7 @@ export default function TopDrawerWithToggle() {
                 sx={{
                   width: '100%',
                   height: '100%',
-                  background: 'linear-gradient(135deg,#3949ab,#1a237e)',
+                  background: 'var(--gradient-primary)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -714,7 +712,7 @@ export default function TopDrawerWithToggle() {
               ...modalStyles.dialog,
               "& .MuiDialog-paper": {
                 animation: "modalFadeIn 0.3s ease-out",
-                backgroundColor: "#E9F1FD",
+                backgroundColor: "var(--color-surface-raised)",
               },
             }}
           >
@@ -722,29 +720,29 @@ export default function TopDrawerWithToggle() {
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}
               >
-                <KeyIcon sx={{ color: "#ffa000", fontSize: 24 }} />
+                <KeyIcon sx={{ color: "var(--color-warning)", fontSize: 24 }} />
                 <Typography
                   variant="subtitle1"
-                  sx={{ fontWeight: 600, color: "#555" }}
+                  sx={{ fontWeight: 600, color: "var(--color-text-secondary)" }}
                 >
                   Demo Credentials
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <AdminIcon sx={{ color: "#d9534f", fontSize: 20 }} />
-                  <Typography variant="body2" sx={{ color: "#666" }}>
+                  <AdminIcon sx={{ color: "var(--color-danger)", fontSize: 20 }} />
+                  <Typography variant="body2" sx={{ color: "var(--color-text-secondary)" }}>
                     Admin:{" "}
-                    <span style={{ color: "#d9534f", fontWeight: 500 }}>
+                    <span style={{ color: "var(--color-danger)", fontWeight: 500 }}>
                       Username: admin | Password: admin
                     </span>
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <SchoolIcon sx={{ color: "#5cb85c", fontSize: 20 }} />
-                  <Typography variant="body2" sx={{ color: "#666" }}>
+                  <SchoolIcon sx={{ color: "var(--color-success)", fontSize: 20 }} />
+                  <Typography variant="body2" sx={{ color: "var(--color-text-secondary)" }}>
                     Teacher:{" "}
-                    <span style={{ color: "#5cb85c", fontWeight: 500 }}>
+                    <span style={{ color: "var(--color-success)", fontWeight: 500 }}>
                       Username: Kamal | Password: Kamal
                     </span>
                   </Typography>
@@ -758,7 +756,7 @@ export default function TopDrawerWithToggle() {
                 sx={{
                   fontWeight: 700,
                   fontFamily: "'Poppins', sans-serif",
-                  color: "#2c3e50",
+                  color: "var(--color-text-primary)",
                 }}
               >
                 Select Role
@@ -766,7 +764,7 @@ export default function TopDrawerWithToggle() {
               <IconButton
                 onClick={() => setShowRoleModal(false)}
                 sx={{
-                  color: "#555",
+                  color: "var(--color-text-secondary)",
                   transition: "all 0.3s ease",
                   "&:hover": {
                     transform: "rotate(90deg)",
@@ -782,14 +780,14 @@ export default function TopDrawerWithToggle() {
               <Button
                 onClick={() => handleRoleSelection("admin")}
                 startIcon={<AdminIcon />}
-                sx={modalStyles.button("#ff6b6b")}
+                sx={modalStyles.button("var(--color-danger)")}
               >
                 Admin
               </Button>
               <Button
                 onClick={() => handleRoleSelection("teacher")}
                 startIcon={<SchoolIcon />}
-                sx={modalStyles.button("#4CAF50")}
+                sx={modalStyles.button("var(--color-success)")}
               >
                 Teacher
               </Button>
@@ -798,7 +796,7 @@ export default function TopDrawerWithToggle() {
                 startIcon={<TeacherAdminIcon />}
                 // use nowrap
                 sx={{
-                  ...modalStyles.button("#2196F3"),
+                  ...modalStyles.button("var(--color-accent)"),
                   whiteSpace: "nowrap",
                 }}
               >
