@@ -1,6 +1,0 @@
-Route: /TeacherRegistration
-Desktop screenshot: screenshots/desktop/teacher-registration-desktop.png
-Mobile screenshot:  screenshots/mobile/teacher-registration-mobile.png
-Component file: src/components/admin/TeacherRegistration.jsx
-CSS file: src/index.css (shared)
-Auth required: admin

@@ -1,6 +1,0 @@
-Route: /PerformanceDashboard
-Desktop screenshot: screenshots/desktop/performance-dashboard-desktop.png
-Mobile screenshot:  screenshots/mobile/performance-dashboard-mobile.png
-Component file: src/components/attendance/pieChart/PerformanceDashboard.jsx
-CSS file: src/index.css (shared)
-Auth required: teacher

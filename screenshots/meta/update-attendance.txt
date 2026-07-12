@@ -1,6 +1,0 @@
-Route: /updateAttenStatus
-Desktop screenshot: screenshots/desktop/update-attendance-desktop.png
-Mobile screenshot:  screenshots/mobile/update-attendance-mobile.png
-Component file: src/components/attendance/UpdateAttenStatusOfClsSec.jsx
-CSS file: src/index.css (shared)
-Auth required: teacher

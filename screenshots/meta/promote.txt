@@ -1,6 +1,0 @@
-Route: /promote
-Desktop screenshot: screenshots/desktop/promote-desktop.png
-Mobile screenshot:  screenshots/mobile/promote-mobile.png
-Component file: src/components/studnetPromotion/ClassSelector.jsx
-CSS file: src/index.css (shared)
-Auth required: admin

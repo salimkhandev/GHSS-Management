@@ -1,6 +1,0 @@
-Route: /AdminRegistration
-Desktop screenshot: screenshots/desktop/admin-registration-desktop.png
-Mobile screenshot:  screenshots/mobile/admin-registration-mobile.png
-Component file: src/components/admin/AdminRegistration.jsx
-CSS file: src/index.css (shared)
-Auth required: admin

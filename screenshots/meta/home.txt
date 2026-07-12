@@ -1,6 +1,0 @@
-Route: /
-Desktop screenshot: screenshots/desktop/home-desktop.png
-Mobile screenshot:  screenshots/mobile/home-mobile.png
-Component file: src/components/Home.jsx
-CSS file: src/index.css
-Auth required: none
