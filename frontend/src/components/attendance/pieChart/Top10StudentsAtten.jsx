@@ -8,6 +8,7 @@ import {
 } from '@mui/icons-material';
 import {
     Box,
+    Button,
     Card,
     CardContent,
     Grid,
@@ -25,6 +26,7 @@ const AttendancePieChart = () => {
     const [attendanceData, setAttendanceData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(10);
 
     const COLORS = [theme.palette.success.main, theme.palette.warning.main];
     const RADIAN = Math.PI / 180;
@@ -267,7 +269,7 @@ const AttendancePieChart = () => {
                 </Box>
             ) : (
                 <Grid container spacing={3} justifyContent="center">
-                    {attendanceData.map((entry, index) => {
+                    {attendanceData.slice(0, visibleCount).map((entry, index) => {
                         const overallPercentage = Math.round(parseFloat(entry.attendance_percentage));
                         const absentPercentage = 100 - overallPercentage;
 
@@ -436,6 +438,28 @@ const AttendancePieChart = () => {
                         );
                     })}
                 </Grid>
+            )}
+            
+            {!loading && !error && attendanceData.length > visibleCount && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                    <Button 
+                        variant="contained" 
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                        sx={{
+                            px: 4, py: 1.5,
+                            borderRadius: 2,
+                            textTransform: 'none',
+                            fontSize: '1.1rem',
+                            background: 'var(--gradient-primary)',
+                            boxShadow: '0 4px 12px rgba(27, 47, 110, 0.2)',
+                            '&:hover': {
+                                boxShadow: '0 6px 16px rgba(27, 47, 110, 0.3)'
+                            }
+                        }}
+                    >
+                        See More
+                    </Button>
+                </Box>
             )}
         </Box>
     );

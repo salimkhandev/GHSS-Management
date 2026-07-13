@@ -110,20 +110,18 @@ const StudentList = () => {
 
     useEffect(() => {
         const fetchClasses = async () => {
-            setStudents([]);
-            setTotalDeptStudents()
-            setTotalpages(0);
-            setPage(1);
             setLoading(true)
             try {
                 const responseCls = await axios.get(`${apiBase}/filteredSectionStd`, {
                     params: {
                         class_id: selectedClassid,
-                        section_id: selectedSectionid
+                        section_id: selectedSectionid,
+                        page: page
                     }
                 })
                 setLoading(false);
                 setStudents(responseCls.data.students);
+                setTotalpages(responseCls.data.totalPages);
             } catch (error) {
                 console.error("Error fetching the classes data:", error);
             }
@@ -131,7 +129,7 @@ const StudentList = () => {
         if (selectedClassid && selectedSectionid) {
             fetchClasses();
         }
-    }, [selectedClassid, selectedSectionid]);
+    }, [selectedClassid, selectedSectionid, page]);
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -153,8 +151,7 @@ const StudentList = () => {
 
     useEffect(() => {
         if (selectedClass === '') {
-            setStudents([]);
-            setTotalpages(0)
+            setTotalpages(0);
         }
         const fetchClasses = async () => {
             setLoading(true);
@@ -196,6 +193,7 @@ const StudentList = () => {
         setSelectedSection('');
         setSelectedSectionid('');
         setSections([]);
+        setPage(1);
 
         if (value !== 'All Classes') {
             const getSelectedObj = classes.find(cls => cls.name === value)
@@ -208,6 +206,7 @@ const StudentList = () => {
 
     const handleSectionsChange = async (e) => {
         const value = e.target.value;
+        setPage(1);
         setSelectedSection(value === 'All Sections' ? setSelectedSectionid('') : value);
         if (value !== 'All Sections') {
             const getSelectedObj = sections.find(sec => sec.name === value);

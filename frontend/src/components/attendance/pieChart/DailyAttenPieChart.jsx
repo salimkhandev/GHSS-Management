@@ -1,10 +1,11 @@
-import { Box, Card, CardContent, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Button, Card, CardContent, Grid, Typography, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 const DailyAttenPieChart = ({ data }) => {
     const theme = useTheme();
+    const [visibleCount, setVisibleCount] = useState(10);
 
     const COLORS = [theme.palette.success.main, theme.palette.error.main];
     const RADIAN = Math.PI / 180;
@@ -52,7 +53,7 @@ const DailyAttenPieChart = ({ data }) => {
     return (
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
             <Grid container spacing={3} justifyContent="center">
-                {normalizedData.map((entry, idx) => {
+                {normalizedData.slice(0, visibleCount).map((entry, idx) => {
                     const chartData = [
                         { name: 'Present', value: entry.present_percentage },
                         { name: 'Absent', value: entry.absent_percentage }
@@ -142,6 +143,28 @@ const DailyAttenPieChart = ({ data }) => {
                     );
                 })}
             </Grid>
+
+            {normalizedData.length > visibleCount && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                    <Button 
+                        variant="contained" 
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                        sx={{
+                            px: 4, py: 1.5,
+                            borderRadius: 2,
+                            textTransform: 'none',
+                            fontSize: '1.1rem',
+                            background: 'var(--gradient-primary)',
+                            boxShadow: '0 4px 12px rgba(27, 47, 110, 0.2)',
+                            '&:hover': {
+                                boxShadow: '0 6px 16px rgba(27, 47, 110, 0.3)'
+                            }
+                        }}
+                    >
+                        See More
+                    </Button>
+                </Box>
+            )}
         </Box>
     );
 };

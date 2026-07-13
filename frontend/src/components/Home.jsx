@@ -86,7 +86,7 @@ const GallerySlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2500,
+    autoplaySpeed: 1000,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     fade: true,
@@ -160,22 +160,25 @@ const GallerySlider = () => {
             <Box sx={{ width: '100vw', height: viewportMinusAppBar }}>
               <Slider {...settings}>
                 {images.map((image, index) => (
-                  <Box key={index} sx={{ width: '100vw', height: viewportMinusAppBar, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gradient-primary)' }}>
-                    <Typography
-                      variant="h2"
-                      sx={{
-                        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
-                        fontWeight: 700,
-                        fontFamily: '"Poppins", sans-serif',
-                        color: 'white',
-                        textAlign: 'center',
-                        px: { xs: 2, sm: 4, md: 6 },
-                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-                      }}
-                    >
-                      {image.text}
-                    </Typography>
-                  </Box>
+                  <div key={index}>
+                    <Box sx={{ width: '100vw', height: viewportMinusAppBar, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--color-background)' }}>
+                      <Typography
+                        variant="h2"
+                        sx={{
+                          fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' },
+                          fontWeight: 700,
+                          fontFamily: '"Playfair Display", "Montserrat", serif',
+                          color: 'var(--color-primary)',
+                          textAlign: 'center',
+                          px: { xs: 2, sm: 4, md: 6 },
+                          textShadow: 'none',
+                          letterSpacing: '0.5px'
+                        }}
+                      >
+                        {image.text}
+                      </Typography>
+                    </Box>
+                  </div>
                 ))}
               </Slider>
             </Box>

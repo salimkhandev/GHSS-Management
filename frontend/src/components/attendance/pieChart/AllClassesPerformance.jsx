@@ -1,5 +1,5 @@
 import { Assessment, Error as ErrorIcon, Timeline } from '@mui/icons-material';
-import { Box, Card, CardContent, Grid, Skeleton, Typography, useTheme } from '@mui/material';
+import { Box, Button, Card, CardContent, Grid, Skeleton, Typography, useTheme } from '@mui/material';
 import axios from 'axios';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +12,7 @@ const AttendancePieChart = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
+    const [visibleCount, setVisibleCount] = useState(10);
 
     const COLORS = [theme.palette.success.main, theme.palette.warning.main];
     const RADIAN = Math.PI / 180;
@@ -164,7 +165,7 @@ const AttendancePieChart = () => {
                 </Card>
             ) : (
                 <Grid container spacing={3}>
-                    {data.map((entry, index) => {
+                    {data.slice(0, visibleCount).map((entry, index) => {
                         const presentPercentage = parseFloat(entry.overall_percentage);
                         const isAttendanceNotTaken = isNaN(presentPercentage);
 
@@ -264,6 +265,28 @@ const AttendancePieChart = () => {
                         );
                     })}
                 </Grid>
+            )}
+            
+            {!loading && !error && data.length > visibleCount && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                    <Button 
+                        variant="contained" 
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                        sx={{
+                            px: 4, py: 1.5,
+                            borderRadius: 2,
+                            textTransform: 'none',
+                            fontSize: '1.1rem',
+                            background: 'var(--gradient-primary)',
+                            boxShadow: '0 4px 12px rgba(27, 47, 110, 0.2)',
+                            '&:hover': {
+                                boxShadow: '0 6px 16px rgba(27, 47, 110, 0.3)'
+                            }
+                        }}
+                    >
+                        See More
+                    </Button>
+                </Box>
             )}
         </Box>
     );

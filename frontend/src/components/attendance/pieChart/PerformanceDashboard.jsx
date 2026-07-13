@@ -56,7 +56,7 @@ const PerformanceDashboard = () => {
         },
         {
             id: 'Top50Students',
-            label: 'Top 10 Ranked Students',
+            label: 'Top 30 Ranked Students',
             icon: <LeaderboardIcon />,
             component: <Top50StudentsAtten />
         }

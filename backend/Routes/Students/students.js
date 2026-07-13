@@ -28,7 +28,7 @@ router.post('/students', async (req, res) => {
 });
 // GET route to get all students
 router.get('/students', async (req, res) => {
-    const { page = 1, limit = 100 } = req.query; // Default page is 1, and default limit is 10
+    const { page = 1, limit = 10 } = req.query; // Default page is 1, and default limit is 10
     const offset = (page - 1) * limit;
     
     const cacheKey = `students:${page}:${limit}`;
@@ -80,26 +80,28 @@ router.get('/students', async (req, res) => {
 // only for selected sections in the class
 
 router.get('/filteredSectionStd', async (req, res) => {
-    const { class_id, section_id } = req.query;
+    const { class_id, section_id, page = 1, limit = 10 } = req.query;
+    const offset = (page - 1) * limit;
     try {
         //query for total students
         const totalResult = await pool.query('SELECT COUNT(*) FROM students where class_id=$1 and section_id=$2', [class_id, section_id]);
         const total = parseInt(totalResult.rows[0].count, 10);
 
-        const result = await pool.query(`SELECT students.id as id, students.name AS student_name, sections.name AS section_name, classes.name AS class_name FROM students INNER JOIN sections ON students.section_id = sections.id INNER JOIN classes ON students.class_id = classes.id where students.class_id=$1 and students.section_id=$2`, [class_id, section_id]);
+        const result = await pool.query(`SELECT students.id as id, students.name AS student_name, sections.name AS section_name, classes.name AS class_name FROM students INNER JOIN sections ON students.section_id = sections.id INNER JOIN classes ON students.class_id = classes.id where students.class_id=$1 and students.section_id=$2 LIMIT $3 OFFSET $4`, [class_id, section_id, limit, offset]);
         const idResult = await pool.query(
             `SELECT id FROM students WHERE class_id = $1 AND section_id = $2`,
             [class_id, section_id]
         );
 
+        const totalPages = Math.ceil(total / limit);
+
         // Prepare the response
         res.json({
             students: result.rows,         // The list of filtered students
             total: total,                  // The total count of filtered students
+            totalPages: totalPages,
             allIds: idResult.rows.map(row => row.id)  // Array of all student IDs
         });
-
-        console.log('↘️', result.rows);
 
     } catch (err) {
         console.error('Error fetching student data:', err.stack);

@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         // Optimized SQL query:
         // 1. Compute attendance metrics per student.
         // 2. Rank the students using DENSE_RANK().
-        // 3. Select the top 10 distinct ranks (including ties) directly in SQL.
+        // 3. Select the top 30 distinct ranks (including ties) directly in SQL.
         const query = `
             WITH student_attendance AS (
                 SELECT 
@@ -53,12 +53,12 @@ router.get('/', async (req, res) => {
                 FROM student_attendance
             ),
             top_ranks AS (
-                -- Get the top 10 distinct ranks
+                -- Get the top 30 distinct ranks
                 SELECT rank
                 FROM ranked_students
                 GROUP BY rank
                 ORDER BY rank
-                LIMIT 10
+                LIMIT 30
             )
             SELECT 
                 student_id,
