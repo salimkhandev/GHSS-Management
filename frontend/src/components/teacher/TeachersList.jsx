@@ -118,6 +118,8 @@ const TeachersList = () => {
     return (
         <Box sx={{
             flexGrow: 1,
+            width: '100%',
+            boxSizing: 'border-box',
             p: { xs: 2, sm: 4 },
             background: 'var(--color-background)'
         }}>
@@ -178,7 +180,7 @@ const TeachersList = () => {
 
                         <Grid container spacing={{ xs: 2, sm: 2.5, md: 3 }}>
                             {teachers[className].map((teacher, idx) => (
-                                <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={idx}>
+                                <Grid item xs={12} sm={6} md={4} key={idx}>
                                     <Card sx={{
                                         height: '100%',
                                         display: 'flex',
